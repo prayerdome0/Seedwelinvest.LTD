@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Projects | Seedwel Investment LTD</title>
+    <meta name="description" content="View our portfolio - 150+ projects delivered across web development, graphic design, and business registration.">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js">
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js">
+    </script>
+
+    <style>
+        :root {
+            --blue: #1a2744;
+            --blue-light: #1e3052;
+            --blue-lighter: #243860;
+            --gold: #d4a853;
+            --gold-light: #e0c06e;
+            --white: #ffffff;
+            --gray: #a0a8b8;
+            --gray-light: #c5cad4;
+            --shadow-gold: 0 4px 30px rgba(212, 168, 83, 0.25);
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--blue);
+            color: var(--white);
+            overflow-x: hidden;
+            line-height: 1.6;
+            max-width: 100vw;
+        }
+
+        ::-webkit-scrollbar {
+            width: 7px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--blue);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 10px;
+        }
+
+        /* ========== PARTICLES ========== */
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .particle {
+            position: absolute;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: floatUp linear infinite;
+            opacity: 0;
+        }
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.5;
+            }
+            90% {
+                opacity: 0.15;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* ========== HEADER ========== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(26, 39, 68, 0.9);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(212, 168, 83, 0.15);
+        }
+        .header.scrolled {
+            background: rgba(26, 39, 68, 0.97);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 28px;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+        .company-name-header {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+        .hamburger {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+            background: rgba(212, 168, 83, 0.1);
+            border-radius: 50%;
+            border: 1px solid rgba(212, 168, 83, 0.3);
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+        .hamburger:hover {
+            background: rgba(212, 168, 83, 0.2);
+            border-color: var(--gold);
+        }
+        .hamburger span {
+            display: block;
+            width: 18px;
+            height: 2px;
+            background: var(--gold);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* ========== MOBILE MENU ========== */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 300px;
+            height: 100vh;
+            background: rgba(30, 49, 82, 0.98);
+            backdrop-filter: blur(25px);
+            z-index: 999;
+            padding: 90px 30px 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: right 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+            border-left: 1px solid rgba(212, 168, 83, 0.2);
+        }
+        .mobile-menu.active {
+            right: 0;
+        }
+        .mobile-menu a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 13px 18px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .mobile-menu a i {
+            color: var(--gold);
+            width: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        .mobile-menu a:hover {
+            background: rgba(212, 168, 83, 0.1);
+            color: var(--gold);
+            padding-left: 24px;
+        }
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: 998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .menu-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* ========== PAGE HERO ========== */
+        .page-hero {
+            padding: 130px 28px 45px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            background: radial-gradient(ellipse at center, rgba(36, 56, 96, 0.5) 0%, var(--blue) 70%);
+        }
+        .page-hero .section-subtitle {
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .page-hero .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff 0%, #d4a853 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        .page-hero .hero-desc {
+            color: var(--gray-light);
+            font-size: 0.9rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* ========== PROJECTS GRID ========== */
+        .projects-section {
+            padding: 30px 28px 60px;
+            position: relative;
+            z-index: 1;
+        }
+        .projects-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+        .project-card {
+            background: rgba(30, 49, 82, 0.7);
+            border: 1px solid rgba(212, 168, 83, 0.15);
+            border-radius: 18px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        .project-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--gold);
+            box-shadow: 0 20px 50px rgba(212, 168, 83, 0.15);
+        }
+        .project-card-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+            border-bottom: 1px solid rgba(212, 168, 83, 0.1);
+            background: rgba(30, 49, 82, 0.5);
+        }
+        .project-card-body {
+            padding: 20px;
+        }
+        .project-card-body h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            color: var(--white);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .project-card-body p {
+            color: var(--gray);
+            font-size: 0.82rem;
+            line-height: 1.5;
+            margin-bottom: 14px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .project-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .project-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+        .project-price span {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+        .project-link {
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.82rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: var(--transition);
+        }
+        .project-link:hover {
+            gap: 10px;
+            color: var(--gold-light);
+        }
+
+        /* ========== EMPTY STATE ========== */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray);
+        }
+        .empty-state i {
+            font-size: 3rem;
+            color: var(--gold);
+            margin-bottom: 16px;
+            display: block;
+            opacity: 0.5;
+        }
+        .empty-state p {
+            font-size: 0.9rem;
+        }
+
+        /* ========== LOADING ========== */
+        .loading-spinner {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        .loading-spinner i {
+            font-size: 2rem;
+            color: var(--gold);
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ========== FLOATING WHATSAPP ========== */
+        .floating-whatsapp {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 999;
+            width: 55px;
+            height: 55px;
+            background: #25d366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.35);
+            cursor: pointer;
+            transition: var(--transition);
+            animation: pulse 2.5s infinite;
+            text-decoration: none;
+        }
+        .floating-whatsapp:hover {
+            transform: scale(1.08);
+            box-shadow: 0 10px 35px rgba(37, 211, 102, 0.55);
+        }
+        .floating-whatsapp i {
+            font-size: 1.6rem;
+            color: #fff;
+        }
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.45);
+            }
+            70% {
+                box-shadow: 0 0 0 18px rgba(37, 211, 102, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+        .whatsapp-tooltip {
+            position: absolute;
+            right: 68px;
+            background: var(--white);
+            color: #1a1a1a;
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .floating-whatsapp:hover .whatsapp-tooltip {
+            opacity: 1;
+        }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            background: rgba(24, 38, 64, 0.9);
+            border-top: 1px solid rgba(212, 168, 83, 0.15);
+            padding: 50px 28px 25px;
+            position: relative;
+            z-index: 1;
+        }
+        .footer-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 35px;
+        }
+        .footer-brand img {
+            height: 42px;
+            margin-bottom: 14px;
+        }
+        .footer-brand p {
+            color: var(--gray);
+            font-size: 0.82rem;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        .footer-socials {
+            display: flex;
+            gap: 10px;
+        }
+        .footer-socials a {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(212, 168, 83, 0.08);
+            border: 1px solid rgba(212, 168, 83, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+        .footer-socials a:hover {
+            background: var(--gold);
+            color: var(--blue);
+            transform: translateY(-3px);
+        }
+        .footer-col h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--gold);
+            margin-bottom: 16px;
+            font-size: 1rem;
+        }
+        .footer-col ul {
+            list-style: none;
+        }
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+        .footer-col ul li a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.82rem;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .footer-col ul li a:hover {
+            color: var(--gold);
+            padding-left: 3px;
+        }
+        .footer-col ul li i {
+            color: var(--gold);
+            font-size: 0.7rem;
+        }
+        .footer-bottom {
+            max-width: 1100px;
+            margin: 35px auto 0;
+            padding-top: 20px;
+            border-top: 1px solid rgba(212, 168, 83, 0.08);
+            text-align: center;
+            color: var(--gray);
+            font-size: 0.78rem;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 900px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 640px) {
+            .header-inner {
+                padding: 10px 16px;
+            }
+            .logo-img {
+                height: 32px;
+            }
+            .company-name-header {
+                font-size: 0.7rem;
+            }
+            .page-hero {
+                padding: 100px 16px 30px;
+            }
+            .page-hero .section-title {
+                font-size: 1.5rem;
+            }
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .project-card-image {
+                height: 200px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+                text-align: center;
+            }
+            .footer-socials {
+                justify-content: center;
+            }
+            .floating-whatsapp {
+                width: 46px;
+                height: 46px;
+                bottom: 18px;
+                right: 18px;
+            }
+            .floating-whatsapp i {
+                font-size: 1.3rem;
+            }
+            .mobile-menu {
+                width: 260px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Particles -->
+    <div class="particles-container" id="particles"></div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo-container">
+                <img src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel Investment LTD" class="logo-img">
+                <span class="company-name-header">Seedwel Investment LTD</span>
+            </a>
+            <div class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <nav class="mobile-menu" id="mobileMenu">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="about.html"><i class="fas fa-info-circle"></i> About Us</a>
+        <a href="services.html"><i class="fas fa-cogs"></i> Services</a>
+        <a href="projects.html"><i class="fas fa-folder-open"></i> Projects</a>
+        <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+        <a href="support.html"><i class="fas fa-headset"></i> Support</a>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <p class="section-subtitle">Our Work</p>
+        <h1 class="section-title">Portfolio & Projects</h1>
+        <p class="hero-desc">Showcasing our best work — 150+ projects delivered with excellence</p>
+    </section>
+
+    <!-- Projects Grid -->
+    <section class="projects-section">
+        <div class="projects-inner">
+            <div class="projects-grid" id="projectsGrid">
+                <!-- Loading -->
+                <div class="loading-spinner" id="loadingSpinner" style="grid-column: 1 / -1;">
+                    <i class="fas fa-spinner"></i>
+                    <p style="color:var(--gray); margin-top:12px;">Loading projects...</p>
+                </div>
+            </div>
+            <div class="empty-state" id="emptyState" style="display:none;">
+                <i class="fas fa-folder-open"></i>
+                <p>No projects yet. Check back soon!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <img src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel Investment LTD">
+                <p>We build digital experiences that drive growth. Premium agency services for modern businesses.</p>
+                <div class="footer-socials">
+                    <a href="https://www.facebook.com/profile.php?id=61566952778871" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/seedwelinvestmentltd" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/260973028342" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                    <li><a href="services.html"><i class="fas fa-chevron-right"></i> Services</a></li>
+                    <li><a href="projects.html"><i class="fas fa-chevron-right"></i> Projects</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    <li><a href="support.html"><i class="fas fa-chevron-right"></i> Help Center</a></li>
+                    <li><a href="tel:+260973028342"><i class="fas fa-phone"></i> +260 973 028 342</a></li>
+                    <li><a href="mailto:Info@prayerdome.net"><i class="fas fa-envelope"></i> Info@prayerdome.net</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Locations</h4>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt" style="color:var(--gold);"></i> Kabwe, Zambia</li>
+                    <li><i class="fas fa-map-marker-alt" style="color:var(--gold);"></i> Chama, Zambia</li>
+                    <li><i class="fas fa-globe" style="color:var(--gold);"></i> Global</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Seedwel Investment LTD. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/260973028342" class="floating-whatsapp" target="_blank" rel="noopener">
+        <span class="whatsapp-tooltip">Chat with us!</span>
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // Scroll to top
+        window.scrollTo(0, 0);
+        window.addEventListener('load', () => window.scrollTo(0, 0));
+        window.addEventListener('pageshow', (e) => { if (e.persisted) window.scrollTo(0, 0); });
+
+        // Particles
+        const pc = document.getElementById('particles');
+        function createParticle() {
+            const p = document.createElement('div');
+            p.classList.add('particle');
+            p.style.width = (Math.random() * 3 + 1.5) + 'px';
+            p.style.height = p.style.width;
+            p.style.left = Math.random() * 100 + '%';
+            p.style.animationDuration = (Math.random() * 8 + 6) + 's';
+            p.style.animationDelay = Math.random() * 5 + 's';
+            pc.appendChild(p);
+            setTimeout(() => p.remove(), 14000);
+        }
+        setInterval(createParticle, 350);
+        for (let i = 0; i < 18; i++) setTimeout(createParticle, Math.random() * 3000);
+
+        // Header
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('scrolled', window.scrollY > 40);
+        });
+
+        // Menu
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+            document.body.style.overflow = hamburger.classList.contains('active') ? 'hidden' : '';
+        }
+        hamburger.addEventListener('click', toggleMenu);
+        menuOverlay.addEventListener('click', toggleMenu);
+        mobileMenu.querySelectorAll('a').forEach(l => {
+            l.addEventListener('click', () => { if (hamburger.classList.contains('active')) toggleMenu(); });
+        });
+
+        // ========== FIREBASE CONFIG ==========
+        const firebaseConfig = {
+            apiKey: "AIzaSyA-BpRy-RVc2rqIG6uiRu_XrGEu1ZGnQwU",
+            authDomain: "seedwel-investment-limited.firebaseapp.com",
+            databaseURL: "https://seedwel-investment-limited-default-rtdb.firebaseio.com",
+            projectId: "seedwel-investment-limited",
+            storageBucket: "seedwel-investment-limited.firebasestorage.app",
+            messagingSenderId: "197778268619",
+            appId: "1:197778268619:web:92f29d88fa5a22dbfa964e"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // ========== LOAD PROJECTS ==========
+        const projectsGrid = document.getElementById('projectsGrid');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const emptyState = document.getElementById('emptyState');
+
+        function loadProjects() {
+            db.ref('projects').on('value', (snapshot) => {
+                projectsGrid.innerHTML = '';
+                const data = snapshot.val();
+
+                if (!data) {
+                    loadingSpinner.style.display = 'none';
+                    emptyState.style.display = 'block';
+                    return;
+                }
+
+                emptyState.style.display = 'none';
+                const projects = Object.entries(data).reverse();
+
+                projects.forEach(([key, project], index) => {
+                    const card = document.createElement('div');
+                    card.className = 'project-card';
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(30px)';
+                    card.style.transition = `all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) ${index * 0.1}s`;
+
+                    const amount = project.amount ? `$${parseFloat(project.amount).toLocaleString()}` : 'Contact us';
+
+                    card.innerHTML = `
+                                <img src="${project.image || 'https://i.ibb.co/svxj52ny/seedwel.png'}" 
+                                     alt="${project.name}" 
+                                     class="project-card-image"
+                                     onerror="this.src='https://i.ibb.co/svxj52ny/seedwel.png'; this.style.objectFit='contain'; this.style.padding='30px';">
+                                <div class="project-card-body">
+                                    <h3>${project.name || 'Untitled Project'}</h3>
+                                    <p>${project.description || 'No description available.'}</p>
+                                    <div class="project-card-footer">
+                                        <div class="project-price">
+                                            ${amount}
+                                            ${amount !== 'Contact us' ? '<span> USD</span>' : ''}
+                                        </div>
+                                        <a href="contact.html" class="project-link">
+                                            Inquire <i class="fas fa-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            `;
+                    projectsGrid.appendChild(card);
+
+                    // Trigger animation
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 100);
+                });
+            }, (error) => {
+                console.error('Error loading projects:', error);
+                loadingSpinner.innerHTML =
+                    '<i class="fas fa-exclamation-circle" style="color:#ef4444;"></i><p style="color:var(--gray); margin-top:12px;">Failed to load projects. Please try again.</p>';
+            });
+        }
+
+        loadProjects();
+    </script>
+</body>
+</html>
