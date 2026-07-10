@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Apply for a Job | Seedwel Investment LTD</title>
+    <meta name="description" content="Join the Seedwel Investment LTD team. Apply for Cold Caller or Virtual Assistant positions with 25% commission." />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #ffffff;
+            color: #111827;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #dc2626;
+            border-radius: 10px;
+        }
+
+        /* ───────── ANIMATIONS ───────── */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        .animate-fade-up {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        .delay-1 {
+            animation-delay: 0.1s;
+            opacity: 0;
+        }
+        .delay-2 {
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+        .delay-3 {
+            animation-delay: 0.3s;
+            opacity: 0;
+        }
+
+        /* ───────── HEADER ───────── */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(220, 38, 38, 0.12);
+            transition: all 0.3s ease;
+        }
+        .header.scrolled {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+        .header-inner {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 28px;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        .logo-img {
+            height: 42px;
+            width: auto;
+        }
+        .company-name-header {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 0.95rem;
+            color: #111827;
+            letter-spacing: -0.5px;
+        }
+        .company-name-header span {
+            color: #dc2626;
+        }
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            align-items: center;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #111827;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #dc2626;
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #dc2626;
+        }
+
+        .hamburger {
+            display: none;
+            width: 40px;
+            height: 40px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            background: rgba(220, 38, 38, 0.06);
+            border-radius: 50%;
+            border: 1px solid rgba(220, 38, 38, 0.12);
+            transition: all 0.3s ease;
+        }
+        .hamburger:hover {
+            background: rgba(220, 38, 38, 0.12);
+        }
+        .hamburger span {
+            width: 20px;
+            height: 2.5px;
+            background: #111827;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* ───────── MOBILE MENU ───────── */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 280px;
+            height: 100vh;
+            background: #ffffff;
+            z-index: 999;
+            padding: 100px 25px 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: right 0.35s cubic-bezier(0.65, 0, 0.35, 1);
+            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.08);
+        }
+        .mobile-menu.active {
+            right: 0;
+        }
+        .mobile-menu a {
+            color: #111827;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 12px 18px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s ease;
+        }
+        .mobile-menu a i {
+            color: #dc2626;
+            width: 24px;
+        }
+        .mobile-menu a:hover {
+            background: rgba(220, 38, 38, 0.06);
+            color: #dc2626;
+        }
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.35);
+            z-index: 998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .menu-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* ───────── HERO ───────── */
+        .hero-apply {
+            padding: 130px 28px 40px;
+            text-align: center;
+            background: linear-gradient(180deg, #fef2f2 0%, #ffffff 50%);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-apply::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(220, 38, 38, 0.03) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .hero-apply h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: clamp(2rem, 4.5vw, 3.5rem);
+            color: #111827;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-apply h1 span {
+            color: #dc2626;
+            position: relative;
+        }
+        .hero-apply h1 span::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: rgba(220, 38, 38, 0.15);
+            border-radius: 4px;
+        }
+        .hero-apply p {
+            color: #4b5563;
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.05rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ───────── COMMISSION BANNER ───────── */
+        .commission-banner {
+            padding: 25px 28px;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            text-align: center;
+            border-top: 3px solid #f59e0b;
+            border-bottom: 3px solid #f59e0b;
+        }
+        .commission-banner h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: #f59e0b;
+        }
+        .commission-banner p {
+            color: #94a3b8;
+            font-size: 1rem;
+        }
+        .commission-banner .highlight-commission {
+            background: rgba(245, 158, 11, 0.15);
+            padding: 2px 14px;
+            border-radius: 20px;
+            font-weight: 700;
+            color: #f59e0b;
+        }
+
+        /* ───────── JOB LISTINGS ───────── */
+        .jobs-section {
+            padding: 50px 28px 60px;
+            background: #ffffff;
+        }
+        .jobs-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+        .section-subtitle {
+            color: #dc2626;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+        }
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            color: #111827;
+        }
+
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .job-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 32px;
+            border: 2px solid #e5e7eb;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            position: relative;
+            text-align: center;
+        }
+        .job-card:hover {
+            transform: translateY(-8px);
+            border-color: #f59e0b;
+            box-shadow: 0 16px 40px rgba(245, 158, 11, 0.12);
+        }
+        .job-card .job-icon {
+            font-size: 3.5rem;
+            margin-bottom: 16px;
+            display: block;
+        }
+        .job-badge {
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 14px;
+            background: rgba(245, 158, 11, 0.15);
+            color: #b45309;
+            border: 1px solid rgba(245, 158, 11, 0.25);
+        }
+        .job-badge i {
+            margin-right: 6px;
+        }
+        .job-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+        .job-card .job-meta {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+            font-size: 0.85rem;
+            color: #6b7280;
+        }
+        .job-card .job-meta i {
+            color: #dc2626;
+            width: 16px;
+        }
+        .job-card p {
+            color: #4b5563;
+            font-size: 0.9rem;
+            margin-bottom: 18px;
+            line-height: 1.6;
+        }
+        .job-card .commission-rate {
+            display: inline-block;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.8rem;
+            color: #f59e0b;
+            margin-bottom: 16px;
+        }
+        .job-card .commission-rate small {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #6b7280;
+        }
+        .btn-apply {
+            background: #dc2626;
+            color: #ffffff;
+            padding: 14px 40px;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(220, 38, 38, 0.2);
+        }
+        .btn-apply:hover {
+            background: #b91c1c;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(220, 38, 38, 0.3);
+        }
+
+        /* ───────── APPLICATION FORM ───────── */
+        .apply-form-section {
+            padding: 60px 28px 80px;
+            background: #f8fafc;
+        }
+        .form-container {
+            max-width: 750px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+        }
+        .form-container h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.6rem;
+            color: #111827;
+            margin-bottom: 6px;
+        }
+        .form-container .form-desc {
+            color: #4b5563;
+            margin-bottom: 28px;
+            font-size: 0.95rem;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #111827;
+            margin-bottom: 6px;
+        }
+        .form-group label .required {
+            color: #dc2626;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 13px 16px;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            color: #111827;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #dc2626;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.06);
+            background: #ffffff;
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .form-group .file-upload {
+            border: 2px dashed #e5e7eb;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: #f9fafb;
+        }
+        .form-group .file-upload:hover {
+            border-color: #dc2626;
+            background: rgba(220, 38, 38, 0.02);
+        }
+        .form-group .file-upload i {
+            font-size: 2rem;
+            color: #dc2626;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .form-group .file-upload p {
+            color: #6b7280;
+            font-size: 0.85rem;
+        }
+        .form-group .file-upload .file-name {
+            color: #dc2626;
+            font-weight: 600;
+            margin-top: 8px;
+            display: none;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: #dc2626;
+            color: #ffffff;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(220, 38, 38, 0.2);
+            margin-top: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-submit::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+        }
+        .btn-submit:hover::after {
+            left: 100%;
+        }
+        .btn-submit:hover {
+            background: #b91c1c;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(220, 38, 38, 0.3);
+        }
+        .btn-submit:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .form-success {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .form-success i {
+            font-size: 4rem;
+            color: #22c55e;
+            margin-bottom: 16px;
+            display: block;
+        }
+        .form-success h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: #111827;
+        }
+        .form-success p {
+            color: #4b5563;
+        }
+
+        /* ───────── WHY JOIN ───────── */
+        .why-join {
+            padding: 60px 28px;
+            background: #ffffff;
+            border-top: 1px solid #e5e7eb;
+        }
+        .why-join .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            text-align: center;
+        }
+        .why-item {
+            padding: 20px;
+        }
+        .why-item i {
+            font-size: 2.5rem;
+            color: #f59e0b;
+            margin-bottom: 12px;
+            display: block;
+        }
+        .why-item h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 6px;
+        }
+        .why-item p {
+            color: #4b5563;
+            font-size: 0.85rem;
+        }
+
+        /* ───────── FOOTER ───────── */
+        footer {
+            background: #0f172a;
+            padding: 50px 28px 25px;
+            border-top: 1px solid #1e293b;
+        }
+        .footer-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 35px;
+        }
+        .footer-brand img {
+            height: 42px;
+            margin-bottom: 12px;
+        }
+        .footer-brand p {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        .footer-col h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 16px;
+            font-size: 1rem;
+        }
+        .footer-col a {
+            color: #94a3b8;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+        .footer-col a:hover {
+            color: #dc2626;
+            transform: translateX(4px);
+        }
+        .footer-col p {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+        }
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 35px auto 0;
+            padding-top: 20px;
+            border-top: 1px solid #1e293b;
+            text-align: center;
+            color: #64748b;
+            font-size: 0.8rem;
+        }
+
+        /* ───────── FLOATING WHATSAPP ───────── */
+        .floating-whatsapp {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: #25d366;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99;
+            animation: pulse 2s infinite;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+        }
+        .floating-whatsapp:hover {
+            transform: scale(1.1);
+        }
+        .floating-whatsapp i {
+            color: #fff;
+            font-size: 1.8rem;
+        }
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 16px rgba(37, 211, 102, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+
+        /* ───────── RESPONSIVE ───────── */
+        @media (max-width: 900px) {
+            .nav-links {
+                display: none;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .jobs-grid {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+            .why-join .container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+        @media (max-width: 640px) {
+            .header-inner {
+                padding: 10px 16px;
+            }
+            .logo-img {
+                height: 34px;
+            }
+            .company-name-header {
+                font-size: 0.75rem;
+            }
+            .hero-apply {
+                padding: 110px 16px 30px;
+            }
+            .hero-apply h1 {
+                font-size: 1.8rem;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .form-container {
+                padding: 24px 16px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .commission-banner h3 {
+                font-size: 1.1rem;
+            }
+            .floating-whatsapp {
+                width: 48px;
+                height: 48px;
+                bottom: 18px;
+                right: 18px;
+            }
+            .floating-whatsapp i {
+                font-size: 1.4rem;
+            }
+            .mobile-menu {
+                width: 260px;
+            }
+            .job-card .commission-rate {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ========== HEADER ========== -->
+    <header class="header" id="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo-container">
+                <img src="https://i.ibb.co/svxj52ny/seedwel.png" class="logo-img" alt="Seedwel Investment LTD" />
+                <span class="company-name-header">Seedwel <span>Investment</span> LTD</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About Us</a>
+                <a href="services.html">Services</a>
+                <a href="projects.html">Projects</a>
+                <a href="Apply.html" class="active">Careers</a>
+                <a href="contact.html">Contact</a>
+                <a href="support.html">Support</a>
+            </div>
+            <div class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== MOBILE MENU ========== -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <nav class="mobile-menu" id="mobileMenu">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="Apply.html"><i class="fas fa-pen"></i> Job Apply</a>
+        <a href="about.html"><i class="fas fa-info-circle"></i> About Us</a>
+        <a href="services.html"><i class="fas fa-cogs"></i> Services</a>
+        <a href="projects.html"><i class="fas fa-folder-open"></i> Projects</a>
+        <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+        <a href="support.html"><i class="fas fa-headset"></i> Support</a>
+    </nav>
+
+    <!-- ========== HERO ========== -->
+    <section class="hero-apply">
+        <h1 class="animate-fade-up">Join Our <span>Sales Team</span></h1>
+        <p class="animate-fade-up delay-1">Earn unlimited income with our commission-based opportunities. We're looking for motivated individuals to join our team.</p>
+    </section>
+
+    <!-- ========== COMMISSION BANNER ========== -->
+    <section class="commission-banner animate-fade-up">
+        <h3>Earn <span class="highlight-commission">25% Commission</span> on Every Sale</h3>
+        <p>Unlimited earning potential — the more you sell, the more you earn!</p>
+    </section>
+
+    <!-- ========== JOB LISTINGS ========== -->
+    <section class="jobs-section">
+        <div class="jobs-container">
+            <div class="section-header animate-fade-up">
+                <p class="section-subtitle">Open Positions</p>
+                <h2 class="section-title">Apply Now</h2>
+            </div>
+            <div class="jobs-grid">
+
+                <!-- Cold Caller -->
+                <div class="job-card animate-fade-up delay-1">
+                    <span class="job-icon">📞</span>
+                    <span class="job-badge"><i class="fas fa-percent"></i> 25% Commission</span>
+                    <h3>Cold Caller</h3>
+                    <div class="job-meta">
+                        <span><i class="fas fa-briefcase"></i> Commission</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Remote</span>
+                        <span><i class="fas fa-clock"></i> Flexible Hours</span>
+                    </div>
+                    <div class="commission-rate">25% <small>commission</small></div>
+                    <p>Make outbound calls to potential clients, introduce our premium digital services, and close sales. No cold calling experience required — we provide full training!</p>
+                    <button class="btn-apply" onclick="openApplication('Cold Caller')">
+                        <i class="fas fa-paper-plane"></i> Apply Now
+                    </button>
+                </div>
+
+                <!-- Virtual Assistant -->
+                <div class="job-card animate-fade-up delay-2">
+                    <span class="job-icon">🖥️</span>
+                    <span class="job-badge"><i class="fas fa-percent"></i> 25% Commission</span>
+                    <h3>Virtual Assistant</h3>
+                    <div class="job-meta">
+                        <span><i class="fas fa-briefcase"></i> Commission</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Remote</span>
+                        <span><i class="fas fa-clock"></i> Flexible Hours</span>
+                    </div>
+                    <div class="commission-rate">25% <small>commission</small></div>
+                    <p>Provide administrative support, manage client relationships, and help convert leads into sales. Excellent communication and organizational skills required.</p>
+                    <button class="btn-apply" onclick="openApplication('Virtual Assistant')">
+                        <i class="fas fa-paper-plane"></i> Apply Now
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== WHY JOIN ========== -->
+    <section class="why-join animate-fade-up">
+        <div class="section-header" style="margin-bottom:30px;">
+            <p class="section-subtitle">Why Join Us</p>
+            <h2 class="section-title">Benefits & Perks</h2>
+        </div>
+        <div class="container">
+            <div class="why-item">
+                <i class="fas fa-coins"></i>
+                <h4>Unlimited Earning Potential</h4>
+                <p>Earn 25% commission on every sale you make. The more you sell, the more you earn — no caps!</p>
+            </div>
+            <div class="why-item">
+                <i class="fas fa-clock"></i>
+                <h4>Flexible Schedule</h4>
+                <p>Work from anywhere, anytime. Set your own hours and work at your own pace.</p>
+            </div>
+            <div class="why-item">
+                <i class="fas fa-graduation-cap"></i>
+                <h4>Full Training Provided</h4>
+                <p>No experience needed. We provide comprehensive training on our services and sales techniques.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== APPLICATION FORM ========== -->
+    <section class="apply-form-section" id="applyFormSection">
+        <div class="form-container animate-fade-up">
+            <div id="formContent">
+                <h2>Apply for <span style="color:#dc2626;">this Position</span></h2>
+                <p class="form-desc">Fill in the form below and we'll get back to you within 48 hours.</p>
+                <form id="applicationForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Full Name <span class="required">*</span></label>
+                            <input type="text" id="fullName" placeholder="Enter your full name" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address <span class="required">*</span></label>
+                            <input type="email" id="email" placeholder="you@example.com" required />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Phone Number <span class="required">*</span></label>
+                            <input type="tel" id="phone" placeholder="+260 XXX XXX XXX" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Position Applying For <span class="required">*</span></label>
+                            <select id="position" required>
+                                <option value="">Select a position...</option>
+                                <option value="Cold Caller">📞 Cold Caller (25% Commission)</option>
+                                <option value="Virtual Assistant">🖥️ Virtual Assistant (25% Commission)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Why are you the right fit? <span class="required">*</span></label>
+                        <textarea id="coverLetter" placeholder="Tell us about your experience, skills, and why you're interested in this role..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Upload CV / Resume <span class="required">*</span></label>
+                        <div class="file-upload" id="fileUpload">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Click to upload your CV (PDF, DOC, DOCX)</p>
+                            <div class="file-name" id="fileName"></div>
+                            <input type="file" id="cvFile" accept=".pdf,.doc,.docx" style="display:none;" required />
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-submit" id="submitBtn">
+                        <i class="fas fa-paper-plane"></i> Submit Application
+                    </button>
+                </form>
+            </div>
+            <div class="form-success" id="formSuccess">
+                <i class="fas fa-check-circle"></i>
+                <h3>Application Submitted!</h3>
+                <p>Thank you for applying. Our team will review your application and get back to you within 48 hours.</p>
+                <button onclick="resetForm()" style="margin-top:20px; background:#dc2626; color:#fff; padding:12px 30px; border:none; border-radius:50px; font-weight:700; cursor:pointer; transition:all 0.3s ease;">
+                    <i class="fas fa-arrow-left"></i> Submit Another Application
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <img src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel Investment LTD" />
+                <p>Premium digital agency delivering excellence worldwide. We build digital experiences that drive growth for modern businesses.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="about.html">About Us</a>
+                <a href="services.html">Services</a>
+                <a href="projects.html">Projects</a>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <a href="contact.html">Contact</a>
+                <a href="support.html">Help Center</a>
+                <a href="tel:+260973028342"><i class="fas fa-phone" style="color:#dc2626; width:18px;"></i> +260 973 028 342</a>
+                <a href="mailto:Info@prayerdome.net"><i class="fas fa-envelope" style="color:#dc2626; width:18px;"></i> seedwelinvestltd@gmail.com</a>
+            </div>
+            <div class="footer-col">
+                <h4>Locations</h4>
+                <p><i class="fas fa-location-dot" style="color:#dc2626; width:18px;"></i> Kabwe, Zambia</p>
+                <p><i class="fas fa-location-dot" style="color:#dc2626; width:18px;"></i> Chama, Zambia</p>
+                <p>🌍 Global Remote</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Seedwel Investment LTD. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- ========== FLOATING WHATSAPP ========== -->
+    <a href="https://wa.me/260973028342" class="floating-whatsapp" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- ========== SCRIPTS ========== -->
+    <script>
+        // ─── Mobile Menu ───
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+            document.body.style.overflow = hamburger.classList.contains('active') ? 'hidden' : '';
+        }
+        hamburger.addEventListener('click', toggleMenu);
+        menuOverlay.addEventListener('click', toggleMenu);
+        document.querySelectorAll('.mobile-menu a').forEach(l => l.addEventListener('click', toggleMenu));
+
+        // ─── Header Scroll Effect ───
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('scrolled', window.scrollY > 40);
+        });
+
+        // ─── File Upload ───
+        const fileUpload = document.getElementById('fileUpload');
+        const fileInput = document.getElementById('cvFile');
+        const fileName = document.getElementById('fileName');
+
+        fileUpload.addEventListener('click', () => fileInput.click());
+
+        fileInput.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                fileName.textContent = '📄 ' + this.files[0].name;
+                fileName.style.display = 'block';
+                fileUpload.style.borderColor = '#dc2626';
+            }
+        });
+
+        // ─── Open Application with Pre-filled Position ───
+        function openApplication(position) {
+            document.getElementById('applyFormSection').scrollIntoView({ behavior: 'smooth' });
+            const select = document.getElementById('position');
+            for (let option of select.options) {
+                if (option.value === position) {
+                    select.value = option.value;
+                    break;
+                }
+            }
+            select.style.borderColor = '#dc2626';
+            setTimeout(() => {
+                select.style.borderColor = '';
+            }, 2000);
+        }
+
+        // ─── Form Submission ───
+        const form = document.getElementById('applicationForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const formContent = document.getElementById('formContent');
+        const formSuccess = document.getElementById('formSuccess');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            if (!fileInput.files || !fileInput.files[0]) {
+                alert('Please upload your CV/Resume.');
+                return;
+            }
+
+            const formData = {
+                name: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                position: document.getElementById('position').value,
+                coverLetter: document.getElementById('coverLetter').value,
+                cvFile: fileInput.files[0].name
+            };
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+
+            setTimeout(() => {
+                formContent.style.display = 'none';
+                formSuccess.style.display = 'block';
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Application';
+                console.log('Application submitted:', formData);
+            }, 1500);
+        });
+
+        // ─── Reset Form ───
+        function resetForm() {
+            form.reset();
+            fileInput.value = '';
+            fileName.style.display = 'none';
+            fileName.textContent = '';
+            fileUpload.style.borderColor = '';
+            formContent.style.display = 'block';
+            formSuccess.style.display = 'none';
+            document.getElementById('applyFormSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // ─── Scroll to Top ───
+        window.scrollTo(0, 0);
+        window.addEventListener('load', () => window.scrollTo(0, 0));
+        window.addEventListener('pageshow', (e) => { if (e.persisted) window.scrollTo(0, 0); });
+    </script>
+
+</body>
+</html>

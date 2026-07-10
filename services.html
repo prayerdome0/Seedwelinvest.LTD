@@ -1,73 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Our Services | Seedwel Investment LTD</title>
-    <meta name="description" content="Premium digital services - Graphic Design, Virtual Assistant, Online Services, Web Development, Mathematics Tutoring and more.">
+    <meta name="description" content="Premium digital services - Graphic Design, Virtual Assistant, Web Development, Business Registration and more." />
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <style>
-        :root {
-            --blue: #0a1428;
-            --blue-light: #112240;
-            --gold: #d4af37;
-            --gold-light: #e6c86a;
-            --white: #ffffff;
-            --gray: #8892b0;
-            --gray-light: #a8b2d1;
-            --shadow-gold: 0 4px 30px rgba(212, 175, 55, 0.2);
-            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--blue);
-            color: var(--white);
+            background: #ffffff;
+            color: #111827;
             overflow-x: hidden;
             line-height: 1.6;
         }
-
-        /* Particles Background */
-        .particles-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
+        ::-webkit-scrollbar {
+            width: 8px;
         }
-        .particle {
-            position: absolute;
-            background: var(--gold);
-            border-radius: 50%;
-            animation: floatUp linear infinite;
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #dc2626;
+            border-radius: 10px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+        @keyframes scrollMarquee {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .animate-fade-up {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        .animate-fade-left {
+            animation: fadeInLeft 0.8s ease forwards;
+        }
+        .animate-fade-right {
+            animation: fadeInRight 0.8s ease forwards;
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        .delay-1 {
+            animation-delay: 0.1s;
             opacity: 0;
         }
-        @keyframes floatUp {
-            0% { transform: translateY(100vh) scale(0); opacity: 0; }
-            10% { opacity: 0.4; }
-            90% { opacity: 0.1; }
-            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        .delay-2 {
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+        .delay-3 {
+            animation-delay: 0.3s;
+            opacity: 0;
+        }
+        .delay-4 {
+            animation-delay: 0.4s;
+            opacity: 0;
+        }
+        .delay-5 {
+            animation-delay: 0.5s;
+            opacity: 0;
+        }
+        .delay-6 {
+            animation-delay: 0.6s;
+            opacity: 0;
         }
 
-        /* Header */
+        /* ───────── HEADER ───────── */
         .header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             z-index: 1000;
-            background: rgba(10, 20, 40, 0.95);
+            background: rgba(255, 255, 255, 0.97);
             backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            border-bottom: 1px solid rgba(220, 38, 38, 0.12);
+            transition: all 0.3s ease;
+        }
+        .header.scrolled {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
         }
         .header-inner {
             max-width: 1300px;
@@ -77,565 +150,886 @@
             align-items: center;
             padding: 12px 28px;
         }
-        .logo-img { height: 42px; }
-        .company-name-header {
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            color: var(--gold);
-            font-size: 0.9rem;
-        }
-        .hamburger {
-            width: 38px;
-            height: 38px;
+        .logo-container {
             display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        .logo-img {
+            height: 42px;
+            width: auto;
+        }
+        .company-name-header {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 0.95rem;
+            color: #111827;
+            letter-spacing: -0.5px;
+        }
+        .company-name-header span {
+            color: #dc2626;
+        }
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            align-items: center;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #111827;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #dc2626;
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #dc2626;
+        }
+
+        .hamburger {
+            display: none;
+            width: 40px;
+            height: 40px;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             gap: 5px;
             cursor: pointer;
-            background: rgba(212, 175, 55, 0.1);
+            background: rgba(220, 38, 38, 0.06);
             border-radius: 50%;
-            border: 1px solid rgba(212, 175, 55, 0.3);
+            border: 1px solid rgba(220, 38, 38, 0.12);
+            transition: all 0.3s ease;
+        }
+        .hamburger:hover {
+            background: rgba(220, 38, 38, 0.12);
         }
         .hamburger span {
-            width: 18px;
-            height: 2px;
-            background: var(--gold);
-            transition: 0.3s;
+            width: 20px;
+            height: 2.5px;
+            background: #111827;
+            border-radius: 4px;
+            transition: all 0.3s ease;
         }
-        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-        .hamburger.active span:nth-child(2) { opacity: 0; }
-        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
 
-        /* Mobile Menu */
+        /* ───────── MOBILE MENU ───────── */
         .mobile-menu {
             position: fixed;
             top: 0;
             right: -320px;
             width: 280px;
             height: 100vh;
-            background: rgba(17, 34, 64, 0.98);
-            backdrop-filter: blur(20px);
+            background: #ffffff;
             z-index: 999;
-            padding: 100px 25px;
+            padding: 100px 25px 30px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            transition: 0.4s ease;
-            border-left: 1px solid rgba(212, 175, 55, 0.2);
+            gap: 8px;
+            transition: right 0.35s cubic-bezier(0.65, 0, 0.35, 1);
+            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.08);
         }
-        .mobile-menu.active { right: 0; }
+        .mobile-menu.active {
+            right: 0;
+        }
         .mobile-menu a {
-            color: var(--white);
+            color: #111827;
             text-decoration: none;
             font-size: 1rem;
+            font-weight: 600;
             padding: 12px 18px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            border-radius: 12px;
+            gap: 14px;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s ease;
         }
-        .mobile-menu a i { color: var(--gold); width: 24px; }
-        .mobile-menu a:hover { background: rgba(212, 175, 55, 0.1); color: var(--gold); }
+        .mobile-menu a i {
+            color: #dc2626;
+            width: 24px;
+        }
+        .mobile-menu a:hover {
+            background: rgba(220, 38, 38, 0.06);
+            color: #dc2626;
+        }
         .menu-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0, 0, 0, 0.35);
             z-index: 998;
             opacity: 0;
             pointer-events: none;
-            transition: 0.3s;
+            transition: opacity 0.3s ease;
         }
-        .menu-overlay.active { opacity: 1; pointer-events: all; }
+        .menu-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
 
-        /* Hero Section */
+        /* ───────── HERO ───────── */
         .hero-services {
-            padding: 130px 20px 60px;
+            padding: 130px 28px 40px;
             text-align: center;
+            background: linear-gradient(180deg, #fef2f2 0%, #ffffff 50%);
             position: relative;
-            z-index: 1;
-            background: radial-gradient(ellipse at 50% 0%, rgba(212,175,55,0.15), transparent);
+            overflow: hidden;
+        }
+        .hero-services::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(220, 38, 38, 0.03) 0%, transparent 70%);
+            border-radius: 50%;
         }
         .hero-services h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            background: linear-gradient(135deg, #fff, var(--gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: clamp(2rem, 5vw, 3.8rem);
+            color: #111827;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+            position: relative;
+            z-index: 1;
         }
-        .hero-services p { color: var(--gray); max-width: 600px; margin: 15px auto; }
+        .hero-services h1 span {
+            color: #dc2626;
+            position: relative;
+        }
+        .hero-services h1 span::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: rgba(220, 38, 38, 0.15);
+            border-radius: 4px;
+        }
+        .hero-services p {
+            color: #4b5563;
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.05rem;
+            position: relative;
+            z-index: 1;
+        }
 
-        /* Zooming Horizontal Marquee */
-        .marquee-section {
-            background: rgba(212, 175, 55, 0.08);
-            padding: 20px 0;
+        /* ───────── FREE OFFER BANNER ───────── */
+        .offer-banner {
+            padding: 22px 28px;
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            text-align: center;
+            position: relative;
             overflow: hidden;
-            border-top: 1px solid rgba(212, 175, 55, 0.2);
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+        .offer-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shimmer 4s infinite;
+        }
+        .offer-banner h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: #ffffff;
+            position: relative;
+            z-index: 1;
+        }
+        .offer-banner p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.95rem;
+            position: relative;
+            z-index: 1;
+        }
+        .offer-banner .highlight {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+
+        /* ───────── MARQUEE ───────── */
+        .marquee-section {
+            background: #f8fafc;
+            padding: 16px 0;
+            overflow: hidden;
+            border-top: 1px solid #e5e7eb;
+            border-bottom: 1px solid #e5e7eb;
         }
         .marquee-track {
             display: flex;
             gap: 40px;
-            animation: scrollMarquee 20s linear infinite;
+            animation: scrollMarquee 22s linear infinite;
             white-space: nowrap;
         }
         .marquee-item {
-            font-size: 1.3rem;
-            font-weight: 600;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            background: rgba(212, 175, 55, 0.1);
-            padding: 8px 24px;
+            background: #ffffff;
+            padding: 8px 22px;
             border-radius: 50px;
-            color: var(--gold-light);
-            animation: zoomPulse 2s ease-in-out infinite;
+            color: #111827;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
         }
-        @keyframes scrollMarquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+        .marquee-item i {
+            color: #dc2626;
         }
-        @keyframes zoomPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); text-shadow: 0 0 8px rgba(212,175,55,0.5); }
+        .marquee-item:hover {
+            border-color: #dc2626;
+            transform: scale(1.04);
+            box-shadow: 0 4px 16px rgba(220, 38, 38, 0.08);
         }
-        .marquee-track:hover { animation-play-state: paused; }
 
-        /* Category Sections */
-        .main-category {
+        /* ───────── SERVICES GRID ───────── */
+        .services-grid-section {
             padding: 60px 28px;
-            position: relative;
-            z-index: 1;
+            background: #ffffff;
         }
-        .alt-bg { background: rgba(17, 34, 64, 0.4); }
-        .container {
-            max-width: 1300px;
+        .services-grid {
+            max-width: 1200px;
             margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
         }
-        .category-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        .category-header .icon {
-            font-size: 2.8rem;
-            color: var(--gold);
-            margin-bottom: 12px;
-            display: block;
-        }
-        .category-header h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            color: var(--white);
-        }
-        .category-header p { color: var(--gray); }
-
-        /* Horizontal Swiper for Photos */
-        .service-swiper {
-            width: 100%;
-            padding: 15px 5px 35px;
-        }
-        .service-slide {
-            background: rgba(17, 34, 64, 0.7);
+        .service-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
             border-radius: 20px;
+            padding: 30px 24px;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
             overflow: hidden;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            transition: var(--transition);
-            height: auto;
         }
-        .service-slide:hover {
-            transform: translateY(-5px);
-            border-color: var(--gold);
-        }
-        .slide-img {
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 220px;
-            object-fit: cover;
+            height: 4px;
+            background: #dc2626;
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
         }
-        .slide-content {
-            padding: 22px;
+        .service-card:hover::before {
+            transform: scaleX(1);
         }
-        .slide-content h3 {
-            font-size: 1.3rem;
-            color: var(--gold);
-            margin-bottom: 10px;
+        .service-card:hover {
+            transform: translateY(-6px);
+            border-color: #dc2626;
+            box-shadow: 0 16px 40px rgba(220, 38, 38, 0.06);
         }
-        .slide-content p { color: var(--gray-light); font-size: 0.85rem; margin-bottom: 12px; }
-        .feature-list { list-style: none; }
-        .feature-list li {
-            padding: 5px 0;
+        .service-card .service-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(220, 38, 38, 0.06);
+            border-radius: 16px;
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 0.8rem;
-            color: var(--gray);
+            justify-content: center;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
         }
-        .feature-list li i { color: var(--gold); font-size: 0.7rem; }
-
-        /* Horizontal Reviews Swiper */
-        .reviews-wrap {
-            background: linear-gradient(145deg, #0c1a30, #071120);
-            padding: 60px 28px;
+        .service-card:hover .service-icon {
+            background: rgba(220, 38, 38, 0.12);
+            transform: scale(1.05);
         }
-        .review-slide {
-            background: rgba(17, 34, 64, 0.8);
-            border-radius: 24px;
-            padding: 25px;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            height: auto;
+        .service-card .service-icon i {
+            font-size: 1.8rem;
+            color: #dc2626;
         }
-        .review-img {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--gold);
-            margin-bottom: 15px;
+        .service-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #111827;
+            margin-bottom: 8px;
         }
-        .stars { color: var(--gold); margin: 12px 0 8px; }
-        .review-text { font-style: italic; color: var(--gray-light); margin: 12px 0; }
-        .review-name { font-weight: 700; color: var(--white); }
-        .review-location { font-size: 0.7rem; color: var(--gold); }
-
-        .add-review-form {
-            max-width: 500px;
-            margin: 50px auto 0;
-            background: rgba(17, 34, 64, 0.6);
-            padding: 25px;
-            border-radius: 24px;
-            text-align: center;
+        .service-card p {
+            color: #4b5563;
+            font-size: 0.88rem;
+            line-height: 1.6;
+            margin-bottom: 12px;
         }
-        .add-review-form input, .add-review-form textarea, .add-review-form select {
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            background: var(--blue-light);
-            border: 1px solid rgba(212,175,55,0.3);
-            border-radius: 12px;
-            color: white;
+        .service-card .service-features {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
         }
-        .add-review-form button {
-            background: var(--gold);
-            color: var(--blue);
-            padding: 12px 25px;
-            border: none;
-            border-radius: 40px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .btn-gold {
-            background: linear-gradient(135deg, var(--gold), #b8860b);
-            padding: 14px 32px;
+        .service-card .service-features li {
+            background: #f8fafc;
+            padding: 4px 14px;
             border-radius: 50px;
-            color: var(--blue);
-            font-weight: bold;
-            text-decoration: none;
-            display: inline-block;
+            font-size: 0.7rem;
+            color: #4b5563;
+            font-weight: 500;
+            border: 1px solid #e5e7eb;
         }
+        .service-card .service-features li i {
+            color: #dc2626;
+            margin-right: 4px;
+            font-size: 0.6rem;
+        }
+
+        /* ───────── CTA ───────── */
+        .cta-section {
+            padding: 60px 28px;
+            text-align: center;
+            background: #111827;
+        }
+        .cta-section h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.8rem;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+        .cta-section p {
+            color: #9ca3af;
+            margin-bottom: 20px;
+        }
+        .btn-white {
+            background: #ffffff;
+            color: #dc2626;
+            padding: 14px 35px;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        .btn-white:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(255, 255, 255, 0.15);
+        }
+
+        /* ───────── FOOTER ───────── */
+        footer {
+            background: #0f172a;
+            padding: 50px 28px 25px;
+            border-top: 1px solid #1e293b;
+        }
+        .footer-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 35px;
+        }
+        .footer-brand img {
+            height: 42px;
+            margin-bottom: 12px;
+        }
+        .footer-brand p {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        .footer-col h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 16px;
+            font-size: 1rem;
+        }
+        .footer-col a {
+            color: #94a3b8;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+        .footer-col a:hover {
+            color: #dc2626;
+            transform: translateX(4px);
+        }
+        .footer-col p {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+        }
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 35px auto 0;
+            padding-top: 20px;
+            border-top: 1px solid #1e293b;
+            text-align: center;
+            color: #64748b;
+            font-size: 0.8rem;
+        }
+
+        /* ───────── FLOATING WHATSAPP ───────── */
         .floating-whatsapp {
             position: fixed;
             bottom: 25px;
             right: 25px;
-            background: #25D366;
-            width: 55px;
-            height: 55px;
+            background: #25d366;
+            width: 56px;
+            height: 56px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 99;
             animation: pulse 2s infinite;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
         }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.5); } 70% { box-shadow: 0 0 0 15px rgba(37,211,102,0); } }
+        .floating-whatsapp:hover {
+            transform: scale(1.1);
+        }
+        .floating-whatsapp i {
+            color: #fff;
+            font-size: 1.8rem;
+        }
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 16px rgba(37, 211, 102, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
 
-        footer {
-            background: #050e1a;
-            padding: 50px 28px 20px;
-            border-top: 1px solid rgba(212,175,55,0.1);
+        @media (max-width: 900px) {
+            .nav-links {
+                display: none;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
         }
-        .footer-grid {
-            max-width: 1200px;
-            margin: auto;
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 30px;
-        }
-        @media (max-width: 800px) {
-            .footer-grid { grid-template-columns: 1fr; text-align: center; }
-            .marquee-item { font-size: 1rem; padding: 5px 16px; }
+        @media (max-width: 640px) {
+            .header-inner {
+                padding: 10px 16px;
+            }
+            .logo-img {
+                height: 34px;
+            }
+            .company-name-header {
+                font-size: 0.75rem;
+            }
+            .hero-services {
+                padding: 110px 16px 30px;
+            }
+            .hero-services h1 {
+                font-size: 1.8rem;
+            }
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .offer-banner h3 {
+                font-size: 1rem;
+            }
+            .marquee-item {
+                font-size: 0.8rem;
+                padding: 6px 14px;
+            }
+            .floating-whatsapp {
+                width: 48px;
+                height: 48px;
+                bottom: 18px;
+                right: 18px;
+            }
+            .floating-whatsapp i {
+                font-size: 1.4rem;
+            }
+            .mobile-menu {
+                width: 260px;
+            }
         }
     </style>
 </head>
+
 <body>
 
-<div class="particles-container" id="particles"></div>
-
-<header class="header" id="header">
-    <div class="header-inner">
-        <a href="index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
-            <img src="https://i.ibb.co/svxj52ny/seedwel.png" class="logo-img" alt="Seedwel">
-            <span class="company-name-header">Seedwel Investment LTD</span>
-        </a>
-        <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
-    </div>
-</header>
-
-<div class="menu-overlay" id="menuOverlay"></div>
-<nav class="mobile-menu" id="mobileMenu">
-    <a href="index.html"><i class="fas fa-home"></i> Home</a>
-    <a href="about.html"><i class="fas fa-info-circle"></i> About Us</a>
-    <a href="services.html"><i class="fas fa-cogs"></i> Services</a>
-    <a href="projects.html"><i class="fas fa-folder-open"></i> Projects</a>
-    <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
-    <a href="support.html"><i class="fas fa-headset"></i> Support</a>
-</nav>
-
-<section class="hero-services">
-    <h1>Premium Digital & Creative Services</h1>
-    <p>From Graphic Design to Global Online Solutions — We deliver excellence worldwide.</p>
-</section>
-
-<!-- Zooming Horizontal Marquee -->
-<div class="marquee-section">
-    <div class="marquee-track" id="marqueeTrack">
-        <span class="marquee-item"><i class="fas fa-paintbrush"></i> Graphic Design</span>
-        <span class="marquee-item"><i class="fas fa-headset"></i> Virtual Assistant</span>
-        <span class="marquee-item"><i class="fas fa-keyboard"></i> Typing & Transcription</span>
-        <span class="marquee-item"><i class="fas fa-code"></i> Web Development</span>
-        <span class="marquee-item"><i class="fas fa-chart-line"></i> SEO & Marketing</span>
-        <span class="marquee-item"><i class="fas fa-store"></i> Shopify Expert</span>
-        <span class="marquee-item"><i class="fas fa-mobile-alt"></i> Mobile Apps</span>
-        <span class="marquee-item"><i class="fas fa-chalkboard-user"></i> Online Math Tutoring</span>
-        <span class="marquee-item"><i class="fas fa-globe"></i> All Online Services</span>
-    </div>
-</div>
-
-<!-- ================= 1. CREATIVITY & GRAPHIC DESIGN (YOUR ORIGINAL IMAGES PRESERVED) ================= -->
-<section class="main-category">
-    <div class="container">
-        <div class="category-header">
-            <span class="icon"><i class="fas fa-palette"></i></span>
-            <h2>🎨 Creativity & Graphic Design</h2>
-            <p>Professional visual solutions for brands worldwide</p>
-        </div>
-        <div class="swiper serviceSwiper1">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide service-slide"><img src="https://i.ibb.co/sJbW28Qf/20260501-154154.jpg" class="slide-img"><div class="slide-content"><h3>Logo Design</h3><ul class="feature-list"><li><i class="fas fa-check"></i> Modern Logos</li><li><i class="fas fa-check"></i> 3D Logos</li><li><i class="fas fa-check"></i> Minimalist & Vintage</li></ul></div></div>
-                <div class="swiper-slide service-slide"><img src="https://i.ibb.co/RpWFwmzx/20260501-153907.jpg" class="slide-img"><div class="slide-content"><h3>Flyers & Posters</h3><ul class="feature-list"><li><i class="fas fa-check"></i> Event Flyers</li><li><i class="fas fa-check"></i> Promotional Posters</li><li><i class="fas fa-check"></i> Business Flyers</li></ul></div></div>
-                <div class="swiper-slide service-slide"><img src="https://i.ibb.co/Dc8y6wR/20260501-153945.jpg" class="slide-img"><div class="slide-content"><h3>Brochures & Catalogs</h3><ul class="feature-list"><li><i class="fas fa-check"></i> Company Profile</li><li><i class="fas fa-check"></i> Product Catalogs</li><li><i class="fas fa-check"></i> Trifold Brochures</li></ul></div></div>
-                <div class="swiper-slide service-slide"><img src="https://i.ibb.co/9337QxJQ/20260501-154115.jpg" class="slide-img"><div class="slide-content"><h3>Social Media Graphics</h3><ul class="feature-list"><li><i class="fas fa-check"></i> Instagram Posts</li><li><i class="fas fa-check"></i> Facebook Covers</li><li><i class="fas fa-check"></i> LinkedIn Banners</li></ul></div></div>
-                <div class="swiper-slide service-slide"><img src="https://i.ibb.co/Rp37txKJ/20260501-154325.jpg" class="slide-img"><div class="slide-content"><h3>T-Shirt & Apparel</h3><ul class="feature-list"><li><i class="fas fa-check"></i> T-Shirt Graphics</li><li><i class="fas fa-check"></i> Hoodie Designs</li><li><i class="fas fa-check"></i> Corporate Uniforms</li></ul></div></div>
-                <div class="swiper-slide service-slide"><img src="https://i.ibb.co/YTXQFwdw/20260501-154809.jpg" class="slide-img"><div class="slide-content"><h3>Packaging Design</h3><ul class="feature-list"><li><i class="fas fa-check"></i> Product Labels</li><li><i class="fas fa-check"></i> Box Packaging</li><li><i class="fas fa-check"></i> Shopping Bags</li></ul></div></div>
+    <!-- ========== HEADER ========== -->
+    <header class="header" id="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo-container">
+                <img src="https://i.ibb.co/svxj52ny/seedwel.png" class="logo-img" alt="Seedwel Investment LTD" />
+                <span class="company-name-header">Seedwel <span>Investment</span> LTD</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About Us</a>
+                <a href="services.html" class="active">Services</a>
+                <a href="projects.html">Projects</a>
+                <a href="Apply.html">Careers</a>
+                <a href="contact.html">Contact</a>
+                <a href="support.html">Support</a>
             </div>
-            <div class="swiper-pagination"></div>
-        </div>
-    </div>
-</section>
-
-<!-- ================= 2. COMPANY REGISTRATION (YOUR ORIGINAL IMAGES PRESERVED, HORIZONTAL SCROLL) ================= -->
-<section class="main-category alt-bg">
-    <div class="container">
-        <div class="category-header">
-            <span class="icon"><i class="fas fa-building"></i></span>
-            <h2>📄 Company & Business Registration</h2>
-            <p>PACRA, ZRA, Workers Compensation & more — we handle the paperwork</p>
-        </div>
-        <div class="swiper serviceSwiper2">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide service-slide"><img src="https://i.ibb.co/TBc6DgQW/20260501-155047.jpg" class="slide-img"><div class="slide-content"><h3>PACRA Registration</h3><ul class="feature-list"><li><i class="fas fa-check"></i> Name Search</li><li><i class="fas fa-check"></i> Certificate of Incorporation</li><li><i class="fas fa-check"></i> CR5 & CR6 Filing</li></ul></div></div>
-                <div class="swiper-slide service-slide"><img src="https://i.ibb.co/Kctd1MRV/20260501-155140.jpg" class="slide-img"><div class="slide-content"><h3>ZPPA Registration</h3><ul class="feature-list"><li><i class="fas fa-check"></i> ZPPA Returns</li><li><i class="fas fa-check"></i> WCFCB Registration</li><li><i class="fas fa-check"></i> Compliance Certificates</li></ul></div></div>
-                <div class="swiper-slide service-slide"><img src="https://i.ibb.co/Mq92NmX/20260501-155240.jpg" class="slide-img"><div class="slide-content"><h3>ZRA</h3><ul class="feature-list"><li><i class="fas fa-check"></i> TPIN Registration</li><li><i class="fas fa-check"></i> VAT</li><li><i class="fas fa-check"></i> Compliance Certificates</li></ul></div></div>
+            <div class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
-            <div class="swiper-pagination"></div>
+        </div>
+    </header>
+
+    <!-- ========== MOBILE MENU ========== -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <nav class="mobile-menu" id="mobileMenu">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="Apply.html"><i class="fas fa-pen"></i> Job Apply</a>
+        <a href="about.html"><i class="fas fa-info-circle"></i> About Us</a>
+        <a href="services.html"><i class="fas fa-cogs"></i> Services</a>
+        <a href="projects.html"><i class="fas fa-folder-open"></i> Projects</a>
+        <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+        <a href="support.html"><i class="fas fa-headset"></i> Support</a>
+    </nav>
+
+    <!-- ========== HERO ========== -->
+    <section class="hero-services">
+        <h1 class="animate-fade-up">Premium Digital & <span>Creative Services</span></h1>
+        <p class="animate-fade-up delay-1">From Graphic Design to Business Registration — we deliver excellence worldwide.</p>
+    </section>
+
+    <!-- ========== FREE OFFER BANNER ========== -->
+    <section class="offer-banner animate-fade-up">
+        <h3> Special Offer: <span class="highlight">Free Website Hosting</span> + <span class="highlight">1 Year Free Domain</span></h3>
+        <p>For all web development projects — get your business online with zero hosting costs for the first year!</p>
+    </section>
+
+    <!-- ========== MARQUEE ========== -->
+    <div class="marquee-section">
+        <div class="marquee-track" id="marqueeTrack">
+            <span class="marquee-item"><i class="fas fa-paintbrush"></i> Graphic Design</span>
+            <span class="marquee-item"><i class="fas fa-headset"></i> Virtual Assistant</span>
+            <span class="marquee-item"><i class="fas fa-keyboard"></i> Typing & Transcription</span>
+            <span class="marquee-item"><i class="fas fa-code"></i> Web Development</span>
+            <span class="marquee-item"><i class="fas fa-chart-line"></i> SEO & Marketing</span>
+            <span class="marquee-item"><i class="fas fa-store"></i> Shopify Expert</span>
+            <span class="marquee-item"><i class="fas fa-mobile-alt"></i> Mobile Apps</span>
+            <span class="marquee-item"><i class="fas fa-chalkboard-user"></i> Online Tutoring</span>
+            <span class="marquee-item"><i class="fas fa-video"></i> Video Editing</span>
+            <span class="marquee-item"><i class="fas fa-building"></i> Business Registration</span>
+            <span class="marquee-item"><i class="fas fa-globe"></i> All Online Services</span>
+            <!-- Duplicate for seamless loop -->
+            <span class="marquee-item"><i class="fas fa-paintbrush"></i> Graphic Design</span>
+            <span class="marquee-item"><i class="fas fa-headset"></i> Virtual Assistant</span>
+            <span class="marquee-item"><i class="fas fa-keyboard"></i> Typing & Transcription</span>
+            <span class="marquee-item"><i class="fas fa-code"></i> Web Development</span>
+            <span class="marquee-item"><i class="fas fa-chart-line"></i> SEO & Marketing</span>
+            <span class="marquee-item"><i class="fas fa-store"></i> Shopify Expert</span>
+            <span class="marquee-item"><i class="fas fa-mobile-alt"></i> Mobile Apps</span>
+            <span class="marquee-item"><i class="fas fa-chalkboard-user"></i> Online Tutoring</span>
+            <span class="marquee-item"><i class="fas fa-video"></i> Video Editing</span>
+            <span class="marquee-item"><i class="fas fa-building"></i> Business Registration</span>
+            <span class="marquee-item"><i class="fas fa-globe"></i> All Online Services</span>
         </div>
     </div>
-</section>
 
-<!-- ================= 3. VIRTUAL ASSISTANT & ADMIN (NEW PHOTOS ADDED) ================= -->
-<section class="main-category">
-    <div class="container">
-        <div class="category-header">
-            <span class="icon"><i class="fas fa-user-tie"></i></span>
-            <h2>👩‍💼 Virtual Assistant & Admin Support</h2>
-            <p>Remote professionals to handle your daily operations</p>
+    <!-- ========== SERVICES GRID ========== -->
+    <section class="services-grid-section">
+        <div class="section-header" style="text-align:center; max-width:700px; margin:0 auto 50px;">
+            <p class="section-subtitle" style="color:#dc2626; font-family:'Montserrat',sans-serif; font-weight:700; font-size:0.8rem; letter-spacing:3px; margin-bottom:10px;">What We Do</p>
+            <h2 style="font-family:'Montserrat',sans-serif; font-weight:900; font-size:clamp(1.8rem,3vw,2.5rem); color:#111827;">Premium Services For Modern Businesses</h2>
         </div>
-        <div class="swiper serviceSwiper3">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide service-slide"><img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=600" class="slide-img"><div class="slide-content"><h3>📞 Customer Service</h3><ul class="feature-list"><li><i class="fas fa-check"></i> Live Chat Support</li><li><i class="fas fa-check"></i> Email & Ticket Systems</li><li><i class="fas fa-check"></i> 24/7 Availability</li></ul></div></div>
-                <div class="swiper-slide service-slide"><img src="https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=600" class="slide-img"><div class="slide-content"><h3>📋 Admin Tasks</h3><ul class="feature-list"><li><i class="fas fa-check"></i> Data Entry & CRM</li><li><i class="fas fa-check"></i> Calendar Management</li><li><i class="fas fa-check"></i> Document Preparation</li></ul></div></div>
-                <div class="swiper-slide service-slide"><img src="https://images.pexels.com/photos/4427801/pexels-photo-4427801.jpeg?auto=compress&cs=tinysrgb&w=600" class="slide-img"><div class="slide-content"><h3>🎯 Executive Assistant</h3><ul class="feature-list"><li><i class="fas fa-check"></i> Email Management</li><li><i class="fas fa-check"></i> Travel Booking</li><li><i class="fas fa-check"></i> Research & Reports</li></ul></div></div>
-                <div class="swiper-slide service-slide"><img src="https://images.pexels.com/photos/6804038/pexels-photo-6804038.jpeg?auto=compress&cs=tinysrgb&w=600" class="slide-img"><div class="slide-content"><h3>📊 CRM Management</h3><ul class="feature-list"><li><i class="fas fa-check"></i> Lead Entry & Tracking</li><li><i class="fas fa-check"></i> Pipeline Management</li><li><i class="fas fa-check"></i> Sales Reports</li></ul></div></div>
+
+        <div class="services-grid">
+
+            <!-- 1. Business Registration -->
+            <div class="service-card animate-fade-up delay-1">
+                <div class="service-icon"><i class="fas fa-building"></i></div>
+                <h3>Business Registration</h3>
+                <p>Complete business registration services including PACRA, ZRA, Workers Compensation, NAPSA, and EIZ registration. We handle all the paperwork so you can focus on growing your business.</p>
+                <ul class="service-features">
+                    <li><i class="fas fa-check"></i> PACRA</li>
+                    <li><i class="fas fa-check"></i> ZRA TPIN</li>
+                    <li><i class="fas fa-check"></i> Workers Comp</li>
+                    <li><i class="fas fa-check"></i> NAPSA</li>
+                    <li><i class="fas fa-check"></i> EIZ</li>
+                </ul>
             </div>
-            <div class="swiper-pagination"></div>
-        </div>
-    </div>
-</section>
 
-<!-- ================= 4. TYPING & COPYWRITING (NEW PHOTOS) ================= -->
-<section class="main-category alt-bg">
-    <div class="container">
-        <div class="category-header">
-            <span class="icon"><i class="fas fa-keyboard"></i></span>
-            <h2>⌨️ Typing, Transcription & Copywriting</h2>
-            <p>Fast, accurate, and professional content services</p>
-        </div>
-        <div class="swiper serviceSwiper4">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide service-slide"><img src="https://images.pexels.com/photos/210661/pexels-photo-210661.jpeg?auto=compress&cs=tinysrgb&w=600" class="slide-img"><div class="slide-content"><h3>📄 Document Typing</h3><ul class="feature-list"><li><i class="fas fa-check"></i> Manuscripts & Reports</li><li><i class="fas fa-check"></i> Legal Documents</li><li><i class="fas fa-check"></i> Business Letters</li></ul></div></div>
-                <div class="swiper-slide service-slide"><img src="https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=600" class="slide-img"><div class="slide-content"><h3>🎙️ Audio Transcription</h3><ul class="feature-list"><li><i class="fas fa-check"></i> Interviews & Meetings</li><li><i class="fas fa-check"></i> Podcast Transcription</li><li><i class="fas fa-check"></i> Video Subtitles</li></ul></div></div>
-                <div class="swiper-slide service-slide"><img src="https://images.pexels.com/photos/4145190/pexels-photo-4145190.jpeg?auto=compress&cs=tinysrgb&w=600" class="slide-img"><div class="slide-content"><h3>✍️ Copywriting</h3><ul class="feature-list"><li><i class="fas fa-check"></i> Website Content</li><li><i class="fas fa-check"></i> Blog Posts</li><li><i class="fas fa-check"></i> Email Campaigns</li></ul></div></div>
-                <div class="swiper-slide service-slide"><img src="https://images.pexels.com/photos/669615/pexels-photo-669615.jpeg?auto=compress&cs=tinysrgb&w=600" class="slide-img"><div class="slide-content"><h3>📊 Data Entry</h3><ul class="feature-list"><li><i class="fas fa-check"></i> Excel/CSV Entry</li><li><i class="fas fa-check"></i> PDF Conversion</li><li><i class="fas fa-check"></i> Database Cleaning</li></ul></div></div>
+            <!-- 2. Graphic Design -->
+            <div class="service-card animate-fade-up delay-2">
+                <div class="service-icon"><i class="fas fa-paint-brush"></i></div>
+                <h3>Graphic Design</h3>
+                <p>Professional visual design services that make your brand memorable. From logos and flyers to complete branding packages, we create designs that help you stand out in a crowded market.</p>
+                <ul class="service-features">
+                    <li><i class="fas fa-check"></i> Logo Design</li>
+                    <li><i class="fas fa-check"></i> Flyers & Posters</li>
+                    <li><i class="fas fa-check"></i> Branding</li>
+                    <li><i class="fas fa-check"></i> Social Media Graphics</li>
+                    <li><i class="fas fa-check"></i> Packaging Design</li>
+                </ul>
             </div>
-            <div class="swiper-pagination"></div>
-        </div>
-    </div>
-</section>
 
-<!-- ================= 5. WEB, APP, SHOPIFY & ALL ONLINE SERVICES (NEW PHOTOS) ================= -->
-<section class="main-category">
-    <div class="container">
-        <div class="category-header">
-            <span class="icon"><i class="fas fa-globe"></i></span>
-            <h2>💻 Web, App & All Online Services</h2>
-            <p>Complete digital solutions — from development to growth hacking</p>
-        </div>
-        <div class="swiper serviceSwiper5">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide service-slide"><img src="https://images.pexels.com/photos/270360/pexels-photo-270360.jpeg?auto=compress&cs=tinysrgb&w=600" class="slide-img"><div class="slide-content"><h3>Web Development</h3><ul class="feature-list"><li><i class="fas fa-check"></i> Business & E-commerce</li><li><i class="fas fa-check"></i> Landing Pages</li><li><i class="fas fa-check"></i> WordPress/React</li></ul></div></div>
-                <div class="swiper-slide service-slide"><img src="https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg?auto=compress&cs=tinysrgb&w=600" class="slide-img"><div class="slide-content"><h3>Mobile Apps</h3><ul class="feature-list"><li><i class="fas fa-check"></i> School Management Apps</li><li><i class="fas fa-check"></i> Business Apps</li><li><i class="fas fa-check"></i> Booking Systems</li></ul></div></div>
-                <div class="swiper-slide service-slide"><img src="https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=600" class="slide-img"><div class="slide-content"><h3>Shopify Expert</h3><ul class="feature-list"><li><i class="fas fa-check"></i> Full Store Setup</li><li><i class="fas fa-check"></i> Custom Themes</li><li><i class="fas fa-check"></i> Product Upload & SEO</li></ul></div></div>
-                <div class="swiper-slide service-slide"><img src="https://images.pexels.com/photos/1181373/pexels-photo-1181373.jpeg?auto=compress&cs=tinysrgb&w=600" class="slide-img"><div class="slide-content"><h3>SEO & Digital Marketing</h3><ul class="feature-list"><li><i class="fas fa-check"></i> On-page/Off-page SEO</li><li><i class="fas fa-check"></i> Google Ads</li><li><i class="fas fa-check"></i> Social Media Management</li></ul></div></div>
-                <div class="swiper-slide service-slide"><img src="https://images.pexels.com/photos/669612/pexels-photo-669612.jpeg?auto=compress&cs=tinysrgb&w=600" class="slide-img"><div class="slide-content"><h3>Email Marketing</h3><ul class="feature-list"><li><i class="fas fa-check"></i> Campaign Setup</li><li><i class="fas fa-check"></i> Automation Flows</li><li><i class="fas fa-check"></i> Newsletter Design</li></ul></div></div>
-                <div class="swiper-slide service-slide"><img src="https://images.pexels.com/photos/3913026/pexels-photo-3913026.jpeg?auto=compress&cs=tinysrgb&w=600" class="slide-img"><div class="slide-content"><h3>IT Consulting</h3><ul class="feature-list"><li><i class="fas fa-check"></i> Cloud Solutions</li><li><i class="fas fa-check"></i> Cybersecurity</li><li><i class="fas fa-check"></i> Workflow Automation</li></ul></div></div>
+            <!-- 3. Web Development -->
+            <div class="service-card animate-fade-up delay-3">
+                <div class="service-icon"><i class="fas fa-code"></i></div>
+                <h3>Web Development</h3>
+                <p>Custom websites, e-commerce stores, and landing pages built with modern technology. <strong>Includes FREE hosting + 1 year free domain!</strong> Responsive, fast, and SEO-optimized.</p>
+                <ul class="service-features">
+                    <li><i class="fas fa-check"></i> Business Websites</li>
+                    <li><i class="fas fa-check"></i> E-Commerce</li>
+                    <li><i class="fas fa-check"></i> Landing Pages</li>
+                    <li><i class="fas fa-check"></i> WordPress</li>
+                    <li><i class="fas fa-check"></i> React</li>
+                </ul>
             </div>
-            <div class="swiper-pagination"></div>
-        </div>
-    </div>
-</section>
 
-<!-- ================= 6. MATHEMATICS & ONLINE TEACHING (NEW PHOTOS) ================= -->
-<section class="main-category alt-bg">
-    <div class="container">
-        <div class="category-header">
-            <span class="icon"><i class="fas fa-chalkboard-user"></i></span>
-            <h2>📐 Mathematics & Online Tutoring</h2>
-            <p>Expert math tutoring for all levels — from high school to university</p>
-        </div>
-        <div class="swiper serviceSwiper6">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide service-slide"><img src="https://images.pexels.com/photos/4145153/pexels-photo-4145153.jpeg?auto=compress&cs=tinysrgb&w=600" class="slide-img"><div class="slide-content"><h3>High School Math</h3><ul class="feature-list"><li><i class="fas fa-check"></i> Algebra, Geometry</li><li><i class="fas fa-check"></i> Exam Prep</li><li><i class="fas fa-check"></i> Homework Help</li></ul></div></div>
-                <div class="swiper-slide service-slide"><img src="https://images.pexels.com/photos/4260325/pexels-photo-4260325.jpeg?auto=compress&cs=tinysrgb&w=600" class="slide-img"><div class="slide-content"><h3>University Math</h3><ul class="feature-list"><li><i class="fas fa-check"></i> Statistics</li><li><i class="fas fa-check"></i> Linear Algebra</li><li><i class="fas fa-check"></i> Calculus</li></ul></div></div>
-                <div class="swiper-slide service-slide"><img src="https://images.pexels.com/photos/5212345/pexels-photo-5212345.jpeg?auto=compress&cs=tinysrgb&w=600" class="slide-img"><div class="slide-content"><h3>Online Courses</h3><ul class="feature-list"><li><i class="fas fa-check"></i> Custom Math Lessons</li><li><i class="fas fa-check"></i> Zoom/Skype Tutoring</li><li><i class="fas fa-check"></i> Assignment Assistance</li></ul></div></div>
+            <!-- 4. Mobile App Development -->
+            <div class="service-card animate-fade-up delay-4">
+                <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
+                <h3>Mobile App Development</h3>
+                <p>Native and cross-platform mobile applications for iOS and Android. School management apps, business apps, booking systems, and more to help you reach customers on the go.</p>
+                <ul class="service-features">
+                    <li><i class="fas fa-check"></i> iOS & Android</li>
+                    <li><i class="fas fa-check"></i> School Management</li>
+                    <li><i class="fas fa-check"></i> Business Apps</li>
+                    <li><i class="fas fa-check"></i> Booking Systems</li>
+                    <li><i class="fas fa-check"></i> Cross-Platform</li>
+                </ul>
             </div>
-            <div class="swiper-pagination"></div>
+
+            <!-- 5. Virtual Assistant -->
+            <div class="service-card animate-fade-up delay-5">
+                <div class="service-icon"><i class="fas fa-headset"></i></div>
+                <h3>Virtual Assistant</h3>
+                <p>24/7 admin and customer support services that save you time and money. Let our professional VAs handle your daily operations so you can focus on what matters most.</p>
+                <ul class="service-features">
+                    <li><i class="fas fa-check"></i> Customer Support</li>
+                    <li><i class="fas fa-check"></i> Admin Tasks</li>
+                    <li><i class="fas fa-check"></i> Email Management</li>
+                    <li><i class="fas fa-check"></i> CRM Management</li>
+                    <li><i class="fas fa-check"></i> 24/7 Availability</li>
+                </ul>
+            </div>
+
+            <!-- 6. Digital Marketing -->
+            <div class="service-card animate-fade-up delay-6">
+                <div class="service-icon"><i class="fas fa-chart-line"></i></div>
+                <h3>Digital Marketing</h3>
+                <p>Data-driven marketing strategies that drive targeted traffic and convert visitors into loyal customers. SEO, Google Ads, social media growth, and more.</p>
+                <ul class="service-features">
+                    <li><i class="fas fa-check"></i> SEO Optimization</li>
+                    <li><i class="fas fa-check"></i> Google Ads</li>
+                    <li><i class="fas fa-check"></i> Social Media</li>
+                    <li><i class="fas fa-check"></i> Email Marketing</li>
+                    <li><i class="fas fa-check"></i> Analytics</li>
+                </ul>
+            </div>
+
+            <!-- 7. Typing & Transcription -->
+            <div class="service-card animate-fade-up delay-1">
+                <div class="service-icon"><i class="fas fa-keyboard"></i></div>
+                <h3>Typing & Transcription</h3>
+                <p>Fast, accurate document services including audio transcription, document typing, data entry, and PDF conversion. Maintain professional records and streamline your workflow.</p>
+                <ul class="service-features">
+                    <li><i class="fas fa-check"></i> Audio Transcription</li>
+                    <li><i class="fas fa-check"></i> Document Typing</li>
+                    <li><i class="fas fa-check"></i> Data Entry</li>
+                    <li><i class="fas fa-check"></i> PDF Conversion</li>
+                    <li><i class="fas fa-check"></i> Copywriting</li>
+                </ul>
+            </div>
+
+            <!-- 8. Online Tutoring -->
+            <div class="service-card animate-fade-up delay-2">
+                <div class="service-icon"><i class="fas fa-chalkboard-user"></i></div>
+                <h3>Online Tutoring</h3>
+                <p>Personalized learning in Mathematics, programming, and more. Help students excel in their academic and professional journeys with expert online tutoring.</p>
+                <ul class="service-features">
+                    <li><i class="fas fa-check"></i> Mathematics</li>
+                    <li><i class="fas fa-check"></i> Programming</li>
+                    <li><i class="fas fa-check"></i> Exam Prep</li>
+                    <li><i class="fas fa-check"></i> Homework Help</li>
+                    <li><i class="fas fa-check"></i> Zoom/Skype</li>
+                </ul>
+            </div>
+
+            <!-- 9. Video Editing -->
+            <div class="service-card animate-fade-up delay-3">
+                <div class="service-icon"><i class="fas fa-video"></i></div>
+                <h3>Video Editing</h3>
+                <p>Professional video production that brings your stories to life. YouTube editing, promotional videos, motion graphics, and more to engage your audience across all platforms.</p>
+                <ul class="service-features">
+                    <li><i class="fas fa-check"></i> YouTube Editing</li>
+                    <li><i class="fas fa-check"></i> Promo Videos</li>
+                    <li><i class="fas fa-check"></i> Motion Graphics</li>
+                    <li><i class="fas fa-check"></i> Animation</li>
+                    <li><i class="fas fa-check"></i> Voice Over</li>
+                </ul>
+            </div>
+
+            <!-- 10. Shopify & E-Commerce -->
+            <div class="service-card animate-fade-up delay-4">
+                <div class="service-icon"><i class="fas fa-store"></i></div>
+                <h3>Shopify & E-Commerce</h3>
+                <p>Complete e-commerce solutions including Shopify store setup, custom themes, product upload, and SEO optimization. Get your online store up and running quickly.</p>
+                <ul class="service-features">
+                    <li><i class="fas fa-check"></i> Store Setup</li>
+                    <li><i class="fas fa-check"></i> Custom Themes</li>
+                    <li><i class="fas fa-check"></i> Product Upload</li>
+                    <li><i class="fas fa-check"></i> Payment Integration</li>
+                    <li><i class="fas fa-check"></i> SEO Optimization</li>
+                </ul>
+            </div>
+            
+            <!-- 11. IT Consulting -->
+            <div class="service-card animate-fade-up delay-5">
+                <div class="service-icon"><i class="fas fa-shield-alt"></i></div>
+                <h3>IT Consulting</h3>
+                <p>Expert guidance on technology solutions including cloud computing, cybersecurity, and workflow automation. Improve efficiency, security, and business performance.</p>
+                <ul class="service-features">
+                    <li><i class="fas fa-check"></i> Cloud Solutions</li>
+                    <li><i class="fas fa-check"></i> Cybersecurity</li>
+                    <li><i class="fas fa-check"></i> Automation</li>
+                    <li><i class="fas fa-check"></i> Database Management</li>
+                    <li><i class="fas fa-check"></i> Technical Support</li>
+                </ul>
+            </div>
+
+            <!-- 12. Voice Over & Recording -->
+            <div class="service-card animate-fade-up delay-6">
+                <div class="service-icon"><i class="fas fa-microphone"></i></div>
+                <h3>Voice Over & Recording</h3>
+                <p>Professional voice over services for commercials, explainer videos, audiobooks, and more. Clear, engaging, and professional audio for all your media needs.</p>
+                <ul class="service-features">
+                    <li><i class="fas fa-check"></i> Commercial VO</li>
+                    <li><i class="fas fa-check"></i> Explainer Videos</li>
+                    <li><i class="fas fa-check"></i> Audiobooks</li>
+                    <li><i class="fas fa-check"></i> IVR Recordings</li>
+                    <li><i class="fas fa-check"></i> Podcast Production</li>
+                </ul>
+            </div>
+
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- ================= HORIZONTAL SCROLLING REVIEWS WITH GLOBAL NAMES ================= -->
-<div class="reviews-wrap">
-    <div class="container" style="text-align:center;">
-        <h2 style="font-size:2rem;">⭐ Client Love From Around The World ⭐</h2>
-        <p style="margin-bottom:30px;">Real reviews from USA, UK, Germany, Canada, Australia & more</p>
-    </div>
-    <div class="swiper reviewsSwiper" style="padding:20px 10px;">
-        <div class="swiper-wrapper" id="reviewsContainer">
-            <div class="swiper-slide review-slide"><img class="review-img" src="https://randomuser.me/api/portraits/women/68.jpg"><div class="stars">★★★★★</div><div class="review-text">"Seedwel built my Shopify store in 5 days! Sales are up 200%. Incredible work."</div><div class="review-name">Sarah Johnson</div><div class="review-location">📍 New York, USA</div></div>
-            <div class="swiper-slide review-slide"><img class="review-img" src="https://randomuser.me/api/portraits/men/32.jpg"><div class="stars">★★★★★</div><div class="review-text">"The graphic design team is world-class. They created a logo that perfectly represents my brand."</div><div class="review-name">Michael Thompson</div><div class="review-location">📍 Los Angeles, USA</div></div>
-            <div class="swiper-slide review-slide"><img class="review-img" src="https://randomuser.me/api/portraits/women/45.jpg"><div class="stars">★★★★★</div><div class="review-text">"Their virtual assistant services saved me 20 hours a week. Highly professional."</div><div class="review-name">Emily Clarke</div><div class="review-location">📍 London, UK</div></div>
-            <div class="swiper-slide review-slide"><img class="review-img" src="https://randomuser.me/api/portraits/men/55.jpg"><div class="stars">★★★★★</div><div class="review-text">"Excellent web development. My school management app works perfectly. Fast delivery!"</div><div class="review-name">James Wilson</div><div class="review-location">📍 Sydney, Australia</div></div>
-            <div class="swiper-slide review-slide"><img class="review-img" src="https://randomuser.me/api/portraits/women/22.jpg"><div class="stars">★★★★★</div><div class="review-text">"The typing and transcription service is super fast and accurate. Will use again."</div><div class="review-name">Priya Sharma</div><div class="review-location">📍 Mumbai, India</div></div>
-            <div class="swiper-slide review-slide"><img class="review-img" src="https://randomuser.me/api/portraits/men/75.jpg"><div class="stars">★★★★★</div><div class="review-text">"Best customer service I've experienced. They resolved my issue in minutes!"</div><div class="review-name">David Miller</div><div class="review-location">📍 Toronto, Canada</div></div>
-            <div class="swiper-slide review-slide"><img class="review-img" src="https://randomuser.me/api/portraits/women/33.jpg"><div class="stars">★★★★★</div><div class="review-text">"Their SEO services doubled my website traffic in 2 months. Highly recommend!"</div><div class="review-name">Jessica Wagner</div><div class="review-location">📍 Berlin, Germany</div></div>
+    <!-- ========== CTA ========== -->
+    <section class="cta-section">
+        <h3 class="animate-fade-up">Ready to Get Started?</h3>
+        <p class="animate-fade-up delay-1">Let's discuss your project and create something amazing together. Get free hosting + 1 year domain!</p>
+        <a href="contact.html" class="btn-white animate-fade-up delay-2"><i class="fas fa-paper-plane"></i> Contact Us Today</a>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <img src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel Investment LTD" />
+                <p>Premium digital agency delivering excellence worldwide. We build digital experiences that drive growth for modern businesses.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="about.html">About Us</a>
+                <a href="services.html">Services</a>
+                <a href="projects.html">Projects</a>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <a href="contact.html">Contact</a>
+                <a href="support.html">Help Center</a>
+                <a href="tel:+260973028342"><i class="fas fa-phone" style="color:#dc2626; width:18px;"></i> +260 973 028 342</a>
+                <a href="mailto:Info@prayerdome.net"><i class="fas fa-envelope" style="color:#dc2626; width:18px;"></i> seedwelinvestltd@gmail.com</a>
+            </div>
+            <div class="footer-col">
+                <h4>Locations</h4>
+                <p><i class="fas fa-location-dot" style="color:#dc2626; width:18px;"></i> Kabwe, Zambia</p>
+                <p><i class="fas fa-location-dot" style="color:#dc2626; width:18px;"></i> Chama, Zambia</p>
+                <p>🌍 Global Remote</p>
+            </div>
         </div>
-        <div class="swiper-pagination"></div>
-    </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Seedwel Investment LTD. All rights reserved.</p>
+        </div>
+    </footer>
 
-    <!-- Add Review Form -->
-    <div class="add-review-form">
-        <h3 style="color:var(--gold);">Share Your Experience</h3>
-        <input type="text" id="revName" placeholder="Your Name">
-        <input type="text" id="revLocation" placeholder="City, Country">
-        <input type="url" id="revPhoto" placeholder="Photo URL (optional)">
-        <select id="revStars"><option value="5">★★★★★ (5)</option><option value="4">★★★★☆ (4)</option><option value="3">★★★☆☆ (3)</option></select>
-        <textarea id="revText" rows="2" placeholder="Your review..."></textarea>
-        <button id="submitReviewBtn">Submit Review</button>
-    </div>
-</div>
+    <!-- ========== FLOATING WHATSAPP ========== -->
+    <a href="https://wa.me/260973028342" class="floating-whatsapp" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 
-<div style="text-align:center; padding: 50px 20px;">
-    <a href="contact.html" class="btn-gold"><i class="fas fa-paper-plane"></i> Start Your Project Today</a>
-</div>
+    <script>
+        // ─── Mobile Menu ───
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
 
-<footer>
-    <div class="footer-grid">
-        <div><img src="https://i.ibb.co/svxj52ny/seedwel.png" style="height:45px;"><p style="margin-top:10px;">Global digital agency delivering excellence.</p></div>
-        <div><h4>Quick Links</h4><a href="index.html" style="color:var(--gray);">Home</a><br><a href="about.html" style="color:var(--gray);">About</a><br><a href="projects.html" style="color:var(--gray);">Projects</a></div>
-        <div><h4>Contact</h4><p><i class="fas fa-phone"></i> +260 973 028 342</p><p><i class="fas fa-envelope"></i> Info@prayerdome.net</p></div>
-        <div><h4>Locations</h4><p>Kabwe, Zambia | Chama, Zambia | Global Remote</p></div>
-    </div>
-    <div class="footer-bottom" style="text-align:center; margin-top:40px;">© 2025 Seedwel Investment LTD. All rights reserved.</div>
-</footer>
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+            document.body.style.overflow = hamburger.classList.contains('active') ? 'hidden' : '';
+        }
+        hamburger.addEventListener('click', toggleMenu);
+        menuOverlay.addEventListener('click', toggleMenu);
+        document.querySelectorAll('.mobile-menu a').forEach(l => l.addEventListener('click', toggleMenu));
 
-<a href="https://wa.me/260973028342" class="floating-whatsapp" target="_blank"><i class="fab fa-whatsapp fa-2x" style="color:white;"></i></a>
+        // ─── Header Scroll Effect ───
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('scrolled', window.scrollY > 40);
+        });
 
-<script>
-    // Particles
-    const pc = document.getElementById('particles');
-    function createParticle() {
-        let p = document.createElement('div'); p.classList.add('particle');
-        let s = Math.random()*3+2; p.style.width = s+'px'; p.style.height = s+'px';
-        p.style.left = Math.random()*100+'%'; p.style.animationDuration = (Math.random()*8+6)+'s';
-        p.style.animationDelay = Math.random()*5+'s'; pc.appendChild(p);
-        setTimeout(() => p.remove(), 12000);
-    }
-    setInterval(createParticle, 300);
-    for(let i=0;i<25;i++) setTimeout(createParticle, Math.random()*3000);
+        // ─── Scroll to Top ───
+        window.scrollTo(0, 0);
+        window.addEventListener('load', () => window.scrollTo(0, 0));
+        window.addEventListener('pageshow', (e) => { if (e.persisted) window.scrollTo(0, 0); });
+    </script>
 
-    // Duplicate marquee for seamless loop
-    const track = document.getElementById('marqueeTrack');
-    track.innerHTML += track.innerHTML;
-
-    // Mobile Menu
-    const hamburger = document.getElementById('hamburger'), mobileMenu = document.getElementById('mobileMenu'), overlay = document.getElementById('menuOverlay');
-    function toggleMenu() {
-        hamburger.classList.toggle('active'); mobileMenu.classList.toggle('active'); overlay.classList.toggle('active');
-        document.body.style.overflow = hamburger.classList.contains('active') ? 'hidden' : '';
-    }
-    hamburger.addEventListener('click', toggleMenu);
-    overlay.addEventListener('click', toggleMenu);
-    document.querySelectorAll('.mobile-menu a').forEach(l => l.addEventListener('click', toggleMenu));
-
-    // Header scroll effect
-    window.addEventListener('scroll', () => { document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50); });
-
-    // Initialize all Swipers for horizontal scrolling
-    const swiperConfig = { slidesPerView: 1, spaceBetween: 20, loop: true, autoplay: { delay: 2500, disableOnInteraction: false }, pagination: { el: '.swiper-pagination', clickable: true }, breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } } };
-    new Swiper('.serviceSwiper1', swiperConfig);
-    new Swiper('.serviceSwiper2', swiperConfig);
-    new Swiper('.serviceSwiper3', swiperConfig);
-    new Swiper('.serviceSwiper4', swiperConfig);
-    new Swiper('.serviceSwiper5', swiperConfig);
-    new Swiper('.serviceSwiper6', swiperConfig);
-    const reviewsSwiper = new Swiper('.reviewsSwiper', { slidesPerView: 1, spaceBetween: 20, loop: true, autoplay: { delay: 3000 }, pagination: { el: '.swiper-pagination', clickable: true }, breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } } });
-
-    // Add new review dynamically
-    document.getElementById('submitReviewBtn').addEventListener('click', () => {
-        let name = document.getElementById('revName').value || "Anonymous";
-        let location = document.getElementById('revLocation').value || "Worldwide";
-        let photo = document.getElementById('revPhoto').value || "https://randomuser.me/api/portraits/lego/1.jpg";
-        let stars = parseInt(document.getElementById('revStars').value);
-        let text = document.getElementById('revText').value;
-        if(!text) return alert("Please write a review.");
-        let starHtml = '★'.repeat(stars) + '☆'.repeat(5-stars);
-        let newSlide = `<div class="swiper-slide review-slide"><img class="review-img" src="${photo}" onerror="this.src='https://randomuser.me/api/portraits/lego/1.jpg'"><div class="stars">${starHtml}</div><div class="review-text">"${text.substring(0,180)}"</div><div class="review-name">${name}</div><div class="review-location">📍 ${location}</div></div>`;
-        document.querySelector('#reviewsContainer').insertAdjacentHTML('beforeend', newSlide);
-        reviewsSwiper.update();
-        alert("Thank you! Your review has been added.");
-        document.getElementById('revText').value = '';
-    });
-</script>
 </body>
 </html>
