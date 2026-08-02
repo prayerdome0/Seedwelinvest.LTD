@@ -5,11 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Seedwel Investment LTD | Digital Agency</title>
     <meta name="description" content="Seedwel Investment LTD - We Build Digital Experiences That Drive Growth" />
+    <meta name="theme-color" content="#dc2626" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="site.webmanifest" />
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
     <style>
         * {
@@ -822,6 +828,188 @@
             }
         }
 
+
+        /* ───────── HOME UPGRADE: MOTION + PORTFOLIO OPERATIONS ───────── */
+        @keyframes heroGlowDrift {
+            0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: .55; }
+            50% { transform: translate3d(-28px, 22px, 0) scale(1.09); opacity: .95; }
+        }
+        @keyframes gentleOrbit {
+            from { transform: translateY(-50%) rotate(0deg); }
+            to { transform: translateY(-50%) rotate(360deg); }
+        }
+        @keyframes homeFloatCard {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 430px;
+            height: 430px;
+            right: 7%;
+            bottom: -250px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(220, 38, 38, .10), transparent 67%);
+            animation: heroGlowDrift 11s ease-in-out infinite;
+            pointer-events: none;
+        }
+        .hero-image { position: relative; }
+        .hero-image .home-float-card {
+            position: absolute;
+            z-index: 2;
+            left: -24px;
+            bottom: 26px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 14px;
+            color: #334155;
+            border: 1px solid rgba(255, 255, 255, .88);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, .93);
+            box-shadow: 0 15px 32px rgba(15, 23, 42, .14);
+            font-size: .73rem;
+            font-weight: 700;
+            animation: homeFloatCard 4.5s ease-in-out infinite;
+        }
+        .home-float-card i {
+            display: grid;
+            width: 30px;
+            height: 30px;
+            color: #dc2626;
+            border-radius: 9px;
+            background: #fef2f2;
+            place-items: center;
+        }
+        .home-float-card strong { display: block; font-family: 'Montserrat', sans-serif; font-size: .79rem; }
+        .home-float-card span { display: block; color: #64748b; font-size: .65rem; font-weight: 600; }
+        .projects-preview .section-header { position: relative; }
+        .projects-preview .section-header::after {
+            display: block;
+            width: 54px;
+            height: 3px;
+            margin: 16px auto 0;
+            content: '';
+            border-radius: 99px;
+            background: linear-gradient(90deg, #dc2626, #fca5a5);
+        }
+        .home-project-category {
+            display: inline-block;
+            margin-bottom: 8px;
+            padding: 4px 8px;
+            color: #b91c1c;
+            border-radius: 999px;
+            background: #fef2f2;
+            font-size: .64rem;
+            font-weight: 800;
+            letter-spacing: .02em;
+            text-transform: uppercase;
+        }
+        .home-project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 12px;
+            color: #dc2626;
+            font-size: .74rem;
+            font-weight: 800;
+            text-decoration: none;
+        }
+        .home-project-link:hover { color: #991b1b; text-decoration: underline; }
+        .home-project-empty {
+            grid-column: 1 / -1;
+            padding: 32px;
+            color: #64748b;
+            border: 1px dashed #cbd5e1;
+            border-radius: 16px;
+            background: #f8fafc;
+            text-align: center;
+            font-size: .85rem;
+        }
+        .insight-section {
+            position: relative;
+            padding: 82px 28px;
+            overflow: hidden;
+            background: linear-gradient(180deg, #ffffff, #f8fafc);
+        }
+        .insight-section::before {
+            position: absolute;
+            top: -100px;
+            left: -130px;
+            width: 280px;
+            height: 280px;
+            content: '';
+            border: 1px dashed rgba(220, 38, 38, .17);
+            border-radius: 50%;
+            animation: gentleOrbit 32s linear infinite;
+        }
+        .insight-inner { position: relative; max-width: 1200px; margin: 0 auto; }
+        .insight-heading { max-width: 680px; margin-bottom: 34px; }
+        .insight-heading h2 {
+            margin-top: 4px;
+            color: #111827;
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+        .insight-heading > p:last-child { margin-top: 12px; color: #64748b; font-size: .93rem; }
+        .insight-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .insight-card {
+            position: relative;
+            padding: 26px;
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+            border-radius: 19px;
+            background: #ffffff;
+            box-shadow: 0 5px 15px rgba(15, 23, 42, .025);
+            transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease, border-color .35s ease;
+        }
+        .insight-card::after {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 65px;
+            height: 3px;
+            content: '';
+            background: #dc2626;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform .35s ease;
+        }
+        .insight-card:hover { border-color: rgba(220, 38, 38, .38); box-shadow: 0 18px 35px rgba(15,23,42,.10); transform: translateY(-8px); }
+        .insight-card:hover::after { transform: scaleX(1); }
+        .insight-icon {
+            display: grid;
+            width: 48px;
+            height: 48px;
+            margin-bottom: 17px;
+            color: #dc2626;
+            border-radius: 14px;
+            background: #fef2f2;
+            font-size: 1.1rem;
+            place-items: center;
+            transition: transform .35s ease;
+        }
+        .insight-card:nth-child(2) .insight-icon { color: #2563eb; background: #eff6ff; }
+        .insight-card:nth-child(3) .insight-icon { color: #059669; background: #ecfdf5; }
+        .insight-card:hover .insight-icon { transform: rotate(-6deg) scale(1.08); }
+        .insight-card h3 { margin-bottom: 8px; color: #111827; font-family: 'Montserrat', sans-serif; font-size: 1rem; }
+        .insight-card p { color: #64748b; font-size: .8rem; line-height: 1.65; }
+        .insight-card .capacity-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 14px;
+            color: #2563eb;
+            font-size: .7rem;
+            font-weight: 800;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .hero::after, .hero-image .home-float-card, .insight-section::before { animation: none !important; }
+        }
+
         /* ───────── RESPONSIVE ───────── */
         @media (max-width: 900px) {
             .nav-links {
@@ -841,6 +1029,9 @@
                 grid-template-columns: repeat(2, 1fr);
             }
             .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .insight-grid {
                 grid-template-columns: 1fr 1fr;
             }
         }
@@ -882,6 +1073,16 @@
             }
             .mobile-menu {
                 width: 260px;
+            }
+            .insight-section {
+                padding: 58px 16px;
+            }
+            .insight-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-image .home-float-card {
+                left: 10px;
+                bottom: 12px;
             }
         }
     </style>
@@ -937,6 +1138,10 @@
                 </div>
             </div>
             <div class="hero-image animate-fade-right delay-2">
+                <div class="home-float-card" aria-label="Portfolio management highlight">
+                    <i class="fas fa-paper-plane" aria-hidden="true"></i>
+                    <div><strong>Share-ready portfolio</strong><span>Send live work in one link</span></div>
+                </div>
                 <img src="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Team working" />
             </div>
         </div>
@@ -1042,7 +1247,7 @@
             <p class="section-subtitle">Our Portfolio</p>
             <h2 class="section-title">Featured Projects</h2>
         </div>
-        <div class="projects-grid">
+        <div class="projects-grid" id="homeProjectsGrid">
             <div class="project-card animate-fade-up delay-1">
                 <img src="https://i.ibb.co/hxrCWMb7/424e989de0aa94a201234cb283cdabcd.jpg" alt="Web Development Project" />
                 <div class="content">
@@ -1063,6 +1268,35 @@
                     <h3>Portfolio Website</h3>
                     <p>Creative portfolio for a professional photographer with stunning visuals and fast loading.</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== HOW WE HELP ========== -->
+    <section class="insight-section">
+        <div class="insight-inner">
+            <div class="insight-heading animate-fade-up">
+                <p class="section-subtitle">Built For Clearer Growth</p>
+                <h2>More than a service provider — a practical digital partner.</h2>
+                <p>From first idea to launch, our team brings the right information, secure project handling and simple next steps together in one place.</p>
+            </div>
+            <div class="insight-grid">
+                <article class="insight-card animate-fade-up delay-1">
+                    <div class="insight-icon"><i class="fas fa-compass" aria-hidden="true"></i></div>
+                    <h3>Clear project direction</h3>
+                    <p>We turn business goals into a focused plan, practical deliverables and a digital experience your customers can use with confidence.</p>
+                </article>
+                <article class="insight-card animate-fade-up delay-2">
+                    <div class="insight-icon"><i class="fas fa-hard-drive" aria-hidden="true"></i></div>
+                    <h3>Media library ready to grow</h3>
+                    <p>Our portfolio workflow is designed around a 1 TB media-capacity target, with protected uploads and a transparent usage view for the administrator.</p>
+                    <span class="capacity-chip"><i class="fas fa-database" aria-hidden="true"></i> 1 TB capacity target</span>
+                </article>
+                <article class="insight-card animate-fade-up delay-3">
+                    <div class="insight-icon"><i class="fas fa-share-nodes" aria-hidden="true"></i></div>
+                    <h3>Portfolio-ready handover</h3>
+                    <p>Published work can be shared by link, WhatsApp or email, helping you present the latest projects to clients and partners without delay.</p>
+                </article>
             </div>
         </div>
     </section>
@@ -1151,6 +1385,76 @@
 
         animateElements.forEach(el => {
             observer.observe(el);
+        });
+
+        // ─── Live Portfolio Preview ───
+        // Firebase configuration is public by design. The deployed Database Rules control data access.
+        const homeFirebaseConfig = {
+            apiKey: 'AIzaSyA-BpRy-RVc2rqIG6uiRu_XrGEu1ZGnQwU',
+            authDomain: 'seedwel-investment-limited.firebaseapp.com',
+            databaseURL: 'https://seedwel-investment-limited-default-rtdb.firebaseio.com',
+            projectId: 'seedwel-investment-limited',
+            storageBucket: 'seedwel-investment-limited.firebasestorage.app',
+            messagingSenderId: '197778268619',
+            appId: '1:197778268619:web:92f29d88fa5a22dbfa964e'
+        };
+        firebase.initializeApp(homeFirebaseConfig);
+        const homeProjectsGrid = document.getElementById('homeProjectsGrid');
+
+        function safeHomeText(value, max = 0) {
+            const text = String(value || '').trim();
+            return max ? text.slice(0, max) : text;
+        }
+        function safeHomeImage(value) {
+            try {
+                const url = new URL(String(value || ''));
+                return (url.protocol === 'https:' || url.protocol === 'http:') ? url.href : 'favicon.svg';
+            } catch (_) {
+                return 'favicon.svg';
+            }
+        }
+        function renderHomeProject(project, index) {
+            const card = document.createElement('article');
+            card.className = 'project-card animate-fade-up delay-' + Math.min(index + 1, 3);
+            const image = document.createElement('img');
+            image.src = safeHomeImage(project.image);
+            image.alt = safeHomeText(project.name, 120) || 'Seedwel portfolio project';
+            image.loading = 'lazy';
+            image.addEventListener('error', () => { image.src = 'favicon.svg'; });
+            const content = document.createElement('div');
+            content.className = 'content';
+            const category = document.createElement('span');
+            category.className = 'home-project-category';
+            category.textContent = safeHomeText(project.category, 60) || 'Portfolio project';
+            const title = document.createElement('h3');
+            title.textContent = safeHomeText(project.name, 120) || 'Untitled project';
+            const summary = document.createElement('p');
+            summary.textContent = safeHomeText(project.description, 260) || 'Explore this Seedwel project in our live portfolio.';
+            const link = document.createElement('a');
+            link.className = 'home-project-link';
+            link.href = 'projects.html';
+            link.innerHTML = 'View portfolio <i class="fas fa-arrow-right" aria-hidden="true"></i>';
+            content.append(category, title, summary, link);
+            card.append(image, content);
+            return card;
+        }
+        firebase.database().ref('publicProjects').on('value', (snapshot) => {
+            const entries = Object.entries(snapshot.val() || {});
+            // Existing cards remain as a useful fallback until the admin imports or creates managed entries.
+            if (!entries.length) return;
+            const published = entries.map(([, project]) => project)
+                .filter((project) => project && project.published !== false)
+                .sort((a, b) => Number(b.updatedAt || b.createdAt || 0) - Number(a.updatedAt || a.createdAt || 0))
+                .slice(0, 3);
+            homeProjectsGrid.replaceChildren();
+            if (!published.length) {
+                const empty = document.createElement('div');
+                empty.className = 'home-project-empty';
+                empty.textContent = 'New portfolio work is being prepared. Visit the portfolio page again soon.';
+                homeProjectsGrid.appendChild(empty);
+                return;
+            }
+            published.forEach((project, index) => homeProjectsGrid.appendChild(renderHomeProject(project, index)));
         });
 
         // ─── Scroll to Top ───

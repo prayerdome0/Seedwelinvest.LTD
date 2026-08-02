@@ -1,0 +1,17 @@
+{
+  "name": "Seedwel Investment LTD",
+  "short_name": "Seedwel",
+  "description": "Seedwel Investment LTD digital services and portfolio.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#dc2626",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
