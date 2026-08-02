@@ -3,690 +3,1475 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel | Seedwel Investment LTD</title>
-    <meta name="robots" content="noindex, nofollow">
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome -->
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="theme-color" content="#111827">
+    <title>Secure Portfolio Admin | Seedwel Investment LTD</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js">
-    </script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js">
-    </script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js">
-    </script>
-
-    <!-- Cloudinary Upload Widget -->
-    <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript">
-    </script>
+    <!-- Firebase config is public by design. Access is protected by Firebase Auth and the deployed rules. -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
 
     <style>
         :root {
-            --blue: #1a2744;
-            --blue-light: #1e3052;
-            --blue-lighter: #243860;
-            --gold: #d4a853;
-            --gold-light: #e0c06e;
-            --white: #ffffff;
-            --gray: #a0a8b8;
-            --red: #ef4444;
-            --green: #22c55e;
-            --shadow-gold: 0 4px 30px rgba(212, 168, 83, 0.25);
-            --transition: all 0.3s ease;
+            --ink: #101827;
+            --ink-2: #17233a;
+            --panel: rgba(25, 37, 60, 0.86);
+            --panel-solid: #1b2941;
+            --line: rgba(255, 255, 255, 0.11);
+            --muted: #aeb9ca;
+            --subtle: #718096;
+            --gold: #f5c967;
+            --gold-deep: #d99d2f;
+            --red: #ef5858;
+            --green: #43d19e;
+            --blue: #78a9ff;
+            --white: #f8fbff;
+            --radius: 18px;
+            --shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { box-sizing: border-box; }
+        html { background: var(--ink); }
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0f1a2e;
-            color: var(--white);
+            min-width: 320px;
             min-height: 100vh;
+            margin: 0;
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            background:
+                radial-gradient(circle at 12% 10%, rgba(245, 201, 103, 0.14), transparent 27rem),
+                radial-gradient(circle at 88% 86%, rgba(86, 124, 255, 0.13), transparent 33rem),
+                var(--ink);
+        }
+        button, input, textarea, select { font: inherit; }
+        button { -webkit-tap-highlight-color: transparent; }
+        button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+            outline: 3px solid rgba(245, 201, 103, 0.75);
+            outline-offset: 3px;
+        }
+        [hidden] { display: none !important; }
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
         }
 
-        /* ========== LOGIN SCREEN ========== */
+        /* Login */
         .login-screen {
+            position: relative;
+            display: grid;
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            padding: 28px;
+            place-items: center;
+            overflow: hidden;
+        }
+        .login-screen::before,
+        .login-screen::after {
+            position: absolute;
+            width: 28rem;
+            height: 28rem;
+            content: '';
+            border-radius: 50%;
+            filter: blur(8px);
+            opacity: 0.5;
+            pointer-events: none;
+            animation: drift 14s ease-in-out infinite alternate;
+        }
+        .login-screen::before {
+            top: -13rem;
+            left: -9rem;
+            background: radial-gradient(circle, rgba(245, 201, 103, 0.34), transparent 68%);
+        }
+        .login-screen::after {
+            right: -11rem;
+            bottom: -14rem;
+            background: radial-gradient(circle, rgba(89, 124, 255, 0.24), transparent 68%);
+            animation-delay: -7s;
         }
         .login-card {
-            background: rgba(30, 49, 82, 0.8);
-            border: 1px solid rgba(212, 168, 83, 0.2);
-            border-radius: 20px;
-            padding: 40px 30px;
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
+            position: relative;
+            z-index: 1;
+            width: min(100%, 455px);
+            padding: clamp(28px, 6vw, 48px);
+            border: 1px solid rgba(245, 201, 103, 0.25);
+            border-radius: 26px;
+            background: rgba(24, 36, 58, 0.88);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(18px);
+            animation: enter 0.65s cubic-bezier(.2, .85, .35, 1) both;
         }
-        .login-card img {
-            height: 50px;
-            margin-bottom: 20px;
+        .brand-lockup {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            margin-bottom: 31px;
         }
-        .login-card h2 {
-            font-family: 'Playfair Display', serif;
+        .brand-lockup img { width: 48px; height: 48px; border-radius: 14px; }
+        .brand-lockup strong {
+            display: block;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.96rem;
+            letter-spacing: -0.02em;
+        }
+        .brand-lockup span { display: block; margin-top: 2px; color: var(--muted); font-size: 0.73rem; }
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            margin: 0 0 12px;
             color: var(--gold);
-            margin-bottom: 8px;
-            font-size: 1.5rem;
+            font-size: 0.71rem;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
         }
-        .login-card p {
-            color: var(--gray);
-            font-size: 0.85rem;
-            margin-bottom: 24px;
+        .eyebrow i { font-size: 0.82rem; }
+        h1, h2, h3, h4, p { margin-top: 0; }
+        .login-card h1 {
+            margin-bottom: 9px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(1.55rem, 4vw, 2rem);
+            letter-spacing: -0.05em;
         }
-        .login-card input {
+        .login-card > p { margin-bottom: 27px; color: var(--muted); font-size: 0.91rem; line-height: 1.65; }
+        .field { margin-bottom: 16px; }
+        .field label { display: block; margin: 0 0 7px; color: #d7deea; font-size: 0.8rem; font-weight: 700; }
+        .field label span { color: var(--subtle); font-weight: 500; }
+        .input-shell { position: relative; }
+        .input-shell > i {
+            position: absolute;
+            top: 50%;
+            left: 16px;
+            color: var(--gold);
+            font-size: 0.9rem;
+            pointer-events: none;
+            transform: translateY(-50%);
+        }
+        .input-shell input,
+        .field input,
+        .field textarea,
+        .field select {
             width: 100%;
-            padding: 14px 16px;
-            background: rgba(26, 39, 68, 0.6);
-            border: 1px solid rgba(212, 168, 83, 0.2);
+            min-height: 48px;
+            border: 1px solid var(--line);
             border-radius: 12px;
             color: var(--white);
-            font-size: 0.9rem;
-            margin-bottom: 12px;
-            outline: none;
-            font-family: 'Inter', sans-serif;
-            transition: var(--transition);
+            background: rgba(7, 16, 33, 0.47);
+            transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
         }
-        .login-card input:focus {
+        .input-shell input { padding: 12px 16px 12px 43px; }
+        .field input, .field select { padding: 11px 13px; }
+        .field textarea { min-height: 106px; padding: 12px 13px; resize: vertical; line-height: 1.52; }
+        .field select option { color: #111827; background: white; }
+        .input-shell input::placeholder, .field input::placeholder, .field textarea::placeholder { color: #8491a6; }
+        .input-shell input:hover, .field input:hover, .field textarea:hover, .field select:hover { border-color: rgba(245, 201, 103, .36); }
+        .input-shell input:focus, .field input:focus, .field textarea:focus, .field select:focus {
             border-color: var(--gold);
-            box-shadow: 0 0 0 3px rgba(212, 168, 83, 0.08);
+            box-shadow: 0 0 0 4px rgba(245, 201, 103, .10);
         }
-        .login-card .btn-login {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, var(--gold), #b8860b);
-            color: #0f1a2e;
-            border: none;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            cursor: pointer;
-            letter-spacing: 0.5px;
-            transition: var(--transition);
-            font-family: 'Inter', sans-serif;
-        }
-        .login-card .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(212, 168, 83, 0.4);
-        }
-        .login-error {
-            color: var(--red);
-            font-size: 0.8rem;
-            margin-top: 10px;
-            display: none;
-        }
-
-        /* ========== DASHBOARD ========== */
-        .dashboard {
-            display: none;
-            min-height: 100vh;
-        }
-        .admin-header {
-            background: rgba(30, 49, 82, 0.9);
-            border-bottom: 1px solid rgba(212, 168, 83, 0.2);
-            padding: 16px 28px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-        .admin-header .admin-logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .admin-header img {
-            height: 35px;
-        }
-        .admin-header h3 {
-            font-family: 'Playfair Display', serif;
-            color: var(--gold);
-        }
-        .admin-header .btn-logout {
-            padding: 10px 22px;
-            background: rgba(239, 68, 68, 0.15);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: var(--red);
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.8rem;
-            transition: var(--transition);
-            font-family: 'Inter', sans-serif;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .admin-header .btn-logout:hover {
-            background: rgba(239, 68, 68, 0.25);
-        }
-
-        .admin-body {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 30px 20px;
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 8px;
             display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 30px;
-        }
-
-        /* Form Section */
-        .admin-section {
-            background: rgba(30, 49, 82, 0.6);
-            border: 1px solid rgba(212, 168, 83, 0.15);
-            border-radius: 18px;
-            padding: 28px 24px;
-        }
-        .admin-section h4 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
-            color: var(--white);
-            margin-bottom: 6px;
-        }
-        .admin-section .section-desc {
-            color: var(--gray);
-            font-size: 0.8rem;
-            margin-bottom: 20px;
-        }
-        .form-group {
-            margin-bottom: 16px;
-        }
-        .form-group label {
-            display: block;
-            color: var(--gray-light);
-            font-size: 0.8rem;
-            font-weight: 500;
-            margin-bottom: 6px;
-        }
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 13px 16px;
-            background: rgba(26, 39, 68, 0.6);
-            border: 1px solid rgba(212, 168, 83, 0.2);
-            border-radius: 12px;
-            color: var(--white);
-            font-size: 0.88rem;
-            outline: none;
-            font-family: 'Inter', sans-serif;
-            transition: var(--transition);
-            resize: vertical;
-        }
-        .form-group input:focus,
-        .form-group textarea:focus {
-            border-color: var(--gold);
-            box-shadow: 0 0 0 3px rgba(212, 168, 83, 0.08);
-        }
-        .image-upload-area {
-            background: rgba(26, 39, 68, 0.6);
-            border: 2px dashed rgba(212, 168, 83, 0.3);
-            border-radius: 12px;
-            padding: 30px;
-            text-align: center;
+            width: 34px;
+            height: 34px;
+            padding: 0;
+            color: var(--muted);
+            border: 0;
+            border-radius: 9px;
+            background: transparent;
             cursor: pointer;
-            transition: var(--transition);
-            margin-bottom: 4px;
+            place-items: center;
+            transform: translateY(-50%);
         }
-        .image-upload-area:hover {
-            border-color: var(--gold);
-            background: rgba(26, 39, 68, 0.8);
-        }
-        .image-upload-area i {
-            font-size: 2rem;
+        .password-toggle:hover { color: var(--gold); background: rgba(255,255,255,.06); }
+        .login-help { display: flex; justify-content: flex-end; margin: -4px 0 19px; }
+        .text-button {
+            padding: 0;
             color: var(--gold);
-            margin-bottom: 8px;
-            display: block;
-        }
-        .image-upload-area p {
-            color: var(--gray);
-            font-size: 0.8rem;
-        }
-        .image-preview {
-            width: 100%;
-            max-height: 200px;
-            object-fit: cover;
-            border-radius: 10px;
-            margin-top: 10px;
-            display: none;
-            border: 1px solid rgba(212, 168, 83, 0.2);
-        }
-        .btn-submit {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, var(--gold), #b8860b);
-            color: #0f1a2e;
-            border: none;
-            border-radius: 50px;
+            border: 0;
+            background: none;
+            font-size: .76rem;
             font-weight: 700;
-            font-size: 0.88rem;
             cursor: pointer;
-            letter-spacing: 0.5px;
-            transition: var(--transition);
-            font-family: 'Inter', sans-serif;
-            display: flex;
+        }
+        .text-button:hover { color: #ffe09a; text-decoration: underline; }
+        .login-error {
+            min-height: 20px;
+            margin: 0 0 12px;
+            color: #ff9d9d;
+            font-size: .78rem;
+            line-height: 1.45;
+        }
+        .btn {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            margin-top: 8px;
-        }
-        .btn-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(212, 168, 83, 0.4);
-        }
-        .btn-submit:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-        .upload-status {
-            text-align: center;
-            font-size: 0.8rem;
-            margin-top: 8px;
-            min-height: 20px;
-        }
-        .upload-status.success {
-            color: var(--green);
-        }
-        .upload-status.error {
-            color: var(--red);
-        }
-
-        /* Projects List */
-        .projects-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            max-height: 500px;
-            overflow-y: auto;
-        }
-        .project-list-item {
-            display: flex;
-            gap: 14px;
-            align-items: center;
-            background: rgba(26, 39, 68, 0.5);
-            border: 1px solid rgba(212, 168, 83, 0.08);
+            min-height: 44px;
+            padding: 11px 16px;
+            border: 1px solid transparent;
             border-radius: 12px;
-            padding: 12px 14px;
-            transition: var(--transition);
-        }
-        .project-list-item:hover {
-            border-color: rgba(212, 168, 83, 0.3);
-        }
-        .project-list-item img {
-            width: 60px;
-            height: 60px;
-            border-radius: 8px;
-            object-fit: cover;
-            flex-shrink: 0;
-        }
-        .project-list-info {
-            flex: 1;
-            min-width: 0;
-        }
-        .project-list-info h5 {
-            font-size: 0.85rem;
-            color: var(--white);
-            margin-bottom: 2px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .project-list-info p {
-            font-size: 0.72rem;
-            color: var(--gray);
-        }
-        .btn-delete {
-            padding: 8px 14px;
-            background: rgba(239, 68, 68, 0.15);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: var(--red);
-            border-radius: 8px;
+            font-size: .82rem;
+            font-weight: 800;
+            text-decoration: none;
             cursor: pointer;
-            font-size: 0.72rem;
-            transition: var(--transition);
-            font-family: 'Inter', sans-serif;
+            transition: transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
+        }
+        .btn:hover:not(:disabled) { transform: translateY(-2px); }
+        .btn:disabled { cursor: not-allowed; opacity: .64; }
+        .btn-primary {
+            color: #182237;
+            background: linear-gradient(135deg, #ffe19a, var(--gold));
+            box-shadow: 0 10px 24px rgba(216, 157, 47, .25);
+        }
+        .btn-primary:hover:not(:disabled) { box-shadow: 0 14px 28px rgba(216, 157, 47, .36); }
+        .btn-login { width: 100%; min-height: 50px; border-radius: 14px; }
+        .login-footnote { margin: 18px 0 0; color: var(--subtle); font-size: .71rem; line-height: 1.55; text-align: center; }
+
+        /* Dashboard shell */
+        .dashboard { min-height: 100vh; }
+        .dashboard-header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            min-height: 75px;
+            padding: 12px clamp(18px, 4vw, 50px);
+            border-bottom: 1px solid var(--line);
+            background: rgba(16, 24, 39, .84);
+            backdrop-filter: blur(18px);
+        }
+        .dashboard-brand { display: flex; align-items: center; gap: 11px; min-width: 0; }
+        .dashboard-brand img { width: 38px; height: 38px; border-radius: 11px; flex: 0 0 auto; }
+        .dashboard-brand h2 { margin: 0; font-family: 'Montserrat', sans-serif; font-size: clamp(.92rem, 2vw, 1.1rem); letter-spacing: -.035em; }
+        .dashboard-brand p { margin: 2px 0 0; color: var(--muted); font-size: .7rem; }
+        .header-actions { display: flex; align-items: center; gap: 9px; }
+        .secure-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 11px;
+            color: #a8eed0;
+            border: 1px solid rgba(67, 209, 158, .25);
+            border-radius: 999px;
+            background: rgba(67, 209, 158, .08);
+            font-size: .7rem;
+            font-weight: 700;
             white-space: nowrap;
         }
-        .btn-delete:hover {
-            background: rgba(239, 68, 68, 0.3);
-        }
-        .no-projects {
-            text-align: center;
-            color: var(--gray);
-            padding: 30px;
-            font-size: 0.85rem;
-        }
+        .btn-secondary { color: #d9e1ed; border-color: var(--line); background: rgba(255,255,255,.04); }
+        .btn-secondary:hover:not(:disabled) { border-color: rgba(245,201,103,.48); background: rgba(245,201,103,.08); }
+        .btn-danger { color: #ffb0b0; border-color: rgba(239, 88, 88, .26); background: rgba(239, 88, 88, .08); }
+        .btn-danger:hover:not(:disabled) { border-color: rgba(239, 88, 88, .55); background: rgba(239, 88, 88, .17); }
+        .header-actions .btn { min-height: 38px; padding: 8px 12px; }
+        .dashboard-main { width: min(1440px, 100%); margin: 0 auto; padding: clamp(24px, 4vw, 50px); }
+        .dashboard-intro { display: flex; align-items: end; justify-content: space-between; gap: 22px; margin-bottom: 25px; }
+        .dashboard-intro h1 { margin: 0; font-family: 'Montserrat', sans-serif; font-size: clamp(1.55rem, 3.5vw, 2.3rem); letter-spacing: -.055em; }
+        .dashboard-intro p { max-width: 620px; margin: 8px 0 0; color: var(--muted); font-size: .88rem; line-height: 1.65; }
+        .last-saved { color: var(--subtle); font-size: .73rem; white-space: nowrap; }
 
-        @media (max-width: 768px) {
-            .admin-body {
-                grid-template-columns: 1fr;
-            }
-            .admin-header {
-                padding: 12px 16px;
-            }
+        .metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-bottom: 27px; }
+        .metric {
+            position: relative;
+            min-height: 137px;
+            padding: 19px;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: rgba(27, 41, 65, .67);
+        }
+        .metric::after { position: absolute; right: -24px; bottom: -36px; width: 110px; height: 110px; content: ''; border-radius: 50%; background: rgba(245,201,103,.07); }
+        .metric-icon { display: grid; width: 34px; height: 34px; margin-bottom: 16px; color: var(--gold); border-radius: 10px; background: rgba(245,201,103,.12); place-items: center; }
+        .metric:nth-child(2) .metric-icon { color: var(--green); background: rgba(67,209,158,.11); }
+        .metric:nth-child(3) .metric-icon { color: var(--blue); background: rgba(120,169,255,.12); }
+        .metric:nth-child(4) .metric-icon { color: #e5b5ff; background: rgba(229,181,255,.11); }
+        .metric strong { display: block; position: relative; z-index: 1; font-family: 'Montserrat', sans-serif; font-size: 1.35rem; letter-spacing: -.05em; }
+        .metric span { display: block; position: relative; z-index: 1; margin-top: 3px; color: var(--muted); font-size: .72rem; line-height: 1.35; }
+        .storage-meter { position: relative; z-index: 1; height: 5px; margin-top: 12px; overflow: hidden; border-radius: 99px; background: rgba(255,255,255,.09); }
+        .storage-meter > span { display: block; width: 0; height: 100%; margin: 0; border-radius: inherit; background: linear-gradient(90deg, #78a9ff, #b3ceff); transition: width .55s ease; }
+
+        .notice {
+            display: flex;
+            align-items: flex-start;
+            gap: 11px;
+            margin: 0 0 27px;
+            padding: 14px 16px;
+            color: #e5d4ae;
+            border: 1px solid rgba(245,201,103,.18);
+            border-radius: 14px;
+            background: rgba(245,201,103,.06);
+            font-size: .78rem;
+            line-height: 1.55;
+        }
+        .notice i { margin-top: 2px; color: var(--gold); }
+        .notice strong { color: #fff0c7; }
+        .notice a { color: #ffe19a; }
+
+        .workspace { display: grid; grid-template-columns: minmax(0, 1.06fr) minmax(330px, .94fr); align-items: start; gap: 20px; }
+        .stack { display: grid; gap: 20px; }
+        .panel { border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); box-shadow: 0 14px 38px rgba(0,0,0,.12); }
+        .panel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 22px 22px 0; }
+        .panel-head h2 { margin: 0; font-family: 'Montserrat', sans-serif; font-size: 1.05rem; letter-spacing: -.04em; }
+        .panel-head p { margin: 5px 0 0; color: var(--muted); font-size: .75rem; line-height: 1.5; }
+        .panel-body { padding: 22px; }
+        .project-form { display: grid; gap: 0; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 13px; }
+        .form-grid .full { grid-column: 1 / -1; }
+        .field small { display: block; margin: 6px 0 0; color: var(--subtle); font-size: .67rem; line-height: 1.45; }
+        .upload-area {
+            position: relative;
+            display: grid;
+            min-height: 122px;
+            padding: 18px;
+            overflow: hidden;
+            color: var(--muted);
+            border: 1px dashed rgba(245, 201, 103, .42);
+            border-radius: 14px;
+            background: rgba(10, 19, 35, .3);
+            cursor: pointer;
+            place-items: center;
+            text-align: center;
+            transition: border-color .2s ease, background .2s ease, transform .2s ease;
+        }
+        .upload-area:hover, .upload-area.dragging { border-color: var(--gold); background: rgba(245,201,103,.08); transform: translateY(-1px); }
+        .upload-area i { display: block; margin-bottom: 7px; color: var(--gold); font-size: 1.35rem; }
+        .upload-area strong { display: block; color: #e6ebf5; font-size: .77rem; }
+        .upload-area span { display: block; margin-top: 4px; color: var(--subtle); font-size: .67rem; }
+        .upload-area input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+        .image-preview-wrap { position: relative; display: none; margin: 12px 0 2px; }
+        .image-preview-wrap.visible { display: block; }
+        .image-preview { display: block; width: 100%; height: 165px; object-fit: cover; border: 1px solid var(--line); border-radius: 12px; background: #0d1727; }
+        .remove-image {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            display: grid;
+            width: 31px;
+            height: 31px;
+            padding: 0;
+            color: white;
+            border: 1px solid rgba(255,255,255,.18);
+            border-radius: 9px;
+            background: rgba(16,24,39,.78);
+            cursor: pointer;
+            place-items: center;
+        }
+        .remove-image:hover { color: #ffb0b0; border-color: rgba(239,88,88,.5); }
+        .check-row { display: flex; align-items: center; gap: 9px; min-height: 42px; margin: 1px 0 15px; color: #e1e8f3; font-size: .79rem; font-weight: 700; }
+        .check-row input { width: 17px; height: 17px; accent-color: var(--gold-deep); }
+        .form-actions { display: flex; align-items: center; gap: 10px; margin-top: 4px; }
+        .form-actions .btn-primary { flex: 1; }
+        .form-status { min-height: 21px; margin: 10px 0 0; color: var(--muted); font-size: .72rem; line-height: 1.45; }
+        .form-status.success { color: #8ce8bd; }
+        .form-status.error { color: #ffaaaa; }
+
+        /* Project list */
+        .project-list { display: grid; gap: 10px; max-height: 720px; padding: 16px 22px 22px; overflow: auto; }
+        .project-list::-webkit-scrollbar { width: 7px; }
+        .project-list::-webkit-scrollbar-thumb { border-radius: 10px; background: rgba(245,201,103,.35); }
+        .project-item { display: grid; grid-template-columns: 62px minmax(0, 1fr); gap: 12px; padding: 10px; border: 1px solid rgba(255,255,255,.08); border-radius: 14px; background: rgba(8,17,32,.30); }
+        .project-item:hover { border-color: rgba(245,201,103,.27); }
+        .project-thumb { width: 62px; height: 62px; object-fit: cover; border-radius: 10px; background: #0e192c; }
+        .project-item-main { min-width: 0; }
+        .project-item-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+        .project-item h3 { overflow: hidden; margin: 0; color: #edf2fa; font-size: .8rem; font-weight: 800; line-height: 1.35; text-overflow: ellipsis; white-space: nowrap; }
+        .project-item p { overflow: hidden; margin: 3px 0 0; color: var(--muted); font-size: .69rem; line-height: 1.4; text-overflow: ellipsis; white-space: nowrap; }
+        .status-pill { flex: 0 0 auto; padding: 3px 7px; border-radius: 999px; font-size: .61rem; font-weight: 800; }
+        .status-pill.published { color: #91ebbf; background: rgba(67,209,158,.13); }
+        .status-pill.draft { color: #ffd98d; background: rgba(245,201,103,.13); }
+        .project-item-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+        .icon-btn { min-height: 29px; padding: 5px 8px; color: #d8e1ee; border: 1px solid rgba(255,255,255,.11); border-radius: 8px; background: rgba(255,255,255,.035); font-size: .64rem; font-weight: 750; cursor: pointer; }
+        .icon-btn:hover { border-color: rgba(245,201,103,.48); color: #ffe4a8; }
+        .icon-btn.delete:hover { border-color: rgba(239,88,88,.55); color: #ffb2b2; }
+        .empty-state { padding: 35px 15px; color: var(--muted); font-size: .78rem; line-height: 1.6; text-align: center; }
+        .empty-state i { display: block; margin-bottom: 10px; color: var(--gold); font-size: 1.7rem; }
+        .seed-button { margin-top: 13px; }
+
+        /* Send panel and settings */
+        .share-panel { overflow: hidden; }
+        .share-panel::before { display: block; height: 3px; content: ''; background: linear-gradient(90deg, var(--gold), #e78a50, #776dff); }
+        .share-visual { display: grid; width: 43px; height: 43px; margin-bottom: 13px; color: var(--gold); border-radius: 13px; background: rgba(245,201,103,.12); place-items: center; }
+        .share-visual i { font-size: 1.1rem; }
+        .share-copy { margin: 0 0 15px; color: var(--muted); font-size: .77rem; line-height: 1.55; }
+        .share-url { display: flex; gap: 8px; margin-bottom: 11px; }
+        .share-url input { min-width: 0; flex: 1; padding: 9px 10px; color: #bfcadd; border: 1px solid var(--line); border-radius: 10px; background: rgba(7,16,33,.4); font-size: .68rem; }
+        .share-url .btn { flex: 0 0 auto; min-height: 37px; padding: 8px 11px; }
+        .share-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .share-actions .btn { min-height: 39px; padding: 8px 4px; font-size: .7rem; }
+        .share-actions .whatsapp { color: #a9f1c9; border-color: rgba(67,209,158,.23); background: rgba(67,209,158,.08); }
+        .share-actions .email { color: #b8d3ff; border-color: rgba(120,169,255,.23); background: rgba(120,169,255,.08); }
+        .settings-panel .panel-body { padding-top: 18px; }
+        .settings-panel .form-grid { grid-template-columns: 1fr 1fr; }
+        .settings-panel .field { margin-bottom: 14px; }
+        .settings-panel .field textarea { min-height: 88px; }
+        .settings-note { margin: 2px 0 15px; color: var(--subtle); font-size: .68rem; line-height: 1.5; }
+
+        .toast {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 50;
+            max-width: min(390px, calc(100vw - 40px));
+            padding: 12px 15px;
+            color: #eef7f3;
+            border: 1px solid rgba(67,209,158,.35);
+            border-radius: 12px;
+            background: #193a34;
+            box-shadow: 0 15px 36px rgba(0,0,0,.32);
+            font-size: .78rem;
+            line-height: 1.45;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(14px);
+            transition: opacity .25s ease, transform .25s ease;
+        }
+        .toast.show { opacity: 1; transform: translateY(0); }
+        .toast.error { color: #ffe5e5; border-color: rgba(239,88,88,.35); background: #47282d; }
+
+        @keyframes enter { from { opacity: 0; transform: translateY(20px) scale(.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes drift { from { transform: translate3d(-8px, -10px, 0) scale(1); } to { transform: translate3d(22px, 18px, 0) scale(1.08); } }
+        @media (max-width: 1080px) {
+            .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .workspace { grid-template-columns: 1fr; }
+            .project-list { max-height: 460px; }
+        }
+        @media (max-width: 680px) {
+            .login-screen { padding: 16px; }
+            .dashboard-header { padding: 10px 15px; }
+            .secure-badge { display: none; }
+            .header-actions .btn span { display: none; }
+            .header-actions .btn { width: 38px; padding: 0; }
+            .dashboard-main { padding: 23px 15px; }
+            .dashboard-intro { display: block; }
+            .last-saved { display: block; margin-top: 11px; }
+            .metrics { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .metric { min-height: 123px; padding: 15px; }
+            .metric strong { font-size: 1.13rem; }
+            .panel-head, .panel-body { padding-right: 16px; padding-left: 16px; }
+            .project-list { padding-right: 16px; padding-left: 16px; }
+            .form-grid, .settings-panel .form-grid { grid-template-columns: 1fr; }
+            .form-grid .full { grid-column: auto; }
+            .share-actions { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 410px) {
+            .metrics { grid-template-columns: 1fr; }
+            .dashboard-brand p { display: none; }
+            .dashboard-brand h2 { font-size: .86rem; }
+            .form-actions { align-items: stretch; flex-direction: column; }
+            .form-actions .btn { width: 100%; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
         }
     </style>
 </head>
 <body>
-
-    <!-- ========== LOGIN SCREEN ========== -->
-    <div class="login-screen" id="loginScreen">
-        <div class="login-card">
-            <img src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel Investment LTD">
-            <h2>Admin Panel</h2>
-            <p>Sign in to manage portfolio & projects</p>
-            <input type="email" id="emailInput" placeholder="Email address" value="zacheussimbaya@gmail.com">
-            <input type="password" id="passwordInput" placeholder="Password">
-            <button class="btn-login" id="btnLogin">
-                <i class="fas fa-lock"></i> Sign In
-            </button>
-            <div class="login-error" id="loginError">Invalid email or password.</div>
-        </div>
-    </div>
-
-    <!-- ========== DASHBOARD ========== -->
-    <div class="dashboard" id="dashboard">
-        <div class="admin-header">
-            <div class="admin-logo">
-                <img src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel">
-                <h3>Admin Dashboard</h3>
+    <main class="login-screen" id="loginScreen">
+        <section class="login-card" aria-labelledby="loginTitle">
+            <div class="brand-lockup">
+                <img src="favicon.svg" alt="Seedwel icon">
+                <div><strong>Seedwel Investment LTD</strong><span>Protected administration</span></div>
             </div>
-            <button class="btn-logout" id="btnLogout">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </button>
-        </div>
-        <div class="admin-body">
-            <!-- Add Project Form -->
-            <div class="admin-section">
-                <h4>Add New Project</h4>
-                <p class="section-desc">Upload to portfolio via Cloudinary</p>
-                <div class="form-group">
-                    <label>Project Image *</label>
-                    <div class="image-upload-area" id="imageUploadArea">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <p>Click to upload image</p>
-                        <p style="font-size:0.7rem; color:var(--gray);">(Cloudinary Upload Widget)</p>
-                    </div>
-                    <img src="" alt="Preview" class="image-preview" id="imagePreview">
-                    <input type="hidden" id="uploadedImageUrl">
-                    <div class="upload-status" id="uploadStatus"></div>
-                </div>
-                <div class="form-group">
-                    <label>Project Name *</label>
-                    <input type="text" id="projectName" placeholder="e.g. E-Commerce Website">
-                </div>
-                <div class="form-group">
-                    <label>Description *</label>
-                    <textarea id="projectDescription" rows="3" placeholder="Brief description of the project..."></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Amount (USD) *</label>
-                    <input type="number" id="projectAmount" placeholder="e.g. 500" min="0" step="0.01">
-                </div>
-                <button class="btn-submit" id="btnSubmit">
-                    <i class="fas fa-plus-circle"></i> Add Project
-                </button>
-            </div>
-
-            <!-- Projects List -->
-            <div class="admin-section">
-                <h4>Existing Projects</h4>
-                <p class="section-desc">Manage your portfolio items</p>
-                <div class="projects-list" id="projectsList">
-                    <div class="no-projects">
-                        <i class="fas fa-spinner fa-spin" style="display:block; margin-bottom:8px; color:var(--gold);"></i>
-                        Loading...
+            <p class="eyebrow"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Restricted access</p>
+            <h1 id="loginTitle">Portfolio control room</h1>
+            <p>Sign in to publish, update, share and protect the live portfolio. Your password is sent only to Firebase Authentication and is never saved in this site.</p>
+            <form id="loginForm" novalidate>
+                <div class="field">
+                    <label for="adminId">Admin ID</label>
+                    <div class="input-shell">
+                        <i class="fa-solid fa-user-shield" aria-hidden="true"></i>
+                        <input id="adminId" name="username" type="text" inputmode="text" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="Enter your admin ID" required>
                     </div>
                 </div>
+                <div class="field">
+                    <label for="passwordInput">Password</label>
+                    <div class="input-shell">
+                        <i class="fa-solid fa-key" aria-hidden="true"></i>
+                        <input id="passwordInput" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required>
+                        <button class="password-toggle" id="passwordToggle" type="button" aria-label="Show password" aria-pressed="false"><i class="fa-solid fa-eye" aria-hidden="true"></i></button>
+                    </div>
+                </div>
+                <div class="login-help"><button class="text-button" id="resetPassword" type="button">Send password reset email</button></div>
+                <div class="login-error" id="loginError" role="alert" aria-live="polite"></div>
+                <button class="btn btn-primary btn-login" id="btnLogin" type="submit"><i class="fa-solid fa-lock" aria-hidden="true"></i> <span>Sign in securely</span></button>
+            </form>
+            <p class="login-footnote">Protected by Firebase Authentication, a session-only sign-in and server-side access rules.</p>
+        </section>
+    </main>
+
+    <main class="dashboard" id="dashboard" hidden>
+        <header class="dashboard-header">
+            <div class="dashboard-brand">
+                <img src="favicon.svg" alt="Seedwel icon">
+                <div><h2>Seedwel Portfolio Admin</h2><p>Publishing &amp; media management</p></div>
+            </div>
+            <div class="header-actions">
+                <span class="secure-badge"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Secure session</span>
+                <a class="btn btn-secondary" href="projects.html" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i><span>View live site</span></a>
+                <button class="btn btn-danger" id="btnLogout" type="button"><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i><span>Logout</span></button>
+            </div>
+        </header>
+
+        <div class="dashboard-main">
+            <section class="dashboard-intro" aria-labelledby="dashboardTitle">
+                <div>
+                    <p class="eyebrow"><i class="fa-solid fa-sparkles" aria-hidden="true"></i> Portfolio operations</p>
+                    <h1 id="dashboardTitle">Manage the work people see.</h1>
+                    <p>Create rich portfolio entries, keep drafts private, publish finished work and send a polished portfolio link from one secure workspace.</p>
+                </div>
+                <span class="last-saved" id="lastSaved">Waiting for secure data…</span>
+            </section>
+
+            <section class="metrics" aria-label="Portfolio overview">
+                <article class="metric"><div class="metric-icon"><i class="fa-solid fa-layer-group" aria-hidden="true"></i></div><strong id="totalProjects">0</strong><span>Total portfolio entries</span></article>
+                <article class="metric"><div class="metric-icon"><i class="fa-solid fa-eye" aria-hidden="true"></i></div><strong id="publishedProjects">0</strong><span>Visible to visitors</span></article>
+                <article class="metric"><div class="metric-icon"><i class="fa-solid fa-hard-drive" aria-hidden="true"></i></div><strong id="storageTarget">1 TB</strong><span>Configured media capacity</span></article>
+                <article class="metric"><div class="metric-icon"><i class="fa-solid fa-chart-pie" aria-hidden="true"></i></div><strong id="storageUsed">0 B</strong><span id="storageUsageCaption">Tracked upload usage</span><div class="storage-meter" aria-hidden="true"><span id="storageMeter"></span></div></article>
+            </section>
+
+            <aside class="notice" aria-label="Storage capacity note">
+                <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+                <div><strong>1 TB is the dashboard capacity target.</strong> Firebase/Google Cloud must be on a billing plan that supports the required storage before it becomes real capacity. The included <a href="FIREBASE_SETUP.md" target="_blank" rel="noopener">deployment guide</a> explains the one-time provider setup; the meter tracks files uploaded through this dashboard.</div>
+            </aside>
+
+            <div class="workspace">
+                <div class="stack">
+                    <section class="panel" aria-labelledby="projectFormTitle">
+                        <div class="panel-head">
+                            <div><h2 id="projectFormTitle">Add a portfolio project</h2><p id="projectFormDescription">Draft it first, then publish when it is ready for the public page.</p></div>
+                            <button class="text-button" id="cancelEdit" type="button" hidden>Cancel edit</button>
+                        </div>
+                        <div class="panel-body">
+                            <form class="project-form" id="projectForm" novalidate>
+                                <div class="form-grid">
+                                    <div class="field full">
+                                        <label for="projectImage">Project image <span>(up to 25 MB)</span></label>
+                                        <label class="upload-area" id="uploadArea" for="projectImage">
+                                            <input id="projectImage" type="file" accept="image/png,image/jpeg,image/webp,image/gif,image/avif">
+                                            <div><i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i><strong>Choose or drop a portfolio image</strong><span>PNG, JPG, WEBP, GIF or AVIF — saved to protected Firebase Storage</span></div>
+                                        </label>
+                                        <div class="image-preview-wrap" id="previewWrap">
+                                            <img class="image-preview" id="imagePreview" alt="Selected project preview">
+                                            <button class="remove-image" id="removeImage" type="button" aria-label="Remove selected image"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+                                        </div>
+                                        <small>Alternatively, add a trusted image URL below. New uploads are restricted to the signed-in administrator by Storage Rules.</small>
+                                    </div>
+                                    <div class="field full">
+                                        <label for="externalImageUrl">Trusted image URL <span>(optional)</span></label>
+                                        <input id="externalImageUrl" type="url" inputmode="url" placeholder="https://example.com/project-image.jpg" maxlength="2048">
+                                    </div>
+                                    <div class="field">
+                                        <label for="projectName">Project title</label>
+                                        <input id="projectName" type="text" placeholder="e.g. E-commerce experience" maxlength="120" required>
+                                    </div>
+                                    <div class="field">
+                                        <label for="projectCategory">Category</label>
+                                        <select id="projectCategory" required>
+                                            <option value="Website">Website</option>
+                                            <option value="Mobile app">Mobile app</option>
+                                            <option value="E-commerce">E-commerce</option>
+                                            <option value="Business registration">Business registration</option>
+                                            <option value="Branding">Branding</option>
+                                            <option value="Digital marketing">Digital marketing</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="field">
+                                        <label for="projectClient">Client or industry <span>(optional)</span></label>
+                                        <input id="projectClient" type="text" placeholder="e.g. Retail &amp; payments" maxlength="120">
+                                    </div>
+                                    <div class="field">
+                                        <label for="projectUrl">Live project link <span>(optional)</span></label>
+                                        <input id="projectUrl" type="url" inputmode="url" placeholder="https://example.com" maxlength="2048">
+                                    </div>
+                                    <div class="field full">
+                                        <label for="projectDescription">Project summary</label>
+                                        <textarea id="projectDescription" maxlength="1200" placeholder="Describe the challenge, solution and value delivered…" required></textarea>
+                                    </div>
+                                    <div class="field full">
+                                        <label for="projectResults">Highlights or results <span>(optional)</span></label>
+                                        <input id="projectResults" type="text" maxlength="500" placeholder="e.g. Responsive design · Secure payments · Training included">
+                                    </div>
+                                </div>
+                                <label class="check-row" for="projectPublished"><input id="projectPublished" type="checkbox" checked> Publish this project on the live portfolio</label>
+                                <div class="form-actions">
+                                    <button class="btn btn-primary" id="saveProject" type="submit"><i class="fa-solid fa-plus" aria-hidden="true"></i><span>Add project</span></button>
+                                    <button class="btn btn-secondary" id="resetProjectForm" type="button">Clear form</button>
+                                </div>
+                                <p class="form-status" id="projectStatus" role="status" aria-live="polite"></p>
+                            </form>
+                        </div>
+                    </section>
+
+                    <section class="panel settings-panel" aria-labelledby="settingsTitle">
+                        <div class="panel-head"><div><h2 id="settingsTitle">Public portfolio details</h2><p>Update the information and capacity label shown to visitors.</p></div></div>
+                        <div class="panel-body">
+                            <form id="settingsForm" novalidate>
+                                <div class="form-grid">
+                                    <div class="field">
+                                        <label for="portfolioTitle">Portfolio heading</label>
+                                        <input id="portfolioTitle" type="text" maxlength="100" required>
+                                    </div>
+                                    <div class="field">
+                                        <label for="storageCapacityTB">Media capacity target (TB)</label>
+                                        <input id="storageCapacityTB" type="number" min="0.01" max="1024" step="0.01" value="1" required>
+                                    </div>
+                                    <div class="field full">
+                                        <label for="portfolioIntro">Portfolio introduction</label>
+                                        <textarea id="portfolioIntro" maxlength="500" required></textarea>
+                                    </div>
+                                    <div class="field">
+                                        <label for="businessEmail">Portfolio email</label>
+                                        <input id="businessEmail" type="email" maxlength="160" placeholder="seedwelinvestltd@gmail.com" required>
+                                    </div>
+                                    <div class="field">
+                                        <label for="businessPhone">WhatsApp / phone</label>
+                                        <input id="businessPhone" type="tel" maxlength="50" placeholder="+260 973 028 342" required>
+                                    </div>
+                                </div>
+                                <p class="settings-note">This number is a portfolio target and usage meter, not a cloud-billing change. Set the real storage plan in the provider console before relying on 1 TB.</p>
+                                <button class="btn btn-secondary" id="saveSettings" type="submit"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> Save public details</button>
+                                <p class="form-status" id="settingsStatus" role="status" aria-live="polite"></p>
+                            </form>
+                        </div>
+                    </section>
+                </div>
+
+                <aside class="stack">
+                    <section class="panel share-panel" aria-labelledby="shareTitle">
+                        <div class="panel-body">
+                            <div class="share-visual"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i></div>
+                            <h2 id="shareTitle">Send the portfolio</h2>
+                            <p class="share-copy">Share the current public portfolio directly by link, WhatsApp, email or your device’s share sheet.</p>
+                            <div class="share-url"><input id="portfolioUrl" type="text" readonly aria-label="Live portfolio URL"><button class="btn btn-secondary" id="copyPortfolio" type="button"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy</button></div>
+                            <div class="share-actions">
+                                <button class="btn btn-secondary" id="nativeShare" type="button"><i class="fa-solid fa-share-nodes" aria-hidden="true"></i> Share</button>
+                                <a class="btn whatsapp" id="shareWhatsApp" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp</a>
+                                <a class="btn email" id="shareEmail"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Email</a>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="panel" aria-labelledby="projectsTitle">
+                        <div class="panel-head"><div><h2 id="projectsTitle">Portfolio library</h2><p>Edit, publish, unpublish or remove any entry.</p></div><button class="text-button" id="syncPublicPortfolio" type="button">Sync public portfolio</button></div>
+                        <div class="project-list" id="projectsList" aria-live="polite"><div class="empty-state"><i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>Loading portfolio entries…</div></div>
+                    </section>
+                </aside>
             </div>
         </div>
-    </div>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <script>
-        // ========== FIREBASE CONFIG ==========
+        'use strict';
+
+        // This account mapping is an identifier, not a secret. The password is never stored in this repository.
+        const ADMIN_ID = 'zacheus';
+        const ADMIN_EMAIL = 'zacheussimbaya@gmail.com';
+        const MAX_IMAGE_BYTES = 25 * 1024 * 1024;
+        const DEFAULT_SETTINGS = Object.freeze({
+            portfolioTitle: 'Portfolio & Projects',
+            portfolioIntro: 'A selection of thoughtful digital products, business services and creative work delivered by Seedwel Investment LTD.',
+            businessEmail: 'seedwelinvestltd@gmail.com',
+            businessPhone: '+260 973 028 342',
+            storageCapacityTB: 1
+        });
+        const SEED_PROJECTS = Object.freeze([
+            { name: 'App Development & Publishing', category: 'Mobile app', client: 'Business technology', image: 'https://i.ibb.co/b50zqq9W/91923a7aeb2120244d50966b9cb69f19.jpg', description: 'Modern, responsive application development and Google Play publishing support for a growing business.', results: 'App development · Play Store publishing · Ongoing support' },
+            { name: 'E-Commerce Platform', category: 'E-commerce', client: 'Retail', image: 'https://i.ibb.co/sdsgbKT1/7ab503270d8ec0cdfd8ab91b9d7513ed.jpg', description: 'A full-featured online store with payment integration, product management and reliable hosting.', results: 'Online sales · Payment integration · Product management' },
+            { name: 'Portfolio Website', category: 'Website', client: 'Creative professional', image: 'https://i.ibb.co/G4xsCdd3/0231d8ff81750c9e0c533f563acf7d14.jpg', description: 'A visual portfolio that puts a professional photographer’s work front and centre across all devices.', results: 'Responsive portfolio · Optimised visuals · Fast loading' },
+            { name: 'Business Landing Page', category: 'Website', client: 'Service business', image: 'https://i.ibb.co/20YyyXCL/2e1921520a41a8019241c94dfdd5b905.jpg', description: 'A conversion-focused landing page designed to create clear next steps and capture qualified leads.', results: 'Lead generation · Mobile ready · Clear calls to action' },
+            { name: 'School Management System', category: 'Website', client: 'Education', image: 'https://i.ibb.co/nqMZdp2R/bfebc06c230536c04c2b0e2a20e20d07.jpg', description: 'A school management platform for student records, fee tracking and a connected parent experience.', results: 'Student records · Fees tracking · Parent portal' },
+            { name: 'Brand Identity Package', category: 'Branding', client: 'Growing business', image: 'https://i.ibb.co/svxj52ny/seedwel.png', description: 'A cohesive identity package with a distinctive logo, supporting collateral and practical brand guidance.', results: 'Logo system · Business cards · Brand guidelines' },
+            { name: 'Company Registration (PACRA)', category: 'Business registration', client: 'Zambian business', image: 'https://i.ibb.co/gMRs5XZ2/images.jpg', description: 'End-to-end PACRA company registration support to establish a business efficiently and compliantly.', results: 'PACRA support · Clear process · Compliance guidance' },
+            { name: 'ZRA VAT, TPIN & TOT Registration', category: 'Business registration', client: 'Zambian business', image: 'https://i.ibb.co/j9ws2d51/1.jpg', description: 'Practical assistance with TPIN, VAT and TOT registration so a business can meet key tax requirements.', results: 'TPIN · VAT · TOT registration' },
+            { name: 'Workers’ Compensation Registration', category: 'Business registration', client: 'Employer', image: 'https://i.ibb.co/67bgY0K3/images-3.jpg', description: 'Registration support for statutory employee protection and Workers’ Compensation compliance.', results: 'Statutory registration · Employer guidance · Compliance' }
+        ]);
+
         const firebaseConfig = {
-            apiKey: "AIzaSyA-BpRy-RVc2rqIG6uiRu_XrGEu1ZGnQwU",
-            authDomain: "seedwel-investment-limited.firebaseapp.com",
-            databaseURL: "https://seedwel-investment-limited-default-rtdb.firebaseio.com",
-            projectId: "seedwel-investment-limited",
-            storageBucket: "seedwel-investment-limited.firebasestorage.app",
-            messagingSenderId: "197778268619",
-            appId: "1:197778268619:web:92f29d88fa5a22dbfa964e"
+            apiKey: 'AIzaSyA-BpRy-RVc2rqIG6uiRu_XrGEu1ZGnQwU',
+            authDomain: 'seedwel-investment-limited.firebaseapp.com',
+            databaseURL: 'https://seedwel-investment-limited-default-rtdb.firebaseio.com',
+            projectId: 'seedwel-investment-limited',
+            storageBucket: 'seedwel-investment-limited.firebasestorage.app',
+            messagingSenderId: '197778268619',
+            appId: '1:197778268619:web:92f29d88fa5a22dbfa964e'
         };
+
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.database();
+        const storage = firebase.storage();
 
-        // ========== CLOUDINARY CONFIG ==========
-        const CLOUD_NAME = 'dhad95cch';
-        const UPLOAD_PRESET = 'portfolio';
+        const $ = (id) => document.getElementById(id);
+        const loginScreen = $('loginScreen');
+        const dashboard = $('dashboard');
+        const loginForm = $('loginForm');
+        const adminId = $('adminId');
+        const passwordInput = $('passwordInput');
+        const passwordToggle = $('passwordToggle');
+        const resetPassword = $('resetPassword');
+        const loginError = $('loginError');
+        const btnLogin = $('btnLogin');
+        const btnLogout = $('btnLogout');
+        const projectForm = $('projectForm');
+        const projectImage = $('projectImage');
+        const uploadArea = $('uploadArea');
+        const previewWrap = $('previewWrap');
+        const imagePreview = $('imagePreview');
+        const removeImage = $('removeImage');
+        const externalImageUrl = $('externalImageUrl');
+        const projectName = $('projectName');
+        const projectCategory = $('projectCategory');
+        const projectClient = $('projectClient');
+        const projectUrl = $('projectUrl');
+        const projectDescription = $('projectDescription');
+        const projectResults = $('projectResults');
+        const projectPublished = $('projectPublished');
+        const projectStatus = $('projectStatus');
+        const saveProject = $('saveProject');
+        const resetProjectForm = $('resetProjectForm');
+        const cancelEdit = $('cancelEdit');
+        const projectsList = $('projectsList');
+        const syncPublicPortfolio = $('syncPublicPortfolio');
+        const settingsForm = $('settingsForm');
+        const portfolioTitle = $('portfolioTitle');
+        const portfolioIntro = $('portfolioIntro');
+        const businessEmail = $('businessEmail');
+        const businessPhone = $('businessPhone');
+        const storageCapacityTB = $('storageCapacityTB');
+        const settingsStatus = $('settingsStatus');
+        const portfolioUrl = $('portfolioUrl');
+        const copyPortfolio = $('copyPortfolio');
+        const nativeShare = $('nativeShare');
+        const shareWhatsApp = $('shareWhatsApp');
+        const shareEmail = $('shareEmail');
+        const toast = $('toast');
 
-        // ========== DOM ELEMENTS ==========
-        const loginScreen = document.getElementById('loginScreen');
-        const dashboard = document.getElementById('dashboard');
-        const emailInput = document.getElementById('emailInput');
-        const passwordInput = document.getElementById('passwordInput');
-        const btnLogin = document.getElementById('btnLogin');
-        const btnLogout = document.getElementById('btnLogout');
-        const loginError = document.getElementById('loginError');
-        const imageUploadArea = document.getElementById('imageUploadArea');
-        const imagePreview = document.getElementById('imagePreview');
-        const uploadedImageUrl = document.getElementById('uploadedImageUrl');
-        const uploadStatus = document.getElementById('uploadStatus');
-        const projectName = document.getElementById('projectName');
-        const projectDescription = document.getElementById('projectDescription');
-        const projectAmount = document.getElementById('projectAmount');
-        const btnSubmit = document.getElementById('btnSubmit');
-        const projectsList = document.getElementById('projectsList');
+        let currentProjects = new Map();
+        let currentSettings = { ...DEFAULT_SETTINGS };
+        let editingKey = null;
+        let selectedFile = null;
+        let settingsTouched = false;
+        let toastTimer;
+        let dataListening = false;
 
-        // ========== AUTH STATE ==========
-        auth.onAuthStateChanged((user) => {
-            if (user && user.email === 'zacheussimbaya@gmail.com') {
-                loginScreen.style.display = 'none';
-                dashboard.style.display = 'block';
-                loadProjectsList();
-            } else {
-                loginScreen.style.display = 'flex';
-                dashboard.style.display = 'none';
-                if (user && user.email !== 'zacheussimbaya@gmail.com') {
-                    auth.signOut();
-                    alert('Access denied. Only the assigned admin can log in.');
-                }
+        function setButtonLoading(button, isLoading, label, iconClass) {
+            button.disabled = isLoading;
+            button.innerHTML = isLoading
+                ? '<i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i><span>' + label + '</span>'
+                : '<i class="' + iconClass + '" aria-hidden="true"></i><span>' + label + '</span>';
+        }
+
+        function setStatus(element, message = '', type = '') {
+            element.textContent = message;
+            element.className = 'form-status' + (type ? ' ' + type : '');
+        }
+
+        function showToast(message, type = '') {
+            window.clearTimeout(toastTimer);
+            toast.textContent = message;
+            toast.className = 'toast show' + (type ? ' ' + type : '');
+            toastTimer = window.setTimeout(() => { toast.className = 'toast'; }, 4200);
+        }
+
+        function safeText(value, max = 0) {
+            const text = String(value || '').trim();
+            return max ? text.slice(0, max) : text;
+        }
+
+        function safeHttpUrl(value, required = false) {
+            const raw = safeText(value, 2048);
+            if (!raw && !required) return '';
+            try {
+                const parsed = new URL(raw);
+                if (parsed.protocol !== 'https:' && parsed.protocol !== 'http:') throw new Error('Unsupported protocol');
+                return parsed.href;
+            } catch (_) {
+                throw new Error('Please use a complete http:// or https:// URL.');
             }
-        });
+        }
 
-        // ========== LOGIN ==========
-        btnLogin.addEventListener('click', () => {
-            const email = emailInput.value.trim();
-            const password = passwordInput.value;
-            if (!email || !password) {
-                loginError.textContent = 'Please enter email and password.';
-                loginError.style.display = 'block';
+        function safeImageUrl(value) {
+            try { return safeHttpUrl(value, true); } catch (_) { return 'favicon.svg'; }
+        }
+
+        function formatBytes(bytes) {
+            const value = Number(bytes) || 0;
+            if (!value) return '0 B';
+            const units = ['B', 'KB', 'MB', 'GB', 'TB'];
+            const index = Math.min(Math.floor(Math.log(value) / Math.log(1024)), units.length - 1);
+            const amount = value / Math.pow(1024, index);
+            return (amount >= 10 || index === 0 ? amount.toFixed(0) : amount.toFixed(1)) + ' ' + units[index];
+        }
+
+        function getPortfolioLink() {
+            return new URL('projects.html', window.location.href).href;
+        }
+
+        function buildShareText() {
+            return 'Explore the Seedwel Investment LTD portfolio: ' + getPortfolioLink();
+        }
+
+        function updateShareLinks() {
+            const link = getPortfolioLink();
+            const message = buildShareText();
+            portfolioUrl.value = link;
+            shareWhatsApp.href = 'https://wa.me/?text=' + encodeURIComponent(message);
+            shareEmail.href = 'mailto:?subject=' + encodeURIComponent('Seedwel Investment LTD portfolio') + '&body=' + encodeURIComponent(message);
+        }
+
+        function getAttemptState() {
+            try {
+                const state = JSON.parse(sessionStorage.getItem('seedwelAdminAttempts') || '{}');
+                if (!state.startedAt || Date.now() - state.startedAt > 15 * 60 * 1000) return { count: 0, startedAt: Date.now() };
+                return state;
+            } catch (_) { return { count: 0, startedAt: Date.now() }; }
+        }
+
+        function noteFailedAttempt() {
+            const state = getAttemptState();
+            const next = { count: state.count + 1, startedAt: state.startedAt || Date.now() };
+            sessionStorage.setItem('seedwelAdminAttempts', JSON.stringify(next));
+            return next;
+        }
+
+        function clearFailedAttempts() {
+            sessionStorage.removeItem('seedwelAdminAttempts');
+        }
+
+        function accountIsAdmin(user) {
+            return Boolean(user && user.email && user.email.toLowerCase() === ADMIN_EMAIL);
+        }
+
+        function revealDashboard() {
+            loginScreen.hidden = true;
+            dashboard.hidden = false;
+            updateShareLinks();
+            if (!dataListening) startDataListeners();
+        }
+
+        function revealLogin(message = '') {
+            dashboard.hidden = true;
+            loginScreen.hidden = false;
+            loginError.style.color = '';
+            loginError.textContent = message;
+            passwordInput.value = '';
+            if (dataListening) stopDataListeners();
+        }
+
+        async function handleSignedInUser(user) {
+            if (!accountIsAdmin(user)) {
+                if (user) await auth.signOut();
+                revealLogin(user ? 'This account is not authorized for this dashboard.' : '');
                 return;
             }
-            if (email !== 'zacheussimbaya@gmail.com') {
-                loginError.textContent = 'Access denied. Only the assigned admin can log in.';
-                loginError.style.display = 'block';
+            if (!user.emailVerified) {
+                try { await user.sendEmailVerification(); } catch (_) { /* Authentication still remains protected. */ }
+                await auth.signOut();
+                revealLogin('Confirm the verification email sent to the administrator account before signing in.');
                 return;
             }
-            btnLogin.disabled = true;
-            btnLogin.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
-            loginError.style.display = 'none';
-            auth.signInWithEmailAndPassword(email, password)
-                .catch((error) => {
-                    loginError.textContent = error.message;
-                    loginError.style.display = 'block';
-                    btnLogin.disabled = false;
-                    btnLogin.innerHTML = '<i class="fas fa-lock"></i> Sign In';
+            clearFailedAttempts();
+            revealDashboard();
+        }
+
+        auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
+            .catch(() => {
+                showToast('Your browser blocked session persistence. Sign-in will still be protected for this visit.', 'error');
+            })
+            .finally(() => {
+                auth.onAuthStateChanged((user) => {
+                    handleSignedInUser(user).catch(() => revealLogin('Unable to validate this session. Please sign in again.'));
                 });
-        });
-
-        passwordInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') btnLogin.click();
-        });
-
-        // ========== LOGOUT ==========
-        btnLogout.addEventListener('click', () => {
-            auth.signOut();
-            uploadedImageUrl.value = '';
-            imagePreview.style.display = 'none';
-            imagePreview.src = '';
-            uploadStatus.textContent = '';
-            projectName.value = '';
-            projectDescription.value = '';
-            projectAmount.value = '';
-        });
-
-        // ========== CLOUDINARY UPLOAD WIDGET ==========
-        const cloudinaryWidget = cloudinary.createUploadWidget({
-            cloudName: CLOUD_NAME,
-            uploadPreset: UPLOAD_PRESET,
-            sources: ['local', 'url', 'camera'],
-            multiple: false,
-            maxFileSize: 10000000,
-            cropping: true,
-            showAdvancedOptions: false,
-            styles: {
-                palette: {
-                    window: '#1e3052',
-                    windowBorder: '#d4a853',
-                    tabIcon: '#d4a853',
-                    menuIcons: '#d4a853',
-                    textDark: '#ffffff',
-                    textLight: '#a0a8b8',
-                    link: '#d4a853',
-                    action: '#d4a853',
-                    inactiveTabIcon: '#a0a8b8',
-                    error: '#ef4444',
-                    inProgress: '#d4a853',
-                    complete: '#22c55e',
-                    sourceBg: '#1a2744'
-                }
-            }
-        }, (error, result) => {
-            if (error) {
-                uploadStatus.textContent = 'Upload failed: ' + error.message;
-                uploadStatus.className = 'upload-status error';
-                return;
-            }
-            if (result && result.event === 'success') {
-                uploadedImageUrl.value = result.info.secure_url;
-                imagePreview.src = result.info.secure_url;
-                imagePreview.style.display = 'block';
-                uploadStatus.textContent = 'Image uploaded successfully!';
-                uploadStatus.className = 'upload-status success';
-            }
-        });
-
-        imageUploadArea.addEventListener('click', () => {
-            cloudinaryWidget.open();
-        });
-
-        // ========== ADD PROJECT ==========
-        btnSubmit.addEventListener('click', () => {
-            const image = uploadedImageUrl.value;
-            const name = projectName.value.trim();
-            const description = projectDescription.value.trim();
-            const amount = projectAmount.value.trim();
-
-            if (!image) {
-                uploadStatus.textContent = 'Please upload an image first.';
-                uploadStatus.className = 'upload-status error';
-                return;
-            }
-            if (!name || !description || !amount) {
-                alert('Please fill in all fields.');
-                return;
-            }
-
-            btnSubmit.disabled = true;
-            btnSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adding...';
-
-            const newProjectRef = db.ref('projects').push();
-            newProjectRef.set({
-                image: image,
-                name: name,
-                description: description,
-                amount: parseFloat(amount).toFixed(2),
-                createdAt: firebase.database.ServerValue.TIMESTAMP
-            }).then(() => {
-                // Reset form
-                uploadedImageUrl.value = '';
-                imagePreview.style.display = 'none';
-                imagePreview.src = '';
-                uploadStatus.textContent = 'Project added!';
-                uploadStatus.className = 'upload-status success';
-                projectName.value = '';
-                projectDescription.value = '';
-                projectAmount.value = '';
-                btnSubmit.disabled = false;
-                btnSubmit.innerHTML = '<i class="fas fa-plus-circle"></i> Add Project';
-                setTimeout(() => {
-                    uploadStatus.textContent = '';
-                }, 3000);
-            }).catch((error) => {
-                console.error('Error adding project:', error);
-                alert('Failed to add project: ' + error.message);
-                btnSubmit.disabled = false;
-                btnSubmit.innerHTML = '<i class="fas fa-plus-circle"></i> Add Project';
             });
+
+        passwordToggle.addEventListener('click', () => {
+            const showing = passwordInput.type === 'text';
+            passwordInput.type = showing ? 'password' : 'text';
+            passwordToggle.setAttribute('aria-label', showing ? 'Show password' : 'Hide password');
+            passwordToggle.setAttribute('aria-pressed', String(!showing));
+            passwordToggle.innerHTML = '<i class="fa-solid fa-eye' + (showing ? '' : '-slash') + '" aria-hidden="true"></i>';
         });
 
-        // ========== LOAD PROJECTS LIST ==========
-        function loadProjectsList() {
-            db.ref('projects').on('value', (snapshot) => {
-                const data = snapshot.val();
-                projectsList.innerHTML = '';
-
-                if (!data) {
-                    projectsList.innerHTML =
-                        '<div class="no-projects"><i class="fas fa-folder-open" style="display:block; margin-bottom:8px; color:var(--gold); font-size:2rem;"></i>No projects yet. Add your first one!</div>';
-                    return;
+        loginForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            loginError.style.color = '';
+            const attempts = getAttemptState();
+            if (attempts.count >= 5) {
+                loginError.textContent = 'Too many attempts in this browser. Wait 15 minutes before trying again.';
+                return;
+            }
+            const enteredId = safeText(adminId.value).toLowerCase();
+            const password = passwordInput.value;
+            if (!enteredId || !password) {
+                loginError.textContent = 'Enter your Admin ID and password.';
+                return;
+            }
+            if (enteredId !== ADMIN_ID) {
+                noteFailedAttempt();
+                loginError.textContent = 'Sign-in failed. Check your Admin ID and password.';
+                passwordInput.value = '';
+                return;
+            }
+            setButtonLoading(btnLogin, true, 'Signing in…', 'fa-solid fa-lock');
+            loginError.textContent = '';
+            try {
+                const credential = await auth.signInWithEmailAndPassword(ADMIN_EMAIL, password);
+                if (!credential.user.emailVerified) {
+                    try { await credential.user.sendEmailVerification(); } catch (_) { /* no sensitive error shown */ }
+                    await auth.signOut();
+                    throw new Error('Confirm the verification email sent to the administrator account before signing in.');
                 }
+                clearFailedAttempts();
+            } catch (error) {
+                noteFailedAttempt();
+                loginError.textContent = error && error.message && error.message.startsWith('Confirm')
+                    ? error.message
+                    : 'Sign-in failed. Check your Admin ID and password, then try again.';
+                passwordInput.value = '';
+            } finally {
+                setButtonLoading(btnLogin, false, 'Sign in securely', 'fa-solid fa-lock');
+            }
+        });
 
-                const projects = Object.entries(data).reverse();
-                projects.forEach(([key, project]) => {
-                    const item = document.createElement('div');
-                    item.className = 'project-list-item';
-                    item.innerHTML = `
-                                <img src="${project.image || 'https://i.ibb.co/svxj52ny/seedwel.png'}" 
-                                     alt="${project.name}" 
-                                     onerror="this.src='https://i.ibb.co/svxj52ny/seedwel.png'; this.style.objectFit='contain';">
-                                <div class="project-list-info">
-                                    <h5>${project.name || 'Untitled'}</h5>
-                                    <p>$${project.amount || '0'} · ${project.description ? project.description.substring(0, 40) + '...' : 'No description'}</p>
-                                </div>
-                                <button class="btn-delete" data-key="${key}">
-                                    <i class="fas fa-trash"></i> Delete
-                                </button>
-                            `;
-                    projectsList.appendChild(item);
-                });
+        resetPassword.addEventListener('click', async () => {
+            if (safeText(adminId.value).toLowerCase() !== ADMIN_ID) {
+                loginError.textContent = 'Enter the assigned Admin ID before requesting a reset.';
+                return;
+            }
+            resetPassword.disabled = true;
+            try {
+                await auth.sendPasswordResetEmail(ADMIN_EMAIL);
+                loginError.style.color = '#8ce8bd';
+                loginError.textContent = 'If the administrator account is configured, a password reset email has been sent.';
+            } catch (_) {
+                loginError.style.color = '#ff9d9d';
+                loginError.textContent = 'Unable to send a reset email right now. Please try again later.';
+            } finally {
+                resetPassword.disabled = false;
+            }
+        });
 
-                // Delete listeners
-                projectsList.querySelectorAll('.btn-delete').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        const key = btn.dataset.key;
-                        if (confirm('Are you sure you want to delete this project?')) {
-                            db.ref('projects/' + key).remove()
-                                .then(() => console.log('Project deleted'))
-                                .catch(err => alert('Error: ' + err.message));
-                        }
-                    });
-                });
+        btnLogout.addEventListener('click', async () => {
+            try { await auth.signOut(); } catch (_) { showToast('Could not end this session. Please close the browser and try again.', 'error'); }
+        });
+
+        function startDataListeners() {
+            dataListening = true;
+            db.ref('projects').on('value', (snapshot) => {
+                const value = snapshot.val() || {};
+                currentProjects = new Map(Object.entries(value));
+                renderProjects();
+                updateMetrics();
+                $('lastSaved').textContent = 'Portfolio synchronized securely';
+            }, () => {
+                projectsList.innerHTML = '<div class="empty-state"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>Unable to load the portfolio. Check the deployed Firebase Database Rules and connection.</div>';
+                showToast('Portfolio data could not be loaded.', 'error');
+            });
+            db.ref('siteSettings').on('value', (snapshot) => {
+                currentSettings = { ...DEFAULT_SETTINGS, ...(snapshot.val() || {}) };
+                applySettingsToForm();
+                updateMetrics();
+            }, () => { showToast('Public portfolio details could not be loaded.', 'error'); });
+        }
+
+        function stopDataListeners() {
+            db.ref('projects').off();
+            db.ref('siteSettings').off();
+            dataListening = false;
+            currentProjects = new Map();
+        }
+
+        function applySettingsToForm() {
+            if (settingsTouched && settingsForm.contains(document.activeElement)) return;
+            portfolioTitle.value = safeText(currentSettings.portfolioTitle) || DEFAULT_SETTINGS.portfolioTitle;
+            portfolioIntro.value = safeText(currentSettings.portfolioIntro) || DEFAULT_SETTINGS.portfolioIntro;
+            businessEmail.value = safeText(currentSettings.businessEmail) || DEFAULT_SETTINGS.businessEmail;
+            businessPhone.value = safeText(currentSettings.businessPhone) || DEFAULT_SETTINGS.businessPhone;
+            storageCapacityTB.value = Number(currentSettings.storageCapacityTB) > 0 ? Number(currentSettings.storageCapacityTB) : 1;
+            settingsTouched = false;
+        }
+
+        function sortedProjects() {
+            return Array.from(currentProjects.entries()).sort(([, a], [, b]) => {
+                const aTime = Number(a.updatedAt || a.createdAt || 0);
+                const bTime = Number(b.updatedAt || b.createdAt || 0);
+                return bTime - aTime;
             });
         }
+
+        // Keep drafts and upload metadata private in /projects. Only this deliberately
+        // limited copy is exposed through /publicProjects to visitors.
+        function toPublicProject(project) {
+            return {
+                name: safeText(project.name, 120) || 'Untitled project',
+                description: safeText(project.description, 1200) || 'A Seedwel Investment LTD portfolio project.',
+                category: safeText(project.category, 60) || 'Other',
+                client: safeText(project.client, 120),
+                liveUrl: safeText(project.liveUrl, 2048),
+                results: safeText(project.results, 500),
+                image: safeText(project.image, 2048) || 'favicon.svg',
+                published: true,
+                createdAt: Number(project.createdAt) || firebase.database.ServerValue.TIMESTAMP,
+                updatedAt: Number(project.updatedAt) || firebase.database.ServerValue.TIMESTAMP
+            };
+        }
+
+        async function syncPublicProject(key, project) {
+            const publicRef = db.ref('publicProjects/' + key);
+            if (project.published === false) {
+                await publicRef.remove();
+                return;
+            }
+            await publicRef.set(toPublicProject(project));
+        }
+
+        async function syncAllPublicProjects() {
+            const publicSnapshot = await db.ref('publicProjects').once('value');
+            const publicKeys = new Set(Object.keys(publicSnapshot.val() || {}));
+            for (const [key, project] of currentProjects.entries()) {
+                await syncPublicProject(key, project);
+                publicKeys.delete(key);
+            }
+            for (const key of publicKeys) await db.ref('publicProjects/' + key).remove();
+        }
+
+        function createButton(label, action, key, extraClass = '') {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'icon-btn' + (extraClass ? ' ' + extraClass : '');
+            button.textContent = label;
+            button.dataset.action = action;
+            button.dataset.key = key;
+            return button;
+        }
+
+        function renderProjects() {
+            projectsList.textContent = '';
+            const entries = sortedProjects();
+            if (!entries.length) {
+                const empty = document.createElement('div');
+                empty.className = 'empty-state';
+                empty.innerHTML = '<i class="fa-solid fa-folder-open" aria-hidden="true"></i>No portfolio entries yet. Add a project above or import the current showcase cards.';
+                const seed = document.createElement('button');
+                seed.type = 'button';
+                seed.id = 'importSeeds';
+                seed.className = 'btn btn-secondary seed-button';
+                seed.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Import current showcase cards';
+                seed.addEventListener('click', importSeedProjects);
+                empty.appendChild(seed);
+                projectsList.appendChild(empty);
+                return;
+            }
+
+            for (const [key, project] of entries) {
+                const item = document.createElement('article');
+                item.className = 'project-item';
+                const image = document.createElement('img');
+                image.className = 'project-thumb';
+                image.src = safeImageUrl(project.image);
+                image.alt = safeText(project.name, 120) || 'Portfolio project';
+                image.addEventListener('error', () => { image.src = 'favicon.svg'; });
+                const main = document.createElement('div');
+                main.className = 'project-item-main';
+                const top = document.createElement('div');
+                top.className = 'project-item-top';
+                const title = document.createElement('h3');
+                title.textContent = safeText(project.name, 120) || 'Untitled project';
+                const status = document.createElement('span');
+                const isPublished = project.published !== false;
+                status.className = 'status-pill ' + (isPublished ? 'published' : 'draft');
+                status.textContent = isPublished ? 'Published' : 'Draft';
+                top.append(title, status);
+                const details = document.createElement('p');
+                details.textContent = [safeText(project.category, 60) || 'Other', safeText(project.client, 120)].filter(Boolean).join(' · ');
+                const actions = document.createElement('div');
+                actions.className = 'project-item-actions';
+                actions.append(
+                    createButton('Edit', 'edit', key),
+                    createButton(isPublished ? 'Unpublish' : 'Publish', 'toggle', key),
+                    createButton('Delete', 'delete', key, 'delete')
+                );
+                main.append(top, details, actions);
+                item.append(image, main);
+                projectsList.appendChild(item);
+            }
+        }
+
+        function updateMetrics() {
+            const projects = Array.from(currentProjects.values());
+            const published = projects.filter((project) => project.published !== false).length;
+            const usage = projects.reduce((sum, project) => sum + Math.max(0, Number(project.fileSize) || 0), 0);
+            const capacityTB = Math.max(.01, Number(currentSettings.storageCapacityTB) || 1);
+            const capacity = capacityTB * Math.pow(1024, 4);
+            const percentage = Math.min(100, (usage / capacity) * 100);
+            $('totalProjects').textContent = projects.length;
+            $('publishedProjects').textContent = published;
+            $('storageTarget').textContent = (capacityTB < 1 ? capacityTB.toFixed(2).replace(/0+$/, '').replace(/\.$/, '') : capacityTB.toLocaleString()) + ' TB';
+            $('storageUsed').textContent = formatBytes(usage);
+            $('storageUsageCaption').textContent = formatBytes(usage) + ' of ' + $('storageTarget').textContent + ' tracked';
+            $('storageMeter').style.width = percentage + '%';
+        }
+
+        function previewImage(url) {
+            if (!url) {
+                imagePreview.removeAttribute('src');
+                previewWrap.classList.remove('visible');
+                return;
+            }
+            imagePreview.src = url;
+            previewWrap.classList.add('visible');
+        }
+
+        function resetProjectEditor() {
+            editingKey = null;
+            selectedFile = null;
+            projectForm.reset();
+            projectPublished.checked = true;
+            projectCategory.value = 'Website';
+            previewImage('');
+            setStatus(projectStatus);
+            $('projectFormTitle').textContent = 'Add a portfolio project';
+            $('projectFormDescription').textContent = 'Draft it first, then publish when it is ready for the public page.';
+            setButtonLoading(saveProject, false, 'Add project', 'fa-solid fa-plus');
+            cancelEdit.hidden = true;
+            window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+        }
+
+        function beginEdit(key) {
+            const project = currentProjects.get(key);
+            if (!project) return;
+            editingKey = key;
+            selectedFile = null;
+            projectImage.value = '';
+            projectName.value = safeText(project.name, 120);
+            projectCategory.value = safeText(project.category, 60) || 'Other';
+            if (!Array.from(projectCategory.options).some((option) => option.value === projectCategory.value)) projectCategory.value = 'Other';
+            projectClient.value = safeText(project.client, 120);
+            projectUrl.value = safeText(project.liveUrl, 2048);
+            projectDescription.value = safeText(project.description, 1200);
+            projectResults.value = safeText(project.results, 500);
+            externalImageUrl.value = '';
+            projectPublished.checked = project.published !== false;
+            previewImage(safeImageUrl(project.image));
+            $('projectFormTitle').textContent = 'Edit portfolio project';
+            $('projectFormDescription').textContent = 'Save changes to update the portfolio immediately. The old image is removed only after a successful replacement.';
+            setButtonLoading(saveProject, false, 'Save changes', 'fa-solid fa-floppy-disk');
+            cancelEdit.hidden = false;
+            setStatus(projectStatus);
+            projectForm.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+            projectName.focus();
+        }
+
+        function validateFile(file) {
+            if (!file) return;
+            if (!file.type || !file.type.startsWith('image/')) throw new Error('Please choose an image file.');
+            if (file.size > MAX_IMAGE_BYTES) throw new Error('That image is larger than 25 MB. Choose a smaller file.');
+        }
+
+        function chooseFile(file) {
+            try {
+                validateFile(file);
+                if (!file) return;
+                selectedFile = file;
+                externalImageUrl.value = '';
+                const reader = new FileReader();
+                reader.addEventListener('load', () => previewImage(reader.result));
+                reader.readAsDataURL(file);
+                setStatus(projectStatus, file.name + ' selected (' + formatBytes(file.size) + ').');
+            } catch (error) {
+                projectImage.value = '';
+                selectedFile = null;
+                setStatus(projectStatus, error.message, 'error');
+            }
+        }
+
+        projectImage.addEventListener('change', () => chooseFile(projectImage.files && projectImage.files[0]));
+        uploadArea.addEventListener('dragover', (event) => { event.preventDefault(); uploadArea.classList.add('dragging'); });
+        uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragging'));
+        uploadArea.addEventListener('drop', (event) => {
+            event.preventDefault();
+            uploadArea.classList.remove('dragging');
+            const file = event.dataTransfer.files && event.dataTransfer.files[0];
+            chooseFile(file);
+        });
+        externalImageUrl.addEventListener('change', () => {
+            if (!externalImageUrl.value.trim()) return;
+            try {
+                const url = safeHttpUrl(externalImageUrl.value);
+                selectedFile = null;
+                projectImage.value = '';
+                previewImage(url);
+                setStatus(projectStatus, 'Trusted external image URL selected.');
+            } catch (error) { setStatus(projectStatus, error.message, 'error'); }
+        });
+        removeImage.addEventListener('click', () => {
+            selectedFile = null;
+            projectImage.value = '';
+            externalImageUrl.value = '';
+            if (editingKey) {
+                const project = currentProjects.get(editingKey);
+                previewImage(project ? safeImageUrl(project.image) : '');
+            } else previewImage('');
+            setStatus(projectStatus);
+        });
+        resetProjectForm.addEventListener('click', resetProjectEditor);
+        cancelEdit.addEventListener('click', resetProjectEditor);
+
+        function randomSegment() {
+            if (window.crypto && window.crypto.getRandomValues) {
+                const values = new Uint32Array(2);
+                window.crypto.getRandomValues(values);
+                return Array.from(values).map((value) => value.toString(36)).join('');
+            }
+            return Math.random().toString(36).slice(2) + Date.now().toString(36);
+        }
+
+        async function uploadImage(file) {
+            const user = auth.currentUser;
+            if (!user) throw new Error('Your session has ended. Sign in again before uploading.');
+            const mimeExtension = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp', 'image/gif': 'gif', 'image/avif': 'avif' };
+            const extension = mimeExtension[file.type] || 'img';
+            const path = 'portfolio/' + user.uid + '/' + Date.now() + '-' + randomSegment() + '.' + extension;
+            const ref = storage.ref().child(path);
+            const task = ref.put(file, { contentType: file.type, cacheControl: 'public,max-age=31536000' });
+            task.on('state_changed', (snapshot) => {
+                const progress = snapshot.totalBytes ? Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100) : 0;
+                setStatus(projectStatus, 'Uploading image… ' + progress + '%');
+            });
+            const snapshot = await task;
+            return { image: await snapshot.ref.getDownloadURL(), storagePath: snapshot.ref.fullPath, fileSize: file.size };
+        }
+
+        async function removeStorageFile(path) {
+            if (!path) return;
+            try { await storage.ref().child(path).delete(); }
+            catch (error) {
+                // A missing legacy file is harmless; surface other failures to the administrator.
+                if (error && error.code !== 'storage/object-not-found') throw error;
+            }
+        }
+
+        projectForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const existing = editingKey ? currentProjects.get(editingKey) : null;
+            let upload = null;
+            let privateRecordSaved = false;
+            try {
+                const name = safeText(projectName.value, 120);
+                const description = safeText(projectDescription.value, 1200);
+                const category = safeText(projectCategory.value, 60);
+                const client = safeText(projectClient.value, 120);
+                const results = safeText(projectResults.value, 500);
+                const liveUrl = safeHttpUrl(projectUrl.value);
+                const imageUrl = externalImageUrl.value.trim() ? safeHttpUrl(externalImageUrl.value) : '';
+                if (name.length < 2) throw new Error('Enter a project title of at least 2 characters.');
+                if (description.length < 10) throw new Error('Add a project summary of at least 10 characters.');
+                if (!category) throw new Error('Choose a category.');
+                setButtonLoading(saveProject, true, existing ? 'Saving…' : 'Adding…', existing ? 'fa-solid fa-floppy-disk' : 'fa-solid fa-plus');
+                setStatus(projectStatus, 'Preparing secure project record…');
+
+                let image = imageUrl || (existing && existing.image) || '';
+                let storagePath = imageUrl ? '' : ((existing && existing.storagePath) || '');
+                let fileSize = imageUrl ? 0 : (Number(existing && existing.fileSize) || 0);
+                if (selectedFile) {
+                    upload = await uploadImage(selectedFile);
+                    image = upload.image;
+                    storagePath = upload.storagePath;
+                    fileSize = upload.fileSize;
+                }
+                if (!image) throw new Error('Choose an image file or enter a trusted image URL.');
+
+                const ref = existing ? db.ref('projects/' + editingKey) : db.ref('projects').push();
+                const record = {
+                    name,
+                    description,
+                    category,
+                    client,
+                    liveUrl,
+                    results,
+                    image,
+                    storagePath,
+                    fileSize,
+                    published: projectPublished.checked,
+                    createdAt: existing && Number(existing.createdAt) ? Number(existing.createdAt) : firebase.database.ServerValue.TIMESTAMP,
+                    updatedAt: firebase.database.ServerValue.TIMESTAMP
+                };
+                // When moving an entry to drafts, remove its public copy first. This favors privacy
+                // over visibility if a network request fails halfway through the operation.
+                if (record.published === false) await syncPublicProject(ref.key, record);
+                await ref.set(record);
+                privateRecordSaved = true;
+                if (record.published !== false) await syncPublicProject(ref.key, record);
+
+                const oldStoragePath = existing && existing.storagePath;
+                if (oldStoragePath && oldStoragePath !== storagePath) {
+                    try { await removeStorageFile(oldStoragePath); }
+                    catch (_) { showToast('Project saved, but the previous image could not be removed. Check Firebase Storage.', 'error'); }
+                }
+                setStatus(projectStatus, existing ? 'Project updated successfully.' : 'Project added successfully.', 'success');
+                showToast(existing ? 'Portfolio project updated.' : 'Portfolio project added.');
+                resetProjectEditor();
+            } catch (error) {
+                if (upload && upload.storagePath && !privateRecordSaved) {
+                    try { await removeStorageFile(upload.storagePath); } catch (_) { /* Do not hide original error. */ }
+                }
+                const message = privateRecordSaved
+                    ? 'Project saved privately, but the public portfolio did not sync. Use “Sync public portfolio” and check Database Rules.'
+                    : (error && error.message ? error.message : 'Unable to save this project. Please try again.');
+                setStatus(projectStatus, message, 'error');
+            } finally {
+                if (editingKey) setButtonLoading(saveProject, false, 'Save changes', 'fa-solid fa-floppy-disk');
+                else setButtonLoading(saveProject, false, 'Add project', 'fa-solid fa-plus');
+            }
+        });
+
+        projectsList.addEventListener('click', async (event) => {
+            const button = event.target.closest('button[data-action]');
+            if (!button) return;
+            const key = button.dataset.key;
+            const action = button.dataset.action;
+            const project = currentProjects.get(key);
+            if (!project) return;
+            if (action === 'edit') { beginEdit(key); return; }
+            if (action === 'toggle') {
+                button.disabled = true;
+                const nextProject = { ...project, published: project.published === false, updatedAt: firebase.database.ServerValue.TIMESTAMP };
+                try {
+                    if (nextProject.published) {
+                        await db.ref('projects/' + key).update({ published: true, updatedAt: nextProject.updatedAt });
+                        await syncPublicProject(key, nextProject);
+                    } else {
+                        // Remove the public copy first so a draft is never left exposed on a partial failure.
+                        await syncPublicProject(key, nextProject);
+                        await db.ref('projects/' + key).update({ published: false, updatedAt: nextProject.updatedAt });
+                    }
+                    showToast(nextProject.published ? 'Project published.' : 'Project moved to drafts and removed from the public feed.');
+                } catch (_) { showToast('Unable to change publish status. Check Database Rules, then use Sync public portfolio if needed.', 'error'); }
+                finally { button.disabled = false; }
+                return;
+            }
+            if (action === 'delete') {
+                if (!window.confirm('Delete “' + safeText(project.name, 120) + '”? This cannot be undone.')) return;
+                button.disabled = true;
+                try {
+                    await db.ref('publicProjects/' + key).remove();
+                    await db.ref('projects/' + key).remove();
+                    try { await removeStorageFile(project.storagePath); }
+                    catch (_) { showToast('Project deleted, but its image could not be removed. Check Firebase Storage.', 'error'); }
+                    if (editingKey === key) resetProjectEditor();
+                    showToast('Portfolio project deleted.');
+                } catch (_) { showToast('Unable to delete this project. Check Database Rules.', 'error'); }
+                finally { button.disabled = false; }
+            }
+        });
+
+        syncPublicPortfolio.addEventListener('click', async () => {
+            if (!currentProjects.size) {
+                showToast('There are no private projects to sync yet.', 'error');
+                return;
+            }
+            syncPublicPortfolio.disabled = true;
+            syncPublicPortfolio.textContent = 'Syncing…';
+            try {
+                await syncAllPublicProjects();
+                showToast('Public portfolio synchronized. Drafts and stale entries are private.');
+            } catch (_) {
+                showToast('Could not synchronize the public portfolio. Check Database Rules.', 'error');
+            } finally {
+                syncPublicPortfolio.disabled = false;
+                syncPublicPortfolio.textContent = 'Sync public portfolio';
+            }
+        });
+
+        async function importSeedProjects() {
+            if (!window.confirm('Import the nine current showcase cards? They will become editable portfolio entries.')) return;
+            const button = $('importSeeds');
+            if (button) { button.disabled = true; button.innerHTML = '<i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> Importing…'; }
+            try {
+                for (const seed of SEED_PROJECTS) {
+                    const ref = db.ref('projects').push();
+                    const record = { ...seed, liveUrl: '', storagePath: '', fileSize: 0, published: true, createdAt: firebase.database.ServerValue.TIMESTAMP, updatedAt: firebase.database.ServerValue.TIMESTAMP };
+                    await ref.set(record);
+                    await syncPublicProject(ref.key, record);
+                }
+                showToast('Current showcase cards imported. You can now edit every one.');
+            } catch (_) {
+                showToast('Unable to import showcase cards. Check Database Rules.', 'error');
+                if (button) { button.disabled = false; button.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Import current showcase cards'; }
+            }
+        }
+
+        settingsForm.addEventListener('input', () => { settingsTouched = true; });
+        settingsForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            try {
+                const title = safeText(portfolioTitle.value, 100);
+                const intro = safeText(portfolioIntro.value, 500);
+                const email = safeText(businessEmail.value, 160);
+                const phone = safeText(businessPhone.value, 50);
+                const capacity = Number(storageCapacityTB.value);
+                if (!title || !intro || !email || !phone) throw new Error('Complete all public portfolio details.');
+                if (!/^\S+@\S+\.\S+$/.test(email)) throw new Error('Enter a valid portfolio email address.');
+                if (!Number.isFinite(capacity) || capacity <= 0 || capacity > 1024) throw new Error('Enter a storage target between 0.01 and 1024 TB.');
+                const save = $('saveSettings');
+                save.disabled = true;
+                save.innerHTML = '<i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> Saving…';
+                await db.ref('siteSettings').set({ portfolioTitle: title, portfolioIntro: intro, businessEmail: email, businessPhone: phone, storageCapacityTB: capacity, updatedAt: firebase.database.ServerValue.TIMESTAMP });
+                settingsTouched = false;
+                setStatus(settingsStatus, 'Public portfolio details saved.', 'success');
+                showToast('Public portfolio details updated.');
+                save.disabled = false;
+                save.innerHTML = '<i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> Save public details';
+            } catch (error) {
+                setStatus(settingsStatus, error && error.message ? error.message : 'Unable to save public details.', 'error');
+                const save = $('saveSettings');
+                save.disabled = false;
+                save.innerHTML = '<i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> Save public details';
+            }
+        });
+
+        copyPortfolio.addEventListener('click', async () => {
+            const text = getPortfolioLink();
+            try {
+                if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(text);
+                else {
+                    portfolioUrl.focus();
+                    portfolioUrl.select();
+                    document.execCommand('copy');
+                }
+                showToast('Portfolio link copied.');
+            } catch (_) { showToast('Could not copy automatically. Select and copy the link above.', 'error'); }
+        });
+        nativeShare.addEventListener('click', async () => {
+            if (!navigator.share) { await copyPortfolio.click(); return; }
+            try { await navigator.share({ title: 'Seedwel Investment LTD portfolio', text: 'Explore our latest work.', url: getPortfolioLink() }); }
+            catch (_) { /* User cancelled or sharing is unavailable; no error needed. */ }
+        });
+
+        updateShareLinks();
     </script>
 </body>
 </html>

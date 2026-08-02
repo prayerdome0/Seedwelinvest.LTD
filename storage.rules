@@ -1,0 +1,23 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email == 'zacheussimbaya@gmail.com'
+        && request.auth.token.email_verified == true;
+    }
+
+    // Public portfolio images can be displayed on the public portfolio page,
+    // but visitors cannot list the media library or upload files.
+    match /portfolio/{ownerId}/{fileName} {
+      allow get: if true;
+      allow list: if false;
+      allow create: if isAdmin()
+        && request.auth.uid == ownerId
+        && request.resource.size < 25 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+      allow update: if false;
+      allow delete: if isAdmin();
+    }
+  }
+}
