@@ -1011,6 +1011,253 @@
         }
 
         /* ───────── RESPONSIVE ───────── */
+
+        /* ───────── TESTIMONIALS ───────── */
+        .testimonials-section {
+            padding: 70px 28px;
+            background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+        }
+        .testimonials-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        .testimonial-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            font-size: 8rem;
+            color: rgba(220, 38, 38, 0.05);
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+        .testimonial-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(220, 38, 38, 0.3);
+            box-shadow: 0 16px 40px rgba(220, 38, 38, 0.08);
+        }
+        .testimonial-stars {
+            color: #f59e0b;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        .testimonial-text {
+            color: #4b5563;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .testimonial-author img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #dc2626;
+        }
+        .testimonial-author strong {
+            display: block;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: #111827;
+            font-size: 0.9rem;
+        }
+        .testimonial-author span {
+            color: #6b7280;
+            font-size: 0.8rem;
+        }
+
+        /* ───────── PROCESS STEPS ───────── */
+        .process-section {
+            padding: 70px 28px;
+            background: #ffffff;
+        }
+        .process-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .process-steps {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .process-step {
+            flex: 1;
+            min-width: 220px;
+            max-width: 260px;
+            text-align: center;
+            padding: 30px 20px;
+            background: #f8fafc;
+            border-radius: 20px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+        }
+        .process-step:hover {
+            transform: translateY(-8px);
+            border-color: #dc2626;
+            box-shadow: 0 16px 40px rgba(220, 38, 38, 0.1);
+            background: #ffffff;
+        }
+        .step-number {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 2.5rem;
+            color: rgba(220, 38, 38, 0.08);
+        }
+        .step-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            transition: all 0.4s ease;
+        }
+        .process-step:hover .step-icon {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.3);
+        }
+        .step-icon i {
+            font-size: 1.8rem;
+            color: #ffffff;
+        }
+        .process-step h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #111827;
+            margin-bottom: 10px;
+        }
+        .process-step p {
+            color: #4b5563;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        .process-connector {
+            display: flex;
+            align-items: center;
+            color: #dc2626;
+            font-size: 1.5rem;
+            padding-top: 60px;
+        }
+
+        /* ───────── CLIENTS SECTION ───────── */
+        .clients-section {
+            padding: 50px 28px;
+            background: #f8fafc;
+            border-top: 1px solid #e5e7eb;
+        }
+        .clients-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .clients-label {
+            color: #6b7280;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+        .clients-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        .client-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+        .client-logo:hover {
+            opacity: 1;
+            transform: translateY(-5px);
+        }
+        .client-logo i {
+            font-size: 2.5rem;
+            color: #dc2626;
+        }
+        .client-logo span {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #4b5563;
+        }
+
+
+        /* ───────── SCROLL REVEAL ───────── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.7s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal.delay-1 { transition-delay: 0.1s; }
+        .reveal.delay-2 { transition-delay: 0.2s; }
+        .reveal.delay-3 { transition-delay: 0.3s; }
+        .reveal.delay-4 { transition-delay: 0.4s; }
+        .reveal.delay-5 { transition-delay: 0.5s; }
+        .reveal.delay-6 { transition-delay: 0.6s; }
+        .reveal.delay-7 { transition-delay: 0.7s; }
+
+        /* ───────── EXTRA ANIMATIONS ───────── */
+        @keyframes counterPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        @keyframes gradientText {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes slideInFromBottom {
+            from { opacity: 0; transform: translateY(60px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes glowPulse {
+            0%, 100% { filter: drop-shadow(0 0 5px rgba(220, 38, 38, 0.2)); }
+            50% { filter: drop-shadow(0 0 15px rgba(220, 38, 38, 0.4)); }
+        }
+        .stat-card:hover .stat-number {
+            animation: counterPulse 0.5s ease;
+        }
+        .service-card:hover .service-icon {
+            animation: glowPulse 1s ease infinite;
+        }
+
         @media (max-width: 900px) {
             .nav-links {
                 display: none;
@@ -1085,6 +1332,21 @@
                 bottom: 12px;
             }
         }
+
+        @media (max-width: 900px) {
+            .process-connector { display: none; }
+            .process-steps { flex-direction: column; align-items: center; }
+            .process-step { max-width: 100%; }
+            .clients-logos { gap: 25px; }
+        }
+        @media (max-width: 640px) {
+            .testimonials-section { padding: 50px 16px; }
+            .testimonials-grid { grid-template-columns: 1fr; }
+            .process-section { padding: 50px 16px; }
+            .clients-section { padding: 35px 16px; }
+            .clients-logos { gap: 16px; }
+            .client-logo i { font-size: 2rem; }
+        }
     </style>
 </head>
 
@@ -1102,6 +1364,7 @@
                 <a href="about.html">About Us</a>
                 <a href="services.html">Services</a>
                 <a href="projects.html">Projects</a>
+                <a href="apply.html">Careers</a>
                 <a href="contact.html">Contact</a>
                 <a href="support.html">Support</a>
             </div>
@@ -1142,7 +1405,7 @@
                     <i class="fas fa-paper-plane" aria-hidden="true"></i>
                     <div><strong>Share-ready portfolio</strong><span>Send live work in one link</span></div>
                 </div>
-                <img src="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Team working" />
+                <img src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Team working" />
             </div>
         </div>
     </section>
@@ -1269,6 +1532,33 @@
                     <p>Creative portfolio for a professional photographer with stunning visuals and fast loading.</p>
                 </div>
             </div>
+            <div class="project-card animate-fade-up delay-1">
+                <img src="https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Restaurant Website Project" />
+                <div class="content">
+                    <span class="home-project-category">Restaurant</span>
+                    <h3>Flavour House Restaurant</h3>
+                    <p>Stunning restaurant website with online reservations, interactive menu, and photo galleries for a premium dining experience.</p>
+                    <a href="projects.html" class="home-project-link">View project <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="project-card animate-fade-up delay-2">
+                <img src="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Digital Marketing" />
+                <div class="content">
+                    <span class="home-project-category">Marketing</span>
+                    <h3>Digital Marketing Campaign</h3>
+                    <p>Full SEO, Google Ads, and social media strategy driving targeted traffic and conversions for growing businesses.</p>
+                    <a href="projects.html" class="home-project-link">View project <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="project-card animate-fade-up delay-3">
+                <img src="https://i.ibb.co/nqMZdp2R/bfebc06c230536c04c2b0e2a20e20d07.jpg" alt="School Management System" />
+                <div class="content">
+                    <span class="home-project-category">Website</span>
+                    <h3>School Management System</h3>
+                    <p>Complete school platform for student records, fee tracking, and a connected parent experience.</p>
+                    <a href="projects.html" class="home-project-link">View project <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1297,6 +1587,112 @@
                     <h3>Portfolio-ready handover</h3>
                     <p>Published work can be shared by link, WhatsApp or email, helping you present the latest projects to clients and partners without delay.</p>
                 </article>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ========== TESTIMONIALS ========== -->
+    <section class="testimonials-section">
+        <div class="testimonials-inner">
+            <div class="section-header reveal">
+                <p class="section-subtitle">Client Love</p>
+                <h2 class="section-title">What Our Clients Say</h2>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card reveal delay-1">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Seedwel built our restaurant website with online reservations and it transformed our business. We're getting 40% more bookings now!"</p>
+                    <div class="testimonial-author">
+                        <img src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=150" alt="Client" />
+                        <div>
+                            <strong>James M.</strong>
+                            <span>Restaurant Owner, Lusaka</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card reveal delay-2">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Professional, responsive, and delivered on time. Our e-commerce site is generating real revenue. Highly recommend Seedwel Investment!"</p>
+                    <div class="testimonial-author">
+                        <img src="https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150" alt="Client" />
+                        <div>
+                            <strong>Sarah K.</strong>
+                            <span>E-commerce Entrepreneur</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card reveal delay-3">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"They handled our PACRA registration and ZRA compliance flawlessly. Saved us weeks of paperwork and confusion. Amazing team!"</p>
+                    <div class="testimonial-author">
+                        <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=150" alt="Client" />
+                        <div>
+                            <strong>David C.</strong>
+                            <span>Business Owner, Kabwe</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== WORK PROCESS ========== -->
+    <section class="process-section">
+        <div class="process-inner">
+            <div class="section-header reveal">
+                <p class="section-subtitle">How We Work</p>
+                <h2 class="section-title">Simple Steps to Your Project</h2>
+            </div>
+            <div class="process-steps">
+                <div class="process-step reveal delay-1">
+                    <div class="step-number">01</div>
+                    <div class="step-icon"><i class="fas fa-comments"></i></div>
+                    <h3>Discovery Call</h3>
+                    <p>We discuss your vision, goals, and requirements in a free consultation call.</p>
+                </div>
+                <div class="process-connector reveal delay-2"><i class="fas fa-arrow-right"></i></div>
+                <div class="process-step reveal delay-3">
+                    <div class="step-number">02</div>
+                    <div class="step-icon"><i class="fas fa-pencil-ruler"></i></div>
+                    <h3>Design & Plan</h3>
+                    <p>We create mockups, wireframes, and a detailed project plan for your approval.</p>
+                </div>
+                <div class="process-connector reveal delay-4"><i class="fas fa-arrow-right"></i></div>
+                <div class="process-step reveal delay-5">
+                    <div class="step-number">03</div>
+                    <div class="step-icon"><i class="fas fa-code"></i></div>
+                    <h3>Build & Test</h3>
+                    <p>Our team develops your project with regular updates and thorough testing.</p>
+                </div>
+                <div class="process-connector reveal delay-6"><i class="fas fa-arrow-right"></i></div>
+                <div class="process-step reveal delay-7">
+                    <div class="step-number">04</div>
+                    <div class="step-icon"><i class="fas fa-rocket"></i></div>
+                    <h3>Launch & Support</h3>
+                    <p>We deploy your project and provide ongoing support and maintenance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CLIENT LOGOS ========== -->
+    <section class="clients-section reveal">
+        <div class="clients-inner">
+            <p class="clients-label">Trusted by businesses across Zambia and beyond</p>
+            <div class="clients-logos">
+                <div class="client-logo"><i class="fas fa-utensils"></i><span>Restaurants</span></div>
+                <div class="client-logo"><i class="fas fa-graduation-cap"></i><span>Schools</span></div>
+                <div class="client-logo"><i class="fas fa-shopping-bag"></i><span>Retail</span></div>
+                <div class="client-logo"><i class="fas fa-hospital"></i><span>Healthcare</span></div>
+                <div class="client-logo"><i class="fas fa-building"></i><span>Corporate</span></div>
+                <div class="client-logo"><i class="fas fa-landmark"></i><span>Government</span></div>
             </div>
         </div>
     </section>
@@ -1387,6 +1783,47 @@
             observer.observe(el);
         });
 
+        // ─── Scroll Reveal for new sections ───
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // ─── Counter Animation ───
+        const statNumbers = document.querySelectorAll('.stat-number');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const text = el.textContent;
+                    const match = text.match(/^([\d.]+)/);
+                    if (match) {
+                        const target = parseFloat(match[1]);
+                        const suffix = text.replace(match[1], '');
+                        const duration = 1500;
+                        const start = performance.now();
+                        const isFloat = text.includes('.');
+                        function updateCounter(now) {
+                            const progress = Math.min((now - start) / duration, 1);
+                            const eased = 1 - Math.pow(1 - progress, 3);
+                            const current = isFloat ? (target * eased).toFixed(1) : Math.floor(target * eased);
+                            el.textContent = current + suffix;
+                            if (progress < 1) requestAnimationFrame(updateCounter);
+                        }
+                        requestAnimationFrame(updateCounter);
+                    }
+                    counterObserver.unobserve(el);
+                }
+            });
+        }, { threshold: 0.5 });
+        statNumbers.forEach(el => counterObserver.observe(el));
+
         // ─── Live Portfolio Preview ───
         // Firebase configuration is public by design. The deployed Database Rules control data access.
         const homeFirebaseConfig = {
@@ -1445,7 +1882,7 @@
             const published = entries.map(([, project]) => project)
                 .filter((project) => project && project.published !== false)
                 .sort((a, b) => Number(b.updatedAt || b.createdAt || 0) - Number(a.updatedAt || a.createdAt || 0))
-                .slice(0, 3);
+                .slice(0, 6);
             homeProjectsGrid.replaceChildren();
             if (!published.length) {
                 const empty = document.createElement('div');

@@ -426,6 +426,30 @@
         .settings-panel .field textarea { min-height: 88px; }
         .settings-note { margin: 2px 0 15px; color: var(--subtle); font-size: .68rem; line-height: 1.5; }
 
+        /* Send Projects Panel */
+        .send-projects-panel { overflow: hidden; }
+        .send-projects-panel::before { display: block; height: 3px; content: ''; background: linear-gradient(90deg, #25d366, #128c7e, #075e54); }
+        .send-projects-panel .field select { width: 100%; min-height: 48px; padding: 11px 13px; color: var(--white); border: 1px solid var(--line); border-radius: 12px; background: rgba(7, 16, 33, 0.47); font-size: .85rem; }
+        .send-projects-panel .form-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+        .send-projects-panel .form-actions .btn { flex: 1; min-width: 140px; }
+        .send-projects-panel .form-actions .btn:first-child { background: #25d366; border-color: #25d366; color: #fff; }
+        .send-projects-panel .form-actions .btn:first-child:hover { background: #128c7e; border-color: #128c7e; }
+        .sent-project-item {
+            padding: 12px; margin-bottom: 10px; border: 1px solid var(--line);
+            border-radius: 10px; background: rgba(255, 255, 255, 0.03);
+            transition: all 0.3s ease;
+        }
+        .sent-project-item:hover { border-color: rgba(245, 201, 103, 0.3); background: rgba(255, 255, 255, 0.05); }
+        .sent-project-item strong { display: block; color: var(--white); font-size: .85rem; margin-bottom: 4px; }
+        .sent-project-item .sent-meta { display: flex; justify-content: space-between; align-items: center; font-size: .72rem; color: var(--muted); }
+        .sent-project-item .sent-badge {
+            display: inline-block; padding: 3px 10px; border-radius: 50px;
+            font-size: .65rem; font-weight: 700; text-transform: uppercase;
+        }
+        .sent-badge.whatsapp { background: rgba(37, 211, 102, 0.15); color: #25d366; }
+        .sent-badge.email { background: rgba(120, 169, 255, 0.15); color: var(--blue); }
+        .sent-badge.link { background: rgba(245, 201, 103, 0.15); color: var(--gold); }
+
         .toast {
             position: fixed;
             right: 20px;
@@ -593,6 +617,7 @@
                                             <option value="Business registration">Business registration</option>
                                             <option value="Branding">Branding</option>
                                             <option value="Digital marketing">Digital marketing</option>
+                                            <option value="Restaurant">Restaurant</option>
                                             <option value="Other">Other</option>
                                         </select>
                                     </div>
@@ -672,6 +697,59 @@
                         </div>
                     </section>
 
+
+                    <!-- SEND PROJECTS PANEL -->
+                    <section class="panel send-projects-panel" aria-labelledby="sendProjectsTitle">
+                        <div class="panel-head">
+                            <div>
+                                <h2 id="sendProjectsTitle">Send Projects to Clients</h2>
+                                <p>Share specific projects with clients via WhatsApp, email, or direct link. Track sent projects and client responses.</p>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <form id="sendProjectForm" novalidate>
+                                <div class="field">
+                                    <label for="selectProjectToSend">Select Project</label>
+                                    <select id="selectProjectToSend" required>
+                                        <option value="">Choose a project...</option>
+                                    </select>
+                                </div>
+                                <div class="form-grid">
+                                    <div class="field">
+                                        <label for="clientName">Client Name</label>
+                                        <input id="clientName" type="text" placeholder="e.g. John's Restaurant" maxlength="120" required>
+                                    </div>
+                                    <div class="field">
+                                        <label for="clientContact">WhatsApp / Email</label>
+                                        <input id="clientContact" type="text" placeholder="+260... or email@example.com" maxlength="160" required>
+                                    </div>
+                                </div>
+                                <div class="field full">
+                                    <label for="clientMessage">Personal Message <span>(optional)</span></label>
+                                    <textarea id="clientMessage" maxlength="500" placeholder="Hi! Here's the project we discussed..."></textarea>
+                                </div>
+                                <div class="form-actions">
+                                    <button class="btn btn-primary" id="sendProjectWhatsApp" type="button"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i><span>Send via WhatsApp</span></button>
+                                    <button class="btn btn-secondary" id="sendProjectEmail" type="button"><i class="fa-solid fa-envelope" aria-hidden="true"></i><span>Send via Email</span></button>
+                                    <button class="btn btn-secondary" id="copyProjectLink" type="button"><i class="fa-regular fa-copy" aria-hidden="true"></i><span>Copy Link</span></button>
+                                </div>
+                                <p class="form-status" id="sendProjectStatus" role="status" aria-live="polite"></p>
+                            </form>
+
+                            <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--line);">
+                                <h3 style="font-family: 'Montserrat', sans-serif; font-size: 0.95rem; margin-bottom: 12px; color: var(--white);">
+                                    <i class="fa-solid fa-clock-rotate-left" style="color: var(--gold); margin-right: 8px;"></i>Recently Sent
+                                </h3>
+                                <div id="sentProjectsList" style="max-height: 300px; overflow-y: auto;">
+                                    <div class="empty-state" style="padding: 20px;">
+                                        <i class="fa-solid fa-inbox" aria-hidden="true"></i>
+                                        No projects sent yet. Send your first project above!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
                     <section class="panel" aria-labelledby="projectsTitle">
                         <div class="panel-head"><div><h2 id="projectsTitle">Portfolio library</h2><p>Edit, publish, unpublish or remove any entry.</p></div><button class="text-button" id="syncPublicPortfolio" type="button">Sync public portfolio</button></div>
                         <div class="project-list" id="projectsList" aria-live="polite"><div class="empty-state"><i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>Loading portfolio entries…</div></div>
@@ -707,6 +785,11 @@
             { name: 'Company Registration (PACRA)', category: 'Business registration', client: 'Zambian business', image: 'https://i.ibb.co/gMRs5XZ2/images.jpg', description: 'End-to-end PACRA company registration support to establish a business efficiently and compliantly.', results: 'PACRA support · Clear process · Compliance guidance' },
             { name: 'ZRA VAT, TPIN & TOT Registration', category: 'Business registration', client: 'Zambian business', image: 'https://i.ibb.co/j9ws2d51/1.jpg', description: 'Practical assistance with TPIN, VAT and TOT registration so a business can meet key tax requirements.', results: 'TPIN · VAT · TOT registration' },
             { name: 'Workers’ Compensation Registration', category: 'Business registration', client: 'Employer', image: 'https://i.ibb.co/67bgY0K3/images-3.jpg', description: 'Registration support for statutory employee protection and Workers’ Compensation compliance.', results: 'Statutory registration · Employer guidance · Compliance' }
+,
+            { name: 'Flavour House Restaurant', category: 'Restaurant', client: 'Fine dining restaurant', image: 'https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'A stunning restaurant website with online reservations, interactive menu showcase, photo galleries, and location mapping.', results: 'Online reservations · Interactive menu · Photo gallery · Google Maps' },
+            { name: 'Savanna Grill & Bar', category: 'Restaurant', client: 'Casual dining', image: 'https://images.pexels.com/photos/1581384/pexels-photo-1581384.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Modern restaurant website featuring online ordering, daily specials, customer reviews, and social media integration.', results: 'Online ordering · Daily specials · Customer reviews · Mobile-first' },
+            { name: 'Digital Marketing Campaign', category: 'Digital marketing', client: 'E-commerce business', image: 'https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Comprehensive digital marketing strategy including SEO, Google Ads, social media campaigns, and content marketing.', results: 'SEO optimization · Google Ads · Social media growth · Content strategy' },
+            { name: 'Social Media Growth Package', category: 'Digital marketing', client: 'Local business', image: 'https://images.pexels.com/photos/607812/pexels-photo-607812.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Strategic social media management across Facebook, Instagram, and TikTok with content creation and analytics.', results: 'Content creation · Community management · Analytics · Brand growth' }
         ]);
 
         const firebaseConfig = {
@@ -1118,6 +1201,7 @@
                 item.append(image, main);
                 projectsList.appendChild(item);
             }
+            if (typeof updateSendProjectDropdown === "function") updateSendProjectDropdown();
         }
 
         function updateMetrics() {
@@ -1471,6 +1555,151 @@
             catch (_) { /* User cancelled or sharing is unavailable; no error needed. */ }
         });
 
+
+        // ═══════════════════════════════════════════════
+        // SEND PROJECTS PANEL LOGIC
+        // ═══════════════════════════════════════════════
+        const selectProjectToSend = $('selectProjectToSend');
+        const clientName = $('clientName');
+        const clientContact = $('clientContact');
+        const clientMessage = $('clientMessage');
+        const sendProjectStatus = $('sendProjectStatus');
+        const sentProjectsList = $('sentProjectsList');
+
+        // Populate the project dropdown whenever projects change
+        function updateSendProjectDropdown() {
+            const currentVal = selectProjectToSend.value;
+            selectProjectToSend.innerHTML = '<option value="">Choose a project...</option>';
+            currentProjects.forEach((project, key) => {
+                const opt = document.createElement('option');
+                opt.value = key;
+                opt.textContent = safeText(project.name, 120) + ' — ' + safeText(project.category, 60);
+                selectProjectToSend.appendChild(opt);
+            });
+            if (currentVal && currentProjects.has(currentVal)) selectProjectToSend.value = currentVal;
+        }
+
+        function getSelectedProjectData() {
+            const key = selectProjectToSend.value;
+            if (!key || !currentProjects.has(key)) return null;
+            const project = currentProjects.get(key);
+            const portfolioUrl = getPortfolioLink();
+            const projectUrl = project.liveUrl ? safeHttpUrl(project.liveUrl) : portfolioUrl;
+            return { key, project, projectUrl, portfolioUrl };
+        }
+
+        function buildProjectShareMessage(data, customMessage) {
+            const name = safeText(data.project.name, 120);
+            const category = safeText(data.project.category, 60);
+            const desc = safeText(data.project.description, 300);
+            const msg = customMessage ? customMessage + '\n\n' : '';
+            return msg + '🌐 *' + name + '*\n' + (category ? '📁 ' + category + '\n' : '') + (desc ? '\n' + desc + '\n' : '') + '\n🔗 ' + data.projectUrl + '\n\n— Sent via Seedwel Investment LTD';
+        }
+
+        async function recordSentProject(data, method) {
+            try {
+                await db.ref('sentProjects').push({
+                    projectKey: data.key,
+                    projectName: safeText(data.project.name, 120),
+                    projectCategory: safeText(data.project.category, 60),
+                    projectUrl: data.projectUrl,
+                    clientName: safeText(clientName.value, 120),
+                    clientContact: safeText(clientContact.value, 160),
+                    message: safeText(clientMessage.value, 500),
+                    method: method,
+                    sentAt: firebase.database.ServerValue.TIMESTAMP
+                });
+            } catch (_) { /* Tracking is best-effort */ }
+        }
+
+        function renderSentProjects() {
+            db.ref('sentProjects').orderByChild('sentAt').limitToLast(20).on('value', (snapshot) => {
+                const records = [];
+                snapshot.forEach((child) => {
+                    records.unshift({ key: child.key, ...child.val() });
+                });
+
+                if (!records.length) {
+                    sentProjectsList.innerHTML = '<div class="empty-state" style="padding: 20px;"><i class="fa-solid fa-inbox" aria-hidden="true"></i>No projects sent yet.</div>';
+                    return;
+                }
+
+                sentProjectsList.innerHTML = '';
+                records.forEach((record) => {
+                    const item = document.createElement('div');
+                    item.className = 'sent-project-item';
+                    const sentDate = record.sentAt ? new Date(record.sentAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : 'Recent';
+                    const badgeClass = record.method || 'link';
+                    item.innerHTML = '<strong>' + safeText(record.projectName, 80) + '</strong>'
+                        + '<div style="color: var(--muted); font-size: .75rem; margin-bottom: 6px;">To: ' + safeText(record.clientName, 60) + '</div>'
+                        + '<div class="sent-meta"><span>' + sentDate + '</span><span class="sent-badge ' + badgeClass + '">' + badgeClass + '</span></div>';
+                    sentProjectsList.appendChild(item);
+                });
+            });
+        }
+
+        // Send via WhatsApp
+        $('sendProjectWhatsApp').addEventListener('click', async () => {
+            const data = getSelectedProjectData();
+            if (!data) { setStatus(sendProjectStatus, 'Please select a project first.', 'error'); return; }
+            const cName = safeText(clientName.value, 120);
+            const contact = safeText(clientContact.value, 160);
+            if (!cName) { setStatus(sendProjectStatus, 'Please enter the client name.', 'error'); return; }
+
+            const message = buildProjectShareMessage(data, safeText(clientMessage.value, 500));
+            const phone = contact.replace(/[^\d]/g, '');
+            const waUrl = phone ? 'https://wa.me/' + phone + '?text=' + encodeURIComponent(message) : 'https://wa.me/?text=' + encodeURIComponent(message);
+
+            window.open(waUrl, '_blank');
+            await recordSentProject(data, 'whatsapp');
+            setStatus(sendProjectStatus, 'WhatsApp opened! Message ready to send.', 'success');
+            showToast('Project shared via WhatsApp.');
+        });
+
+        // Send via Email
+        $('sendProjectEmail').addEventListener('click', async () => {
+            const data = getSelectedProjectData();
+            if (!data) { setStatus(sendProjectStatus, 'Please select a project first.', 'error'); return; }
+            const cName = safeText(clientName.value, 120);
+            const contact = safeText(clientContact.value, 160);
+            if (!cName) { setStatus(sendProjectStatus, 'Please enter the client name.', 'error'); return; }
+
+            const subject = 'Your Project: ' + safeText(data.project.name, 100);
+            const body = buildProjectShareMessage(data, safeText(clientMessage.value, 500));
+            const emailAddr = contact.includes('@') ? contact : '';
+            const mailUrl = 'mailto:' + encodeURIComponent(emailAddr) + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+
+            window.location.href = mailUrl;
+            await recordSentProject(data, 'email');
+            setStatus(sendProjectStatus, 'Email client opened with project details.', 'success');
+            showToast('Email client opened.');
+        });
+
+        // Copy project link
+        $('copyProjectLink').addEventListener('click', async () => {
+            const data = getSelectedProjectData();
+            if (!data) { setStatus(sendProjectStatus, 'Please select a project first.', 'error'); return; }
+
+            try {
+                if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(data.projectUrl);
+                else {
+                    const tmp = document.createElement('input');
+                    tmp.value = data.projectUrl;
+                    document.body.appendChild(tmp);
+                    tmp.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(tmp);
+                }
+                await recordSentProject(data, 'link');
+                setStatus(sendProjectStatus, 'Project link copied to clipboard!', 'success');
+                showToast('Project link copied.');
+            } catch (_) {
+                setStatus(sendProjectStatus, 'Could not copy. Select the URL manually.', 'error');
+            }
+        });
+
+        // Initialize
+        renderSentProjects();
         updateShareLinks();
     </script>
 </body>
