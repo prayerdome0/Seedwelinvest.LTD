@@ -448,6 +448,31 @@
         }
         .sent-badge.whatsapp { background: rgba(37, 211, 102, 0.15); color: #25d366; }
         .sent-badge.email { background: rgba(120, 169, 255, 0.15); color: var(--blue); }
+
+        /* Inbox panels */
+        .inbox-panel .panel-body { padding-top: 12px; }
+        .inbox-list { display: grid; gap: 12px; max-height: 520px; overflow: auto; padding-right: 4px; }
+        .inbox-item {
+            padding: 14px 14px 12px; border: 1px solid var(--line); border-radius: 12px;
+            background: rgba(7, 16, 33, 0.35);
+        }
+        .inbox-item.is-new { border-color: rgba(245, 201, 103, 0.35); box-shadow: inset 3px 0 0 var(--gold); }
+        .inbox-item-top { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; margin-bottom: 6px; }
+        .inbox-item-top h3 { margin: 0; font-size: .92rem; letter-spacing: -.02em; }
+        .inbox-meta { color: var(--muted); font-size: .72rem; line-height: 1.45; margin-bottom: 8px; }
+        .inbox-meta a { color: #b8d3ff; }
+        .inbox-body { color: #d5deec; font-size: .8rem; line-height: 1.55; white-space: pre-wrap; word-break: break-word; }
+        .inbox-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+        .inbox-actions .btn { min-height: 34px; padding: 7px 10px; font-size: .72rem; }
+        .status-pill.reviewing { color: #b8d3ff; border-color: rgba(120,169,255,.28); background: rgba(120,169,255,.1); }
+        .status-pill.shortlisted, .status-pill.read { color: #a8eed0; border-color: rgba(67,209,158,.28); background: rgba(67,209,158,.1); }
+        .status-pill.rejected, .status-pill.archived { color: #ffb0b0; border-color: rgba(239,88,88,.28); background: rgba(239,88,88,.1); }
+        .status-pill.hired { color: #ffe19a; border-color: rgba(245,201,103,.3); background: rgba(245,201,103,.1); }
+        .metrics { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+        .metric:nth-child(5) .metric-icon { color: #fda4af; background: rgba(253,164,175,.12); }
+        .metric:nth-child(6) .metric-icon { color: #7dd3fc; background: rgba(125,211,252,.12); }
+        @media (max-width: 1200px) { .metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
         .sent-badge.link { background: rgba(245, 201, 103, 0.15); color: var(--gold); }
 
         .toast {
@@ -571,6 +596,8 @@
                 <article class="metric"><div class="metric-icon"><i class="fa-solid fa-eye" aria-hidden="true"></i></div><strong id="publishedProjects">0</strong><span>Visible to visitors</span></article>
                 <article class="metric"><div class="metric-icon"><i class="fa-solid fa-hard-drive" aria-hidden="true"></i></div><strong id="storageTarget">1 TB</strong><span>Configured media capacity</span></article>
                 <article class="metric"><div class="metric-icon"><i class="fa-solid fa-chart-pie" aria-hidden="true"></i></div><strong id="storageUsed">0 B</strong><span id="storageUsageCaption">Tracked upload usage</span><div class="storage-meter" aria-hidden="true"><span id="storageMeter"></span></div></article>
+                <article class="metric"><div class="metric-icon"><i class="fa-solid fa-envelope-open-text" aria-hidden="true"></i></div><strong id="newMessagesCount">0</strong><span>New contact messages</span></article>
+                <article class="metric"><div class="metric-icon"><i class="fa-solid fa-user-tie" aria-hidden="true"></i></div><strong id="newApplicationsCount">0</strong><span>New job applications</span></article>
             </section>
 
             <aside class="notice" aria-label="Storage capacity note">
@@ -754,6 +781,26 @@
                         <div class="panel-head"><div><h2 id="projectsTitle">Portfolio library</h2><p>Edit, publish, unpublish or remove any entry.</p></div><button class="text-button" id="syncPublicPortfolio" type="button">Sync public portfolio</button></div>
                         <div class="project-list" id="projectsList" aria-live="polite"><div class="empty-state"><i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>Loading portfolio entries…</div></div>
                     </section>
+
+                    <section class="panel inbox-panel" aria-labelledby="messagesTitle">
+                        <div class="panel-head">
+                            <div><h2 id="messagesTitle">Contact inbox</h2><p>Messages submitted from the public contact form.</p></div>
+                            <button class="text-button" id="refreshMessages" type="button">Refresh</button>
+                        </div>
+                        <div class="panel-body">
+                            <div class="inbox-list" id="messagesList" aria-live="polite"><div class="empty-state"><i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>Loading messages…</div></div>
+                        </div>
+                    </section>
+
+                    <section class="panel inbox-panel" aria-labelledby="applicationsTitle">
+                        <div class="panel-head">
+                            <div><h2 id="applicationsTitle">Job applications</h2><p>Careers form submissions and CV downloads.</p></div>
+                            <button class="text-button" id="refreshApplications" type="button">Refresh</button>
+                        </div>
+                        <div class="panel-body">
+                            <div class="inbox-list" id="applicationsList" aria-live="polite"><div class="empty-state"><i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>Loading applications…</div></div>
+                        </div>
+                    </section>
                 </aside>
             </div>
         </div>
@@ -837,6 +884,8 @@
         const resetProjectForm = $('resetProjectForm');
         const cancelEdit = $('cancelEdit');
         const projectsList = $('projectsList');
+        const messagesList = $('messagesList');
+        const applicationsList = $('applicationsList');
         const syncPublicPortfolio = $('syncPublicPortfolio');
         const settingsForm = $('settingsForm');
         const portfolioTitle = $('portfolioTitle');
@@ -853,6 +902,8 @@
         const toast = $('toast');
 
         let currentProjects = new Map();
+        let currentMessages = new Map();
+        let currentApplications = new Map();
         let currentSettings = { ...DEFAULT_SETTINGS };
         let editingKey = null;
         let selectedFile = null;
@@ -1078,13 +1129,33 @@
                 applySettingsToForm();
                 updateMetrics();
             }, () => { showToast('Public portfolio details could not be loaded.', 'error'); });
+            db.ref('contactMessages').on('value', (snapshot) => {
+                currentMessages = new Map(Object.entries(snapshot.val() || {}));
+                renderMessages();
+                updateMetrics();
+            }, () => {
+                if (messagesList) messagesList.innerHTML = '<div class="empty-state"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>Unable to load contact messages. Deploy updated Database Rules.</div>';
+                showToast('Contact messages could not be loaded.', 'error');
+            });
+            db.ref('applications').on('value', (snapshot) => {
+                currentApplications = new Map(Object.entries(snapshot.val() || {}));
+                renderApplications();
+                updateMetrics();
+            }, () => {
+                if (applicationsList) applicationsList.innerHTML = '<div class="empty-state"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>Unable to load applications. Deploy updated Database Rules.</div>';
+                showToast('Job applications could not be loaded.', 'error');
+            });
         }
 
         function stopDataListeners() {
             db.ref('projects').off();
             db.ref('siteSettings').off();
+            db.ref('contactMessages').off();
+            db.ref('applications').off();
             dataListening = false;
             currentProjects = new Map();
+            currentMessages = new Map();
+            currentApplications = new Map();
         }
 
         function applySettingsToForm() {
@@ -1217,7 +1288,231 @@
             $('storageUsed').textContent = formatBytes(usage);
             $('storageUsageCaption').textContent = formatBytes(usage) + ' of ' + $('storageTarget').textContent + ' tracked';
             $('storageMeter').style.width = percentage + '%';
+            const newMessages = Array.from(currentMessages.values()).filter((item) => (item.status || 'new') === 'new').length;
+            const newApps = Array.from(currentApplications.values()).filter((item) => (item.status || 'new') === 'new').length;
+            if ($('newMessagesCount')) $('newMessagesCount').textContent = newMessages;
+            if ($('newApplicationsCount')) $('newApplicationsCount').textContent = newApps;
         }
+
+        function formatInboxDate(value) {
+            const time = Number(value);
+            if (!time) return 'Recent';
+            try {
+                return new Date(time).toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+            } catch (_) {
+                return 'Recent';
+            }
+        }
+
+        function sortedMapEntries(map) {
+            return Array.from(map.entries()).sort(([, a], [, b]) => {
+                const aTime = Number(a.submittedAt || a.updatedAt || 0);
+                const bTime = Number(b.submittedAt || b.updatedAt || 0);
+                return bTime - aTime;
+            });
+        }
+
+        function renderMessages() {
+            if (!messagesList) return;
+            messagesList.textContent = '';
+            const entries = sortedMapEntries(currentMessages);
+            if (!entries.length) {
+                messagesList.innerHTML = '<div class="empty-state"><i class="fa-solid fa-inbox" aria-hidden="true"></i>No contact messages yet.</div>';
+                return;
+            }
+            for (const [key, msg] of entries) {
+                const status = safeText(msg.status, 20) || 'new';
+                const item = document.createElement('article');
+                item.className = 'inbox-item' + (status === 'new' ? ' is-new' : '');
+                item.dataset.key = key;
+                const top = document.createElement('div');
+                top.className = 'inbox-item-top';
+                const title = document.createElement('h3');
+                title.textContent = safeText(msg.fullName, 120) || 'Visitor';
+                const pill = document.createElement('span');
+                pill.className = 'status-pill ' + status;
+                pill.textContent = status;
+                top.append(title, pill);
+                const meta = document.createElement('div');
+                meta.className = 'inbox-meta';
+                const email = safeText(msg.email, 160);
+                const phone = safeText(msg.phone, 40);
+                const service = safeText(msg.service, 80);
+                meta.innerHTML = (email ? '<a href="mailto:' + email.replace(/"/g, '') + '">' + email + '</a>' : 'No email')
+                    + (phone ? ' · ' + phone : '')
+                    + (service ? ' · ' + service : '')
+                    + ' · ' + formatInboxDate(msg.submittedAt);
+                const body = document.createElement('div');
+                body.className = 'inbox-body';
+                body.textContent = safeText(msg.message, 3000) || '';
+                const actions = document.createElement('div');
+                actions.className = 'inbox-actions';
+                if (status !== 'read') {
+                    const readBtn = document.createElement('button');
+                    readBtn.type = 'button';
+                    readBtn.className = 'btn btn-secondary';
+                    readBtn.dataset.action = 'message-read';
+                    readBtn.dataset.key = key;
+                    readBtn.innerHTML = '<i class="fa-solid fa-check" aria-hidden="true"></i> Mark read';
+                    actions.appendChild(readBtn);
+                }
+                if (status !== 'archived') {
+                    const archBtn = document.createElement('button');
+                    archBtn.type = 'button';
+                    archBtn.className = 'btn btn-secondary';
+                    archBtn.dataset.action = 'message-archive';
+                    archBtn.dataset.key = key;
+                    archBtn.innerHTML = '<i class="fa-solid fa-box-archive" aria-hidden="true"></i> Archive';
+                    actions.appendChild(archBtn);
+                }
+                const delBtn = document.createElement('button');
+                delBtn.type = 'button';
+                delBtn.className = 'btn btn-danger';
+                delBtn.dataset.action = 'message-delete';
+                delBtn.dataset.key = key;
+                delBtn.innerHTML = '<i class="fa-solid fa-trash" aria-hidden="true"></i> Delete';
+                actions.appendChild(delBtn);
+                if (email) {
+                    const reply = document.createElement('a');
+                    reply.className = 'btn btn-secondary';
+                    reply.href = 'mailto:' + encodeURIComponent(email) + '?subject=' + encodeURIComponent('Re: Your enquiry to Seedwel Investment LTD');
+                    reply.innerHTML = '<i class="fa-solid fa-reply" aria-hidden="true"></i> Reply';
+                    actions.appendChild(reply);
+                }
+                item.append(top, meta, body, actions);
+                messagesList.appendChild(item);
+            }
+        }
+
+        function renderApplications() {
+            if (!applicationsList) return;
+            applicationsList.textContent = '';
+            const entries = sortedMapEntries(currentApplications);
+            if (!entries.length) {
+                applicationsList.innerHTML = '<div class="empty-state"><i class="fa-solid fa-user-plus" aria-hidden="true"></i>No job applications yet.</div>';
+                return;
+            }
+            for (const [key, app] of entries) {
+                const status = safeText(app.status, 20) || 'new';
+                const item = document.createElement('article');
+                item.className = 'inbox-item' + (status === 'new' ? ' is-new' : '');
+                const top = document.createElement('div');
+                top.className = 'inbox-item-top';
+                const title = document.createElement('h3');
+                title.textContent = (safeText(app.fullName, 120) || 'Applicant') + ' · ' + (safeText(app.position, 120) || 'Role');
+                const pill = document.createElement('span');
+                pill.className = 'status-pill ' + status;
+                pill.textContent = status;
+                top.append(title, pill);
+                const meta = document.createElement('div');
+                meta.className = 'inbox-meta';
+                const email = safeText(app.email, 160);
+                const phone = safeText(app.phone, 40);
+                const exp = safeText(app.experience, 40);
+                const portfolio = safeText(app.portfolioUrl, 2048);
+                meta.innerHTML = (email ? '<a href="mailto:' + email.replace(/"/g, '') + '">' + email + '</a>' : 'No email')
+                    + (phone ? ' · ' + phone : '')
+                    + (exp ? ' · Exp: ' + exp : '')
+                    + ' · ' + formatInboxDate(app.submittedAt)
+                    + (portfolio ? ' · <a href="' + portfolio.replace(/"/g, '') + '" target="_blank" rel="noopener">Portfolio</a>' : '');
+                const body = document.createElement('div');
+                body.className = 'inbox-body';
+                let note = safeText(app.coverLetter, 4000) || '';
+                if (app.cvUploadNote) note += (note ? '\n\n' : '') + 'Note: ' + safeText(app.cvUploadNote, 300);
+                body.textContent = note;
+                const actions = document.createElement('div');
+                actions.className = 'inbox-actions';
+                const statuses = [
+                    ['reviewing', 'Reviewing'],
+                    ['shortlisted', 'Shortlist'],
+                    ['rejected', 'Reject'],
+                    ['hired', 'Hired']
+                ];
+                for (const [value, label] of statuses) {
+                    if (status === value) continue;
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'btn btn-secondary';
+                    btn.dataset.action = 'application-status';
+                    btn.dataset.key = key;
+                    btn.dataset.status = value;
+                    btn.textContent = label;
+                    actions.appendChild(btn);
+                }
+                const cvUrl = safeText(app.cvDownloadUrl, 2048);
+                if (cvUrl) {
+                    const cv = document.createElement('a');
+                    cv.className = 'btn btn-secondary';
+                    cv.href = cvUrl;
+                    cv.target = '_blank';
+                    cv.rel = 'noopener';
+                    cv.innerHTML = '<i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> CV';
+                    actions.appendChild(cv);
+                }
+                const delBtn = document.createElement('button');
+                delBtn.type = 'button';
+                delBtn.className = 'btn btn-danger';
+                delBtn.dataset.action = 'application-delete';
+                delBtn.dataset.key = key;
+                delBtn.innerHTML = '<i class="fa-solid fa-trash" aria-hidden="true"></i> Delete';
+                actions.appendChild(delBtn);
+                item.append(top, meta, body, actions);
+                applicationsList.appendChild(item);
+            }
+        }
+
+        if (messagesList) {
+            messagesList.addEventListener('click', async (event) => {
+                const btn = event.target.closest('button[data-action]');
+                if (!btn) return;
+                const key = btn.dataset.key;
+                if (!key) return;
+                try {
+                    if (btn.dataset.action === 'message-read') {
+                        await db.ref('contactMessages/' + key).update({ status: 'read', updatedAt: firebase.database.ServerValue.TIMESTAMP });
+                        showToast('Message marked as read.');
+                    } else if (btn.dataset.action === 'message-archive') {
+                        await db.ref('contactMessages/' + key).update({ status: 'archived', updatedAt: firebase.database.ServerValue.TIMESTAMP });
+                        showToast('Message archived.');
+                    } else if (btn.dataset.action === 'message-delete') {
+                        if (!window.confirm('Delete this contact message permanently?')) return;
+                        await db.ref('contactMessages/' + key).remove();
+                        showToast('Message deleted.');
+                    }
+                } catch (_) {
+                    showToast('Could not update message. Check Database Rules.', 'error');
+                }
+            });
+        }
+
+        if (applicationsList) {
+            applicationsList.addEventListener('click', async (event) => {
+                const btn = event.target.closest('button[data-action]');
+                if (!btn) return;
+                const key = btn.dataset.key;
+                if (!key) return;
+                try {
+                    if (btn.dataset.action === 'application-status') {
+                        const status = btn.dataset.status;
+                        await db.ref('applications/' + key).update({ status: status, updatedAt: firebase.database.ServerValue.TIMESTAMP });
+                        showToast('Application updated to “' + status + '”.');
+                    } else if (btn.dataset.action === 'application-delete') {
+                        if (!window.confirm('Delete this application permanently?')) return;
+                        const app = currentApplications.get(key);
+                        await db.ref('applications/' + key).remove();
+                        if (app && app.cvStoragePath) {
+                            try { await storage.ref(app.cvStoragePath).delete(); } catch (_) { /* best-effort CV cleanup */ }
+                        }
+                        showToast('Application deleted.');
+                    }
+                } catch (_) {
+                    showToast('Could not update application. Check Database Rules.', 'error');
+                }
+            });
+        }
+
+        if ($('refreshMessages')) $('refreshMessages').addEventListener('click', () => { renderMessages(); showToast('Messages refreshed.'); });
+        if ($('refreshApplications')) $('refreshApplications').addEventListener('click', () => { renderApplications(); showToast('Applications refreshed.'); });
 
         function previewImage(url) {
             if (!url) {

@@ -19,5 +19,21 @@ service firebase.storage {
       allow update: if false;
       allow delete: if isAdmin();
     }
+
+    // Career applications may upload a CV (PDF/DOC/DOCX) without signing in.
+    // Only the administrator can list or delete application files.
+    match /applications/{fileName} {
+      allow get: if isAdmin();
+      allow list: if false;
+      allow create: if request.resource.size < 5 * 1024 * 1024
+        && (
+          request.resource.contentType == 'application/pdf'
+          || request.resource.contentType == 'application/msword'
+          || request.resource.contentType == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+          || request.resource.contentType.matches('application/.*')
+        );
+      allow update: if false;
+      allow delete: if isAdmin();
+    }
   }
 }
