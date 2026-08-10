@@ -9,7 +9,19 @@
     <title>Careers | Seedwel Investment LTD</title>
     <meta name="description" content="Join the Seedwel Investment LTD team. Apply for Web Developer, Graphic Designer, Cold Caller, Virtual Assistant and more positions." />
 
-    <!-- Google Fonts -->
+    
+    <link rel="canonical" href="https://seedwel.ltd/apply.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Seedwel Investment LTD" />
+    <meta property="og:title" content="Careers | Seedwel Investment LTD" />
+    <meta property="og:description" content="Join Seedwel Investment LTD. Apply for web developer, graphic designer, cold caller, virtual assistant and commission-based roles." />
+    <meta property="og:url" content="https://seedwel.ltd/apply.html" />
+    <meta property="og:image" content="https://i.ibb.co/svxj52ny/seedwel.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Careers | Seedwel Investment LTD" />
+    <meta name="twitter:description" content="Join Seedwel Investment LTD. Apply for web developer, graphic designer, cold caller, virtual assistant and commission-based roles." />
+    <meta name="twitter:image" content="https://i.ibb.co/svxj52ny/seedwel.png" />
+<!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
@@ -537,6 +549,28 @@
             }
         }
     </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "Seedwel Investment LTD",
+      "url": "https://seedwel.ltd/",
+      "logo": "https://i.ibb.co/svxj52ny/seedwel.png",
+      "image": "https://i.ibb.co/svxj52ny/seedwel.png",
+      "description": "Premium digital agency offering web development, SEO, branding, graphic design and business registration services.",
+      "email": "seedwelinvestltd@gmail.com",
+      "telephone": "+260973028342",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Kabwe",
+        "addressCountry": "ZM"
+      },
+      "areaServed": ["ZM", "Global"],
+      "sameAs": [
+        "https://wa.me/260973028342"
+      ]
+    }
+    </script>
 </head>
 
 <body>
@@ -849,11 +883,15 @@
                             <i class="fas fa-cloud-upload-alt"></i>
                             <p>Click to upload your CV (PDF, DOC, DOCX — max 5MB)</p>
                             <div class="file-name" id="fileName"></div>
-                            <input type="file" id="cvFile" accept=".pdf,.doc,.docx" style="display:none;" required />
+                            <input type="file" id="cvFile" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" style="display:none;" required />
                         </div>
                         <div class="file-upload-progress" id="uploadProgress">
                             <div class="file-upload-progress-bar" id="uploadProgressBar"></div>
                         </div>
+                    </div>
+                    <div class="form-group" style="display:flex;align-items:flex-start;gap:10px;">
+                        <input type="checkbox" id="applyConsent" required style="margin-top:4px;width:auto;accent-color:#dc2626;" />
+                        <label for="applyConsent" style="font-weight:500;font-size:0.85rem;color:#4b5563;margin:0;">I agree to the <a href="privacy.html" style="color:#dc2626;">Privacy Policy</a> and consent to Seedwel processing my application data for recruitment. <span class="required">*</span></label>
                     </div>
                     <button type="submit" class="btn-submit" id="submitBtn">
                         <i class="fas fa-paper-plane"></i> Submit Application
@@ -919,6 +957,8 @@
                 <h4>Support</h4>
                 <a href="contact.html">Contact</a>
                 <a href="support.html">Help Center</a>
+                <a href="privacy.html">Privacy</a>
+                <a href="terms.html">Terms</a>
                 <a href="tel:+260973028342"><i class="fas fa-phone" style="color:#dc2626; width:18px;"></i> +260 973 028 342</a>
                 <a href="mailto:seedwelinvestltd@gmail.com"><i class="fas fa-envelope" style="color:#dc2626; width:18px;"></i> seedwelinvestltd@gmail.com</a>
             </div>
@@ -1087,14 +1127,41 @@
             const experience = document.getElementById('experience').value;
             const portfolioUrl = document.getElementById('portfolioUrl').value.trim();
             const coverLetter = document.getElementById('coverLetter').value.trim();
+            const consent = document.getElementById('applyConsent').checked;
 
             if (!fullName || !email || !phone || !position || !coverLetter) {
                 alert('Please fill in all required fields.');
                 return;
             }
+            if (coverLetter.length < 20) {
+                alert('Please write a slightly longer cover note (at least 20 characters).');
+                return;
+            }
+            if (!consent) {
+                alert('Please accept the Privacy Policy to submit your application.');
+                return;
+            }
+            if (file.size > 5 * 1024 * 1024) {
+                alert('File size must be under 5MB.');
+                return;
+            }
 
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+
+            const baseApplication = {
+                fullName: fullName.slice(0, 120),
+                email: email.slice(0, 160),
+                phone: phone.slice(0, 40),
+                position: position.slice(0, 120),
+                experience: (experience || '').slice(0, 40),
+                portfolioUrl: portfolioUrl.slice(0, 2048),
+                coverLetter: coverLetter.slice(0, 4000),
+                cvFileName: (file.name || 'cv').slice(0, 200),
+                consent: true,
+                status: 'new',
+                submittedAt: firebase.database.ServerValue.TIMESTAMP
+            };
 
             try {
                 // Upload CV to Firebase Storage
@@ -1102,9 +1169,12 @@
                 uploadProgressBar.style.width = '20%';
 
                 const timestamp = Date.now();
-                const safeName = fullName.replace(/[^a-zA-Z0-9]/g, '_');
-                const storageRef = storage.ref('applications/' + safeName + '_' + timestamp + '_' + file.name);
-                const uploadTask = storageRef.put(file);
+                const safeName = fullName.replace(/[^a-zA-Z0-9]/g, '_').slice(0, 40) || 'applicant';
+                const safeFile = (file.name || 'cv.pdf').replace(/[^a-zA-Z0-9._-]/g, '_').slice(0, 80);
+                const storagePath = 'applications/' + safeName + '_' + timestamp + '_' + safeFile;
+                const storageRef = storage.ref(storagePath);
+                const metadata = { contentType: file.type || 'application/pdf' };
+                const uploadTask = storageRef.put(file, metadata);
 
                 const downloadUrl = await new Promise((resolve, reject) => {
                     uploadTask.on('state_changed',
@@ -1123,23 +1193,11 @@
 
                 uploadProgressBar.style.width = '95%';
 
-                // Save application to Firebase Database
-                const applicationData = {
-                    fullName,
-                    email,
-                    phone,
-                    position,
-                    experience,
-                    portfolioUrl,
-                    coverLetter,
-                    cvFileName: file.name,
+                await db.ref('applications').push().set({
+                    ...baseApplication,
                     cvDownloadUrl: downloadUrl,
-                    status: 'new',
-                    submittedAt: firebase.database.ServerValue.TIMESTAMP
-                };
-
-                const newRef = db.ref('applications').push();
-                await newRef.set(applicationData);
+                    cvStoragePath: storagePath
+                });
 
                 uploadProgressBar.style.width = '100%';
 
@@ -1157,17 +1215,12 @@
 
                 // Fallback: save without file upload if storage fails
                 try {
-                    const applicationData = {
-                        fullName, email, phone, position, experience,
-                        portfolioUrl, coverLetter,
-                        cvFileName: file.name,
+                    await db.ref('applications').push().set({
+                        ...baseApplication,
                         cvDownloadUrl: '',
-                        cvUploadNote: 'File upload failed: ' + (error.message || 'Unknown error'),
-                        status: 'new',
-                        submittedAt: firebase.database.ServerValue.TIMESTAMP
-                    };
-                    const newRef = db.ref('applications').push();
-                    await newRef.set(applicationData);
+                        cvStoragePath: '',
+                        cvUploadNote: ('File upload failed: ' + (error.message || 'Unknown error')).slice(0, 300)
+                    });
 
                     formContent.style.display = 'none';
                     formSuccess.style.display = 'block';

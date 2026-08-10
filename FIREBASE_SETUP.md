@@ -59,3 +59,23 @@ The public `projects.html` continues to show the existing showcase items until F
 - Review Firebase Authentication and Cloud Storage usage regularly.
 - Do not loosen `.write` rules to `true` or use an unsigned third-party upload preset for portfolio media.
 - Remove former team members from Firebase Authentication and change the administrator password immediately when access changes.
+
+
+## Contact messages and job applications
+
+Public visitors can **create** records under:
+
+- `/contactMessages` — contact form submissions from `contact.html`
+- `/applications` — careers form submissions from `apply.html`
+
+Only the verified administrator account can **read**, **update** (status changes) or **delete** those paths.
+
+CV files are stored at `applications/{fileName}` in Firebase Storage (max 5 MB). Visitors may upload; only the administrator may download or delete them.
+
+After pulling these rules, redeploy:
+
+```bash
+firebase deploy --project seedwel-investment-limited --only database,storage
+```
+
+Then open `admin.html` while signed in to review the **Contact inbox** and **Job applications** panels.
