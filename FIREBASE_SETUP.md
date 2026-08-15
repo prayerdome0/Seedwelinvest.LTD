@@ -27,9 +27,9 @@ In Vercel:
 
 The upload workflow uses these managed folders in that same product environment:
 
-- `seedwel-investment-ltd/portfolio`
-- `seedwel-investment-ltd/job-applications`
-- `seedwel-investment-ltd/profile-pictures`
+- `portfolio/portfolio`
+- `portfolio/job-applications`
+- `portfolio/profile-pictures`
 
 CVs are uploaded with Cloudinary's `authenticated` delivery type. An administrator must be signed in to request the five-minute private download URL. Portfolio signatures require the verified administrator account. Profile-photo signatures require the matching signed-in Firebase user and use one stable Cloudinary public ID per Firebase UID, so replacing a photo does not create duplicate ID photos.
 

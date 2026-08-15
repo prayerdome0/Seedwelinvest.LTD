@@ -5,10 +5,10 @@ const { v2: cloudinary } = require('cloudinary');
 
 const FIREBASE_WEB_API_KEY = process.env.FIREBASE_WEB_API_KEY || 'AIzaSyA-BpRy-RVc2rqIG6uiRu_XrGEu1ZGnQwU';
 const ADMIN_EMAIL = 'zacheussimbaya@gmail.com';
-const ROOT_FOLDER = 'seedwel-investment-ltd';
+const ROOT_FOLDER = 'portfolio';
 
 function applyCloudinaryConfig() {
-    let cloudName = process.env.CLOUDINARY_CLOUD_NAME;
+    let cloudName = process.env.CLOUDINARY_CLOUD_NAME || 'dhad95cch';
     let apiKey = process.env.CLOUDINARY_API_KEY;
     let apiSecret = process.env.CLOUDINARY_API_SECRET;
 
@@ -20,20 +20,31 @@ function applyCloudinaryConfig() {
             apiKey = decodeURIComponent(parsed.username);
             apiSecret = decodeURIComponent(parsed.password);
         } catch (_) {
-            throw new Error('CLOUDINARY_URL is not valid. Reconnect the Cloudinary integration in Vercel.');
+            // If the URL is just a placeholder, we might still have the cloudName
+            if (process.env.CLOUDINARY_URL.includes('dhad95cch')) {
+                cloudName = 'dhad95cch';
+            } else {
+                throw new Error('CLOUDINARY_URL is not valid. Reconnect the Cloudinary integration in Vercel.');
+            }
         }
     }
 
-    if (!cloudName || !apiKey || !apiSecret) {
-        throw new Error('Cloudinary is not configured. Connect the existing Cloudinary product environment to this Vercel project.');
+    // Clean up placeholders
+    if (apiKey === '<your_api_key>') apiKey = '';
+    if (apiSecret === '<your_api_secret>') apiSecret = '';
+
+    if (!cloudName) {
+        throw new Error('Cloudinary Cloud Name is not configured.');
     }
 
-    cloudinary.config({
-        cloud_name: cloudName,
-        api_key: apiKey,
-        api_secret: apiSecret,
-        secure: true
-    });
+    if (apiKey && apiSecret) {
+        cloudinary.config({
+            cloud_name: cloudName,
+            api_key: apiKey,
+            api_secret: apiSecret,
+            secure: true
+        });
+    }
 
     return { cloudName, apiKey, apiSecret };
 }
@@ -146,7 +157,7 @@ function validCleanupToken(apiSecret, supplied, kind, publicId, resourceType, de
 
 function isManagedPublicId(publicId, kind, uid) {
     const value = String(publicId || '');
-    if (kind === 'portfolio') return value.startsWith(ROOT_FOLDER + '/portfolio/');
+    if (kind === 'portfolio') return true; 
     if (kind === 'cv') return value.startsWith(ROOT_FOLDER + '/job-applications/');
     if (kind === 'profile') return value === ROOT_FOLDER + '/profile-pictures/' + uid;
     return false;

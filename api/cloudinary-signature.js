@@ -79,14 +79,19 @@ module.exports = async function handler(req, res) {
         }
 
         const { cloudName, apiKey, apiSecret } = applyCloudinaryConfig();
+        
+        // Use unsigned upload for portfolio as requested by the user
+        if (kind === 'portfolio') {
+            return json(res, 200, {
+                cloudName,
+                uploadPreset: 'portfolio',
+                resourceType: policy.resourceType,
+                maxBytes: policy.maxBytes
+            });
+        }
+
         const timestamp = Math.floor(Date.now() / 1000);
         let publicId;
-
-        // Put the managed prefix directly in the public ID. This works in both
-        // Cloudinary fixed-folder and dynamic-folder product environments.
-        if (kind === 'portfolio') {
-            publicId = ROOT_FOLDER + '/portfolio/' + timestamp + '-' + randomId();
-        } else if (kind === 'profile') {
             publicId = ROOT_FOLDER + '/profile-pictures/' + user.uid;
         } else {
             const extension = safeExtension(originalName);
