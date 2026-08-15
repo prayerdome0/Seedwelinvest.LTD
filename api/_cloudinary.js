@@ -1,52 +1,127 @@
 'use strict';
 
 const crypto = require('node:crypto');
+
+// The Cloudinary SDK parses `process.env.CLOUDINARY_URL` while it is being
+// required and throws immediately when the value is not a real
+// `cloudinary://` URL. A placeholder or half-connected integration variable
+// would therefore crash the whole serverless function at import time and
+// surface as an opaque 500 to visitors. Quarantine an unusable value before
+// the SDK ever sees it so the handlers can return a clear, actionable error.
+const RAW_CLOUDINARY_URL = process.env.CLOUDINARY_URL;
+if (RAW_CLOUDINARY_URL && !/^cloudinary:\/\/[^:@\s/]+:[^@\s/]+@[^\s/?#]+/i.test(String(RAW_CLOUDINARY_URL).trim())) {
+    delete process.env.CLOUDINARY_URL;
+}
+
 const { v2: cloudinary } = require('cloudinary');
 
 const FIREBASE_WEB_API_KEY = process.env.FIREBASE_WEB_API_KEY || 'AIzaSyA-BpRy-RVc2rqIG6uiRu_XrGEu1ZGnQwU';
 const ADMIN_EMAIL = 'zacheussimbaya@gmail.com';
 const ROOT_FOLDER = 'portfolio';
 
+/**
+ * Trim an environment variable and ignore the placeholder values that get
+ * copied out of documentation (for example `<your_api_key>`), so a half-filled
+ * Vercel environment is reported as "not configured" instead of silently
+ * producing invalid Cloudinary signatures.
+ */
+const PLACEHOLDER_VALUES = new Set([
+    'changeme', 'change_me', 'example', 'null', 'placeholder', 'todo',
+    'undefined', 'xxx', 'xxxxx', 'your_api_key', 'your_api_secret',
+    'your_cloud_name', 'yourapikey', 'yourapisecret', 'yourcloudname'
+]);
+
+function cleanEnv(value) {
+    const text = String(value == null ? '' : value).trim();
+    if (!text) return '';
+    // Bracketed templates copied from documentation, e.g. `<your_api_key>`.
+    if (/^[<[{(].*[>\]})]$/.test(text)) return '';
+    // Exact placeholder tokens only, so legitimate values that merely begin
+    // with "my" or "example" (a real cloud name such as `mycloud`) are kept.
+    if (PLACEHOLDER_VALUES.has(text.toLowerCase())) return '';
+    return text;
+}
+
+/**
+ * Parse the standard `CLOUDINARY_URL` that the Cloudinary/Vercel integration
+ * injects: cloudinary://<api_key>:<api_secret>@<cloud_name>
+ */
+function parseCloudinaryUrl(rawValue) {
+    const value = cleanEnv(rawValue);
+    if (!value) return null;
+    const match = value.match(/^cloudinary:\/\/([^:@\s/]+):([^@\s/]+)@([^\s/?#]+)/i);
+    if (!match) return null;
+    try {
+        const cloudName = decodeURIComponent(match[3]);
+        const apiKey = decodeURIComponent(match[1]);
+        const apiSecret = decodeURIComponent(match[2]);
+        if (!cloudName || !apiKey || !apiSecret) return null;
+        return { cloudName, apiKey, apiSecret };
+    } catch (_) {
+        return null;
+    }
+}
+
+/**
+ * Resolve credentials from `CLOUDINARY_URL` first (what the Vercel integration
+ * provides) and fall back to the individual variables, allowing either source
+ * to fill in a value the other is missing.
+ */
+function readCloudinaryEnv() {
+    // Use the captured original value: an unusable CLOUDINARY_URL is removed
+    // from process.env above so the SDK cannot crash on import.
+    const rawUrl = process.env.CLOUDINARY_URL || RAW_CLOUDINARY_URL;
+    const parsed = parseCloudinaryUrl(rawUrl);
+    const cloudName = (parsed && parsed.cloudName) || cleanEnv(process.env.CLOUDINARY_CLOUD_NAME) || '';
+    const apiKey = (parsed && parsed.apiKey) || cleanEnv(process.env.CLOUDINARY_API_KEY) || '';
+    const apiSecret = (parsed && parsed.apiSecret) || cleanEnv(process.env.CLOUDINARY_API_SECRET) || '';
+
+    const missing = [];
+    if (!cloudName) missing.push('CLOUDINARY_CLOUD_NAME');
+    if (!apiKey) missing.push('CLOUDINARY_API_KEY');
+    if (!apiSecret) missing.push('CLOUDINARY_API_SECRET');
+
+    return {
+        cloudName,
+        apiKey,
+        apiSecret,
+        missing,
+        usedCloudinaryUrl: Boolean(parsed),
+        hasCloudinaryUrlValue: Boolean(cleanEnv(rawUrl)),
+        configured: missing.length === 0
+    };
+}
+
+function cloudinaryConfigError(env) {
+    const detail = env.hasCloudinaryUrlValue && !env.usedCloudinaryUrl
+        ? 'CLOUDINARY_URL is present but is not a valid cloudinary://api_key:api_secret@cloud_name value.'
+        : 'Missing ' + env.missing.join(', ') + '.';
+    const error = new Error(
+        'The upload service is not configured yet. ' + detail +
+        ' An administrator needs to connect the Cloudinary integration in the Vercel project settings and redeploy.'
+    );
+    error.statusCode = 503;
+    error.code = 'CLOUDINARY_NOT_CONFIGURED';
+    return error;
+}
+
+/**
+ * Configure the Cloudinary SDK for this invocation. Throws a clear, actionable
+ * 503 when credentials are absent instead of failing later with an opaque
+ * signature error.
+ */
 function applyCloudinaryConfig() {
-    let cloudName = process.env.CLOUDINARY_CLOUD_NAME || 'dhad95cch';
-    let apiKey = process.env.CLOUDINARY_API_KEY;
-    let apiSecret = process.env.CLOUDINARY_API_SECRET;
+    const env = readCloudinaryEnv();
+    if (!env.configured) throw cloudinaryConfigError(env);
 
-    if (process.env.CLOUDINARY_URL) {
-        try {
-            const parsed = new URL(process.env.CLOUDINARY_URL);
-            if (parsed.protocol !== 'cloudinary:') throw new Error('Unexpected Cloudinary URL protocol.');
-            cloudName = decodeURIComponent(parsed.hostname);
-            apiKey = decodeURIComponent(parsed.username);
-            apiSecret = decodeURIComponent(parsed.password);
-        } catch (_) {
-            // If the URL is just a placeholder, we might still have the cloudName
-            if (process.env.CLOUDINARY_URL.includes('dhad95cch')) {
-                cloudName = 'dhad95cch';
-            } else {
-                throw new Error('CLOUDINARY_URL is not valid. Reconnect the Cloudinary integration in Vercel.');
-            }
-        }
-    }
+    cloudinary.config({
+        cloud_name: env.cloudName,
+        api_key: env.apiKey,
+        api_secret: env.apiSecret,
+        secure: true
+    });
 
-    // Clean up placeholders
-    if (apiKey === '<your_api_key>') apiKey = '';
-    if (apiSecret === '<your_api_secret>') apiSecret = '';
-
-    if (!cloudName) {
-        throw new Error('Cloudinary Cloud Name is not configured.');
-    }
-
-    if (apiKey && apiSecret) {
-        cloudinary.config({
-            cloud_name: cloudName,
-            api_key: apiKey,
-            api_secret: apiSecret,
-            secure: true
-        });
-    }
-
-    return { cloudName, apiKey, apiSecret };
+    return { cloudName: env.cloudName, apiKey: env.apiKey, apiSecret: env.apiSecret };
 }
 
 function setApiHeaders(res) {
@@ -157,7 +232,10 @@ function validCleanupToken(apiSecret, supplied, kind, publicId, resourceType, de
 
 function isManagedPublicId(publicId, kind, uid) {
     const value = String(publicId || '');
-    if (kind === 'portfolio') return true; 
+    // Portfolio images stay permissive: assets created by an earlier unsigned
+    // upload preset live outside the managed folder and must remain deletable
+    // by the administrator (this path is already admin-only).
+    if (kind === 'portfolio') return Boolean(value);
     if (kind === 'cv') return value.startsWith(ROOT_FOLDER + '/job-applications/');
     if (kind === 'profile') return value === ROOT_FOLDER + '/profile-pictures/' + uid;
     return false;
@@ -173,6 +251,7 @@ module.exports = {
     isManagedPublicId,
     json,
     randomId,
+    readCloudinaryEnv,
     requireUser,
     safeExtension,
     safeSegment,

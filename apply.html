@@ -1251,7 +1251,14 @@
                         });
                     } catch (_) { /* Do not hide the original submission error. */ }
                 }
-                alert((error && error.message ? error.message : 'The application could not be submitted.') + ' Please try again or contact us via WhatsApp.');
+                const detail = error && error.message ? error.message : 'The application could not be submitted.';
+                // A 503 means the CV upload service has not been connected yet.
+                // Applicants should not be told to simply "try again" — the
+                // retry cannot succeed until an administrator fixes it.
+                const notConfigured = (error && (error.status === 503 || error.code === 'CLOUDINARY_NOT_CONFIGURED'));
+                alert(notConfigured
+                    ? 'We cannot receive CV uploads at the moment. Our team has been notified. Please send your CV to seedwelinvestltd@gmail.com or contact us on WhatsApp: +260 973 028 342.'
+                    : detail + ' Please try again or contact us via WhatsApp.');
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Application';
                 uploadProgress.style.display = 'none';
