@@ -26,7 +26,7 @@ Static public website, a Firebase-backed portfolio administration workspace, and
 - **Automatic Worker IDs** (`SWL-YYYY-000001`): issued transactionally on approval from a monotonic counter; unique, permanent, never reused, and impossible for applicants to set themselves (blocked by Database Rules).
 - **QR verification**: each approved worker gets a secure random verification token. The QR opens `verify.html?t=…`, which checks the token live against `/verifications` and shows VERIFIED WORKER or VERIFICATION FAILED with limited verification data.
 - **Cloudinary Worker ID photos**: active workers can upload or replace their ID profile photo in the dashboard. It appears on the private ID card and the token-based public verification record.
-- **Admin controls**: approve / reject / request info / mark under review / suspend / reactivate, worker search (name, email, Worker ID), a Jobs panel, worker notifications and an append-only audit log.
+- **Admin controls**: approve / reject / request info / mark under review / suspend / reactivate, worker search (name, email, Worker ID), application search/filter/CSV export, CV follow-up actions, a Jobs panel, worker notifications and an append-only audit log.
 - **Important rule shown throughout**: creating an account does **not** guarantee employment or a job award.
 
 ## Team portal (Phase 2 + Phase 3)
@@ -45,7 +45,8 @@ Static public website, a Firebase-backed portfolio administration workspace, and
 ## Uploads and portfolio administration
 
 - **All new uploads use the existing connected Cloudinary product environment**: portfolio images, authenticated/private CVs and Worker ID profile photos are organised in its `portfolio` asset folder. Serverless functions create signed requests; no API secret or unsigned upload preset is exposed in browser code.
-- Open `admin.html` to manage published portfolio projects, protected image uploads, public portfolio details, share links, **contact inbox** and **job applications**.
+- Open `admin.html` to manage published portfolio projects with up to six photos each, protected image uploads, public portfolio details, share links, **contact inbox** and **job applications**.
+- Careers submissions always reach the private admin inbox. If the CV provider is unavailable, the application is saved with a follow-up flag instead of being discarded.
 - Open `projects.html` for the live, shareable portfolio.
 - See [FIREBASE_SETUP.md](FIREBASE_SETUP.md) before production use. Confirm the Vercel Cloudinary integration provides `CLOUDINARY_URL`, then deploy the included Firebase Database/Storage Rules.
 
