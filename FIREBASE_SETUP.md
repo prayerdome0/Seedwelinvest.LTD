@@ -88,7 +88,20 @@ Server-side rules enforce that:
 - a worker **cannot** change their own `status`, `role`, or `commissionRate`, and cannot write their own `/workers/{uid}/stats` (performance metrics are admin-written);
 - the verified administrator can read and write all worker and task records.
 
-When a worker registers, their record is created with `status: "pending"`. The dashboard blocks pending and suspended accounts. The administrator approves, rejects, suspends or reactivates workers from the **Team workers** panel in `admin.html`, and assigns tasks from the **Assign a task** panel. Approving a worker means setting `/workers/{uid}/status` to `"active"`.
+When a worker registers, their record is created with `status: "pending"`. The dashboard blocks pending, under-review, info-required, suspended and rejected accounts from full access and shows the appropriate status screen instead. The administrator approves, rejects, requests additional information, marks under review, suspends or reactivates workers from the **Workers & applicants** panel in `admin.html`, and assigns tasks from the **Assign a task** panel. Approving a worker means setting `/workers/{uid}/status` to `"active"`.
+
+## Worker IDs, QR verification, notifications, jobs and audit log
+
+Additional paths introduced by the hiring portal:
+
+- `/counters/workerId` — a monotonically increasing counter, incremented **only via a transaction by the admin** when a worker is approved. The rules require each new value to be strictly greater than the previous one, so Worker IDs are unique and **never reused**, even after deletion or rejection.
+- `/workers/{uid}/workerId` — the permanent, system-generated ID in the format `SWL-YYYY-000001`. Workers **cannot** write their own `workerId`, `verifyToken` or `approvedAt` (enforced server-side by the rules).
+- `/verifications/{token}` — public-read verification records keyed by a cryptographically random token (16–64 chars). Scanning a worker's QR opens `verify.html?t={token}`, which checks this path live. The record contains **only** limited data (Worker ID, name, role, status, reference, date) — no private personal information. Only the admin can create or update these records. The parent path is not listable, so tokens cannot be enumerated.
+- `/notifications/{uid}/{noteId}` — internal notifications (application approved/rejected, info requested, task assigned…). The admin writes them; a worker can only read their own and mark them `read`.
+- `/jobs/{jobId}` — public-read job openings managed from the admin **Jobs** panel and displayed on `apply.html`.
+- `/auditLog/{entryId}` — admin-only, **append-only** audit trail (entries cannot be edited or deleted once written) recording approvals, rejections, suspensions, ID issuance, job changes and task assignments.
+
+When the admin **suspends** a worker, their verification record is set to `suspended` (the QR page shows a warning); when an approved worker is **rejected/revoked**, the verification record is set to `revoked` (the QR page shows VERIFICATION FAILED).
 
 After changing `database.rules.json`, redeploy the rules:
 

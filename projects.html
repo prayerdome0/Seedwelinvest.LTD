@@ -260,7 +260,13 @@
             *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
             .reveal { opacity: 1; transform: none; }
         }
-    </style>
+            .nav-links a.nav-login {
+            background: #dc2626; color: #fff !important; padding: 8px 20px; border-radius: 50px;
+            box-shadow: 0 4px 14px rgba(220,38,38,.25); transition: all .3s ease;
+        }
+        .nav-links a.nav-login::after { display: none; }
+        .nav-links a.nav-login:hover { background: #b91c1c; color: #fff; transform: translateY(-1px); }
+</style>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -289,14 +295,14 @@
         <div class="container header-inner">
             <a href="index.html" class="logo-container" aria-label="Seedwel Investment LTD home"><img src="favicon.svg" class="logo-img" alt=""><span>Seedwel <span>Investment</span> LTD</span></a>
             <nav class="nav-links" aria-label="Main navigation">
-                <a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a><a href="projects.html" class="active" aria-current="page">Portfolio</a><a href="apply.html">Careers</a><a href="contact.html">Contact</a><a href="support.html">Support</a>
+                <a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a><a href="projects.html" class="active" aria-current="page">Portfolio</a><a href="apply.html">Careers</a><a href="contact.html">Contact</a><a href="support.html">Support</a><a href="login.html" class="nav-login">Login</a>
             </nav>
             <button class="hamburger" id="hamburger" type="button" aria-label="Open navigation" aria-expanded="false"><span></span><span></span><span></span></button>
         </div>
     </header>
     <div class="menu-overlay" id="menuOverlay"></div>
     <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
-        <a href="index.html"><i class="fa-solid fa-house" aria-hidden="true"></i>Home</a><a href="about.html"><i class="fa-solid fa-circle-info" aria-hidden="true"></i>About us</a><a href="services.html"><i class="fa-solid fa-grid-2" aria-hidden="true"></i>Services</a><a href="projects.html" class="active"><i class="fa-solid fa-folder-open" aria-hidden="true"></i>Portfolio</a><a href="apply.html"><i class="fa-solid fa-briefcase" aria-hidden="true"></i>Careers</a><a href="contact.html"><i class="fa-solid fa-envelope" aria-hidden="true"></i>Contact</a><a href="support.html"><i class="fa-solid fa-headset" aria-hidden="true"></i>Support</a>
+        <a href="index.html"><i class="fa-solid fa-house" aria-hidden="true"></i>Home</a><a href="about.html"><i class="fa-solid fa-circle-info" aria-hidden="true"></i>About us</a><a href="services.html"><i class="fa-solid fa-grid-2" aria-hidden="true"></i>Services</a><a href="projects.html" class="active"><i class="fa-solid fa-folder-open" aria-hidden="true"></i>Portfolio</a><a href="apply.html"><i class="fa-solid fa-briefcase" aria-hidden="true"></i>Careers</a><a href="contact.html"><i class="fa-solid fa-envelope" aria-hidden="true"></i>Contact</a><a href="support.html"><i class="fa-solid fa-headset" aria-hidden="true"></i>Support</a><a href="login.html"><i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i>Login</a>
     </nav>
 
     <main>

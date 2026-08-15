@@ -17,6 +17,8 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <!-- QR generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -59,12 +61,26 @@
             max-width: 560px; margin: 60px auto; background: #fff; border: 1px solid #e5e7eb;
             border-radius: 24px; padding: 48px 40px; text-align: center; box-shadow: 0 24px 60px rgba(15,23,42,0.08);
         }
-        .status-card i { font-size: 3.2rem; margin-bottom: 16px; display: block; }
-        .status-card.pending i { color: #f59e0b; }
-        .status-card.suspended i { color: #dc2626; }
+        .status-card img.brand { height: 46px; width: auto; margin-bottom: 18px; }
+        .status-card i.status-icon { font-size: 3.2rem; margin-bottom: 16px; display: block; }
+        .status-card.pending i.status-icon { color: #f59e0b; }
+        .status-card.info i.status-icon { color: #2563eb; }
+        .status-card.suspended i.status-icon { color: #dc2626; }
         .status-card h1 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.5rem; margin-bottom: 10px; }
         .status-card p { color: #6b7280; font-size: 0.95rem; }
         .status-card .note { margin-top: 20px; font-size: 0.82rem; color: #94a3b8; }
+        .status-card .info-note {
+            margin-top: 18px; padding: 12px 16px; border-radius: 12px; text-align: left;
+            background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; font-size: 0.85rem;
+        }
+        .progress-steps { display: flex; justify-content: center; gap: 6px; margin: 22px 0 4px; flex-wrap: wrap; }
+        .progress-step {
+            display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 50px;
+            font-size: 0.7rem; font-weight: 700; font-family: 'Montserrat', sans-serif;
+            background: #f1f5f9; color: #94a3b8; border: 1px solid #e2e8f0;
+        }
+        .progress-step.done { background: #ecfdf5; color: #047857; border-color: #a7f3d0; }
+        .progress-step.current { background: #fffbeb; color: #b45309; border-color: #fde68a; }
 
         /* Dashboard layout */
         .welcome { margin-bottom: 26px; }
@@ -78,6 +94,41 @@
         .badge.active { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
         .badge.role { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
         .badge.commission { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+        .badge.wid { background: #f5f3ff; color: #6d28d9; border: 1px solid #ddd6fe; }
+
+        /* Worker ID card */
+        .id-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 24px; margin-bottom: 30px; }
+        .worker-id-card {
+            position: relative; overflow: hidden; border-radius: 20px; padding: 28px;
+            background: linear-gradient(135deg, #111827 0%, #1f2937 60%, #7f1d1d 130%);
+            color: #fff; border: 1px solid #1f2937;
+        }
+        .worker-id-card::after {
+            content: ''; position: absolute; top: -60px; right: -60px; width: 220px; height: 220px;
+            border-radius: 50%; background: rgba(220,38,38,0.18);
+        }
+        .wid-head { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+        .wid-head img { height: 36px; width: auto; background: #fff; border-radius: 8px; padding: 3px 6px; }
+        .wid-head strong { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; letter-spacing: 0.4px; }
+        .wid-head span { display: block; font-size: 0.68rem; color: #cbd5e1; font-weight: 500; }
+        .wid-body { position: relative; z-index: 1; display: flex; justify-content: space-between; gap: 18px; align-items: flex-end; flex-wrap: wrap; }
+        .wid-label { font-size: 0.68rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
+        .wid-value { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.05rem; }
+        .wid-number { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.5rem; letter-spacing: 1px; color: #fecaca; }
+        .wid-verified {
+            display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; padding: 5px 12px;
+            border-radius: 50px; background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.4);
+            color: #6ee7b7; font-size: 0.72rem; font-weight: 700; font-family: 'Montserrat', sans-serif;
+        }
+        .qr-card {
+            background: #fff; border: 1px solid #e5e7eb; border-radius: 20px; padding: 24px; text-align: center;
+        }
+        .qr-card h3 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1rem; margin-bottom: 6px; }
+        .qr-card p { color: #6b7280; font-size: 0.78rem; margin-bottom: 14px; }
+        .qr-box { display: inline-block; padding: 10px; background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; }
+        .qr-box img, .qr-box canvas { display: block; }
+        .qr-link { margin-top: 12px; font-size: 0.72rem; color: #94a3b8; word-break: break-all; }
+        .qr-link a { color: #dc2626; font-weight: 600; }
 
         .stats-grid {
             display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-bottom: 30px;
@@ -152,10 +203,63 @@
         .note-editor .note-actions { display: flex; gap: 8px; margin-top: 8px; }
         .task-hint { font-size: 0.72rem; color: #94a3b8; margin-top: 6px; }
 
+        /* Notifications */
+        .notif-list { display: flex; flex-direction: column; gap: 10px; }
+        .notif-item {
+            display: flex; gap: 12px; align-items: flex-start; border: 1px solid #e5e7eb;
+            border-radius: 14px; padding: 14px 16px;
+        }
+        .notif-item.unread { background: #fef2f2; border-color: #fecaca; }
+        .notif-item .n-icon {
+            width: 34px; height: 34px; border-radius: 10px; flex: none; display: flex;
+            align-items: center; justify-content: center; background: #fff1f2; color: #dc2626; font-size: 0.9rem;
+        }
+        .notif-item strong { display: block; font-size: 0.88rem; }
+        .notif-item p { font-size: 0.8rem; color: #6b7280; }
+        .notif-item time { font-size: 0.7rem; color: #94a3b8; }
+        .notif-item .mark-read {
+            margin-left: auto; flex: none; background: none; border: none; color: #dc2626; cursor: pointer;
+            font-size: 0.72rem; font-weight: 700; font-family: 'Montserrat', sans-serif;
+        }
+
+        /* Profile & security */
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .field { margin-bottom: 14px; }
+        .field label { display: block; font-weight: 600; font-size: 0.82rem; color: #111827; margin-bottom: 5px; }
+        .field input, .field textarea {
+            width: 100%; padding: 11px 14px; background: #f9fafb; border: 1px solid #e5e7eb;
+            border-radius: 10px; color: #111827; font-family: 'Inter', sans-serif; font-size: 0.88rem;
+        }
+        .field input:focus, .field textarea:focus { border-color: #dc2626; outline: none; background: #fff; box-shadow: 0 0 0 3px rgba(220,38,38,0.06); }
+        .field input[disabled] { color: #9ca3af; cursor: not-allowed; }
+        .field .locked-hint { font-size: 0.7rem; color: #94a3b8; margin-top: 3px; }
+        .btn-primary {
+            padding: 12px 24px; border: none; border-radius: 50px; cursor: pointer;
+            font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.85rem;
+            background: #dc2626; color: #fff; transition: all 0.3s ease;
+        }
+        .btn-primary:hover { background: #b91c1c; }
+        .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+        .btn-ghost {
+            padding: 12px 24px; border-radius: 50px; cursor: pointer;
+            font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.85rem;
+            background: #fff; color: #dc2626; border: 2px solid #dc2626; transition: all 0.3s ease;
+        }
+        .btn-ghost:hover { background: #fef2f2; }
+        .form-msg { display: none; margin-top: 12px; padding: 10px 14px; border-radius: 10px; font-size: 0.82rem; font-weight: 600; }
+        .form-msg.success { display: block; background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+        .form-msg.error { display: block; background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+        .security-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid #f1f5f9; }
+        .security-row:last-child { border-bottom: none; }
+        .security-row strong { font-size: 0.88rem; display: block; }
+        .security-row p { font-size: 0.78rem; color: #6b7280; }
+
         footer { text-align: center; padding: 20px; color: #94a3b8; font-size: 0.78rem; }
 
         @media (max-width: 900px) {
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .id-grid { grid-template-columns: 1fr; }
+            .two-col { grid-template-columns: 1fr; }
         }
         @media (max-width: 560px) {
             .stats-grid { grid-template-columns: 1fr; }
@@ -189,20 +293,33 @@
 
     <div class="wrap">
 
-        <!-- PENDING STATUS -->
+        <!-- PENDING / UNDER REVIEW STATUS -->
         <div class="status-card pending" id="pendingView" style="display:none;">
-            <i class="fas fa-hourglass-half"></i>
-            <h1>Application under review</h1>
-            <p>Welcome, <strong id="pendingName"></strong>. Your account status is currently <strong>Pending Approval</strong>.</p>
-            <p>A Seedwel administrator is reviewing your application. You'll gain access to your dashboard and tasks once you are approved.</p>
-            <div class="note">You can sign out and come back later to check your status.</div>
+            <img class="brand" src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel Investment LTD" />
+            <i class="fas fa-hourglass-half status-icon"></i>
+            <h1 id="pendingTitle">Application under review</h1>
+            <p>Welcome, <strong id="pendingName"></strong>. Your application status is currently <strong id="pendingStatusLabel">Pending Approval</strong>.</p>
+            <p>Seedwel Investment LTD is reviewing your application and verifying your information. Once approved you will receive your official Seedwel Worker ID and full dashboard access.</p>
+            <div class="progress-steps" id="progressSteps"></div>
+            <div class="note">Creating an account does not guarantee employment or a job award. You can sign out and come back later to check your status.</div>
         </div>
 
-        <!-- SUSPENDED STATUS -->
+        <!-- ADDITIONAL INFORMATION REQUIRED -->
+        <div class="status-card info" id="infoView" style="display:none;">
+            <img class="brand" src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel Investment LTD" />
+            <i class="fas fa-circle-question status-icon"></i>
+            <h1>Additional information required</h1>
+            <p>Hello, <strong id="infoName"></strong>. Seedwel Investment LTD needs more information before your application can be approved.</p>
+            <div class="info-note" id="infoNote">Please contact us to provide the requested information.</div>
+            <div class="note">Contact us via WhatsApp: +260 973 028 342 or email seedwelinvestltd@gmail.com</div>
+        </div>
+
+        <!-- SUSPENDED / REJECTED STATUS -->
         <div class="status-card suspended" id="suspendedView" style="display:none;">
-            <i class="fas fa-circle-exclamation"></i>
-            <h1>Account suspended</h1>
-            <p>Your account has been suspended. If you believe this is a mistake, please contact a Seedwel administrator.</p>
+            <img class="brand" src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel Investment LTD" />
+            <i class="fas fa-circle-exclamation status-icon"></i>
+            <h1 id="suspendedTitle">Account suspended</h1>
+            <p id="suspendedText">Your account has been suspended. If you believe this is a mistake, please contact a Seedwel administrator.</p>
             <div class="note">Contact us via WhatsApp: +260 973 028 342</div>
         </div>
 
@@ -212,9 +329,42 @@
                 <h1>Welcome, <span id="welcomeName">—</span> 👋</h1>
                 <p id="welcomeEmail">—</p>
                 <div class="badges">
-                    <span class="badge active"><i class="fas fa-circle-check"></i> Account Active</span>
+                    <span class="badge active"><i class="fas fa-circle-check"></i> Active Worker</span>
+                    <span class="badge wid" id="widBadge" style="display:none;"><i class="fas fa-id-card"></i> <span id="widBadgeText"></span></span>
                     <span class="badge role"><i class="fas fa-briefcase"></i> <span id="roleLabel">Role</span></span>
                     <span class="badge commission"><i class="fas fa-percent"></i> <span id="commissionLabel">10% Commission</span></span>
+                </div>
+            </div>
+
+            <!-- WORKER ID + QR -->
+            <div class="id-grid" id="idGrid" style="display:none;">
+                <div class="worker-id-card">
+                    <div class="wid-head">
+                        <img src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel Investment LTD" />
+                        <div>
+                            <strong>SEEDWEL INVESTMENT LTD</strong>
+                            <span>Official Worker Identification</span>
+                        </div>
+                    </div>
+                    <div class="wid-body">
+                        <div>
+                            <div class="wid-label">Worker name</div>
+                            <div class="wid-value" id="widName">—</div>
+                            <div class="wid-label" style="margin-top:12px;">Role</div>
+                            <div class="wid-value" id="widRole">—</div>
+                        </div>
+                        <div style="text-align:right;">
+                            <div class="wid-label">Worker ID</div>
+                            <div class="wid-number" id="widNumber">—</div>
+                            <div class="wid-verified"><i class="fas fa-shield-halved"></i> VERIFIED · Seedwel Investment LTD</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="qr-card">
+                    <h3><i class="fas fa-qrcode" style="color:#dc2626;"></i> Verification QR</h3>
+                    <p>Scan to verify this worker on the official Seedwel verification page. The QR contains a secure verification token — not personal data.</p>
+                    <div class="qr-box"><div id="qrCode"></div></div>
+                    <div class="qr-link" id="qrLinkWrap" style="display:none;"><a id="qrLink" target="_blank" rel="noopener">Open verification page</a></div>
                 </div>
             </div>
 
@@ -231,11 +381,86 @@
 
             <div class="section-card">
                 <div class="section-head">
+                    <h2><i class="fas fa-bell" style="color:#dc2626;"></i> Notifications</h2>
+                    <span class="count" id="notifCount">0 new</span>
+                </div>
+                <div id="notifList" class="notif-list">
+                    <div class="empty"><i class="fas fa-bell-slash"></i> No notifications yet.</div>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-head">
                     <h2><i class="fas fa-list-check" style="color:#dc2626;"></i> My Tasks</h2>
                     <span class="count" id="taskCount">0 tasks</span>
                 </div>
                 <div id="taskList" class="task-list">
                     <div class="empty"><i class="fas fa-inbox"></i> No tasks assigned yet.</div>
+                </div>
+            </div>
+
+            <div class="two-col">
+                <div class="section-card">
+                    <div class="section-head">
+                        <h2><i class="fas fa-user-pen" style="color:#dc2626;"></i> My Profile</h2>
+                    </div>
+                    <form id="profileForm" novalidate>
+                        <div class="field">
+                            <label>Full name</label>
+                            <input type="text" id="pfName" disabled />
+                            <div class="locked-hint"><i class="fas fa-lock"></i> Name changes require admin approval — contact Seedwel support.</div>
+                        </div>
+                        <div class="field">
+                            <label>Email</label>
+                            <input type="email" id="pfEmail" disabled />
+                            <div class="locked-hint"><i class="fas fa-lock"></i> Your email is your secure login identity.</div>
+                        </div>
+                        <div class="field">
+                            <label>Phone / WhatsApp</label>
+                            <input type="tel" id="pfPhone" maxlength="40" placeholder="+260 XXX XXX XXX" />
+                        </div>
+                        <div class="field">
+                            <label>Country</label>
+                            <input type="text" id="pfCountry" maxlength="80" placeholder="e.g. Zambia" />
+                        </div>
+                        <div class="field">
+                            <label>Availability</label>
+                            <input type="text" id="pfAvailability" maxlength="80" placeholder="e.g. Full-time, weekdays" />
+                        </div>
+                        <div class="field">
+                            <label>Skills</label>
+                            <textarea id="pfSkills" maxlength="500" rows="3" placeholder="Your key skills…"></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary" id="pfSaveBtn"><i class="fas fa-floppy-disk"></i> Save profile</button>
+                        <div class="form-msg" id="pfMsg"></div>
+                    </form>
+                </div>
+
+                <div class="section-card">
+                    <div class="section-head">
+                        <h2><i class="fas fa-shield-halved" style="color:#dc2626;"></i> Account Security</h2>
+                    </div>
+                    <div class="security-row">
+                        <div>
+                            <strong>Password</strong>
+                            <p>Your password is never stored on this website — it is protected by Firebase Authentication with secure hashing.</p>
+                        </div>
+                        <button type="button" class="btn-ghost" id="changePwBtn">Change password</button>
+                    </div>
+                    <div class="security-row">
+                        <div>
+                            <strong>Sessions</strong>
+                            <p>Sign out of this device. Changing your password signs you out of all sessions everywhere.</p>
+                        </div>
+                        <button type="button" class="btn-ghost" id="secSignOutBtn">Sign out</button>
+                    </div>
+                    <div class="security-row">
+                        <div>
+                            <strong>Worker ID</strong>
+                            <p>Your Worker ID is permanent, unique and system-generated. It cannot be chosen or changed manually.</p>
+                        </div>
+                    </div>
+                    <div class="form-msg" id="secMsg"></div>
                 </div>
             </div>
         </div>
@@ -279,6 +504,13 @@
             return { pending: 'Pending', in_progress: 'In Progress', completed: 'Completed' }[status] || status;
         }
 
+        function showFormMsg(el, text, ok) {
+            el.textContent = text;
+            el.className = 'form-msg ' + (ok ? 'success' : 'error');
+            window.setTimeout(() => { el.className = 'form-msg'; }, 6000);
+        }
+
+        // ─── Tasks ───
         function renderTasks(uid) {
             const list = $('taskList');
             db.ref('tasks/' + uid).on('value', (snap) => {
@@ -333,7 +565,6 @@
             const actions = document.createElement('div');
             actions.className = 'task-actions';
 
-            // Status transition buttons
             if (status === 'pending') {
                 actions.appendChild(miniBtn('start', 'fas fa-play', 'Start work', async () => {
                     await setTaskStatus(uid, t.id, 'in_progress');
@@ -351,7 +582,6 @@
                 }));
             }
 
-            // Notes toggle
             actions.appendChild(miniBtn('', 'fas fa-pen', 'Note', () => {
                 editor.classList.toggle('open');
                 if (editor.classList.contains('open')) editorTextarea.focus();
@@ -376,7 +606,6 @@
             }
             editor.appendChild(editorTextarea);
             editor.appendChild(noteActions);
-            editorTextarea.addEventListener('input', () => { editorTextarea.style.borderColor = ''; });
 
             item.appendChild(main);
             item.appendChild(pill);
@@ -421,12 +650,149 @@
             }
         }
 
-        function escapeHtml(str) {
-            return String(str).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        // ─── Notifications ───
+        function renderNotifications(uid) {
+            const list = $('notifList');
+            db.ref('notifications/' + uid).limitToLast(30).on('value', (snap) => {
+                const data = snap.val() || {};
+                const notes = Object.entries(data).map(([id, n]) => ({ id, ...n }))
+                    .sort((a, b) => Number(b.createdAt || 0) - Number(a.createdAt || 0));
+                const unread = notes.filter(n => !n.read).length;
+                $('notifCount').textContent = unread + ' new';
+                list.textContent = '';
+                if (!notes.length) {
+                    list.innerHTML = '<div class="empty"><i class="fas fa-bell-slash"></i> No notifications yet.</div>';
+                    return;
+                }
+                notes.forEach(n => {
+                    const item = document.createElement('div');
+                    item.className = 'notif-item' + (n.read ? '' : ' unread');
+                    const icon = document.createElement('div');
+                    icon.className = 'n-icon';
+                    icon.innerHTML = '<i class="fas ' + (n.type === 'approval' ? 'fa-circle-check' : n.type === 'task' ? 'fa-list-check' : 'fa-bell') + '"></i>';
+                    const body = document.createElement('div');
+                    const title = document.createElement('strong');
+                    title.textContent = String(n.title || 'Notification');
+                    const text = document.createElement('p');
+                    text.textContent = String(n.body || '');
+                    const time = document.createElement('time');
+                    time.textContent = n.createdAt ? new Date(Number(n.createdAt)).toLocaleString() : '';
+                    body.append(title, text, time);
+                    item.append(icon, body);
+                    if (!n.read) {
+                        const btn = document.createElement('button');
+                        btn.className = 'mark-read';
+                        btn.textContent = 'Mark read';
+                        btn.addEventListener('click', async () => {
+                            try { await db.ref('notifications/' + uid + '/' + n.id).update({ read: true }); } catch (_) {}
+                        });
+                        item.appendChild(btn);
+                    }
+                    list.appendChild(item);
+                });
+            }, () => {
+                list.innerHTML = '<div class="empty"><i class="fas fa-bell-slash"></i> Notifications unavailable.</div>';
+            });
         }
 
+        // ─── QR / Worker ID ───
+        function renderWorkerId(worker) {
+            if (!worker.workerId) { $('idGrid').style.display = 'none'; $('widBadge').style.display = 'none'; return; }
+            $('idGrid').style.display = 'grid';
+            $('widBadge').style.display = 'inline-flex';
+            $('widBadgeText').textContent = worker.workerId;
+            $('widName').textContent = worker.fullName || '—';
+            $('widRole').textContent = worker.role || '—';
+            $('widNumber').textContent = worker.workerId;
+
+            const qrHolder = $('qrCode');
+            qrHolder.innerHTML = '';
+            if (worker.verifyToken) {
+                const url = new URL('verify.html', window.location.href);
+                url.searchParams.set('t', worker.verifyToken);
+                try {
+                    new QRCode(qrHolder, { text: url.href, width: 148, height: 148, correctLevel: QRCode.CorrectLevel.M });
+                } catch (_) {
+                    qrHolder.textContent = 'QR unavailable';
+                }
+                $('qrLinkWrap').style.display = 'block';
+                $('qrLink').href = url.href;
+            } else {
+                qrHolder.textContent = 'QR pending';
+                $('qrLinkWrap').style.display = 'none';
+            }
+        }
+
+        // ─── Profile ───
+        function fillProfile(user, worker) {
+            $('pfName').value = worker.fullName || '';
+            $('pfEmail').value = user.email || '';
+            $('pfPhone').value = worker.phone || '';
+            $('pfCountry').value = worker.country || '';
+            $('pfAvailability').value = worker.availability || '';
+            $('pfSkills').value = worker.skills || '';
+        }
+
+        $('profileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const user = auth.currentUser;
+            if (!user) return;
+            const btn = $('pfSaveBtn');
+            btn.disabled = true;
+            try {
+                await db.ref('workers/' + user.uid).update({
+                    phone: $('pfPhone').value.trim().slice(0, 40),
+                    country: $('pfCountry').value.trim().slice(0, 80),
+                    availability: $('pfAvailability').value.trim().slice(0, 80),
+                    skills: $('pfSkills').value.trim().slice(0, 500),
+                    updatedAt: firebase.database.ServerValue.TIMESTAMP
+                });
+                showFormMsg($('pfMsg'), 'Profile updated successfully.', true);
+            } catch (err) {
+                console.error('Profile save error:', err);
+                showFormMsg($('pfMsg'), 'Could not save your profile. Please try again.', false);
+            } finally {
+                btn.disabled = false;
+            }
+        });
+
+        // ─── Security ───
+        $('changePwBtn').addEventListener('click', async () => {
+            const user = auth.currentUser;
+            if (!user || !user.email) return;
+            try {
+                await auth.sendPasswordResetEmail(user.email);
+                showFormMsg($('secMsg'), 'A secure password change link has been sent to ' + user.email + '.', true);
+            } catch (_) {
+                showFormMsg($('secMsg'), 'Could not send the password link. Please try again later.', false);
+            }
+        });
+        $('secSignOutBtn').addEventListener('click', async () => {
+            await auth.signOut();
+            window.location.href = 'login.html';
+        });
+
+        // ─── Status screens ───
         function showOnly(el) {
-            ['pendingView', 'suspendedView', 'dashboardView'].forEach(id => { $(id).style.display = (id === el ? 'block' : 'none'); });
+            ['pendingView', 'infoView', 'suspendedView', 'dashboardView'].forEach(id => { $(id).style.display = (id === el ? 'block' : 'none'); });
+        }
+
+        function renderProgress(status) {
+            const steps = [
+                { key: 'account', label: 'Account Created' },
+                { key: 'submitted', label: 'Application Submitted' },
+                { key: 'review', label: 'Under Review' },
+                { key: 'approved', label: 'Approved' }
+            ];
+            const currentIndex = status === 'under_review' ? 2 : 1;
+            const holder = $('progressSteps');
+            holder.innerHTML = '';
+            steps.forEach((s, i) => {
+                const el = document.createElement('span');
+                el.className = 'progress-step' + (i < currentIndex ? ' done' : i === currentIndex ? ' current' : '');
+                el.innerHTML = (i < currentIndex ? '<i class="fas fa-check"></i>' : i === currentIndex ? '<i class="fas fa-spinner"></i>' : '') + ' ' + s.label;
+                holder.appendChild(el);
+            });
         }
 
         function renderDashboard(user, worker) {
@@ -434,17 +800,30 @@
             $('avatarInitials').textContent = initials(worker.fullName);
             $('topName').textContent = worker.fullName || user.email;
 
-            if (status === 'pending') {
+            if (status === 'pending' || status === 'under_review') {
                 $('pendingName').textContent = worker.fullName || user.email;
+                $('pendingTitle').textContent = status === 'under_review' ? 'Application under review' : 'Application submitted';
+                $('pendingStatusLabel').textContent = status === 'under_review' ? 'Under Review' : 'Pending Approval';
+                renderProgress(status);
                 showOnly('pendingView');
                 return;
             }
+            if (status === 'info_required') {
+                $('infoName').textContent = worker.fullName || user.email;
+                $('infoNote').textContent = worker.statusNote || 'Please contact Seedwel Investment LTD to provide the requested information.';
+                showOnly('infoView');
+                return;
+            }
             if (status === 'suspended' || status === 'rejected') {
+                $('suspendedTitle').textContent = status === 'rejected' ? 'Application not approved' : 'Account suspended';
+                $('suspendedText').textContent = status === 'rejected'
+                    ? 'Unfortunately your application was not approved at this time. You may contact Seedwel Investment LTD for more information.'
+                    : 'Your account has been suspended. If you believe this is a mistake, please contact a Seedwel administrator.';
                 showOnly('suspendedView');
                 return;
             }
 
-            // Active
+            // Active worker
             $('welcomeName').textContent = worker.fullName || 'there';
             $('welcomeEmail').textContent = user.email || '';
             $('roleLabel').textContent = worker.role || 'Team Member';
@@ -461,29 +840,34 @@
             $('stPaid').textContent = money(s.commissionPaid);
             $('stPending').textContent = money(s.commissionPending);
 
+            renderWorkerId(worker);
+            fillProfile(user, worker);
             showOnly('dashboardView');
-            renderTasks(user.uid);
         }
 
+        let liveListeners = false;
         auth.onAuthStateChanged(async (user) => {
             if (!user) { window.location.href = 'login.html'; return; }
             if (user.email && user.email.toLowerCase() === ADMIN_EMAIL) { window.location.href = 'admin.html'; return; }
 
-            try {
-                const snap = await db.ref('workers/' + user.uid).once('value');
+            db.ref('workers/' + user.uid).on('value', (snap) => {
                 const worker = snap.val();
                 if (!worker) {
-                    // Signed-in account with no worker record.
-                    await auth.signOut();
-                    window.location.href = 'login.html';
+                    auth.signOut().then(() => { window.location.href = 'login.html'; });
                     return;
                 }
                 renderDashboard(user, worker);
-            } catch (err) {
+                if ((worker.status || 'pending') === 'active' && !liveListeners) {
+                    liveListeners = true;
+                    renderTasks(user.uid);
+                    renderNotifications(user.uid);
+                }
+            }, (err) => {
                 console.error('Dashboard load error:', err);
                 $('pendingName').textContent = user.email || '';
+                renderProgress('pending');
                 showOnly('pendingView');
-            }
+            });
         });
 
         $('signOutBtn').addEventListener('click', async () => {

@@ -14,9 +14,19 @@ Static public website, a Firebase-backed portfolio administration workspace, and
 | `contact.html` | Contact form (saved to Firebase) |
 | `support.html` | Help center |
 | `privacy.html` / `terms.html` | Legal |
-| `login.html` | Private team login (workers sign in / apply) |
-| `dashboard.html` | Private worker dashboard (active team members only) |
-| `admin.html` | Secure admin (portfolio, messages, applications) |
+| `login.html` | Single login / create-account page with automatic server-checked role routing |
+| `dashboard.html` | Private worker dashboard (Worker ID, QR verification, tasks, notifications, profile, security) |
+| `admin.html` | Secure admin (portfolio, messages, applications, workers, jobs, audit log) |
+| `verify.html` | Public Seedwel worker verification page (opened by scanning a worker's QR code) |
+
+## Hiring portal
+
+- **One login entry point** (`login.html`): the account role is stored in Firebase (server-side rules), never chosen in the browser. After sign-in, admins are routed to `admin.html`, approved workers to their dashboard, and applicants to their status screen.
+- **Application workflow**: Account Created → Application Submitted → Under Review / Info Required → Approved or Rejected — with clear status screens for the applicant at every step.
+- **Automatic Worker IDs** (`SWL-YYYY-000001`): issued transactionally on approval from a monotonic counter; unique, permanent, never reused, and impossible for applicants to set themselves (blocked by Database Rules).
+- **QR verification**: each approved worker gets a secure random verification token. The QR opens `verify.html?t=…`, which checks the token live against `/verifications` and shows VERIFIED WORKER or VERIFICATION FAILED with limited, non-private data only.
+- **Admin controls**: approve / reject / request info / mark under review / suspend / reactivate, worker search (name, email, Worker ID), a Jobs panel, worker notifications and an append-only audit log.
+- **Important rule shown throughout**: creating an account does **not** guarantee employment or a job award.
 
 ## Team portal (Phase 2 + Phase 3)
 

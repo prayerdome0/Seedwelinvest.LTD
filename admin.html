@@ -471,6 +471,17 @@
         .status-pill.active { color: #91ebbf; border-color: rgba(67,209,158,.28); background: rgba(67,209,158,.1); }
         .status-pill.pending { color: #ffd98d; border-color: rgba(245,201,103,.3); background: rgba(245,201,103,.1); }
         .status-pill.suspended { color: #ffb0b0; border-color: rgba(239,88,88,.28); background: rgba(239,88,88,.1); }
+        .status-pill.under_review { color: #b8d3ff; border-color: rgba(120,169,255,.28); background: rgba(120,169,255,.1); }
+        .status-pill.info_required { color: #ffd98d; border-color: rgba(245,201,103,.3); background: rgba(245,201,103,.1); }
+        .status-pill.open { color: #91ebbf; border-color: rgba(67,209,158,.28); background: rgba(67,209,158,.1); }
+        .status-pill.closed { color: #ffb0b0; border-color: rgba(239,88,88,.28); background: rgba(239,88,88,.1); }
+        .worker-id-tag { display: inline-block; margin-top: 4px; padding: 2px 10px; border-radius: 999px; font-family: 'Montserrat', sans-serif; font-size: .68rem; font-weight: 800; letter-spacing: .4px; color: #ffd98d; background: rgba(245,201,103,.12); border: 1px solid rgba(245,201,103,.3); }
+        .panel-search { width: 100%; margin-bottom: 12px; padding: 10px 14px; border-radius: 11px; border: 1px solid var(--line); background: rgba(9,14,24,.6); color: var(--white); font-family: 'Inter', sans-serif; font-size: .82rem; }
+        .panel-search:focus { border-color: var(--gold); outline: none; }
+        .audit-item { padding: 10px 14px; border-bottom: 1px solid var(--line); font-size: .78rem; color: #dbe6f5; }
+        .audit-item:last-child { border-bottom: none; }
+        .audit-item strong { color: var(--gold); }
+        .audit-item time { display: block; color: var(--muted); font-size: .68rem; margin-top: 2px; }
         .workers-panel::before { display: block; height: 3px; content: ''; background: linear-gradient(90deg, var(--gold), #78a9ff, #43d19e); }
         .worker-role { color: #dbe6f5; font-size: .72rem; margin: 2px 0 0; }
         .task-form { display: grid; gap: 0; }
@@ -546,7 +557,7 @@
     <main class="login-screen" id="loginScreen">
         <section class="login-card" aria-labelledby="loginTitle">
             <div class="brand-lockup">
-                <img src="favicon.svg" alt="Seedwel icon">
+                <img src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel Investment LTD" style="object-fit:contain;background:#fff;padding:4px;">
                 <div><strong>Seedwel Investment LTD</strong><span>Protected administration</span></div>
             </div>
             <p class="eyebrow"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Restricted access</p>
@@ -579,7 +590,7 @@
     <main class="dashboard" id="dashboard" hidden>
         <header class="dashboard-header">
             <div class="dashboard-brand">
-                <img src="favicon.svg" alt="Seedwel icon">
+                <img src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel Investment LTD" style="object-fit:contain;background:#fff;padding:4px;">
                 <div><h2>Seedwel Portfolio Admin</h2><p>Publishing &amp; media management</p></div>
             </div>
             <div class="header-actions">
@@ -606,6 +617,8 @@
                 <article class="metric"><div class="metric-icon"><i class="fa-solid fa-chart-pie" aria-hidden="true"></i></div><strong id="storageUsed">0 B</strong><span id="storageUsageCaption">Tracked upload usage</span><div class="storage-meter" aria-hidden="true"><span id="storageMeter"></span></div></article>
                 <article class="metric"><div class="metric-icon"><i class="fa-solid fa-envelope-open-text" aria-hidden="true"></i></div><strong id="newMessagesCount">0</strong><span>New contact messages</span></article>
                 <article class="metric"><div class="metric-icon"><i class="fa-solid fa-user-tie" aria-hidden="true"></i></div><strong id="newApplicationsCount">0</strong><span>New job applications</span></article>
+                <article class="metric"><div class="metric-icon"><i class="fa-solid fa-user-clock" aria-hidden="true"></i></div><strong id="pendingWorkersMetric">0</strong><span>Pending applicants</span></article>
+                <article class="metric"><div class="metric-icon"><i class="fa-solid fa-user-check" aria-hidden="true"></i></div><strong id="activeWorkersMetric">0</strong><span>Active workers</span></article>
             </section>
 
             <aside class="notice" aria-label="Storage capacity note">
@@ -812,11 +825,50 @@
 
                     <section class="panel inbox-panel workers-panel" aria-labelledby="workersTitle">
                         <div class="panel-head">
-                            <div><h2 id="workersTitle">Team workers</h2><p>Approve, suspend or assign tasks to portal members. <span id="pendingWorkersCount"></span></p></div>
+                            <div><h2 id="workersTitle">Workers &amp; applicants</h2><p>Review, approve, reject, request info, suspend or assign tasks. Approval automatically issues a permanent Worker ID and secure QR verification record. <span id="pendingWorkersCount"></span></p></div>
                             <button class="text-button" id="refreshWorkers" type="button">Refresh</button>
                         </div>
                         <div class="panel-body">
+                            <input class="panel-search" id="workerSearch" type="search" placeholder="Search by name, email or Worker ID (e.g. SWL-2026-000001)…" autocomplete="off" />
                             <div class="inbox-list" id="workersList" aria-live="polite"><div class="empty-state"><i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>Loading workers…</div></div>
+                        </div>
+                    </section>
+
+                    <section class="panel inbox-panel" aria-labelledby="jobsTitle">
+                        <div class="panel-head">
+                            <div><h2 id="jobsTitle">Jobs</h2><p>Create, edit and close job openings shown to applicants.</p></div>
+                        </div>
+                        <div class="panel-body">
+                            <form id="jobForm" novalidate>
+                                <div class="form-grid">
+                                    <div class="field">
+                                        <label for="jobTitle">Job title</label>
+                                        <input id="jobTitle" type="text" maxlength="200" placeholder="e.g. Cold Caller — Remote" required>
+                                    </div>
+                                    <div class="field">
+                                        <label for="jobType">Type / location</label>
+                                        <input id="jobType" type="text" maxlength="60" placeholder="e.g. Remote · Commission">
+                                    </div>
+                                </div>
+                                <div class="field full">
+                                    <label for="jobDescription">Description</label>
+                                    <textarea id="jobDescription" maxlength="2000" placeholder="What the role involves…"></textarea>
+                                </div>
+                                <div class="form-actions">
+                                    <button class="btn btn-primary" id="saveJobBtn" type="submit"><i class="fa-solid fa-plus" aria-hidden="true"></i><span>Create job</span></button>
+                                </div>
+                                <p class="form-status" id="jobFormStatus" role="status" aria-live="polite"></p>
+                            </form>
+                            <div class="inbox-list" id="jobsList" aria-live="polite" style="margin-top:14px;"><div class="empty-state"><i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>Loading jobs…</div></div>
+                        </div>
+                    </section>
+
+                    <section class="panel inbox-panel" aria-labelledby="auditTitle">
+                        <div class="panel-head">
+                            <div><h2 id="auditTitle">Audit log</h2><p>A permanent record of administrative actions: approvals, rejections, suspensions, jobs and verification changes.</p></div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="inbox-list" id="auditList" aria-live="polite" style="max-height:340px;overflow-y:auto;"><div class="empty-state"><i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>Loading audit log…</div></div>
                         </div>
                     </section>
 
@@ -972,6 +1024,9 @@
         let currentMessages = new Map();
         let currentApplications = new Map();
         let currentWorkers = new Map();
+        let currentJobs = new Map();
+        let currentAudit = new Map();
+        let workerSearchTerm = '';
         let currentSettings = { ...DEFAULT_SETTINGS };
         let editingKey = null;
         let selectedFile = null;
@@ -1217,9 +1272,22 @@
                 currentWorkers = new Map(Object.entries(snapshot.val() || {}));
                 renderWorkers();
                 populateTaskWorkers();
+                updateWorkerMetrics();
             }, () => {
                 if (workersList) workersList.innerHTML = '<div class="empty-state"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>Unable to load team workers. Deploy updated Database Rules.</div>';
                 showToast('Team workers could not be loaded.', 'error');
+            });
+            db.ref('jobs').on('value', (snapshot) => {
+                currentJobs = new Map(Object.entries(snapshot.val() || {}));
+                renderJobs();
+            }, () => {
+                if ($('jobsList')) $('jobsList').innerHTML = '<div class="empty-state"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>Unable to load jobs. Deploy updated Database Rules.</div>';
+            });
+            db.ref('auditLog').limitToLast(100).on('value', (snapshot) => {
+                currentAudit = new Map(Object.entries(snapshot.val() || {}));
+                renderAudit();
+            }, () => {
+                if ($('auditList')) $('auditList').innerHTML = '<div class="empty-state"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>Unable to load the audit log. Deploy updated Database Rules.</div>';
             });
         }
 
@@ -1228,10 +1296,16 @@
             db.ref('siteSettings').off();
             db.ref('contactMessages').off();
             db.ref('applications').off();
+            db.ref('workers').off();
+            db.ref('jobs').off();
+            db.ref('auditLog').off();
             dataListening = false;
             currentProjects = new Map();
             currentMessages = new Map();
             currentApplications = new Map();
+            currentWorkers = new Map();
+            currentJobs = new Map();
+            currentAudit = new Map();
         }
 
         function applySettingsToForm() {
@@ -1537,14 +1611,35 @@
             }
         }
 
+        function updateWorkerMetrics() {
+            const values = Array.from(currentWorkers.values());
+            const pendingCount = values.filter((w) => ['pending', 'under_review', 'info_required'].includes(w.status || 'pending')).length;
+            const activeCount = values.filter((w) => (w.status || 'pending') === 'active').length;
+            if ($('pendingWorkersMetric')) $('pendingWorkersMetric').textContent = String(pendingCount);
+            if ($('activeWorkersMetric')) $('activeWorkersMetric').textContent = String(activeCount);
+        }
+
+        const STATUS_LABELS = {
+            pending: 'Pending', under_review: 'Under review', info_required: 'Info required',
+            active: 'Active', suspended: 'Suspended', rejected: 'Rejected'
+        };
+
         function renderWorkers() {
             if (!workersList) return;
             workersList.textContent = '';
-            const entries = sortedMapEntries(currentWorkers);
-            const pending = Array.from(currentWorkers.values()).filter((w) => (w.status || 'pending') === 'pending').length;
-            if ($('pendingWorkersCount')) $('pendingWorkersCount').textContent = pending ? ('· ' + pending + ' pending approval') : '';
+            let entries = sortedMapEntries(currentWorkers);
+            const pending = Array.from(currentWorkers.values()).filter((w) => ['pending', 'under_review', 'info_required'].includes(w.status || 'pending')).length;
+            if ($('pendingWorkersCount')) $('pendingWorkersCount').textContent = pending ? ('· ' + pending + ' awaiting review') : '';
+            if (workerSearchTerm) {
+                const q = workerSearchTerm.toLowerCase();
+                entries = entries.filter(([, w]) =>
+                    (safeText(w.fullName, 120).toLowerCase().includes(q))
+                    || (safeText(w.email, 160).toLowerCase().includes(q))
+                    || (safeText(w.workerId, 20).toLowerCase().includes(q))
+                    || (safeText(w.role, 120).toLowerCase().includes(q)));
+            }
             if (!entries.length) {
-                workersList.innerHTML = '<div class="empty-state"><i class="fa-solid fa-people-group" aria-hidden="true"></i>No team members yet. Workers appear here after they sign up from the careers page.</div>';
+                workersList.innerHTML = '<div class="empty-state"><i class="fa-solid fa-people-group" aria-hidden="true"></i>' + (workerSearchTerm ? 'No workers match this search.' : 'No team members yet. Workers appear here after they create an account.') + '</div>';
                 return;
             }
             for (const [uid, worker] of entries) {
@@ -1557,7 +1652,7 @@
                 title.textContent = (safeText(worker.fullName, 120) || 'Worker');
                 const pill = document.createElement('span');
                 pill.className = 'status-pill ' + status;
-                pill.textContent = status;
+                pill.textContent = STATUS_LABELS[status] || status;
                 top.append(title, pill);
                 const meta = document.createElement('div');
                 meta.className = 'inbox-meta';
@@ -1578,9 +1673,18 @@
                 const skills = safeText(worker.skills, 500);
                 if (skills) lines += '\nSkills: ' + skills;
                 body.textContent = lines;
+                if (worker.workerId) {
+                    const idTag = document.createElement('span');
+                    idTag.className = 'worker-id-tag';
+                    idTag.innerHTML = '<i class="fa-solid fa-id-card" aria-hidden="true"></i> ' + safeText(worker.workerId, 20);
+                    body.appendChild(document.createElement('br'));
+                    body.appendChild(idTag);
+                }
                 const actions = document.createElement('div');
                 actions.className = 'inbox-actions';
-                if (status === 'pending') {
+                if (status === 'pending' || status === 'under_review' || status === 'info_required') {
+                    if (status !== 'under_review') actions.append(workerAction('Mark under review', 'under_review', uid, false));
+                    if (status !== 'info_required') actions.append(workerAction('Request info', 'info_required', uid, false));
                     actions.append(
                         workerAction('Approve', 'active', uid, false),
                         workerAction('Reject', 'rejected', uid, true)
@@ -1590,8 +1694,17 @@
                         workerAction('Suspend', 'suspended', uid, true),
                         assignTaskButton(uid, worker)
                     );
+                    if (worker.verifyToken) {
+                        const verifyBtn = document.createElement('a');
+                        verifyBtn.className = 'btn btn-secondary';
+                        verifyBtn.href = new URL('verify.html', window.location.href).href + '?t=' + encodeURIComponent(worker.verifyToken);
+                        verifyBtn.target = '_blank';
+                        verifyBtn.rel = 'noopener';
+                        verifyBtn.innerHTML = '<i class="fa-solid fa-qrcode" aria-hidden="true"></i> Verification';
+                        actions.append(verifyBtn);
+                    }
                 } else if (status === 'suspended') {
-                    actions.append(workerAction('Activate', 'active', uid, false));
+                    actions.append(workerAction('Reactivate', 'active', uid, false));
                 } else if (status === 'rejected') {
                     actions.append(workerAction('Approve', 'active', uid, false));
                 }
@@ -1698,6 +1811,116 @@
         if ($('refreshApplications')) $('refreshApplications').addEventListener('click', () => { renderApplications(); showToast('Applications refreshed.'); });
         if (refreshWorkers) refreshWorkers.addEventListener('click', () => { renderWorkers(); populateTaskWorkers(); showToast('Workers refreshed.'); });
 
+        // ─── Audit log ───
+        async function recordAudit(action, target, detail) {
+            try {
+                await db.ref('auditLog').push({
+                    action: safeText(action, 80),
+                    target: safeText(target, 200),
+                    detail: safeText(detail, 500),
+                    actor: ADMIN_EMAIL,
+                    at: firebase.database.ServerValue.TIMESTAMP
+                });
+            } catch (_) { /* Audit writes are best-effort on the client. */ }
+        }
+
+        function renderAudit() {
+            const list = $('auditList');
+            if (!list) return;
+            const entries = Array.from(currentAudit.entries())
+                .map(([key, e]) => ({ key, ...e }))
+                .sort((a, b) => Number(b.at || 0) - Number(a.at || 0));
+            if (!entries.length) {
+                list.innerHTML = '<div class="empty-state"><i class="fa-solid fa-clipboard-list" aria-hidden="true"></i>No audit entries yet. Admin actions will be recorded here.</div>';
+                return;
+            }
+            list.textContent = '';
+            for (const e of entries) {
+                const item = document.createElement('div');
+                item.className = 'audit-item';
+                const strong = document.createElement('strong');
+                strong.textContent = safeText(e.action, 80);
+                item.appendChild(strong);
+                item.appendChild(document.createTextNode(' — ' + (safeText(e.target, 200) || '') + (e.detail ? ' · ' + safeText(e.detail, 500) : '')));
+                const time = document.createElement('time');
+                time.textContent = (e.at ? new Date(Number(e.at)).toLocaleString() : '') + (e.actor ? ' · ' + safeText(e.actor, 160) : '');
+                item.appendChild(time);
+                list.appendChild(item);
+            }
+        }
+
+        // ─── Notifications to workers ───
+        async function notifyWorker(uid, title, body, type) {
+            try {
+                await db.ref('notifications/' + uid).push({
+                    title: safeText(title, 200),
+                    body: safeText(body, 1000),
+                    type: safeText(type, 40) || 'general',
+                    read: false,
+                    createdAt: firebase.database.ServerValue.TIMESTAMP
+                });
+            } catch (_) { /* best-effort */ }
+        }
+
+        // ─── Worker ID + verification issuance ───
+        function generateVerifyToken() {
+            const bytes = new Uint8Array(24);
+            window.crypto.getRandomValues(bytes);
+            let token = '';
+            const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            for (const b of bytes) token += alphabet[b % alphabet.length];
+            return token;
+        }
+
+        async function issueWorkerId(uid, worker) {
+            // Atomically increment the permanent counter so IDs are unique and never reused.
+            const result = await db.ref('counters/workerId').transaction((current) => (Number(current) || 0) + 1);
+            if (!result.committed) throw new Error('Could not reserve a Worker ID.');
+            const sequence = Number(result.snapshot.val());
+            const year = new Date().getFullYear();
+            const workerId = 'SWL-' + year + '-' + String(sequence).padStart(6, '0');
+            const verifyToken = generateVerifyToken();
+            const now = Date.now();
+
+            await db.ref('verifications/' + verifyToken).set({
+                workerId: workerId,
+                fullName: safeText(worker.fullName, 120) || 'Seedwel Worker',
+                role: safeText(worker.role, 120),
+                status: 'active',
+                reference: 'SW-' + String(sequence).padStart(6, '0'),
+                verifiedAt: now
+            });
+            await db.ref('workers/' + uid).update({
+                workerId: workerId,
+                verifyToken: verifyToken,
+                approvedAt: now,
+                updatedAt: firebase.database.ServerValue.TIMESTAMP
+            });
+            return workerId;
+        }
+
+        async function setVerificationStatus(worker, status) {
+            if (!worker || !worker.verifyToken) return;
+            try {
+                await db.ref('verifications/' + worker.verifyToken).update({ status: status, updatedAt: firebase.database.ServerValue.TIMESTAMP });
+            } catch (_) { /* verification record may not exist yet */ }
+        }
+
+        const WORKER_STATUS_MESSAGES = {
+            active: { title: 'Application approved 🎉', body: 'Congratulations! Your application has been approved by Seedwel Investment LTD. Your official Worker ID and QR verification are now available on your dashboard.', type: 'approval' },
+            rejected: { title: 'Application decision', body: 'Unfortunately your application was not approved at this time. You may contact Seedwel Investment LTD for more information.', type: 'general' },
+            under_review: { title: 'Application under review', body: 'Your application is now being reviewed by Seedwel Investment LTD.', type: 'general' },
+            info_required: { title: 'Additional information required', body: 'Seedwel Investment LTD needs more information to continue reviewing your application. Please check your dashboard and contact us.', type: 'general' },
+            suspended: { title: 'Account suspended', body: 'Your worker account has been suspended. Contact a Seedwel administrator if you believe this is a mistake.', type: 'general' }
+        };
+
+        if ($('workerSearch')) {
+            $('workerSearch').addEventListener('input', () => {
+                workerSearchTerm = safeText($('workerSearch').value, 160);
+                renderWorkers();
+            });
+        }
+
         if (workersList) {
             workersList.addEventListener('click', async (event) => {
                 const btn = event.target.closest('button[data-action]');
@@ -1707,8 +1930,44 @@
                 try {
                     if (btn.dataset.action === 'worker-status') {
                         const status = btn.dataset.status;
-                        await db.ref('workers/' + uid).update({ status: status });
-                        showToast('Worker status updated to “' + status + '”.');
+                        const worker = currentWorkers.get(uid) || {};
+                        const workerName = safeText(worker.fullName, 120) || 'Worker';
+
+                        if (status === 'rejected' && !window.confirm('Reject the application from ' + workerName + '?')) return;
+                        if (status === 'suspended' && !window.confirm('Suspend ' + workerName + '\u2019s account?')) return;
+
+                        btn.disabled = true;
+                        let statusNote = '';
+                        if (status === 'info_required') {
+                            statusNote = safeText(window.prompt('What additional information is required from ' + workerName + '?', '') || '', 500);
+                        }
+
+                        const updates = { status: status, updatedAt: firebase.database.ServerValue.TIMESTAMP };
+                        if (statusNote) updates.statusNote = statusNote;
+                        await db.ref('workers/' + uid).update(updates);
+
+                        let auditDetail = '';
+                        if (status === 'active') {
+                            if (!worker.workerId) {
+                                const newId = await issueWorkerId(uid, worker);
+                                auditDetail = 'Issued Worker ID ' + newId;
+                                showToast(workerName + ' approved. Worker ID ' + newId + ' issued.');
+                            } else {
+                                await setVerificationStatus(worker, 'active');
+                                auditDetail = 'Reactivated ' + safeText(worker.workerId, 20);
+                                showToast(workerName + ' reactivated.');
+                            }
+                        } else {
+                            if (status === 'suspended') await setVerificationStatus(worker, 'suspended');
+                            if (status === 'rejected') await setVerificationStatus(worker, 'revoked');
+                            showToast('Worker status updated to “' + (STATUS_LABELS[status] || status) + '”.');
+                        }
+
+                        const msg = WORKER_STATUS_MESSAGES[status];
+                        if (msg) await notifyWorker(uid, msg.title, statusNote ? (msg.body + ' Requested: ' + statusNote) : msg.body, msg.type);
+
+                        const actionNames = { active: 'Worker approved', rejected: 'Applicant rejected', suspended: 'Worker suspended', under_review: 'Application marked under review', info_required: 'Additional information requested' };
+                        await recordAudit(actionNames[status] || ('Worker status: ' + status), workerName + (worker.email ? ' <' + safeText(worker.email, 160) + '>' : ''), auditDetail || statusNote);
                     } else if (btn.dataset.action === 'worker-assign') {
                         populateTaskWorkers();
                         if (Array.from(taskWorker.options).some((o) => o.value === uid)) {
@@ -1757,11 +2016,129 @@
                     taskNotes.value = '';
                     setTaskFormStatus('Task assigned successfully.');
                     showToast('Task assigned to the worker.');
+                    const w = currentWorkers.get(uid) || {};
+                    await notifyWorker(uid, 'New task assigned', 'You have a new task: ' + title, 'task');
+                    await recordAudit('Task assigned', safeText(w.fullName, 120) || uid, title);
                 } catch (_) {
                     setTaskFormStatus('Could not assign the task. Check Database Rules.', true);
                 } finally {
                     btn.disabled = false;
                     btn.innerHTML = original;
+                }
+            });
+        }
+
+        // ─── Jobs panel ───
+        function setJobFormStatus(text, isError) {
+            const el = $('jobFormStatus');
+            if (!el) return;
+            el.textContent = text;
+            el.className = 'form-status' + (isError ? ' error' : (text ? ' success' : ''));
+        }
+
+        function renderJobs() {
+            const list = $('jobsList');
+            if (!list) return;
+            const entries = Array.from(currentJobs.entries())
+                .map(([key, j]) => ({ key, ...j }))
+                .sort((a, b) => Number(b.createdAt || 0) - Number(a.createdAt || 0));
+            if (!entries.length) {
+                list.innerHTML = '<div class="empty-state"><i class="fa-solid fa-briefcase" aria-hidden="true"></i>No jobs yet. Create the first opening above.</div>';
+                return;
+            }
+            list.textContent = '';
+            for (const job of entries) {
+                const status = job.status === 'closed' ? 'closed' : 'open';
+                const item = document.createElement('article');
+                item.className = 'inbox-item';
+                const top = document.createElement('div');
+                top.className = 'inbox-item-top';
+                const title = document.createElement('h3');
+                title.textContent = safeText(job.title, 200) || 'Untitled job';
+                const pill = document.createElement('span');
+                pill.className = 'status-pill ' + status;
+                pill.textContent = status === 'open' ? 'Open' : 'Closed';
+                top.append(title, pill);
+                const meta = document.createElement('div');
+                meta.className = 'inbox-meta';
+                meta.textContent = (safeText(job.type, 60) ? safeText(job.type, 60) + ' · ' : '') + formatInboxDate(job.createdAt);
+                const body = document.createElement('div');
+                body.className = 'inbox-body';
+                body.textContent = safeText(job.description, 2000) || 'No description.';
+                const actions = document.createElement('div');
+                actions.className = 'inbox-actions';
+                const toggle = document.createElement('button');
+                toggle.type = 'button';
+                toggle.className = status === 'open' ? 'btn btn-danger' : 'btn btn-secondary';
+                toggle.dataset.action = 'job-toggle';
+                toggle.dataset.key = job.key;
+                toggle.textContent = status === 'open' ? 'Close job' : 'Reopen job';
+                const del = document.createElement('button');
+                del.type = 'button';
+                del.className = 'btn btn-danger';
+                del.dataset.action = 'job-delete';
+                del.dataset.key = job.key;
+                del.textContent = 'Delete';
+                actions.append(toggle, del);
+                item.append(top, meta, body, actions);
+                list.appendChild(item);
+            }
+        }
+
+        if ($('jobForm')) {
+            $('jobForm').addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const title = safeText($('jobTitle').value, 200);
+                const type = safeText($('jobType').value, 60);
+                const description = safeText($('jobDescription').value, 2000);
+                setJobFormStatus('');
+                if (title.length < 2) { setJobFormStatus('Enter a job title.', true); return; }
+                const btn = $('saveJobBtn');
+                btn.disabled = true;
+                try {
+                    await db.ref('jobs').push({
+                        title: title,
+                        type: type,
+                        description: description,
+                        status: 'open',
+                        createdAt: firebase.database.ServerValue.TIMESTAMP,
+                        updatedAt: firebase.database.ServerValue.TIMESTAMP
+                    });
+                    $('jobTitle').value = '';
+                    $('jobType').value = '';
+                    $('jobDescription').value = '';
+                    setJobFormStatus('Job created and published.');
+                    showToast('Job created.');
+                    await recordAudit('Job created', title, type);
+                } catch (_) {
+                    setJobFormStatus('Could not create the job. Check Database Rules.', true);
+                } finally {
+                    btn.disabled = false;
+                }
+            });
+        }
+
+        if ($('jobsList')) {
+            $('jobsList').addEventListener('click', async (event) => {
+                const btn = event.target.closest('button[data-action]');
+                if (!btn) return;
+                const key = btn.dataset.key;
+                const job = currentJobs.get(key);
+                if (!key || !job) return;
+                try {
+                    if (btn.dataset.action === 'job-toggle') {
+                        const next = job.status === 'closed' ? 'open' : 'closed';
+                        await db.ref('jobs/' + key).update({ status: next, updatedAt: firebase.database.ServerValue.TIMESTAMP });
+                        showToast('Job ' + (next === 'closed' ? 'closed' : 'reopened') + '.');
+                        await recordAudit(next === 'closed' ? 'Job closed' : 'Job reopened', safeText(job.title, 200), '');
+                    } else if (btn.dataset.action === 'job-delete') {
+                        if (!window.confirm('Delete this job permanently?')) return;
+                        await db.ref('jobs/' + key).remove();
+                        showToast('Job deleted.');
+                        await recordAudit('Job deleted', safeText(job.title, 200), '');
+                    }
+                } catch (_) {
+                    showToast('Could not update the job. Check Database Rules.', 'error');
                 }
             });
         }

@@ -6,8 +6,8 @@
     <meta name="theme-color" content="#dc2626" />
     <meta name="robots" content="noindex, nofollow" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-    <title>Team Login | Seedwel Investment LTD</title>
-    <meta name="description" content="Sign in to the Seedwel Investment LTD team portal." />
+    <title>Login | Seedwel Investment LTD</title>
+    <meta name="description" content="Sign in to your Seedwel Investment LTD account." />
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -64,11 +64,15 @@
         .auth-head {
             padding: 32px 34px 20px; text-align: center;
         }
-        .auth-head .lock {
-            width: 58px; height: 58px; border-radius: 16px; margin: 0 auto 14px;
-            background: linear-gradient(135deg, #dc2626, #b91c1c);
-            display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.4rem;
+        .auth-head .brand-logo {
+            height: 54px; width: auto; margin: 0 auto 14px; display: block;
         }
+        .hiring-note {
+            margin: 14px 0 0; padding: 10px 14px; border-radius: 12px; text-align: left;
+            background: #fffbeb; border: 1px solid #fde68a; color: #92400e;
+            font-size: 0.78rem; font-weight: 500; display: flex; gap: 8px; align-items: flex-start;
+        }
+        .hiring-note i { margin-top: 2px; }
         .auth-head h1 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.4rem; }
         .auth-head p { color: #6b7280; font-size: 0.9rem; margin-top: 6px; }
 
@@ -165,14 +169,14 @@
     <div class="auth-wrap">
         <div class="auth-card">
             <div class="auth-head">
-                <div class="lock"><i class="fas fa-lock"></i></div>
-                <h1>Seedwel Team Portal</h1>
-                <p>Private access for approved team members only.</p>
+                <img src="https://i.ibb.co/svxj52ny/seedwel.png" class="brand-logo" alt="Seedwel Investment LTD" />
+                <h1>Seedwel Account Login</h1>
+                <p>One secure login. Your account type is detected automatically after you sign in.</p>
             </div>
 
             <div class="tabs">
-                <button class="tab active" id="tabSignIn" type="button">Sign In</button>
-                <button class="tab" id="tabJoin" type="button">Join Seedwel Team</button>
+                <button class="tab active" id="tabSignIn" type="button">Login</button>
+                <button class="tab" id="tabJoin" type="button">Create Account</button>
             </div>
 
             <div class="auth-body">
@@ -191,7 +195,8 @@
                         <button type="submit" class="btn" id="signInBtn"><i class="fas fa-right-to-bracket"></i> Sign In</button>
                     </form>
                     <p class="helper"><a id="forgotLink">Forgot your password?</a></p>
-                    <p class="helper">New here? <a id="gotoJoin">Join the Seedwel team</a></p>
+                    <p class="helper">New here? <a id="gotoJoin">Create an account</a></p>
+                    <div class="hiring-note"><i class="fas fa-circle-info"></i><span>Account roles are stored securely on the server and checked during authentication — admins, approved workers and applicants are routed automatically.</span></div>
                 </div>
 
                 <!-- JOIN PANEL -->
@@ -244,6 +249,7 @@
                             <input type="checkbox" id="joinAgree" required />
                             <label for="joinAgree">I agree to the <a href="terms.html">Terms</a> and <a href="privacy.html">Privacy Policy</a>, and to the <strong>10% commission</strong> structure. My account starts as <strong>Pending Approval</strong>. <span style="color:#dc2626;">*</span></label>
                         </div>
+                        <div class="hiring-note" style="margin-bottom:16px;"><i class="fas fa-triangle-exclamation"></i><span><strong>Important:</strong> Creating an account does not guarantee employment or a job award. Your application must be completed, reviewed and officially approved by Seedwel Investment LTD before you become an approved worker with an official Worker ID.</span></div>
                         <button type="submit" class="btn" id="joinBtn"><i class="fas fa-paper-plane"></i> Submit Application</button>
                     </form>
                     <p class="helper">Already have an account? <a id="gotoSignIn">Sign in</a></p>
@@ -254,8 +260,8 @@
                     <div class="status-screen">
                         <i class="fas fa-hourglass-half"></i>
                         <h2>Application received!</h2>
-                        <p>Thanks, <strong id="statusName"></strong>. Your account has been created with <strong>Pending Approval</strong> status. A Seedwel administrator will review your application and approve it before you can access team tasks.</p>
-                        <p style="font-size:0.82rem;">We'll notify you once your account is approved. You can sign in again at any time to check your status.</p>
+                        <p>Thanks, <strong id="statusName"></strong>. Your applicant account has been created with <strong>Pending Approval</strong> status. Seedwel Investment LTD will review your application and verify your information before approval.</p>
+                        <p style="font-size:0.82rem;">Creating an account does not guarantee employment. Once approved, you will receive your official Seedwel Worker ID and full dashboard access. You can sign in again at any time to check your application status.</p>
                         <button type="button" class="btn btn-outline" id="statusSignOut"><i class="fas fa-right-from-bracket"></i> Sign Out</button>
                     </div>
                 </div>

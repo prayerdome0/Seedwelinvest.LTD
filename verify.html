@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#dc2626" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <title>Worker Verification | Seedwel Investment LTD</title>
+    <meta name="description" content="Official Seedwel Investment LTD worker verification." />
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(180deg, #fef2f2 0%, #ffffff 45%);
+            color: #111827; min-height: 100vh; display: flex; flex-direction: column; line-height: 1.6;
+        }
+        .topbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 16px 28px; max-width: 1100px; margin: 0 auto; width: 100%;
+        }
+        .logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-img { height: 40px; width: auto; }
+        .company-name { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 0.95rem; color: #111827; }
+        .company-name span { color: #dc2626; }
+        .back-link { text-decoration: none; color: #4b5563; font-weight: 600; font-size: 0.85rem; }
+        .back-link:hover { color: #dc2626; }
+
+        .verify-wrap { flex: 1; display: flex; align-items: center; justify-content: center; padding: 24px 20px 60px; }
+        .verify-card {
+            width: 100%; max-width: 520px; background: #fff; border: 1px solid #e5e7eb;
+            border-radius: 24px; box-shadow: 0 24px 60px rgba(15,23,42,0.08); overflow: hidden; text-align: center;
+        }
+        .verify-head { padding: 34px 34px 8px; }
+        .verify-head img { height: 52px; width: auto; margin-bottom: 12px; }
+        .verify-head h1 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.2rem; }
+        .verify-head p { color: #6b7280; font-size: 0.85rem; margin-top: 4px; }
+
+        .verify-body { padding: 24px 34px 40px; }
+
+        .result-banner {
+            display: inline-flex; align-items: center; gap: 10px; padding: 12px 26px; border-radius: 50px;
+            font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1rem; margin-bottom: 22px;
+        }
+        .result-banner.ok { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+        .result-banner.warn { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+        .result-banner.fail { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+        .result-banner i { font-size: 1.2rem; }
+
+        .loading { padding: 30px 0; color: #6b7280; font-size: 0.9rem; }
+        .loading i { font-size: 2rem; color: #dc2626; display: block; margin-bottom: 12px; }
+
+        .detail-list { text-align: left; border: 1px solid #e5e7eb; border-radius: 16px; overflow: hidden; }
+        .detail-row {
+            display: flex; justify-content: space-between; gap: 16px; padding: 13px 18px;
+            border-bottom: 1px solid #f1f5f9; font-size: 0.88rem;
+        }
+        .detail-row:last-child { border-bottom: none; }
+        .detail-row .k { color: #6b7280; font-weight: 600; }
+        .detail-row .v { font-weight: 700; text-align: right; }
+        .detail-row .v.id { font-family: 'Montserrat', sans-serif; color: #dc2626; letter-spacing: 0.5px; }
+        .detail-row .v .pill {
+            display: inline-flex; align-items: center; gap: 6px; padding: 3px 12px; border-radius: 50px;
+            font-size: 0.74rem; font-weight: 700; font-family: 'Montserrat', sans-serif;
+        }
+        .pill.active { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+        .pill.suspended { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+        .pill.revoked { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+
+        .secure-note {
+            margin-top: 20px; display: flex; align-items: flex-start; gap: 10px; text-align: left;
+            padding: 12px 16px; border-radius: 12px; background: #f8fafc; border: 1px solid #e5e7eb;
+            color: #64748b; font-size: 0.76rem;
+        }
+        .secure-note i { color: #059669; margin-top: 2px; }
+
+        .fail-text { color: #6b7280; font-size: 0.9rem; }
+        .fail-text strong { color: #b91c1c; }
+
+        footer { text-align: center; padding: 20px; color: #94a3b8; font-size: 0.78rem; border-top: 1px solid #e5e7eb; background: #f8fafc; }
+        footer a { color: #dc2626; text-decoration: none; }
+
+        @media (max-width: 560px) {
+            .verify-body { padding: 20px 18px 30px; }
+            .verify-head { padding: 26px 18px 6px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topbar">
+        <a href="index.html" class="logo-container">
+            <img src="https://i.ibb.co/svxj52ny/seedwel.png" class="logo-img" alt="Seedwel Investment LTD" />
+            <span class="company-name">Seedwel <span>Investment</span> LTD</span>
+        </a>
+        <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to site</a>
+    </div>
+
+    <div class="verify-wrap">
+        <div class="verify-card">
+            <div class="verify-head">
+                <img src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel Investment LTD" />
+                <h1>Seedwel Investment LTD — Worker Verification</h1>
+                <p>Official verification of registered Seedwel workers.</p>
+            </div>
+            <div class="verify-body">
+                <div class="loading" id="loadingState">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    Checking verification record against the official Seedwel database…
+                </div>
+
+                <div id="resultOk" style="display:none;">
+                    <div class="result-banner ok"><i class="fas fa-circle-check"></i> VERIFIED WORKER</div>
+                    <div class="detail-list">
+                        <div class="detail-row"><span class="k">Worker ID</span><span class="v id" id="vWorkerId">—</span></div>
+                        <div class="detail-row"><span class="k">Worker name</span><span class="v" id="vName">—</span></div>
+                        <div class="detail-row"><span class="k">Role</span><span class="v" id="vRole">—</span></div>
+                        <div class="detail-row"><span class="k">Status</span><span class="v" id="vStatus">—</span></div>
+                        <div class="detail-row"><span class="k">Date verified</span><span class="v" id="vDate">—</span></div>
+                        <div class="detail-row"><span class="k">Verification reference</span><span class="v" id="vRef">—</span></div>
+                        <div class="detail-row"><span class="k">Verified by</span><span class="v">Seedwel Investment LTD</span></div>
+                    </div>
+                    <div class="secure-note">
+                        <i class="fas fa-shield-halved"></i>
+                        <span>This record was checked live against the official Seedwel Investment LTD database using a secure verification token. It displays limited verification data only — no private personal information is exposed.</span>
+                    </div>
+                </div>
+
+                <div id="resultWarn" style="display:none;">
+                    <div class="result-banner warn"><i class="fas fa-triangle-exclamation"></i> WORKER NOT ACTIVE</div>
+                    <p class="fail-text">This verification record exists but the worker is currently <strong id="warnStatus">suspended</strong>. Please contact Seedwel Investment LTD to confirm this worker's standing before proceeding.</p>
+                </div>
+
+                <div id="resultFail" style="display:none;">
+                    <div class="result-banner fail"><i class="fas fa-circle-xmark"></i> VERIFICATION FAILED</div>
+                    <p class="fail-text">This record <strong>could not be verified</strong> against the official Seedwel Investment LTD database. The QR code or verification link may be invalid, expired, revoked, or fake.</p>
+                    <div class="secure-note">
+                        <i class="fas fa-circle-info" style="color:#b45309;"></i>
+                        <span>If someone presented this code as proof of employment with Seedwel Investment LTD, treat it with caution and contact us directly at seedwelinvestltd@gmail.com or +260 973 028 342.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Seedwel Investment LTD · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a>
+    </footer>
+
+    <script>
+        'use strict';
+
+        const firebaseConfig = {
+            apiKey: 'AIzaSyA-BpRy-RVc2rqIG6uiRu_XrGEu1ZGnQwU',
+            authDomain: 'seedwel-investment-limited.firebaseapp.com',
+            databaseURL: 'https://seedwel-investment-limited-default-rtdb.firebaseio.com',
+            projectId: 'seedwel-investment-limited',
+            storageBucket: 'seedwel-investment-limited.firebasestorage.app',
+            messagingSenderId: '197778268619',
+            appId: '1:197778268619:web:92f29d88fa5a22dbfa964e'
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        function $(id) { return document.getElementById(id); }
+        function show(id) {
+            $('loadingState').style.display = 'none';
+            ['resultOk', 'resultWarn', 'resultFail'].forEach(x => { $(x).style.display = (x === id ? 'block' : 'none'); });
+        }
+
+        async function verify() {
+            const params = new URLSearchParams(window.location.search);
+            const token = String(params.get('t') || '').trim();
+            // Token must look like a system-generated verification token.
+            if (!/^[A-Za-z0-9_-]{16,64}$/.test(token)) { show('resultFail'); return; }
+
+            try {
+                const snap = await db.ref('verifications/' + token).once('value');
+                const record = snap.val();
+                if (!record || !record.workerId || !record.fullName) { show('resultFail'); return; }
+
+                const status = String(record.status || '');
+                if (status === 'revoked') { show('resultFail'); return; }
+                if (status !== 'active') {
+                    $('warnStatus').textContent = status || 'not active';
+                    show('resultWarn');
+                    return;
+                }
+
+                $('vWorkerId').textContent = String(record.workerId);
+                $('vName').textContent = String(record.fullName);
+                $('vRole').textContent = String(record.role || '—');
+                $('vStatus').innerHTML = '<span class="pill active"><i class="fas fa-circle-check"></i> Active</span>';
+                $('vDate').textContent = record.verifiedAt ? new Date(Number(record.verifiedAt)).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : '—';
+                $('vRef').textContent = String(record.reference || token.slice(0, 8).toUpperCase());
+                show('resultOk');
+            } catch (err) {
+                console.error('Verification error:', err);
+                show('resultFail');
+            }
+        }
+
+        verify();
+    </script>
+</body>
+</html>

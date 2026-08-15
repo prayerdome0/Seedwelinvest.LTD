@@ -1359,7 +1359,13 @@
             .clients-logos { gap: 16px; }
             .client-logo i { font-size: 2rem; }
         }
-    </style>
+            .nav-links a.nav-login {
+            background: #dc2626; color: #fff !important; padding: 8px 20px; border-radius: 50px;
+            box-shadow: 0 4px 14px rgba(220,38,38,.25); transition: all .3s ease;
+        }
+        .nav-links a.nav-login::after { display: none; }
+        .nav-links a.nav-login:hover { background: #b91c1c; color: #fff; transform: translateY(-1px); }
+</style>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -1401,6 +1407,7 @@
                 <a href="apply.html">Careers</a>
                 <a href="contact.html">Contact</a>
                 <a href="support.html">Support</a>
+                <a href="login.html" class="nav-login">Login</a>
             </div>
             <div class="hamburger" id="hamburger" aria-label="Menu">
                 <span></span>
@@ -1420,6 +1427,7 @@
         <a href="projects.html"><i class="fas fa-folder-open"></i> Projects</a>
         <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
         <a href="support.html"><i class="fas fa-headset"></i> Support</a>
+        <a href="login.html"><i class="fas fa-right-to-bracket"></i> Login</a>
     </nav>
 
     <!-- ========== HERO ========== -->
@@ -1751,7 +1759,7 @@
                 <a href="about.html">About Us</a>
                 <a href="services.html">Services</a>
                 <a href="projects.html">Projects</a>
-                <a href="login.html">Team Login</a>
+                <a href="login.html">Login</a>
             </div>
             <div class="footer-col">
                 <h4>Support</h4>
