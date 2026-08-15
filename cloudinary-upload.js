@@ -34,11 +34,16 @@
         if (file.size > Number(config.maxBytes || 0)) throw new Error('The selected file exceeds the upload limit.');
         const form = new FormData();
         form.append('file', file);
-        Object.keys(config.signedParams || {}).forEach(function (key) {
-            form.append(key, String(config.signedParams[key]));
-        });
-        form.append('api_key', String(config.apiKey));
-        form.append('signature', String(config.signature));
+        
+        if (config.uploadPreset) {
+            form.append('upload_preset', config.uploadPreset);
+        } else {
+            Object.keys(config.signedParams || {}).forEach(function (key) {
+                form.append(key, String(config.signedParams[key]));
+            });
+            form.append('api_key', String(config.apiKey));
+            form.append('signature', String(config.signature));
+        }
 
         const result = await new Promise(function (resolve, reject) {
             const xhr = new XMLHttpRequest();
