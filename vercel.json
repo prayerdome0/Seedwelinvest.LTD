@@ -12,7 +12,7 @@
       ]
     },
     {
-      "source": "/(admin|login|dashboard).html",
+      "source": "/(admin|login|dashboard|verify).html",
       "headers": [
         { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" },
         { "key": "Cache-Control", "value": "no-store" }

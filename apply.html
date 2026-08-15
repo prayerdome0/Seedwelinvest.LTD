@@ -548,7 +548,13 @@
                 transition-duration: 0.01ms !important;
             }
         }
-    </style>
+            .nav-links a.nav-login {
+            background: #dc2626; color: #fff !important; padding: 8px 20px; border-radius: 50px;
+            box-shadow: 0 4px 14px rgba(220,38,38,.25); transition: all .3s ease;
+        }
+        .nav-links a.nav-login::after { display: none; }
+        .nav-links a.nav-login:hover { background: #b91c1c; color: #fff; transform: translateY(-1px); }
+</style>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -590,6 +596,7 @@
                 <a href="apply.html" class="active">Careers</a>
                 <a href="contact.html">Contact</a>
                 <a href="support.html">Support</a>
+                <a href="login.html" class="nav-login">Login</a>
             </div>
             <div class="hamburger" id="hamburger" aria-label="Menu">
                 <span></span><span></span><span></span>
@@ -607,6 +614,7 @@
         <a href="projects.html"><i class="fas fa-folder-open"></i> Projects</a>
         <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
         <a href="support.html"><i class="fas fa-headset"></i> Support</a>
+        <a href="login.html"><i class="fas fa-right-to-bracket"></i> Login</a>
     </nav>
 
     <!-- ========== HERO ========== -->
@@ -893,6 +901,10 @@
                         <input type="checkbox" id="applyConsent" required style="margin-top:4px;width:auto;accent-color:#dc2626;" />
                         <label for="applyConsent" style="font-weight:500;font-size:0.85rem;color:#4b5563;margin:0;">I agree to the <a href="privacy.html" style="color:#dc2626;">Privacy Policy</a> and consent to Seedwel processing my application data for recruitment. <span class="required">*</span></label>
                     </div>
+                    <div style="margin-bottom:16px;padding:12px 16px;border-radius:12px;background:#fffbeb;border:1px solid #fde68a;color:#92400e;font-size:0.82rem;font-weight:500;display:flex;gap:10px;align-items:flex-start;">
+                        <i class="fas fa-triangle-exclamation" style="margin-top:2px;"></i>
+                        <span><strong>Important:</strong> Submitting an application or creating an account does not guarantee employment or a job award. Every application is reviewed and must be officially approved by Seedwel Investment LTD before an applicant becomes an approved worker with an official Worker ID.</span>
+                    </div>
                     <button type="submit" class="btn-submit" id="submitBtn">
                         <i class="fas fa-paper-plane"></i> Submit Application
                     </button>
@@ -952,7 +964,7 @@
                 <a href="about.html">About Us</a>
                 <a href="services.html">Services</a>
                 <a href="projects.html">Projects</a>
-                <a href="login.html">Team Login</a>
+                <a href="login.html">Login</a>
             </div>
             <div class="footer-col">
                 <h4>Support</h4>
@@ -997,6 +1009,38 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
         const storage = firebase.storage();
+
+        // ─── Live job openings from the admin dashboard ───
+        (function loadLiveJobs() {
+            const grid = document.getElementById('jobsGrid');
+            if (!grid) return;
+            db.ref('jobs').once('value').then((snap) => {
+                const data = snap.val() || {};
+                const openJobs = Object.values(data)
+                    .filter(j => j && j.status === 'open' && j.title)
+                    .sort((a, b) => Number(b.createdAt || 0) - Number(a.createdAt || 0));
+                openJobs.forEach((job) => {
+                    const card = document.createElement('div');
+                    card.className = 'job-card reveal visible';
+                    card.dataset.category = 'all';
+                    const icon = document.createElement('span');
+                    icon.className = 'job-icon';
+                    icon.textContent = '📌';
+                    const badge = document.createElement('span');
+                    badge.className = 'job-badge';
+                    badge.innerHTML = '<i class="fas fa-bolt"></i> New Opening';
+                    const h3 = document.createElement('h3');
+                    h3.textContent = String(job.title).slice(0, 200);
+                    const meta = document.createElement('div');
+                    meta.className = 'job-meta';
+                    meta.innerHTML = '<span><i class="fas fa-briefcase"></i> ' + (job.type ? String(job.type).slice(0, 60).replace(/[<>]/g, '') : 'Open role') + '</span>';
+                    const p = document.createElement('p');
+                    p.textContent = String(job.description || '').slice(0, 220);
+                    card.append(icon, badge, h3, meta, p);
+                    grid.prepend(card);
+                });
+            }).catch(() => { /* public jobs are optional; static roles remain visible */ });
+        })();
 
         // ─── Mobile Menu ───
         const hamburger = document.getElementById('hamburger');

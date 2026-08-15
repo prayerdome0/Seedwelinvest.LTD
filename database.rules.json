@@ -105,8 +105,8 @@
       ".read": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com' && auth.token.email_verified == true",
       "$uid": {
         ".read": "auth != null && (auth.uid == $uid || (auth.token.email == 'zacheussimbaya@gmail.com' && auth.token.email_verified == true))",
-        ".write": "auth != null && ((auth.token.email == 'zacheussimbaya@gmail.com' && auth.token.email_verified == true) || (auth.uid == $uid && ((!data.exists() && newData.child('status').val() == 'pending') || (data.exists() && newData.child('status').val() == data.child('status').val() && newData.child('role').val() == data.child('role').val() && newData.child('commissionRate').val() == data.child('commissionRate').val()))))",
-        ".validate": "!newData.exists() || (newData.hasChildren(['fullName', 'email', 'role', 'status', 'commissionRate', 'createdAt']) && newData.child('fullName').isString() && newData.child('fullName').val().length >= 2 && newData.child('fullName').val().length <= 120 && newData.child('email').isString() && newData.child('email').val().length >= 5 && newData.child('email').val().length <= 160 && newData.child('role').isString() && newData.child('role').val().length >= 2 && newData.child('role').val().length <= 120 && newData.child('status').isString() && newData.child('status').val().matches(/^(pending|active|suspended|rejected)$/) && newData.child('commissionRate').isNumber() && newData.child('commissionRate').val() >= 0 && newData.child('commissionRate').val() <= 100 && newData.child('createdAt').isNumber())",
+        ".write": "auth != null && ((auth.token.email == 'zacheussimbaya@gmail.com' && auth.token.email_verified == true) || (auth.uid == $uid && ((!data.exists() && newData.child('status').val() == 'pending') || (data.exists() && newData.child('status').val() == data.child('status').val() && newData.child('role').val() == data.child('role').val() && newData.child('commissionRate').val() == data.child('commissionRate').val() && newData.child('workerId').val() == data.child('workerId').val() && newData.child('verifyToken').val() == data.child('verifyToken').val() && newData.child('approvedAt').val() == data.child('approvedAt').val()))))",
+        ".validate": "!newData.exists() || (newData.hasChildren(['fullName', 'email', 'role', 'status', 'commissionRate', 'createdAt']) && newData.child('fullName').isString() && newData.child('fullName').val().length >= 2 && newData.child('fullName').val().length <= 120 && newData.child('email').isString() && newData.child('email').val().length >= 5 && newData.child('email').val().length <= 160 && newData.child('role').isString() && newData.child('role').val().length >= 2 && newData.child('role').val().length <= 120 && newData.child('status').isString() && newData.child('status').val().matches(/^(pending|under_review|info_required|active|suspended|rejected)$/) && newData.child('commissionRate').isNumber() && newData.child('commissionRate').val() >= 0 && newData.child('commissionRate').val() <= 100 && newData.child('createdAt').isNumber())",
         "phone": {
           ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 40)"
         },
@@ -122,8 +122,99 @@
         "availability": {
           ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 80)"
         },
+        "workerId": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().matches(/^SWL-[0-9]{4}-[0-9]{6}$/))"
+        },
+        "verifyToken": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length >= 16 && newData.val().length <= 64)"
+        },
+        "approvedAt": {
+          ".validate": "!newData.exists() || newData.isNumber()"
+        },
+        "statusNote": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 500)"
+        },
+        "updatedAt": {
+          ".validate": "!newData.exists() || newData.isNumber()"
+        },
         "stats": {
           ".write": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com' && auth.token.email_verified == true"
+        }
+      }
+    },
+    "counters": {
+      ".read": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com' && auth.token.email_verified == true",
+      "workerId": {
+        ".write": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com' && auth.token.email_verified == true",
+        ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 999999 && (!data.exists() || newData.val() > data.val())"
+      }
+    },
+    "verifications": {
+      "$token": {
+        ".read": true,
+        ".write": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com' && auth.token.email_verified == true",
+        ".validate": "!newData.exists() || (newData.hasChildren(['workerId', 'fullName', 'status', 'verifiedAt']) && newData.child('workerId').isString() && newData.child('workerId').val().matches(/^SWL-[0-9]{4}-[0-9]{6}$/) && newData.child('fullName').isString() && newData.child('fullName').val().length >= 2 && newData.child('fullName').val().length <= 120 && newData.child('status').isString() && newData.child('status').val().matches(/^(active|suspended|revoked)$/) && newData.child('verifiedAt').isNumber())",
+        "role": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 120)"
+        },
+        "reference": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 20)"
+        },
+        "updatedAt": {
+          ".validate": "!newData.exists() || newData.isNumber()"
+        }
+      }
+    },
+    "notifications": {
+      "$uid": {
+        ".read": "auth != null && (auth.uid == $uid || (auth.token.email == 'zacheussimbaya@gmail.com' && auth.token.email_verified == true))",
+        "$noteId": {
+          ".write": "auth != null && ((auth.token.email == 'zacheussimbaya@gmail.com' && auth.token.email_verified == true) || (auth.uid == $uid && data.exists() && newData.exists() && newData.child('title').val() == data.child('title').val() && newData.child('body').val() == data.child('body').val() && newData.child('createdAt').val() == data.child('createdAt').val()))",
+          ".validate": "!newData.exists() || (newData.hasChildren(['title', 'createdAt']) && newData.child('title').isString() && newData.child('title').val().length >= 2 && newData.child('title').val().length <= 200 && newData.child('createdAt').isNumber())",
+          "body": {
+            ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 1000)"
+          },
+          "type": {
+            ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 40)"
+          },
+          "read": {
+            ".validate": "!newData.exists() || newData.isBoolean()"
+          }
+        }
+      }
+    },
+    "jobs": {
+      ".read": true,
+      "$jobId": {
+        ".write": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com' && auth.token.email_verified == true",
+        ".validate": "!newData.exists() || (newData.hasChildren(['title', 'status', 'createdAt']) && newData.child('title').isString() && newData.child('title').val().length >= 2 && newData.child('title').val().length <= 200 && newData.child('status').isString() && newData.child('status').val().matches(/^(open|closed)$/) && newData.child('createdAt').isNumber())",
+        "description": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 2000)"
+        },
+        "location": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 120)"
+        },
+        "type": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 60)"
+        },
+        "updatedAt": {
+          ".validate": "!newData.exists() || newData.isNumber()"
+        }
+      }
+    },
+    "auditLog": {
+      ".read": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com' && auth.token.email_verified == true",
+      "$entryId": {
+        ".write": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com' && auth.token.email_verified == true && !data.exists() && newData.exists()",
+        ".validate": "newData.hasChildren(['action', 'at']) && newData.child('action').isString() && newData.child('action').val().length >= 2 && newData.child('action').val().length <= 80 && newData.child('at').isNumber()",
+        "target": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 200)"
+        },
+        "detail": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 500)"
+        },
+        "actor": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 160)"
         }
       }
     },

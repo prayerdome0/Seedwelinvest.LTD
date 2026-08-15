@@ -1,6 +1,9 @@
 User-agent: *
 Allow: /
 Disallow: /admin.html
+Disallow: /login.html
+Disallow: /dashboard.html
+Disallow: /verify.html
 Disallow: /FIREBASE_SETUP.md
 Disallow: /generate_portfolio.py
 Disallow: /database.rules.json
