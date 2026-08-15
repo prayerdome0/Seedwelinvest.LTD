@@ -57,6 +57,10 @@
         .loading { padding: 30px 0; color: #6b7280; font-size: 0.9rem; }
         .loading i { font-size: 2rem; color: #dc2626; display: block; margin-bottom: 12px; }
 
+        .verified-photo {
+            width: 108px; height: 124px; margin: 0 auto 18px; object-fit: cover; border-radius: 16px; border: 3px solid #fff;
+            outline: 1px solid #d1fae5; box-shadow: 0 10px 26px rgba(15,23,42,.12); background: #f1f5f9;
+        }
         .detail-list { text-align: left; border: 1px solid #e5e7eb; border-radius: 16px; overflow: hidden; }
         .detail-row {
             display: flex; justify-content: space-between; gap: 16px; padding: 13px 18px;
@@ -118,6 +122,7 @@
 
                 <div id="resultOk" style="display:none;">
                     <div class="result-banner ok"><i class="fas fa-circle-check"></i> VERIFIED WORKER</div>
+                    <img class="verified-photo" id="vPhoto" alt="Verified worker profile photo" hidden />
                     <div class="detail-list">
                         <div class="detail-row"><span class="k">Worker ID</span><span class="v id" id="vWorkerId">—</span></div>
                         <div class="detail-row"><span class="k">Worker name</span><span class="v" id="vName">—</span></div>
@@ -194,6 +199,19 @@
                     return;
                 }
 
+                const photo = $('vPhoto');
+                try {
+                    const photoUrl = new URL(String(record.profilePhotoUrl || ''));
+                    if (photoUrl.protocol === 'https:' && photoUrl.hostname === 'res.cloudinary.com') {
+                        photo.src = photoUrl.href;
+                        photo.hidden = false;
+                        photo.onerror = () => { photo.hidden = true; };
+                    } else {
+                        photo.hidden = true;
+                    }
+                } catch (_) {
+                    photo.hidden = true;
+                }
                 $('vWorkerId').textContent = String(record.workerId);
                 $('vName').textContent = String(record.fullName);
                 $('vRole').textContent = String(record.role || '—');

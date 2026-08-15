@@ -28,7 +28,7 @@
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+    <script src="cloudinary-upload.js"></script>
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -1008,7 +1008,6 @@
         };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
-        const storage = firebase.storage();
 
         // ─── Live job openings from the admin dashboard ───
         (function loadLiveJobs() {
@@ -1208,44 +1207,31 @@
                 submittedAt: firebase.database.ServerValue.TIMESTAMP
             };
 
+            let cvAsset = null;
             try {
-                // Upload CV to Firebase Storage
                 uploadProgress.style.display = 'block';
-                uploadProgressBar.style.width = '20%';
+                uploadProgressBar.style.width = '5%';
 
-                const timestamp = Date.now();
-                const safeName = fullName.replace(/[^a-zA-Z0-9]/g, '_').slice(0, 40) || 'applicant';
-                const safeFile = (file.name || 'cv.pdf').replace(/[^a-zA-Z0-9._-]/g, '_').slice(0, 80);
-                const storagePath = 'applications/' + safeName + '_' + timestamp + '_' + safeFile;
-                const storageRef = storage.ref(storagePath);
-                const metadata = { contentType: file.type || 'application/pdf' };
-                const uploadTask = storageRef.put(file, metadata);
-
-                const downloadUrl = await new Promise((resolve, reject) => {
-                    uploadTask.on('state_changed',
-                        (snapshot) => {
-                            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                            uploadProgressBar.style.width = (20 + progress * 0.6) + '%';
-                        },
-                        (error) => reject(error),
-                        async () => {
-                            uploadProgressBar.style.width = '85%';
-                            const url = await uploadTask.snapshot.ref.getDownloadURL();
-                            resolve(url);
-                        }
-                    );
+                cvAsset = await SeedwelCloudinary.upload(file, {
+                    kind: 'cv',
+                    ownerName: fullName,
+                    onProgress: (progress) => { uploadProgressBar.style.width = (5 + progress * 0.85) + '%'; }
                 });
-
-                uploadProgressBar.style.width = '95%';
+                uploadProgressBar.style.width = '93%';
 
                 await db.ref('applications').push().set({
                     ...baseApplication,
-                    cvDownloadUrl: downloadUrl,
-                    cvStoragePath: storagePath
+                    cvDownloadUrl: '/api/cloudinary-download',
+                    cvStoragePath: cvAsset.publicId,
+                    cvCloudinaryPublicId: cvAsset.publicId,
+                    cvResourceType: cvAsset.resourceType,
+                    cvDeliveryType: cvAsset.deliveryType,
+                    cvFormat: cvAsset.format,
+                    cvFileSize: cvAsset.bytes,
+                    cvUploadProvider: 'cloudinary'
                 });
 
                 uploadProgressBar.style.width = '100%';
-
                 setTimeout(() => {
                     formContent.style.display = 'none';
                     formSuccess.style.display = 'block';
@@ -1254,26 +1240,18 @@
                     uploadProgress.style.display = 'none';
                     uploadProgressBar.style.width = '0';
                 }, 500);
-
             } catch (error) {
                 console.error('Application submission error:', error);
-
-                // Fallback: save without file upload if storage fails
-                try {
-                    await db.ref('applications').push().set({
-                        ...baseApplication,
-                        cvDownloadUrl: '',
-                        cvStoragePath: '',
-                        cvUploadNote: ('File upload failed: ' + (error.message || 'Unknown error')).slice(0, 300)
-                    });
-
-                    formContent.style.display = 'none';
-                    formSuccess.style.display = 'block';
-                } catch (dbError) {
-                    alert('Sorry, there was an error submitting your application. Please try again or contact us via WhatsApp.');
-                    console.error('Database error:', dbError);
+                if (cvAsset && cvAsset.publicId) {
+                    try {
+                        await SeedwelCloudinary.remove({
+                            kind: 'cv',
+                            publicId: cvAsset.publicId,
+                            cleanupToken: cvAsset.cleanupToken
+                        });
+                    } catch (_) { /* Do not hide the original submission error. */ }
                 }
-
+                alert((error && error.message ? error.message : 'The application could not be submitted.') + ' Please try again or contact us via WhatsApp.');
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Application';
                 uploadProgress.style.display = 'none';
