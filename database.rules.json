@@ -101,6 +101,57 @@
         }
       }
     },
+    "workers": {
+      ".read": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com' && auth.token.email_verified == true",
+      "$uid": {
+        ".read": "auth != null && (auth.uid == $uid || (auth.token.email == 'zacheussimbaya@gmail.com' && auth.token.email_verified == true))",
+        ".write": "auth != null && ((auth.token.email == 'zacheussimbaya@gmail.com' && auth.token.email_verified == true) || (auth.uid == $uid && ((!data.exists() && newData.child('status').val() == 'pending') || (data.exists() && newData.child('status').val() == data.child('status').val() && newData.child('role').val() == data.child('role').val() && newData.child('commissionRate').val() == data.child('commissionRate').val()))))",
+        ".validate": "!newData.exists() || (newData.hasChildren(['fullName', 'email', 'role', 'status', 'commissionRate', 'createdAt']) && newData.child('fullName').isString() && newData.child('fullName').val().length >= 2 && newData.child('fullName').val().length <= 120 && newData.child('email').isString() && newData.child('email').val().length >= 5 && newData.child('email').val().length <= 160 && newData.child('role').isString() && newData.child('role').val().length >= 2 && newData.child('role').val().length <= 120 && newData.child('status').isString() && newData.child('status').val().matches(/^(pending|active|suspended|rejected)$/) && newData.child('commissionRate').isNumber() && newData.child('commissionRate').val() >= 0 && newData.child('commissionRate').val() <= 100 && newData.child('createdAt').isNumber())",
+        "phone": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 40)"
+        },
+        "country": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 80)"
+        },
+        "skills": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 500)"
+        },
+        "experience": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 40)"
+        },
+        "availability": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 80)"
+        },
+        "stats": {
+          ".write": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com' && auth.token.email_verified == true"
+        }
+      }
+    },
+    "tasks": {
+      ".read": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com' && auth.token.email_verified == true",
+      "$workerUid": {
+        ".read": "auth != null && (auth.uid == $workerUid || (auth.token.email == 'zacheussimbaya@gmail.com' && auth.token.email_verified == true))",
+        "$taskId": {
+          ".write": "auth != null && ((auth.token.email == 'zacheussimbaya@gmail.com' && auth.token.email_verified == true) || (auth.uid == $workerUid && data.exists() && newData.exists()))",
+          ".validate": "!newData.exists() || (newData.hasChildren(['title', 'status', 'createdAt']) && newData.child('title').isString() && newData.child('title').val().length >= 2 && newData.child('title').val().length <= 200 && newData.child('status').isString() && newData.child('status').val().matches(/^(pending|in_progress|completed)$/) && newData.child('createdAt').isNumber())",
+          "dueDate": {
+            ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 40)"
+          },
+          "priority": {
+            ".validate": "!newData.exists() || (newData.isString() && newData.val().matches(/^(low|medium|high)$/))"
+          },
+          "notes": {
+            ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 2000)"
+          },
+          "assignedBy": {
+            ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 120)"
+          },
+          "updatedAt": {
+            ".validate": "!newData.exists() || newData.isNumber()"
+          }
+        }
+      }
+    },
     "sentProjects": {
       ".read": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com' && auth.token.email_verified == true",
       "$sentId": {

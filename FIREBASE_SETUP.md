@@ -72,6 +72,32 @@ Only the verified administrator account can **read**, **update** (status changes
 
 CV files are stored at `applications/{fileName}` in Firebase Storage (max 5 MB). Visitors may upload; only the administrator may download or delete them.
 
+## Worker accounts and the team portal
+
+`login.html` and `dashboard.html` use **Firebase Authentication (Email/Password)** for workers, the same provider the admin uses. No worker password is stored in the repository or database — Firebase Authentication handles credentials and sessions.
+
+Worker data is stored under:
+
+- `/workers/{uid}` — one record per worker (full name, email, phone, country, role, skills, experience, availability, `commissionRate`, `status`, `createdAt`).
+- `/tasks/{workerUid}/{taskId}` — tasks assigned to a specific worker.
+
+Server-side rules enforce that:
+
+- a worker can read and create **only their own** `/workers/{uid}` record, and a newly created record must have `status: "pending"`;
+- a worker can only read **their own** `/tasks/{workerUid}` subtree, and can only **update** (not create or delete) their own task nodes;
+- a worker **cannot** change their own `status`, `role`, or `commissionRate`, and cannot write their own `/workers/{uid}/stats` (performance metrics are admin-written);
+- the verified administrator can read and write all worker and task records.
+
+When a worker registers, their record is created with `status: "pending"`. The dashboard blocks pending and suspended accounts. The administrator approves, rejects, suspends or reactivates workers from the **Team workers** panel in `admin.html`, and assigns tasks from the **Assign a task** panel. Approving a worker means setting `/workers/{uid}/status` to `"active"`.
+
+After changing `database.rules.json`, redeploy the rules:
+
+```bash
+firebase deploy --project seedwel-investment-limited --only database,storage
+```
+
+Also make sure **Email/Password** sign-in is enabled in **Authentication → Sign-in method** (already required for the admin), and that `seedwel.ltd` is in **Authentication → Settings → Authorized domains** so production workers can sign in.
+
 After pulling these rules, redeploy:
 
 ```bash
