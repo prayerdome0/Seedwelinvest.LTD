@@ -647,11 +647,28 @@
         body[data-admin-view="tasks"] .panel[data-admin-view="tasks"],
         body[data-admin-view="documents"] .panel[data-admin-view="documents"],
         body[data-admin-view="verification"] .panel[data-admin-view="verification"],
-        body[data-admin-view="reports"] .panel[data-admin-view="reports"] { display: block; }
+        body[data-admin-view="reports"] .panel[data-admin-view="reports"],
+        body[data-admin-view="daily-reports"] .panel[data-admin-view="daily-reports"],
+        body[data-admin-view="charts"] .panel[data-admin-view="charts"] { display: block; }
         .report-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
         .report-card { padding:18px; border:1px solid var(--line); border-radius:14px; background:rgba(8,17,32,.3); }
         .report-card strong { display:block; color:var(--gold); font-family:'Montserrat',sans-serif; font-size:1.5rem; }
         .report-card span { color:var(--muted); font-size:.72rem; }
+        .chart-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
+        .chart-card { padding:20px; border:1px solid var(--line); border-radius:16px; background:rgba(8,17,32,.3); }
+        .chart-card h3 { margin:0 0 18px; font:800 .86rem 'Montserrat',sans-serif; }
+        .chart-row { display:grid; grid-template-columns:110px minmax(0,1fr) 36px; align-items:center; gap:10px; margin:11px 0; font-size:.7rem; color:var(--muted); }
+        .chart-track { height:10px; overflow:hidden; border-radius:99px; background:rgba(255,255,255,.08); }
+        .chart-bar { height:100%; min-width:2px; border-radius:inherit; background:linear-gradient(90deg,var(--gold-deep),var(--gold)); transition:width .4s ease; }
+        .chart-row:nth-child(even) .chart-bar { background:linear-gradient(90deg,#4d7ee8,var(--blue)); }
+        .daily-report-grid { display:grid; gap:12px; }
+        .daily-report { padding:18px; border:1px solid var(--line); border-radius:15px; background:rgba(8,17,32,.3); }
+        .daily-report-head { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+        .daily-report h3 { margin:0; font-size:.86rem; }
+        .daily-report-meta { margin:4px 0 12px; color:var(--muted); font-size:.68rem; }
+        .daily-report-copy { white-space:pre-wrap; color:#dce5f2; font-size:.75rem; line-height:1.6; }
+        .daily-report-copy strong { color:var(--gold); }
+        .daily-report-actions { display:flex; gap:8px; margin-top:14px; flex-wrap:wrap; }
         .security-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
         .security-item { display:flex; gap:12px; padding:16px; border:1px solid var(--line); border-radius:14px; background:rgba(8,17,32,.3); }
         .security-item i { color:var(--green); margin-top:3px; }
@@ -679,7 +696,7 @@
             .admin-nav button { width:auto; min-height:38px; padding:8px 11px; white-space:nowrap; }
             .dashboard-main { padding:22px 15px 45px; }
             .metrics { grid-template-columns:repeat(2,minmax(0,1fr)); }
-            .report-grid,.security-list,.job-form-grid { grid-template-columns:1fr; }
+            .report-grid,.security-list,.job-form-grid,.chart-grid { grid-template-columns:1fr; }
             .job-form-grid .span-2 { grid-column:auto; }
         }
 
@@ -743,6 +760,8 @@
                     <button type="button" data-view="workers"><i class="fa-solid fa-people-group"></i>Workers</button>
                     <button type="button" data-view="jobs"><i class="fa-solid fa-briefcase"></i>Jobs</button>
                     <button type="button" data-view="tasks"><i class="fa-solid fa-list-check"></i>Tasks</button>
+                    <button type="button" data-view="daily-reports"><i class="fa-solid fa-calendar-check"></i>Daily Reports</button>
+                    <button type="button" data-view="charts"><i class="fa-solid fa-chart-column"></i>Charts</button>
                     <button type="button" data-view="portfolio"><i class="fa-solid fa-layer-group"></i>Portfolio</button>
                     <button type="button" data-view="messages"><i class="fa-solid fa-envelope"></i>Messages</button>
                     <button type="button" data-view="verification"><i class="fa-solid fa-shield-halved"></i>Verification</button>
@@ -1088,6 +1107,21 @@
                         </div>
                     </section>
 
+                    <section class="panel" data-admin-view="daily-reports" aria-labelledby="dailyReportsTitle">
+                        <div class="panel-head"><div><h2 id="dailyReportsTitle">Worker daily reports</h2><p>Track work completed, hours, challenges and next-day plans. Reviews are recorded with the administrator and time.</p></div><select id="dailyReportFilter" aria-label="Filter daily reports"><option value="all">All reports</option><option value="pending">Pending review</option><option value="reviewed">Reviewed</option></select></div>
+                        <div class="panel-body"><div class="daily-report-grid" id="dailyReportsList"><div class="empty-state"><i class="fa-solid fa-spinner fa-spin"></i>Loading daily reports…</div></div></div>
+                    </section>
+
+                    <section class="panel" data-admin-view="charts" aria-labelledby="chartsTitle">
+                        <div class="panel-head"><div><h2 id="chartsTitle">Operations charts</h2><p>Live visual summaries from recruitment, workers, jobs and daily reporting.</p></div></div>
+                        <div class="panel-body"><div class="chart-grid">
+                            <div class="chart-card"><h3>Application pipeline</h3><div id="applicationChart"></div></div>
+                            <div class="chart-card"><h3>Worker status</h3><div id="workerChart"></div></div>
+                            <div class="chart-card"><h3>Daily reports — last 7 days</h3><div id="dailyReportChart"></div></div>
+                            <div class="chart-card"><h3>Jobs</h3><div id="jobChart"></div></div>
+                        </div></div>
+                    </section>
+
                     <section class="panel" data-admin-view="verification" aria-labelledby="verificationTitle">
                         <div class="panel-head"><div><h2 id="verificationTitle">Worker verification</h2><p>Public QR records expose only approved identity and verification fields—never email, phone, CV or private documents.</p></div><a class="btn btn-secondary" href="verify.html" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open verifier</a></div>
                         <div class="panel-body"><div class="security-list">
@@ -1246,6 +1280,8 @@
         let currentWorkers = new Map();
         let currentJobs = new Map();
         let currentAudit = new Map();
+        let currentDailyReports = new Map();
+        let dailyReportFilter = 'all';
         let workerSearchTerm = '';
         let applicationSearchTerm = '';
         let applicationStatus = 'all';
@@ -1262,6 +1298,8 @@
             workers: ['Workers', 'Manage approved workers, Worker IDs, status and task assignment.'],
             jobs: ['Jobs', 'Create detailed openings and monitor recruitment.'],
             tasks: ['Tasks', 'Assign operational work independently from worker approval.'],
+            'daily-reports': ['Daily Reports', 'Review and track daily worker progress reports.'],
+            charts: ['Charts', 'Visual recruitment and operations performance.'],
             portfolio: ['Portfolio', 'Create, publish and share Seedwel project work.'],
             messages: ['Messages', 'Manage enquiries from the public website.'],
             verification: ['Verification', 'Monitor privacy-safe Worker ID and QR verification records.'],
@@ -1306,6 +1344,7 @@
             set('reportConversion', apps.length ? Math.round((approved / apps.length) * 100) + '%' : '0%');
             set('verifiedWorkersCount', active + ' active verification record' + (active === 1 ? '' : 's'));
             set('documentCvSummary', (apps.length - cvPending) + ' private CV' + ((apps.length - cvPending) === 1 ? '' : 's') + ' attached · ' + cvPending + ' follow-up required.');
+            renderAdminCharts();
         }
 
         $('globalAdminSearch').addEventListener('input', (event) => {
@@ -1581,6 +1620,12 @@
             }, () => {
                 if ($('auditList')) $('auditList').innerHTML = '<div class="empty-state"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>Unable to load the audit log. Deploy updated Database Rules.</div>';
             });
+            db.ref('dailyReports').on('value', (snapshot) => {
+                currentDailyReports = new Map(Object.entries(snapshot.val() || {}));
+                renderDailyReports(); renderAdminCharts();
+            }, () => {
+                if ($('dailyReportsList')) $('dailyReportsList').innerHTML = '<div class="empty-state">Unable to load daily reports. Deploy updated Database Rules.</div>';
+            });
         }
 
         function stopDataListeners() {
@@ -1591,6 +1636,7 @@
             db.ref('workers').off();
             db.ref('jobs').off();
             db.ref('auditLog').off();
+            db.ref('dailyReports').off();
             dataListening = false;
             currentProjects = new Map();
             currentMessages = new Map();
@@ -1598,6 +1644,7 @@
             currentWorkers = new Map();
             currentJobs = new Map();
             currentAudit = new Map();
+            currentDailyReports = new Map();
         }
 
         function applySettingsToForm() {
@@ -2292,6 +2339,71 @@
         });
         if (exportApplications) exportApplications.addEventListener('click', exportApplicationsCsv);
         if (refreshWorkers) refreshWorkers.addEventListener('click', () => { renderWorkers(); populateTaskWorkers(); showToast('Workers refreshed.'); });
+
+        // ─── Daily reports and charts ───
+        function flattenedDailyReports() {
+            const reports = [];
+            currentDailyReports.forEach((workerReports, uid) => {
+                Object.entries(workerReports || {}).forEach(([id, report]) => reports.push({ id, uid, ...report }));
+            });
+            return reports.sort((a,b) => Number(b.submittedAt || 0) - Number(a.submittedAt || 0));
+        }
+
+        function renderDailyReports() {
+            const list = $('dailyReportsList');
+            if (!list) return;
+            const reports = flattenedDailyReports().filter((report) => dailyReportFilter === 'all' || (report.reviewStatus || 'pending') === dailyReportFilter);
+            list.textContent = '';
+            if (!reports.length) { list.innerHTML = '<div class="empty-state"><i class="fa-solid fa-calendar-xmark"></i>No daily reports match this filter.</div>'; return; }
+            reports.forEach((report) => {
+                const worker = currentWorkers.get(report.uid) || {};
+                const item = document.createElement('article'); item.className = 'daily-report';
+                const head = document.createElement('div'); head.className = 'daily-report-head';
+                const title = document.createElement('h3'); title.textContent = safeText(report.workerName,120) || safeText(worker.fullName,120) || 'Worker';
+                const pill = document.createElement('span'); pill.className = 'status-pill ' + ((report.reviewStatus || 'pending') === 'reviewed' ? 'active' : 'pending'); pill.textContent = (report.reviewStatus || 'pending') === 'reviewed' ? 'Reviewed' : 'Pending review';
+                head.append(title,pill);
+                const meta = document.createElement('div'); meta.className='daily-report-meta'; meta.textContent = (worker.workerId ? worker.workerId + ' · ' : '') + safeText(report.reportDate,20) + ' · ' + Number(report.hoursWorked || 0) + ' hours · Submitted ' + formatInboxDate(report.submittedAt);
+                const copy = document.createElement('div'); copy.className='daily-report-copy';
+                copy.textContent = `WORK COMPLETED
+${safeText(report.workCompleted,3000)}
+
+CHALLENGES
+${safeText(report.challenges,2000) || 'None reported'}
+
+NEXT PLAN
+${safeText(report.nextPlan,2000)}`;
+                const actions = document.createElement('div'); actions.className='daily-report-actions';
+                if ((report.reviewStatus || 'pending') !== 'reviewed') {
+                    const review = document.createElement('button'); review.type='button'; review.className='btn btn-primary'; review.dataset.action='report-review'; review.dataset.uid=report.uid; review.dataset.id=report.id; review.innerHTML='<i class="fa-solid fa-check"></i> Mark reviewed'; actions.appendChild(review);
+                } else {
+                    const reviewInfo=document.createElement('span'); reviewInfo.className='inbox-meta'; reviewInfo.textContent='Reviewed by ' + safeText(report.reviewedBy,160) + ' · ' + formatInboxDate(report.reviewedAt); actions.appendChild(reviewInfo);
+                }
+                item.append(head,meta,copy,actions); list.appendChild(item);
+            });
+        }
+
+        function chartRows(targetId, rows) {
+            const target=$(targetId); if (!target) return;
+            target.textContent=''; const max=Math.max(1,...rows.map((row)=>row[1]));
+            rows.forEach(([label,value])=>{ const row=document.createElement('div'); row.className='chart-row'; const name=document.createElement('span'); name.textContent=label; const track=document.createElement('div'); track.className='chart-track'; const bar=document.createElement('div'); bar.className='chart-bar'; bar.style.width=Math.max(value ? 4 : 0,(value/max)*100)+'%'; track.appendChild(bar); const count=document.createElement('strong'); count.textContent=String(value); row.append(name,track,count); target.appendChild(row); });
+        }
+
+        function renderAdminCharts() {
+            const apps=Array.from(currentApplications.values()), workers=Array.from(currentWorkers.values()), jobs=Array.from(currentJobs.values()), reports=flattenedDailyReports();
+            chartRows('applicationChart', [['Registered',apps.filter(a=>['new','submitted','application_started'].includes(a.status)).length],['Reviewing',apps.filter(a=>a.status==='reviewing').length],['Shortlisted',apps.filter(a=>a.status==='shortlisted').length],['Interview',apps.filter(a=>a.status==='interview').length],['Approved',apps.filter(a=>['approved','active_worker','job_assigned','completed','hired'].includes(a.status)).length]]);
+            chartRows('workerChart', [['Pending',workers.filter(w=>['pending','under_review','info_required'].includes(w.status)).length],['Active',workers.filter(w=>w.status==='active').length],['Suspended',workers.filter(w=>w.status==='suspended').length],['Rejected',workers.filter(w=>w.status==='rejected').length]]);
+            const days=[]; for(let i=6;i>=0;i--){ const d=new Date(); d.setDate(d.getDate()-i); const key=d.toISOString().slice(0,10); days.push([d.toLocaleDateString(undefined,{weekday:'short'}),reports.filter(r=>r.reportDate===key).length]); } chartRows('dailyReportChart',days);
+            chartRows('jobChart',[['Open',jobs.filter(j=>j.status!=='closed').length],['Closed',jobs.filter(j=>j.status==='closed').length]]);
+        }
+
+        if ($('dailyReportFilter')) $('dailyReportFilter').addEventListener('change', (event)=>{ dailyReportFilter=event.target.value; renderDailyReports(); });
+        if ($('dailyReportsList')) $('dailyReportsList').addEventListener('click', async (event)=>{
+            const button=event.target.closest('button[data-action="report-review"]'); if(!button) return;
+            const note=window.prompt('Optional private review note for this report:',''); if(note===null) return;
+            button.disabled=true;
+            try { await db.ref('dailyReports/'+button.dataset.uid+'/'+button.dataset.id).update({ reviewStatus:'reviewed', reviewNote:safeText(note,1000), reviewedBy:ADMIN_EMAIL, reviewedAt:firebase.database.ServerValue.TIMESTAMP }); await recordAudit('Daily report reviewed', button.dataset.uid, safeText(note,500)); showToast('Daily report marked as reviewed.'); }
+            catch(_){ button.disabled=false; showToast('Could not review this report. Check Database Rules.','error'); }
+        });
 
         // ─── Audit log ───
         async function recordAudit(action, target, detail) {

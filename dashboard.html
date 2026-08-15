@@ -290,6 +290,17 @@
             .wrap { padding: 20px 16px 50px; }
             .task-item { flex-direction: column; align-items: flex-start; }
         }
+        /* Daily reporting */
+        .daily-form-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+        .daily-form-grid .full { grid-column:1/-1; }
+        .daily-report-history { display:grid; gap:10px; margin-top:20px; }
+        .worker-report-item { padding:15px; border:1px solid #e5e7eb; border-radius:13px; background:#f8fafc; }
+        .worker-report-item strong { font-size:.82rem; }
+        .worker-report-item p { margin:4px 0 0; color:#64748b; font-size:.75rem; }
+        .report-status { float:right; padding:4px 9px; border-radius:99px; font-size:.65rem; font-weight:700; background:#fffbeb; color:#b45309; }
+        .report-status.reviewed { background:#ecfdf5; color:#047857; }
+        @media(max-width:700px){ .daily-form-grid{grid-template-columns:1fr}.daily-form-grid .full{grid-column:auto} }
+
     </style>
 </head>
 <body>
@@ -422,6 +433,25 @@
                 <div id="taskList" class="task-list">
                     <div class="empty"><i class="fas fa-inbox"></i> No tasks assigned yet.</div>
                 </div>
+            </div>
+
+            <div class="section-card" id="dailyReportSection">
+                <div class="section-head">
+                    <h2><i class="fas fa-calendar-check" style="color:#dc2626;"></i> Daily Report</h2>
+                    <span class="count">One report per day</span>
+                </div>
+                <form id="dailyReportForm" novalidate>
+                    <div class="daily-form-grid">
+                        <div class="field"><label>Report date</label><input id="dailyReportDate" type="date" required /></div>
+                        <div class="field"><label>Hours worked</label><input id="dailyHours" type="number" min="0" max="24" step="0.5" placeholder="8" required /></div>
+                        <div class="field full"><label>Work completed today</label><textarea id="dailyCompleted" maxlength="3000" rows="4" placeholder="Summarize tasks, calls, sales or project work completed…" required></textarea></div>
+                        <div class="field full"><label>Challenges or support needed</label><textarea id="dailyChallenges" maxlength="2000" rows="3" placeholder="Enter none if there were no blockers."></textarea></div>
+                        <div class="field full"><label>Plan for the next working day</label><textarea id="dailyNextPlan" maxlength="2000" rows="3" placeholder="What will you work on next?" required></textarea></div>
+                    </div>
+                    <button type="submit" class="btn-primary" id="dailyReportBtn"><i class="fas fa-paper-plane"></i> Submit daily report</button>
+                    <div class="form-msg" id="dailyReportMsg"></div>
+                </form>
+                <div class="daily-report-history" id="workerReportHistory"><div class="empty"><i class="fas fa-clock"></i> No daily reports submitted yet.</div></div>
             </div>
 
             <div class="two-col">
@@ -718,6 +748,38 @@
             }
         }
 
+        // ─── Daily reports ───
+        function localDateKey(date = new Date()) {
+            const offset = date.getTimezoneOffset();
+            return new Date(date.getTime() - offset * 60000).toISOString().slice(0, 10);
+        }
+        $('dailyReportDate').value = localDateKey();
+        $('dailyReportDate').max = localDateKey();
+
+        function renderWorkerReports(uid) {
+            const list = $('workerReportHistory');
+            db.ref('dailyReports/' + uid).limitToLast(14).on('value', (snapshot) => {
+                const reports = Object.entries(snapshot.val() || {}).map(([id, report]) => ({id,...report})).sort((a,b)=>Number(b.submittedAt||0)-Number(a.submittedAt||0));
+                list.textContent='';
+                if(!reports.length){ list.innerHTML='<div class="empty"><i class="fas fa-clock"></i> No daily reports submitted yet.</div>'; return; }
+                reports.forEach((report)=>{ const item=document.createElement('div'); item.className='worker-report-item'; const status=document.createElement('span'); status.className='report-status'+(report.reviewStatus==='reviewed'?' reviewed':''); status.textContent=report.reviewStatus==='reviewed'?'Reviewed':'Pending review'; const title=document.createElement('strong'); title.textContent=report.reportDate+' · '+Number(report.hoursWorked||0)+' hours'; const copy=document.createElement('p'); copy.textContent=String(report.workCompleted||'').slice(0,180)+(String(report.workCompleted||'').length>180?'…':''); item.append(status,title,copy); if(report.reviewNote){ const note=document.createElement('p'); note.textContent='Admin: '+report.reviewNote; item.appendChild(note); } list.appendChild(item); });
+            });
+        }
+
+        $('dailyReportForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const user=auth.currentUser, worker=currentWorker, date=$('dailyReportDate').value, hours=Number($('dailyHours').value), completed=$('dailyCompleted').value.trim(), challenges=$('dailyChallenges').value.trim(), nextPlan=$('dailyNextPlan').value.trim();
+            const msg=$('dailyReportMsg'), button=$('dailyReportBtn'); msg.textContent=''; msg.className='form-msg';
+            if(!user||!worker) return;
+            if(!date||date>localDateKey()){ msg.textContent='Choose today or an earlier report date.'; return; }
+            if(!Number.isFinite(hours)||hours<0||hours>24){ msg.textContent='Enter hours worked between 0 and 24.'; return; }
+            if(completed.length<10||nextPlan.length<5){ msg.textContent='Please provide enough detail about completed work and your next plan.'; return; }
+            button.disabled=true;
+            try { await db.ref('dailyReports/'+user.uid+'/'+date).set({ reportDate:date, workerName:String(worker.fullName||'Worker').slice(0,120), hoursWorked:hours, workCompleted:completed.slice(0,3000), challenges:challenges.slice(0,2000), nextPlan:nextPlan.slice(0,2000), reviewStatus:'pending', submittedAt:firebase.database.ServerValue.TIMESTAMP }); $('dailyHours').value=''; $('dailyCompleted').value=''; $('dailyChallenges').value=''; $('dailyNextPlan').value=''; msg.textContent='Daily report submitted to the administrator.'; msg.className='form-msg success'; }
+            catch(error){ msg.textContent=error && error.code==='PERMISSION_DENIED'?'A report already exists for this date or access was denied.':'Could not submit the report. Please try again.'; }
+            finally { button.disabled=false; }
+        });
+
         // ─── Notifications ───
         function renderNotifications(uid) {
             const list = $('notifList');
@@ -1006,6 +1068,7 @@
                     liveListeners = true;
                     renderTasks(user.uid);
                     renderNotifications(user.uid);
+                    renderWorkerReports(user.uid);
                 }
             }, (err) => {
                 console.error('Dashboard load error:', err);

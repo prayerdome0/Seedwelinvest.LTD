@@ -26,7 +26,7 @@ Static public website and a Firebase-backed Seedwel Operations & Workforce Manag
 - **Automatic Worker IDs** (`SWL-YYYY-000001`): issued transactionally on approval from a monotonic counter; unique, permanent, never reused, and impossible for applicants to set themselves (blocked by Database Rules).
 - **QR verification**: each approved worker gets a secure random verification token. The QR opens `verify.html?t=…`, which checks the token live against `/verifications` and shows VERIFIED WORKER or VERIFICATION FAILED with limited verification data.
 - **Cloudinary Worker ID photos**: active workers can upload or replace their ID profile photo in the dashboard. It appears on the private ID card and the token-based public verification record.
-- **Operations admin**: mobile-friendly sidebar navigation, global applicant/worker/Worker ID search, approval and suspension controls, detailed jobs, private documents, database-driven reports/CSV export, worker notifications, verification monitoring and an append-only audit log.
+- **Operations admin**: mobile-friendly sidebar navigation, global applicant/worker/Worker ID search, approval and suspension controls, detailed jobs, private documents, database-driven reports/CSV export, live operations charts, administrator-tracked worker daily reports, notifications, verification monitoring and an append-only audit log.
 - **Important rule shown throughout**: creating an account does **not** guarantee employment or a job award.
 
 ## Team portal (Phase 2 + Phase 3)

@@ -282,14 +282,30 @@
         "type": {
           ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 60)"
         },
-        "department": { ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 100)" },
-        "employmentType": { ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 60)" },
-        "workMode": { ".validate": "!newData.exists() || (newData.isString() && newData.val().matches(/^(On-site|Remote|Hybrid)$/))" },
-        "positions": { ".validate": "!newData.exists() || (newData.isNumber() && newData.val() >= 1 && newData.val() <= 999)" },
-        "deadline": { ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 20)" },
-        "salary": { ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 100)" },
-        "requirements": { ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 3000)" },
-        "responsibilities": { ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 3000)" },
+        "department": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 100)"
+        },
+        "employmentType": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 60)"
+        },
+        "workMode": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().matches(/^(On-site|Remote|Hybrid)$/))"
+        },
+        "positions": {
+          ".validate": "!newData.exists() || (newData.isNumber() && newData.val() >= 1 && newData.val() <= 999)"
+        },
+        "deadline": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 20)"
+        },
+        "salary": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 100)"
+        },
+        "requirements": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 3000)"
+        },
+        "responsibilities": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 3000)"
+        },
         "updatedAt": {
           ".validate": "!newData.exists() || newData.isNumber()"
         }
@@ -341,6 +357,28 @@
       "$sentId": {
         ".write": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com'",
         ".validate": "!newData.exists() || (newData.hasChildren(['projectKey', 'projectName', 'method', 'sentAt']) && newData.child('projectKey').isString() && newData.child('projectName').isString() && newData.child('method').isString() && newData.child('sentAt').isNumber())"
+      }
+    },
+    "dailyReports": {
+      ".read": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com'",
+      "$uid": {
+        ".read": "auth != null && (auth.uid == $uid || auth.token.email == 'zacheussimbaya@gmail.com')",
+        "$reportId": {
+          ".write": "auth != null && ((auth.token.email == 'zacheussimbaya@gmail.com') || (auth.uid == $uid && !data.exists() && newData.child('reportDate').val() == $reportId && newData.child('workerName').val() == root.child('workers').child($uid).child('fullName').val() && newData.child('reviewStatus').val() == 'pending' && !newData.child('reviewNote').exists() && !newData.child('reviewedBy').exists() && !newData.child('reviewedAt').exists()))",
+          ".validate": "!newData.exists() || (newData.hasChildren(['reportDate', 'workerName', 'hoursWorked', 'workCompleted', 'nextPlan', 'reviewStatus', 'submittedAt']) && newData.child('reportDate').isString() && newData.child('reportDate').val().matches(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/) && newData.child('workerName').isString() && newData.child('workerName').val().length >= 2 && newData.child('workerName').val().length <= 120 && newData.child('hoursWorked').isNumber() && newData.child('hoursWorked').val() >= 0 && newData.child('hoursWorked').val() <= 24 && newData.child('workCompleted').isString() && newData.child('workCompleted').val().length >= 10 && newData.child('workCompleted').val().length <= 3000 && newData.child('nextPlan').isString() && newData.child('nextPlan').val().length >= 5 && newData.child('nextPlan').val().length <= 2000 && newData.child('reviewStatus').isString() && newData.child('reviewStatus').val().matches(/^(pending|reviewed)$/) && newData.child('submittedAt').isNumber())",
+          "challenges": {
+            ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 2000)"
+          },
+          "reviewNote": {
+            ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 1000)"
+          },
+          "reviewedBy": {
+            ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 160)"
+          },
+          "reviewedAt": {
+            ".validate": "!newData.exists() || newData.isNumber()"
+          }
+        }
       }
     }
   }
