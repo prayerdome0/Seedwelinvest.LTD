@@ -78,20 +78,16 @@ module.exports = async function handler(req, res) {
             return json(res, 400, { error: 'CV files must be PDF, DOC or DOCX.' });
         }
 
+        // Throws a 503 with an actionable message when the Vercel project has no
+        // Cloudinary credentials, instead of returning an unusable signature.
         const { cloudName, apiKey, apiSecret } = applyCloudinaryConfig();
-        
-        // Use unsigned upload for portfolio as requested by the user
-        if (kind === 'portfolio') {
-            return json(res, 200, {
-                cloudName,
-                uploadPreset: 'portfolio',
-                resourceType: policy.resourceType,
-                maxBytes: policy.maxBytes
-            });
-        }
 
         const timestamp = Math.floor(Date.now() / 1000);
         let publicId;
+        if (kind === 'portfolio') {
+            const title = safeSegment(body.ownerName, 'project', 50);
+            publicId = ROOT_FOLDER + '/projects/' + title + '-' + timestamp + '-' + randomId();
+        } else if (kind === 'profile') {
             publicId = ROOT_FOLDER + '/profile-pictures/' + user.uid;
         } else {
             const extension = safeExtension(originalName);
@@ -126,6 +122,9 @@ module.exports = async function handler(req, res) {
         });
     } catch (error) {
         console.error('Cloudinary signature error:', error && error.message ? error.message : error);
-        return json(res, error.statusCode || 500, { error: error.message || 'Could not prepare the upload.' });
+        return json(res, error.statusCode || 500, {
+            error: error.message || 'Could not prepare the upload.',
+            code: error.code || undefined
+        });
     }
 };

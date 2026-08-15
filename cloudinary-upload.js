@@ -15,7 +15,12 @@
             body: JSON.stringify(body || {})
         });
         const data = await response.json().catch(() => ({}));
-        if (!response.ok) throw new Error(errorMessage(data, 'The upload service is unavailable. Please try again.'));
+        if (!response.ok) {
+            const error = new Error(errorMessage(data, 'The upload service is unavailable. Please try again.'));
+            error.status = response.status;
+            error.code = data && data.code ? String(data.code) : '';
+            throw error;
+        }
         return data;
     }
 
@@ -32,11 +37,13 @@
         }, options.user || null);
 
         if (file.size > Number(config.maxBytes || 0)) throw new Error('The selected file exceeds the upload limit.');
+        if (!config.cloudName) throw new Error('The upload service is not configured yet. Please contact an administrator.');
+
         const form = new FormData();
         form.append('file', file);
-        
+
         if (config.uploadPreset) {
-            form.append('upload_preset', config.uploadPreset);
+            form.append('upload_preset', String(config.uploadPreset));
         } else {
             Object.keys(config.signedParams || {}).forEach(function (key) {
                 form.append(key, String(config.signedParams[key]));
@@ -69,7 +76,7 @@
             url: String(result.secure_url),
             publicId: String(result.public_id),
             resourceType: String(result.resource_type || config.resourceType),
-            deliveryType: String(result.type || config.signedParams.type || 'upload'),
+            deliveryType: String(result.type || (config.signedParams && config.signedParams.type) || 'upload'),
             bytes: Number(result.bytes || file.size || 0),
             format: String(result.format || file.name.split('.').pop() || '').toLowerCase(),
             version: Number(result.version || 0),
