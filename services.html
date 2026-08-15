@@ -16,14 +16,16 @@
     <meta property="og:title" content="Our Services | Seedwel Investment LTD" />
     <meta property="og:description" content="Premium digital services from Seedwel Investment LTD: web development, graphic design, SEO, business registration, virtual assistance and more." />
     <meta property="og:url" content="https://seedwel.ltd/services.html" />
-    <meta property="og:image" content="https://i.ibb.co/svxj52ny/seedwel.png" />
+    <meta property="og:image" content="https://seedwel.ltd/assets/images/seedwel-digital-craft.jpg" />
+    <meta property="og:image:alt" content="Seedwel digital specialists designing and developing a client experience" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Our Services | Seedwel Investment LTD" />
     <meta name="twitter:description" content="Premium digital services from Seedwel Investment LTD: web development, graphic design, SEO, business registration, virtual assistance and more." />
-    <meta name="twitter:image" content="https://i.ibb.co/svxj52ny/seedwel.png" />
+    <meta name="twitter:image" content="https://seedwel.ltd/assets/images/seedwel-digital-craft.jpg" />
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="assets/css/media-showcase.css" />
 
     <style>
         * {
@@ -823,6 +825,31 @@
         </div>
     </div>
 
+    <!-- ========== SERVICES IN PICTURES ========== -->
+    <section class="seedwel-service-visuals" aria-labelledby="serviceVisualTitle">
+        <div class="seedwel-media-container">
+            <header class="seedwel-media-reveal">
+                <p class="seedwel-media-eyebrow">Expertise you can see</p>
+                <h2 id="serviceVisualTitle">Three disciplines. <span>One dependable partner.</span></h2>
+                <p class="seedwel-visual-intro">We connect digital delivery, business guidance and responsive client care so your next move feels simpler and more confident.</p>
+            </header>
+            <div class="seedwel-photo-grid">
+                <figure class="seedwel-photo-card seedwel-media-reveal">
+                    <img src="assets/images/seedwel-digital-craft.jpg" alt="Product design and web development specialists at work" width="1376" height="768" loading="lazy" decoding="async" />
+                    <figcaption><span>Digital</span><strong>Web, mobile and brand experiences</strong></figcaption>
+                </figure>
+                <figure class="seedwel-photo-card seedwel-media-reveal">
+                    <img src="assets/images/seedwel-business-advisory.jpg" alt="Business registration advisor working with an entrepreneur" width="1376" height="768" loading="lazy" decoding="async" />
+                    <figcaption><span>Business</span><strong>Registration and practical guidance</strong></figcaption>
+                </figure>
+                <figure class="seedwel-photo-card seedwel-media-reveal">
+                    <img src="assets/images/seedwel-client-support.jpg" alt="Professional virtual assistant supporting a client" width="1376" height="768" loading="lazy" decoding="async" />
+                    <figcaption><span>Support</span><strong>Responsive help when it matters</strong></figcaption>
+                </figure>
+            </div>
+        </div>
+    </section>
+
     <!-- ========== SERVICES GRID ========== -->
     <section class="services-grid-section">
         <div class="section-header" style="text-align:center; max-width:700px; margin:0 auto 50px;">
@@ -1077,6 +1104,7 @@
         window.addEventListener('load', () => window.scrollTo(0, 0));
         window.addEventListener('pageshow', (e) => { if (e.persisted) window.scrollTo(0, 0); });
     </script>
+    <script src="assets/js/media-showcase.js" defer></script>
 
 </body>
 </html>
