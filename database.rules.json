@@ -115,8 +115,8 @@
     "applications": {
       ".read": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com'",
       "$applicationId": {
-        ".write": "(!data.exists() && newData.exists()) || (auth != null && auth.token.email == 'zacheussimbaya@gmail.com')",
-        ".validate": "!newData.exists() || (newData.hasChildren(['fullName', 'email', 'phone', 'position', 'coverLetter', 'status', 'submittedAt']) && newData.child('fullName').isString() && newData.child('fullName').val().length >= 2 && newData.child('fullName').val().length <= 120 && newData.child('email').isString() && newData.child('email').val().length >= 5 && newData.child('email').val().length <= 160 && newData.child('phone').isString() && newData.child('phone').val().length >= 5 && newData.child('phone').val().length <= 40 && newData.child('position').isString() && newData.child('position').val().length >= 2 && newData.child('position').val().length <= 120 && newData.child('coverLetter').isString() && newData.child('coverLetter').val().length >= 20 && newData.child('coverLetter').val().length <= 4000 && newData.child('status').isString() && newData.child('status').val().matches(/^(new|reviewing|shortlisted|rejected|hired)$/) && newData.child('submittedAt').isNumber())",
+        ".write": "(!data.exists() && newData.exists() && newData.child('status').val() == 'new') || (auth != null && auth.token.email == 'zacheussimbaya@gmail.com')",
+        ".validate": "!newData.exists() || (newData.hasChildren(['fullName', 'email', 'phone', 'position', 'coverLetter', 'status', 'submittedAt']) && newData.child('fullName').isString() && newData.child('fullName').val().length >= 2 && newData.child('fullName').val().length <= 120 && newData.child('email').isString() && newData.child('email').val().length >= 5 && newData.child('email').val().length <= 160 && newData.child('phone').isString() && newData.child('phone').val().length >= 5 && newData.child('phone').val().length <= 40 && newData.child('position').isString() && newData.child('position').val().length >= 2 && newData.child('position').val().length <= 120 && newData.child('coverLetter').isString() && newData.child('coverLetter').val().length >= 20 && newData.child('coverLetter').val().length <= 4000 && newData.child('status').isString() && newData.child('status').val().matches(/^(new|application_started|submitted|reviewing|shortlisted|interview|approved|worker_id_generated|active_worker|job_assigned|completed|rejected|hired)$/) && newData.child('submittedAt').isNumber())",
         "experience": {
           ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 40)"
         },
@@ -274,13 +274,37 @@
         ".write": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com'",
         ".validate": "!newData.exists() || (newData.hasChildren(['title', 'status', 'createdAt']) && newData.child('title').isString() && newData.child('title').val().length >= 2 && newData.child('title').val().length <= 200 && newData.child('status').isString() && newData.child('status').val().matches(/^(open|closed)$/) && newData.child('createdAt').isNumber())",
         "description": {
-          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 2000)"
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 3000)"
         },
         "location": {
           ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 120)"
         },
         "type": {
           ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 60)"
+        },
+        "department": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 100)"
+        },
+        "employmentType": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 60)"
+        },
+        "workMode": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().matches(/^(On-site|Remote|Hybrid)$/))"
+        },
+        "positions": {
+          ".validate": "!newData.exists() || (newData.isNumber() && newData.val() >= 1 && newData.val() <= 999)"
+        },
+        "deadline": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 20)"
+        },
+        "salary": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 100)"
+        },
+        "requirements": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 3000)"
+        },
+        "responsibilities": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 3000)"
         },
         "updatedAt": {
           ".validate": "!newData.exists() || newData.isNumber()"
@@ -333,6 +357,28 @@
       "$sentId": {
         ".write": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com'",
         ".validate": "!newData.exists() || (newData.hasChildren(['projectKey', 'projectName', 'method', 'sentAt']) && newData.child('projectKey').isString() && newData.child('projectName').isString() && newData.child('method').isString() && newData.child('sentAt').isNumber())"
+      }
+    },
+    "dailyReports": {
+      ".read": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com'",
+      "$uid": {
+        ".read": "auth != null && (auth.uid == $uid || auth.token.email == 'zacheussimbaya@gmail.com')",
+        "$reportId": {
+          ".write": "auth != null && ((auth.token.email == 'zacheussimbaya@gmail.com') || (auth.uid == $uid && !data.exists() && newData.child('reportDate').val() == $reportId && newData.child('workerName').val() == root.child('workers').child($uid).child('fullName').val() && newData.child('reviewStatus').val() == 'pending' && !newData.child('reviewNote').exists() && !newData.child('reviewedBy').exists() && !newData.child('reviewedAt').exists()))",
+          ".validate": "!newData.exists() || (newData.hasChildren(['reportDate', 'workerName', 'hoursWorked', 'workCompleted', 'nextPlan', 'reviewStatus', 'submittedAt']) && newData.child('reportDate').isString() && newData.child('reportDate').val().matches(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/) && newData.child('workerName').isString() && newData.child('workerName').val().length >= 2 && newData.child('workerName').val().length <= 120 && newData.child('hoursWorked').isNumber() && newData.child('hoursWorked').val() >= 0 && newData.child('hoursWorked').val() <= 24 && newData.child('workCompleted').isString() && newData.child('workCompleted').val().length >= 10 && newData.child('workCompleted').val().length <= 3000 && newData.child('nextPlan').isString() && newData.child('nextPlan').val().length >= 5 && newData.child('nextPlan').val().length <= 2000 && newData.child('reviewStatus').isString() && newData.child('reviewStatus').val().matches(/^(pending|reviewed)$/) && newData.child('submittedAt').isNumber())",
+          "challenges": {
+            ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 2000)"
+          },
+          "reviewNote": {
+            ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 1000)"
+          },
+          "reviewedBy": {
+            ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 160)"
+          },
+          "reviewedAt": {
+            ".validate": "!newData.exists() || newData.isNumber()"
+          }
+        }
       }
     }
   }
