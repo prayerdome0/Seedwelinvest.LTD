@@ -673,7 +673,7 @@
 
             <aside class="notice" aria-label="Storage capacity note">
                 <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
-                <div><strong>Cloudinary manages all new uploads.</strong> The connected Cloudinary product environment stores portfolio media, private CVs and worker ID profile photos. The included <a href="FIREBASE_SETUP.md" target="_blank" rel="noopener">deployment guide</a> explains the server-side connection; the meter tracks portfolio files uploaded through this dashboard.</div>
+                <div><strong>Cloudinary manages all new uploads.</strong> The connected Cloudinary product environment stores portfolio media, authenticated private CVs and worker ID profile photos in the <code>portfolio</code> asset folder. The included <a href="FIREBASE_SETUP.md" target="_blank" rel="noopener">deployment guide</a> explains the server-side connection; the meter tracks portfolio files uploaded through this dashboard.</div>
             </aside>
 
             <div class="workspace">
@@ -1658,6 +1658,7 @@
                     cv.className = 'btn btn-secondary';
                     cv.dataset.action = 'application-cv';
                     cv.dataset.key = key;
+                    cv.title = 'Authenticated Cloudinary CV · folder: ' + (safeText(app.cvAssetFolder, 80) || 'portfolio');
                     cv.innerHTML = '<i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> Private CV';
                     actions.appendChild(cv);
                 } else if (cvUrl) {

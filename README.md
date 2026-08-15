@@ -36,9 +36,15 @@ Static public website, a Firebase-backed portfolio administration workspace, and
 - `admin.html` has a **Team workers** panel: approve, reject, suspend, or activate workers (sets `/workers/{uid}/status`), plus an **Assign a task** form that writes to `/tasks/{workerUid}/{taskId}`.
 - Task records live under `/tasks/{workerUid}/{taskId}`; a worker can read and update **only their own** tasks, while the administrator manages all workers and tasks.
 
+## Original brand media
+
+- Purpose-built, generated campaign photography lives in `assets/images/` and replaces generic stock imagery across the home and about experiences.
+- Two lightweight H.264 films in `assets/videos/` present the company story and three-step delivery process. They are muted, inline, visibility-aware and include accessible play/pause controls.
+- `assets/css/media-showcase.css` and `assets/js/media-showcase.js` provide responsive editorial layouts, scroll reveals, hover motion and reduced-motion support across the Home, About and Services pages.
+
 ## Uploads and portfolio administration
 
-- **All new uploads use the existing connected Cloudinary product environment**: portfolio images, authenticated/private CVs and Worker ID profile photos. Serverless functions create signed requests; no API secret or unsigned upload preset is exposed in browser code.
+- **All new uploads use the existing connected Cloudinary product environment**: portfolio images, authenticated/private CVs and Worker ID profile photos are organised in its `portfolio` asset folder. Serverless functions create signed requests; no API secret or unsigned upload preset is exposed in browser code.
 - Open `admin.html` to manage published portfolio projects, protected image uploads, public portfolio details, share links, **contact inbox** and **job applications**.
 - Open `projects.html` for the live, shareable portfolio.
 - See [FIREBASE_SETUP.md](FIREBASE_SETUP.md) before production use. Confirm the Vercel Cloudinary integration provides `CLOUDINARY_URL`, then deploy the included Firebase Database/Storage Rules.

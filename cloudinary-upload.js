@@ -75,6 +75,7 @@
         return {
             url: String(result.secure_url),
             publicId: String(result.public_id),
+            assetFolder: String(result.asset_folder || config.assetFolder || (config.signedParams && config.signedParams.asset_folder) || ''),
             resourceType: String(result.resource_type || config.resourceType),
             deliveryType: String(result.type || (config.signedParams && config.signedParams.type) || 'upload'),
             bytes: Number(result.bytes || file.size || 0),

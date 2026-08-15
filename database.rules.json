@@ -111,6 +111,9 @@
         "cvCloudinaryPublicId": {
           ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 512)"
         },
+        "cvAssetFolder": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val() == 'portfolio')"
+        },
         "cvResourceType": {
           ".validate": "!newData.exists() || (newData.isString() && newData.val() == 'raw')"
         },

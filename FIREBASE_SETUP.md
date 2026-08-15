@@ -25,13 +25,15 @@ In Vercel:
 3. Confirm `CLOUDINARY_URL` is present in the project environment settings. Keep the currently connected Cloudinary product environment—there is no hardcoded cloud name in this repository.
 4. Redeploy after changing environment variables.
 
-The upload workflow uses these managed folders in that same product environment:
+The upload workflow places every managed asset in the Cloudinary Media Library folder **`portfolio`**. It also keeps logical, scoped public IDs so assets remain safe to manage in either Cloudinary folder mode:
 
-- `portfolio/portfolio`
-- `portfolio/job-applications`
-- `portfolio/profile-pictures`
+- `portfolio/projects/...`
+- `portfolio/job-applications/...`
+- `portfolio/profile-pictures/...`
 
-CVs are uploaded with Cloudinary's `authenticated` delivery type. An administrator must be signed in to request the five-minute private download URL. Portfolio signatures require the verified administrator account. Profile-photo signatures require the matching signed-in Firebase user and use one stable Cloudinary public ID per Firebase UID, so replacing a photo does not create duplicate ID photos.
+The signed upload includes `asset_folder=portfolio` for modern dynamic-folder product environments. The `portfolio/...` public-ID prefix provides the equivalent folder placement for legacy fixed-folder environments. Do not replace this with an unsigned upload preset.
+
+CVs remain private even though they share the `portfolio` Media Library folder: they are uploaded as `raw` assets with Cloudinary's `authenticated` delivery type. An administrator must be signed in to request the five-minute private download URL. Portfolio signatures require the verified administrator account. Profile-photo signatures require the matching signed-in Firebase user and use one stable Cloudinary public ID per Firebase UID, so replacing a photo does not create duplicate ID photos.
 
 ## Firebase configuration
 

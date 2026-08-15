@@ -10,6 +10,7 @@ const {
     randomId,
     requireUser,
     safeExtension,
+    safeFileName,
     safeSegment,
     sameOriginRequest
 } = require('./_cloudinary');
@@ -54,17 +55,25 @@ module.exports = async function handler(req, res) {
             return json(res, 429, { error: 'Too many upload attempts. Please wait a few minutes and try again.' });
         }
 
-        const originalName = String(body.fileName || '').slice(0, 200);
-        let mimeType = String(body.mimeType || '').toLowerCase().slice(0, 100);
+        const suppliedFileName = String(body.fileName || '').trim();
+        const originalName = safeFileName(suppliedFileName, 'upload', 200);
+        let mimeType = String(body.mimeType || '').toLowerCase().split(';')[0].trim().slice(0, 100);
+        mimeType = {
+            'application/x-pdf': 'application/pdf',
+            'application/vnd.ms-word': 'application/msword'
+        }[mimeType] || mimeType;
         const extensionHint = safeExtension(originalName);
-        if (!mimeType) {
+        // Browsers on some phones and Windows installations report Office files
+        // as a generic binary stream. In that case, use the separately validated
+        // extension rather than rejecting an otherwise valid CV before upload.
+        if (!mimeType || mimeType === 'application/octet-stream') {
             mimeType = {
                 jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp', gif: 'image/gif', avif: 'image/avif',
                 pdf: 'application/pdf', doc: 'application/msword', docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
             }[extensionHint] || '';
         }
         const size = Number(body.fileSize);
-        if (!originalName || !Number.isFinite(size) || size <= 0 || size > policy.maxBytes) {
+        if (!suppliedFileName || !Number.isFinite(size) || size <= 0 || size > policy.maxBytes) {
             return json(res, 400, { error: 'The selected file is missing or exceeds the allowed size.' });
         }
 
@@ -99,6 +108,11 @@ module.exports = async function handler(req, res) {
         }
 
         const signedParams = {
+            // `asset_folder` places uploads in the visible portfolio folder for
+            // Cloudinary environments using dynamic folders. The portfolio/
+            // prefix in public_id provides the equivalent placement in legacy
+            // fixed-folder environments and keeps deletion checks scoped.
+            asset_folder: ROOT_FOLDER,
             invalidate: true,
             overwrite: kind === 'profile',
             public_id: publicId,
@@ -106,7 +120,7 @@ module.exports = async function handler(req, res) {
             type: policy.deliveryType
         };
         // Keep the stable profile public ID on one predictable image format, and
-        // preserve an applicant's original CV filename as asset metadata.
+        // preserve an applicant's sanitised original CV filename as asset metadata.
         if (kind === 'profile') signedParams.format = 'jpg';
         if (kind === 'cv') signedParams.filename_override = originalName;
         const signature = cloudinary.utils.api_sign_request(signedParams, apiSecret);
@@ -116,6 +130,7 @@ module.exports = async function handler(req, res) {
             apiKey,
             signature,
             signedParams,
+            assetFolder: ROOT_FOLDER,
             resourceType: policy.resourceType,
             maxBytes: policy.maxBytes,
             cleanupToken: cleanupToken(apiSecret, kind, publicId, policy.resourceType, policy.deliveryType)

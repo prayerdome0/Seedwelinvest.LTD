@@ -12,11 +12,12 @@
     <meta property="og:title" content="Seedwel Investment LTD | Digital Agency" />
     <meta property="og:description" content="Seedwel Investment LTD builds digital experiences that drive growth — web development, SEO, branding and business registration across Zambia and globally." />
     <meta property="og:url" content="https://seedwel.ltd/" />
-    <meta property="og:image" content="https://i.ibb.co/svxj52ny/seedwel.png" />
+    <meta property="og:image" content="https://seedwel.ltd/assets/images/seedwel-team-studio.jpg" />
+    <meta property="og:image:alt" content="Seedwel Investment LTD digital team collaborating in a modern studio" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Seedwel Investment LTD | Digital Agency" />
     <meta name="twitter:description" content="Seedwel Investment LTD builds digital experiences that drive growth — web development, SEO, branding and business registration across Zambia and globally." />
-    <meta name="twitter:image" content="https://i.ibb.co/svxj52ny/seedwel.png" />
+    <meta name="twitter:image" content="https://seedwel.ltd/assets/images/seedwel-team-studio.jpg" />
 <meta name="theme-color" content="#dc2626" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
@@ -26,6 +27,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="preload" as="image" href="assets/images/seedwel-team-studio.jpg" fetchpriority="high" />
+    <link rel="stylesheet" href="assets/css/media-showcase.css" />
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
@@ -1447,7 +1450,11 @@
                     <i class="fas fa-paper-plane" aria-hidden="true"></i>
                     <div><strong>Share-ready portfolio</strong><span>Send live work in one link</span></div>
                 </div>
-                <img src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Team working" />
+                <div class="home-location-card" aria-label="Based in Zambia and working globally">
+                    <i class="fas fa-location-dot" aria-hidden="true"></i>
+                    <span>Zambia based · Globally connected</span>
+                </div>
+                <img class="seedwel-hero-photo" src="assets/images/seedwel-team-studio.jpg" alt="Seedwel digital specialists collaborating in a modern studio" width="1312" height="816" loading="eager" fetchpriority="high" decoding="async" />
             </div>
         </div>
     </section>
@@ -1480,6 +1487,60 @@
                 <div class="stat-icon"><i class="fas fa-clock"></i></div>
                 <div class="stat-number">24/7</div>
                 <div class="stat-label">Support Available</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== ORIGINAL COMPANY SHOWREEL ========== -->
+    <section class="seedwel-media-section" aria-labelledby="seedwelShowreelTitle">
+        <div class="seedwel-media-container">
+            <header class="seedwel-media-heading seedwel-media-reveal">
+                <div>
+                    <p class="seedwel-media-eyebrow">Seedwel in motion</p>
+                    <h2 id="seedwelShowreelTitle">See how ideas become <span>useful experiences.</span></h2>
+                    <p>Meet the thinking, craft and client care behind our digital products and business services — from Zambia to teams around the world.</p>
+                </div>
+                <span class="seedwel-original-mark"><i class="fas fa-wand-magic-sparkles" aria-hidden="true"></i> Original Seedwel visual story</span>
+            </header>
+
+            <div class="seedwel-showcase-grid">
+                <div class="seedwel-video-shell seedwel-media-reveal" data-reveal="left">
+                    <video data-seedwel-video autoplay muted loop playsinline preload="metadata" poster="assets/images/seedwel-showreel-poster.jpg" aria-label="Seedwel Investment LTD company showreel">
+                        <source src="assets/videos/seedwel-company-showreel.mp4" type="video/mp4" />
+                        Your browser does not support embedded video. <a href="assets/videos/seedwel-company-showreel.mp4">Open the Seedwel company film</a>.
+                    </video>
+                    <span class="seedwel-video-badge">16-second company film</span>
+                    <button class="seedwel-video-toggle" type="button" data-video-toggle aria-label="Pause company film">
+                        <i class="fas fa-pause" aria-hidden="true"></i><span>Pause film</span>
+                    </button>
+                </div>
+
+                <aside class="seedwel-showcase-copy seedwel-media-reveal" data-reveal="right">
+                    <p class="seedwel-card-kicker">One team. Many capabilities.</p>
+                    <h3>Strategy, design and support under one roof.</h3>
+                    <p>We bring business thinking and digital execution together, giving every project a clear direction and a dependable path to launch.</p>
+                    <div class="seedwel-story-points">
+                        <div class="seedwel-story-point"><i class="fas fa-lightbulb" aria-hidden="true"></i><span>Clear thinking before production</span></div>
+                        <div class="seedwel-story-point"><i class="fas fa-laptop-code" aria-hidden="true"></i><span>Modern, responsive digital delivery</span></div>
+                        <div class="seedwel-story-point"><i class="fas fa-headset" aria-hidden="true"></i><span>Human support after launch</span></div>
+                    </div>
+                    <a class="seedwel-media-link" href="about.html">Meet Seedwel <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                </aside>
+            </div>
+
+            <div class="seedwel-photo-grid" aria-label="Seedwel ways of working">
+                <figure class="seedwel-photo-card seedwel-media-reveal">
+                    <img src="assets/images/seedwel-strategy-session.jpg" alt="Digital strategy workshop with business specialists" width="1376" height="768" loading="lazy" decoding="async" />
+                    <figcaption><span>Discover</span><strong>Plan with clarity</strong></figcaption>
+                </figure>
+                <figure class="seedwel-photo-card seedwel-media-reveal">
+                    <img src="assets/images/seedwel-digital-craft.jpg" alt="Product designers and developers creating a digital experience" width="1376" height="768" loading="lazy" decoding="async" />
+                    <figcaption><span>Create</span><strong>Build with purpose</strong></figcaption>
+                </figure>
+                <figure class="seedwel-photo-card seedwel-media-reveal">
+                    <img src="assets/images/seedwel-client-support.jpg" alt="Customer success specialist providing professional support" width="1376" height="768" loading="lazy" decoding="async" />
+                    <figcaption><span>Support</span><strong>Stay close after launch</strong></figcaption>
+                </figure>
             </div>
         </div>
     </section>
@@ -1944,6 +2005,7 @@
         window.addEventListener('load', () => window.scrollTo(0, 0));
         window.addEventListener('pageshow', (e) => { if (e.persisted) window.scrollTo(0, 0); });
     </script>
+    <script src="assets/js/media-showcase.js" defer></script>
 
 </body>
 </html>

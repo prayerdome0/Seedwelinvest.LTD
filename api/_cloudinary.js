@@ -211,6 +211,27 @@ function safeExtension(fileName) {
     return match ? match[1] : '';
 }
 
+/**
+ * Keep applicant-provided filenames useful to administrators without passing
+ * path separators or control characters into Cloudinary metadata. Preserve the
+ * final extension even when a very long filename must be shortened.
+ */
+function safeFileName(value, fallback = 'upload', maxLength = 200) {
+    const normalised = String(value || '')
+        .normalize('NFKC')
+        .replace(/[\u0000-\u001f\u007f/\\]+/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+    if (!normalised) return fallback;
+
+    const extension = safeExtension(normalised);
+    const suffix = extension ? '.' + extension : '';
+    const rawStem = suffix ? normalised.slice(0, -suffix.length) : normalised;
+    const stem = rawStem.replace(/^\.+/, '').trim() || fallback;
+    const stemLimit = Math.max(1, maxLength - suffix.length);
+    return stem.slice(0, stemLimit).trim() + suffix;
+}
+
 function randomId() {
     return crypto.randomBytes(9).toString('hex');
 }
@@ -254,6 +275,7 @@ module.exports = {
     readCloudinaryEnv,
     requireUser,
     safeExtension,
+    safeFileName,
     safeSegment,
     sameOriginRequest,
     validCleanupToken
