@@ -6,7 +6,7 @@
     <meta name="robots" content="noindex, nofollow, noarchive">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="theme-color" content="#111827">
-    <title>Secure Portfolio Admin | Seedwel Investment LTD</title>
+    <title>Operations & Workforce Admin | Seedwel Investment LTD</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="manifest" href="site.webmanifest">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -610,6 +610,79 @@
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
         }
+
+        /* Operations workspace navigation */
+        .admin-shell { display: grid; grid-template-columns: 248px minmax(0, 1fr); align-items: start; }
+        .admin-sidebar { position: sticky; top: 75px; height: calc(100vh - 75px); padding: 24px 16px; overflow-y: auto; border-right: 1px solid var(--line); background: rgba(12, 20, 34, .78); backdrop-filter: blur(18px); }
+        .admin-sidebar-label { margin: 0 10px 12px; color: var(--subtle); font-size: .64rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+        .admin-nav { display: grid; gap: 4px; }
+        .admin-nav button { display: flex; align-items: center; gap: 11px; width: 100%; min-height: 42px; padding: 10px 12px; color: var(--muted); border: 1px solid transparent; border-radius: 11px; background: transparent; font-size: .77rem; font-weight: 700; text-align: left; cursor: pointer; }
+        .admin-nav button i { width: 17px; color: #8290a6; text-align: center; }
+        .admin-nav button:hover { color: var(--white); background: rgba(255,255,255,.05); }
+        .admin-nav button.active { color: #fff2cb; border-color: rgba(245,201,103,.22); background: rgba(245,201,103,.10); }
+        .admin-nav button.active i { color: var(--gold); }
+        .admin-sidebar-foot { margin: 22px 10px 0; padding-top: 18px; color: var(--subtle); border-top: 1px solid var(--line); font-size: .65rem; line-height: 1.55; }
+        .global-search { position: relative; width: min(390px, 38vw); }
+        .global-search i { position: absolute; top: 50%; left: 13px; color: var(--subtle); transform: translateY(-50%); }
+        .global-search input { width: 100%; min-height: 40px; padding: 9px 12px 9px 38px; color: var(--white); border: 1px solid var(--line); border-radius: 11px; background: rgba(7,16,33,.52); font-size: .75rem; }
+        .global-search input:focus { border-color: var(--gold); }
+        .dashboard-main { min-width: 0; }
+        .admin-view-title { display: none; margin: 0 0 22px; }
+        .admin-view-title.visible { display: block; }
+        .admin-view-title h1 { margin: 0; font-family: 'Montserrat',sans-serif; font-size: clamp(1.45rem,3vw,2rem); letter-spacing: -.045em; }
+        .admin-view-title p { margin: 7px 0 0; color: var(--muted); font-size: .82rem; }
+        body[data-admin-view]:not([data-admin-view="overview"]) .dashboard-intro,
+        body[data-admin-view]:not([data-admin-view="overview"]) .metrics,
+        body[data-admin-view]:not([data-admin-view="overview"]) .notice { display: none; }
+        body[data-admin-view] .workspace { display: block; }
+        body[data-admin-view] .workspace .stack { display: contents; }
+        body[data-admin-view] .workspace .panel { display: none; margin-bottom: 20px; }
+        body[data-admin-view="portfolio"] .panel[data-admin-view="portfolio"],
+        body[data-admin-view="settings"] .panel[data-admin-view="settings"],
+        body[data-admin-view="messages"] .panel[data-admin-view="messages"],
+        body[data-admin-view="applications"] .panel[data-admin-view="applications"],
+        body[data-admin-view="workers"] .panel[data-admin-view="workers"],
+        body[data-admin-view="jobs"] .panel[data-admin-view="jobs"],
+        body[data-admin-view="audit"] .panel[data-admin-view="audit"],
+        body[data-admin-view="tasks"] .panel[data-admin-view="tasks"],
+        body[data-admin-view="documents"] .panel[data-admin-view="documents"],
+        body[data-admin-view="verification"] .panel[data-admin-view="verification"],
+        body[data-admin-view="reports"] .panel[data-admin-view="reports"] { display: block; }
+        .report-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+        .report-card { padding:18px; border:1px solid var(--line); border-radius:14px; background:rgba(8,17,32,.3); }
+        .report-card strong { display:block; color:var(--gold); font-family:'Montserrat',sans-serif; font-size:1.5rem; }
+        .report-card span { color:var(--muted); font-size:.72rem; }
+        .security-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+        .security-item { display:flex; gap:12px; padding:16px; border:1px solid var(--line); border-radius:14px; background:rgba(8,17,32,.3); }
+        .security-item i { color:var(--green); margin-top:3px; }
+        .security-item strong { display:block; font-size:.8rem; }
+        .security-item p { margin:4px 0 0; color:var(--muted); font-size:.7rem; line-height:1.5; }
+        .inbox-item .inbox-body { display:-webkit-box; max-height:4.6em; overflow:hidden; -webkit-box-orient:vertical; -webkit-line-clamp:3; }
+        .inbox-item.profile-open .inbox-body { display:block; max-height:none; overflow:visible; -webkit-line-clamp:unset; }
+        .job-form-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0 13px; }
+        .job-form-grid .span-2 { grid-column:span 2; }
+        .job-form-grid .full { grid-column:1/-1; }
+        @media (max-width: 1050px) {
+            .admin-shell { grid-template-columns: 205px minmax(0,1fr); }
+            .dashboard-main { padding: 28px 24px; }
+            .report-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+            .global-search { width: min(300px,32vw); }
+        }
+        @media (max-width: 760px) {
+            .dashboard-header { flex-wrap:wrap; padding:10px 14px; }
+            .dashboard-brand p, .secure-badge, .header-actions > a { display:none; }
+            .global-search { order:3; width:100%; }
+            .admin-shell { display:block; }
+            .admin-sidebar { position:sticky; top:100px; z-index:18; width:100%; height:auto; padding:9px 12px; overflow-x:auto; border-right:0; border-bottom:1px solid var(--line); }
+            .admin-sidebar-label,.admin-sidebar-foot { display:none; }
+            .admin-nav { display:flex; width:max-content; gap:5px; }
+            .admin-nav button { width:auto; min-height:38px; padding:8px 11px; white-space:nowrap; }
+            .dashboard-main { padding:22px 15px 45px; }
+            .metrics { grid-template-columns:repeat(2,minmax(0,1fr)); }
+            .report-grid,.security-list,.job-form-grid { grid-template-columns:1fr; }
+            .job-form-grid .span-2 { grid-column:auto; }
+        }
+
     </style>
 </head>
 <body>
@@ -651,8 +724,9 @@
         <header class="dashboard-header">
             <div class="dashboard-brand">
                 <img src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel Investment LTD" style="object-fit:contain;background:#fff;padding:4px;">
-                <div><h2>Seedwel Portfolio Admin</h2><p>Publishing &amp; media management</p></div>
+                <div><h2>Seedwel Operations</h2><p>Workforce management system</p></div>
             </div>
+            <label class="global-search" for="globalAdminSearch"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><span class="sr-only">Global search</span><input id="globalAdminSearch" type="search" placeholder="Search applicants, workers, Worker IDs, jobs…" autocomplete="off"></label>
             <div class="header-actions">
                 <span class="secure-badge"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Secure session</span>
                 <a class="btn btn-secondary" href="projects.html" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i><span>View live site</span></a>
@@ -660,7 +734,27 @@
             </div>
         </header>
 
-        <div class="dashboard-main">
+        <div class="admin-shell">
+            <aside class="admin-sidebar" aria-label="Admin navigation">
+                <p class="admin-sidebar-label">Operations</p>
+                <nav class="admin-nav" id="adminNav">
+                    <button type="button" class="active" data-view="overview"><i class="fa-solid fa-chart-line"></i>Overview</button>
+                    <button type="button" data-view="applications"><i class="fa-solid fa-user-plus"></i>Applicants</button>
+                    <button type="button" data-view="workers"><i class="fa-solid fa-people-group"></i>Workers</button>
+                    <button type="button" data-view="jobs"><i class="fa-solid fa-briefcase"></i>Jobs</button>
+                    <button type="button" data-view="tasks"><i class="fa-solid fa-list-check"></i>Tasks</button>
+                    <button type="button" data-view="portfolio"><i class="fa-solid fa-layer-group"></i>Portfolio</button>
+                    <button type="button" data-view="messages"><i class="fa-solid fa-envelope"></i>Messages</button>
+                    <button type="button" data-view="verification"><i class="fa-solid fa-shield-halved"></i>Verification</button>
+                    <button type="button" data-view="documents"><i class="fa-solid fa-folder-closed"></i>Documents</button>
+                    <button type="button" data-view="reports"><i class="fa-solid fa-chart-pie"></i>Reports</button>
+                    <button type="button" data-view="audit"><i class="fa-solid fa-clock-rotate-left"></i>Audit Log</button>
+                    <button type="button" data-view="settings"><i class="fa-solid fa-gear"></i>Settings</button>
+                </nav>
+                <p class="admin-sidebar-foot"><i class="fa-solid fa-lock"></i> Private workforce data is protected by authenticated database rules.</p>
+            </aside>
+            <div class="dashboard-main">
+            <section class="admin-view-title" id="adminViewTitle"><p class="eyebrow">Seedwel operations</p><h1 id="adminViewHeading"></h1><p id="adminViewDescription"></p></section>
             <section class="dashboard-intro" aria-labelledby="dashboardTitle">
                 <div>
                     <p class="eyebrow"><i class="fa-solid fa-sparkles" aria-hidden="true"></i> Portfolio operations</p>
@@ -689,7 +783,7 @@
 
             <div class="workspace">
                 <div class="stack">
-                    <section class="panel" aria-labelledby="projectFormTitle">
+                    <section class="panel" data-admin-view="portfolio" aria-labelledby="projectFormTitle">
                         <div class="panel-head">
                             <div><h2 id="projectFormTitle">Add a portfolio project</h2><p id="projectFormDescription">Draft it first, then publish when it is ready for the public page.</p></div>
                             <button class="text-button" id="cancelEdit" type="button" hidden>Cancel edit</button>
@@ -762,7 +856,7 @@
                         </div>
                     </section>
 
-                    <section class="panel settings-panel" aria-labelledby="settingsTitle">
+                    <section class="panel settings-panel" data-admin-view="settings" aria-labelledby="settingsTitle">
                         <div class="panel-head"><div><h2 id="settingsTitle">Public portfolio details</h2><p>Update the information and capacity label shown to visitors.</p></div></div>
                         <div class="panel-body">
                             <form id="settingsForm" novalidate>
@@ -797,7 +891,7 @@
                 </div>
 
                 <aside class="stack">
-                    <section class="panel share-panel" aria-labelledby="shareTitle">
+                    <section class="panel share-panel" data-admin-view="portfolio" aria-labelledby="shareTitle">
                         <div class="panel-body">
                             <div class="share-visual"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i></div>
                             <h2 id="shareTitle">Send the portfolio</h2>
@@ -813,7 +907,7 @@
 
 
                     <!-- SEND PROJECTS PANEL -->
-                    <section class="panel send-projects-panel" aria-labelledby="sendProjectsTitle">
+                    <section class="panel send-projects-panel" data-admin-view="portfolio" aria-labelledby="sendProjectsTitle">
                         <div class="panel-head">
                             <div>
                                 <h2 id="sendProjectsTitle">Send Projects to Clients</h2>
@@ -864,12 +958,12 @@
                         </div>
                     </section>
 
-                    <section class="panel" aria-labelledby="projectsTitle">
+                    <section class="panel" data-admin-view="portfolio" aria-labelledby="projectsTitle">
                         <div class="panel-head"><div><h2 id="projectsTitle">Portfolio library</h2><p>Edit, publish, unpublish or remove any entry.</p></div><button class="text-button" id="syncPublicPortfolio" type="button">Sync public portfolio</button></div>
                         <div class="project-list" id="projectsList" aria-live="polite"><div class="empty-state"><i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>Loading portfolio entries…</div></div>
                     </section>
 
-                    <section class="panel inbox-panel" aria-labelledby="messagesTitle">
+                    <section class="panel inbox-panel" data-admin-view="messages" aria-labelledby="messagesTitle">
                         <div class="panel-head">
                             <div><h2 id="messagesTitle">Contact inbox</h2><p>Messages submitted from the public contact form.</p></div>
                             <button class="text-button" id="refreshMessages" type="button">Refresh</button>
@@ -879,7 +973,7 @@
                         </div>
                     </section>
 
-                    <section class="panel inbox-panel" aria-labelledby="applicationsTitle">
+                    <section class="panel inbox-panel" data-admin-view="applications" aria-labelledby="applicationsTitle">
                         <div class="panel-head">
                             <div><h2 id="applicationsTitle">Job applications</h2><p>Careers form submissions and CV downloads.</p></div>
                             <button class="text-button" id="refreshApplications" type="button">Refresh</button>
@@ -889,10 +983,16 @@
                                 <input class="panel-search" id="applicationSearch" type="search" placeholder="Search name, email, phone or position…" autocomplete="off" />
                                 <select id="applicationStatusFilter" aria-label="Filter applications by status">
                                     <option value="all">All statuses</option>
-                                    <option value="new">New</option>
+                                    <option value="new">Registered</option>
+                                    <option value="application_started">Application started</option>
+                                    <option value="submitted">Submitted</option>
                                     <option value="reviewing">Reviewing</option>
                                     <option value="shortlisted">Shortlisted</option>
-                                    <option value="hired">Hired</option>
+                                    <option value="interview">Interview</option>
+                                    <option value="approved">Approved</option>
+                                    <option value="active_worker">Active worker</option>
+                                    <option value="job_assigned">Job assigned</option>
+                                    <option value="completed">Completed</option>
                                     <option value="rejected">Rejected</option>
                                     <option value="cv_pending">CV follow-up</option>
                                 </select>
@@ -902,7 +1002,7 @@
                         </div>
                     </section>
 
-                    <section class="panel inbox-panel workers-panel" aria-labelledby="workersTitle">
+                    <section class="panel inbox-panel workers-panel" data-admin-view="workers" aria-labelledby="workersTitle">
                         <div class="panel-head">
                             <div><h2 id="workersTitle">Workers &amp; applicants</h2><p>Review, approve, reject, request info, suspend or assign tasks. Approval automatically issues a permanent Worker ID and secure QR verification record. <span id="pendingWorkersCount"></span></p></div>
                             <button class="text-button" id="refreshWorkers" type="button">Refresh</button>
@@ -913,36 +1013,33 @@
                         </div>
                     </section>
 
-                    <section class="panel inbox-panel" aria-labelledby="jobsTitle">
+                    <section class="panel inbox-panel" data-admin-view="jobs" aria-labelledby="jobsTitle">
                         <div class="panel-head">
                             <div><h2 id="jobsTitle">Jobs</h2><p>Create, edit and close job openings shown to applicants.</p></div>
                         </div>
                         <div class="panel-body">
                             <form id="jobForm" novalidate>
-                                <div class="form-grid">
-                                    <div class="field">
-                                        <label for="jobTitle">Job title</label>
-                                        <input id="jobTitle" type="text" maxlength="200" placeholder="e.g. Cold Caller — Remote" required>
-                                    </div>
-                                    <div class="field">
-                                        <label for="jobType">Type / location</label>
-                                        <input id="jobType" type="text" maxlength="60" placeholder="e.g. Remote · Commission">
-                                    </div>
+                                <div class="job-form-grid">
+                                    <div class="field span-2"><label for="jobTitle">Job title</label><input id="jobTitle" type="text" maxlength="200" placeholder="e.g. Sales Representative" required></div>
+                                    <div class="field"><label for="jobDepartment">Department</label><input id="jobDepartment" type="text" maxlength="100" placeholder="e.g. Sales"></div>
+                                    <div class="field"><label for="jobEmploymentType">Employment type</label><select id="jobEmploymentType"><option>Full-time</option><option>Part-time</option><option>Contract</option><option>Temporary</option><option>Internship</option><option>Commission</option></select></div>
+                                    <div class="field"><label for="jobWorkMode">Work mode</label><select id="jobWorkMode"><option>On-site</option><option>Remote</option><option>Hybrid</option></select></div>
+                                    <div class="field"><label for="jobLocation">Location</label><input id="jobLocation" type="text" maxlength="120" placeholder="e.g. Lusaka, Zambia"></div>
+                                    <div class="field"><label for="jobPositions">Positions</label><input id="jobPositions" type="number" min="1" max="999" value="1"></div>
+                                    <div class="field"><label for="jobDeadline">Application deadline</label><input id="jobDeadline" type="date"></div>
+                                    <div class="field"><label for="jobSalary">Salary / rate <span>(optional)</span></label><input id="jobSalary" type="text" maxlength="100" placeholder="e.g. K5,000/month"></div>
+                                    <div class="field full"><label for="jobDescription">Description</label><textarea id="jobDescription" maxlength="3000" placeholder="What the role involves…"></textarea></div>
+                                    <div class="field full"><label for="jobRequirements">Requirements</label><textarea id="jobRequirements" maxlength="3000" placeholder="Skills, experience and qualifications…"></textarea></div>
+                                    <div class="field full"><label for="jobResponsibilities">Responsibilities</label><textarea id="jobResponsibilities" maxlength="3000" placeholder="Key responsibilities…"></textarea></div>
                                 </div>
-                                <div class="field full">
-                                    <label for="jobDescription">Description</label>
-                                    <textarea id="jobDescription" maxlength="2000" placeholder="What the role involves…"></textarea>
-                                </div>
-                                <div class="form-actions">
-                                    <button class="btn btn-primary" id="saveJobBtn" type="submit"><i class="fa-solid fa-plus" aria-hidden="true"></i><span>Create job</span></button>
-                                </div>
+                                <div class="form-actions"><button class="btn btn-primary" id="saveJobBtn" type="submit"><i class="fa-solid fa-plus" aria-hidden="true"></i><span>Create job</span></button></div>
                                 <p class="form-status" id="jobFormStatus" role="status" aria-live="polite"></p>
                             </form>
                             <div class="inbox-list" id="jobsList" aria-live="polite" style="margin-top:14px;"><div class="empty-state"><i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>Loading jobs…</div></div>
                         </div>
                     </section>
 
-                    <section class="panel inbox-panel" aria-labelledby="auditTitle">
+                    <section class="panel inbox-panel" data-admin-view="audit" aria-labelledby="auditTitle">
                         <div class="panel-head">
                             <div><h2 id="auditTitle">Audit log</h2><p>A permanent record of administrative actions: approvals, rejections, suspensions, jobs and verification changes.</p></div>
                         </div>
@@ -951,7 +1048,7 @@
                         </div>
                     </section>
 
-                    <section class="panel" aria-labelledby="taskFormTitle">
+                    <section class="panel" data-admin-view="tasks" aria-labelledby="taskFormTitle">
                         <div class="panel-head">
                             <div><h2 id="taskFormTitle">Assign a task</h2><p>Send work to an approved team member. They see it in their dashboard.</p></div>
                         </div>
@@ -990,7 +1087,40 @@
                             </form>
                         </div>
                     </section>
+
+                    <section class="panel" data-admin-view="verification" aria-labelledby="verificationTitle">
+                        <div class="panel-head"><div><h2 id="verificationTitle">Worker verification</h2><p>Public QR records expose only approved identity and verification fields—never email, phone, CV or private documents.</p></div><a class="btn btn-secondary" href="verify.html" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open verifier</a></div>
+                        <div class="panel-body"><div class="security-list">
+                            <div class="security-item"><i class="fa-solid fa-circle-check"></i><div><strong id="verifiedWorkersCount">0 active verification records</strong><p>Generated automatically when an applicant is approved and assigned a permanent Worker ID.</p></div></div>
+                            <div class="security-item"><i class="fa-solid fa-eye-slash"></i><div><strong>Privacy-safe public result</strong><p>Shows Worker ID, name, role, status, verification date and secure reference only.</p></div></div>
+                        </div></div>
+                    </section>
+
+                    <section class="panel" data-admin-view="documents" aria-labelledby="documentsTitle">
+                        <div class="panel-head"><div><h2 id="documentsTitle">Secure documents</h2><p>Applicant and worker files remain behind authenticated access controls.</p></div></div>
+                        <div class="panel-body"><div class="security-list">
+                            <div class="security-item"><i class="fa-solid fa-file-shield"></i><div><strong>Private CVs</strong><p id="documentCvSummary">Loading document totals…</p></div></div>
+                            <div class="security-item"><i class="fa-solid fa-id-card"></i><div><strong>Identification documents</strong><p>Reserved for authenticated worker profiles; never included in QR verification payloads.</p></div></div>
+                            <div class="security-item"><i class="fa-solid fa-certificate"></i><div><strong>Certificates &amp; contracts</strong><p>Use signed server-side delivery and role-based permissions for future uploads.</p></div></div>
+                            <div class="security-item"><i class="fa-solid fa-lock"></i><div><strong>Access policy</strong><p>Only authorized administrators and the document owner may access private files.</p></div></div>
+                        </div></div>
+                    </section>
+
+                    <section class="panel" data-admin-view="reports" aria-labelledby="reportsTitle">
+                        <div class="panel-head"><div><h2 id="reportsTitle">Workforce reports</h2><p>Live operational totals calculated from applications, workers and jobs.</p></div><button class="btn btn-secondary" id="exportReport" type="button"><i class="fa-solid fa-file-csv"></i> Export CSV</button></div>
+                        <div class="panel-body"><div class="report-grid">
+                            <div class="report-card"><strong id="reportApplicants">0</strong><span>Total applicants</span></div>
+                            <div class="report-card"><strong id="reportThisMonth">0</strong><span>Applications this month</span></div>
+                            <div class="report-card"><strong id="reportApproved">0</strong><span>Approved applications</span></div>
+                            <div class="report-card"><strong id="reportActive">0</strong><span>Active workers</span></div>
+                            <div class="report-card"><strong id="reportRejected">0</strong><span>Rejected applications</span></div>
+                            <div class="report-card"><strong id="reportJobs">0</strong><span>Open jobs</span></div>
+                            <div class="report-card"><strong id="reportCv">0</strong><span>CV follow-ups</span></div>
+                            <div class="report-card"><strong id="reportConversion">0%</strong><span>Application conversion</span></div>
+                        </div></div>
+                    </section>
                 </aside>
+            </div>
             </div>
         </div>
     </main>
@@ -1125,6 +1255,82 @@
         let settingsTouched = false;
         let toastTimer;
         let dataListening = false;
+
+        const ADMIN_VIEWS = Object.freeze({
+            overview: ['Operations overview', 'Live recruitment, workforce, jobs and portfolio activity.'],
+            applications: ['Applicants', 'Review applications and move candidates through the recruitment workflow.'],
+            workers: ['Workers', 'Manage approved workers, Worker IDs, status and task assignment.'],
+            jobs: ['Jobs', 'Create detailed openings and monitor recruitment.'],
+            tasks: ['Tasks', 'Assign operational work independently from worker approval.'],
+            portfolio: ['Portfolio', 'Create, publish and share Seedwel project work.'],
+            messages: ['Messages', 'Manage enquiries from the public website.'],
+            verification: ['Verification', 'Monitor privacy-safe Worker ID and QR verification records.'],
+            documents: ['Documents', 'Secure applicant and worker document controls.'],
+            reports: ['Reports', 'Database-driven workforce and recruitment totals.'],
+            audit: ['Audit Log', 'Administrator actions and status changes with actor and timestamp.'],
+            settings: ['Settings', 'Public portfolio and platform configuration.']
+        });
+
+        function setAdminView(view, updateHash = true) {
+            if (!ADMIN_VIEWS[view]) view = 'overview';
+            document.body.dataset.adminView = view;
+            document.querySelectorAll('#adminNav button').forEach((button) => button.classList.toggle('active', button.dataset.view === view));
+            const title = $('adminViewTitle');
+            title.classList.toggle('visible', view !== 'overview');
+            $('adminViewHeading').textContent = ADMIN_VIEWS[view][0];
+            $('adminViewDescription').textContent = ADMIN_VIEWS[view][1];
+            if (updateHash) history.replaceState(null, '', '#' + view);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        $('adminNav').addEventListener('click', (event) => {
+            const button = event.target.closest('button[data-view]');
+            if (button) setAdminView(button.dataset.view);
+        });
+        setAdminView(location.hash.slice(1) || 'overview', false);
+
+        function renderOperationsReports() {
+            const apps = Array.from(currentApplications.values());
+            const workers = Array.from(currentWorkers.values());
+            const jobs = Array.from(currentJobs.values());
+            const now = new Date();
+            const thisMonth = apps.filter((app) => { const d = new Date(Number(app.submittedAt || 0)); return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear(); }).length;
+            const approved = apps.filter((app) => ['approved','worker_id_generated','active_worker','job_assigned','completed','hired'].includes(app.status)).length;
+            const rejected = apps.filter((app) => app.status === 'rejected').length;
+            const active = workers.filter((worker) => worker.status === 'active').length;
+            const cvPending = apps.filter(applicationNeedsCv).length;
+            const set = (id, value) => { if ($(id)) $(id).textContent = String(value); };
+            set('reportApplicants', apps.length); set('reportThisMonth', thisMonth); set('reportApproved', approved);
+            set('reportActive', active); set('reportRejected', rejected);
+            set('reportJobs', jobs.filter((job) => job.status !== 'closed').length); set('reportCv', cvPending);
+            set('reportConversion', apps.length ? Math.round((approved / apps.length) * 100) + '%' : '0%');
+            set('verifiedWorkersCount', active + ' active verification record' + (active === 1 ? '' : 's'));
+            set('documentCvSummary', (apps.length - cvPending) + ' private CV' + ((apps.length - cvPending) === 1 ? '' : 's') + ' attached · ' + cvPending + ' follow-up required.');
+        }
+
+        $('globalAdminSearch').addEventListener('input', (event) => {
+            const query = safeText(event.target.value, 200);
+            workerSearchTerm = query;
+            applicationSearchTerm = query;
+            if ($('workerSearch')) $('workerSearch').value = query;
+            if (applicationSearch) applicationSearch.value = query;
+            renderWorkers(); renderApplications();
+        });
+        $('globalAdminSearch').addEventListener('keydown', (event) => {
+            if (event.key !== 'Enter') return;
+            event.preventDefault();
+            const query = safeText(event.currentTarget.value, 200).toLowerCase();
+            const workerMatch = Array.from(currentWorkers.values()).some((w) => [w.fullName,w.email,w.workerId,w.role].some((v) => safeText(v).toLowerCase().includes(query)));
+            setAdminView(workerMatch ? 'workers' : 'applications');
+        });
+
+        if ($('exportReport')) $('exportReport').addEventListener('click', () => {
+            const rows = [['Metric','Value'],['Total applicants',currentApplications.size],['Active workers',Array.from(currentWorkers.values()).filter((w)=>w.status==='active').length],['Open jobs',Array.from(currentJobs.values()).filter((j)=>j.status!=='closed').length],['CV follow-ups',Array.from(currentApplications.values()).filter(applicationNeedsCv).length]];
+            const csv = '\ufeff' + rows.map((row) => row.map(csvCell).join(',')).join('\r\n');
+            const url = URL.createObjectURL(new Blob([csv], {type:'text/csv;charset=utf-8'}));
+            const link = document.createElement('a'); link.href=url; link.download='seedwel-operations-report-'+new Date().toISOString().slice(0,10)+'.csv'; link.click(); URL.revokeObjectURL(url);
+            showToast('Operations report exported.');
+        });
 
         function setButtonLoading(button, isLoading, label, iconClass) {
             button.disabled = isLoading;
@@ -1576,7 +1782,8 @@
                 title.textContent = safeText(msg.fullName, 120) || 'Visitor';
                 const pill = document.createElement('span');
                 pill.className = 'status-pill ' + status;
-                pill.textContent = status;
+                const applicationLabels = { new:'Registered', application_started:'Application started', submitted:'Submitted', reviewing:'Reviewing', shortlisted:'Shortlisted', interview:'Interview', approved:'Approved', worker_id_generated:'Worker ID generated', active_worker:'Active worker', job_assigned:'Job assigned', completed:'Completed', rejected:'Rejected', hired:'Approved' };
+                pill.textContent = applicationLabels[status] || status.replace(/_/g, ' ');
                 top.append(title, pill);
                 const meta = document.createElement('div');
                 meta.className = 'inbox-meta';
@@ -1651,6 +1858,7 @@
         }
 
         function renderApplications() {
+            renderOperationsReports();
             if (!applicationsList) return;
             applicationsList.textContent = '';
             const entries = filteredApplicationEntries();
@@ -1709,16 +1917,25 @@
                 const body = document.createElement('div');
                 body.className = 'inbox-body';
                 let note = safeText(app.coverLetter, 4000) || '';
-                if (app.cvUploadNote) note += (note ? '\n\n' : '') + 'Admin note: ' + safeText(app.cvUploadNote, 300);
-                body.textContent = note;
+                if (app.cvUploadNote) note += (note ? '\n\n' : '') + 'CV note: ' + safeText(app.cvUploadNote, 300);
+                if (app.adminNote) note += (note ? '\n\n' : '') + 'Internal admin note: ' + safeText(app.adminNote, 1000);
+                body.textContent = note || 'Open this applicant profile to review the complete submission.';
 
                 const actions = document.createElement('div');
                 actions.className = 'inbox-actions';
+                const viewBtn = document.createElement('button');
+                viewBtn.type = 'button'; viewBtn.className = 'btn btn-primary'; viewBtn.dataset.action = 'application-view'; viewBtn.dataset.key = key;
+                viewBtn.innerHTML = '<i class="fa-solid fa-user"></i> View profile';
+                const noteBtn = document.createElement('button');
+                noteBtn.type = 'button'; noteBtn.className = 'btn btn-secondary'; noteBtn.dataset.action = 'application-note'; noteBtn.dataset.key = key;
+                noteBtn.innerHTML = '<i class="fa-solid fa-note-sticky"></i> Admin note';
+                actions.append(viewBtn, noteBtn);
                 const statuses = [
-                    ['reviewing', 'Reviewing'],
+                    ['reviewing', 'Review'],
                     ['shortlisted', 'Shortlist'],
-                    ['rejected', 'Reject'],
-                    ['hired', 'Hired']
+                    ['interview', 'Interview'],
+                    ['approved', 'Approve applicant'],
+                    ['rejected', 'Reject']
                 ];
                 for (const [value, label] of statuses) {
                     if (status === value) continue;
@@ -1811,6 +2028,7 @@
         }
 
         function updateWorkerMetrics() {
+            renderOperationsReports();
             const values = Array.from(currentWorkers.values());
             const pendingCount = values.filter((w) => ['pending', 'under_review', 'info_required'].includes(w.status || 'pending')).length;
             const activeCount = values.filter((w) => (w.status || 'pending') === 'active').length;
@@ -1987,10 +2205,39 @@
                 const key = btn.dataset.key;
                 if (!key) return;
                 try {
-                    if (btn.dataset.action === 'application-status') {
+                    if (btn.dataset.action === 'application-view') {
+                        const card = btn.closest('.inbox-item');
+                        card.classList.toggle('profile-open');
+                        btn.innerHTML = card.classList.contains('profile-open') ? '<i class="fa-solid fa-chevron-up"></i> Close profile' : '<i class="fa-solid fa-user"></i> View profile';
+                    } else if (btn.dataset.action === 'application-note') {
+                        const app = currentApplications.get(key) || {};
+                        const note = window.prompt('Private note for authorized administrators only:', safeText(app.adminNote, 1000));
+                        if (note !== null) {
+                            await db.ref('applications/' + key).update({ adminNote: safeText(note, 1000), updatedAt: firebase.database.ServerValue.TIMESTAMP });
+                            await recordAudit('Applicant note updated', safeText(app.fullName,120) || key, 'Private recruitment note');
+                            showToast('Private admin note saved.');
+                        }
+                    } else if (btn.dataset.action === 'application-status') {
                         const status = btn.dataset.status;
-                        await db.ref('applications/' + key).update({ status: status, updatedAt: firebase.database.ServerValue.TIMESTAMP });
-                        showToast('Application updated to “' + status + '”.');
+                        const app = currentApplications.get(key) || {};
+                        const historyRef = db.ref('applications/' + key + '/statusHistory').push();
+                        const updates = {};
+                        updates['applications/' + key + '/status'] = status;
+                        updates['applications/' + key + '/updatedAt'] = firebase.database.ServerValue.TIMESTAMP;
+                        updates['applications/' + key + '/statusHistory/' + historyRef.key] = { status: status, actor: ADMIN_EMAIL, at: firebase.database.ServerValue.TIMESTAMP };
+                        await db.ref().update(updates);
+                        await recordAudit('Application status changed', safeText(app.fullName, 120) || key, (safeText(app.status, 30) || 'new') + ' → ' + status);
+                        if (status === 'approved') {
+                            const match = Array.from(currentWorkers.entries()).find(([, worker]) => safeText(worker.email, 160).toLowerCase() === safeText(app.email, 160).toLowerCase());
+                            if (match) {
+                                const [uid, worker] = match;
+                                if (!worker.workerId) await issueWorkerId(uid, worker);
+                                await db.ref('workers/' + uid).update({ status: 'active', approvedAt: firebase.database.ServerValue.TIMESTAMP, updatedAt: firebase.database.ServerValue.TIMESTAMP });
+                                await notifyWorker(uid, 'Application approved', 'Your application is approved. Your Worker ID and QR verification are now available. Job assignment is managed separately.', 'approval');
+                                await db.ref('applications/' + key).update({ status: 'active_worker', linkedWorkerUid: uid, updatedAt: firebase.database.ServerValue.TIMESTAMP });
+                            }
+                        }
+                        showToast('Application moved to “' + status.replace(/_/g, ' ') + '”.');
                     } else if (btn.dataset.action === 'application-cv') {
                         const app = currentApplications.get(key);
                         if (!app || !app.cvCloudinaryPublicId) throw new Error('CV metadata is missing.');
@@ -2273,6 +2520,7 @@
         }
 
         function renderJobs() {
+            renderOperationsReports();
             const list = $('jobsList');
             if (!list) return;
             const entries = Array.from(currentJobs.entries())
@@ -2297,10 +2545,14 @@
                 top.append(title, pill);
                 const meta = document.createElement('div');
                 meta.className = 'inbox-meta';
-                meta.textContent = (safeText(job.type, 60) ? safeText(job.type, 60) + ' · ' : '') + formatInboxDate(job.createdAt);
+                meta.textContent = [safeText(job.department,100), safeText(job.employmentType || job.type,60), safeText(job.workMode,20), safeText(job.location,120), (job.positions ? job.positions + ' position' + (Number(job.positions) === 1 ? '' : 's') : ''), (job.deadline ? 'Deadline ' + job.deadline : ''), formatInboxDate(job.createdAt)].filter(Boolean).join(' · ');
+                const relatedApplications = Array.from(currentApplications.values()).filter((app) => safeText(app.position,200).toLowerCase() === safeText(job.title,200).toLowerCase());
+                const pipeline = document.createElement('div');
+                pipeline.className = 'cv-state uploaded';
+                pipeline.textContent = 'Applicants: ' + relatedApplications.length + ' · Shortlisted: ' + relatedApplications.filter((app) => app.status === 'shortlisted').length + ' · Interview: ' + relatedApplications.filter((app) => app.status === 'interview').length + ' · Approved: ' + relatedApplications.filter((app) => ['approved','active_worker','job_assigned','completed','hired'].includes(app.status)).length;
                 const body = document.createElement('div');
                 body.className = 'inbox-body';
-                body.textContent = safeText(job.description, 2000) || 'No description.';
+                body.textContent = (safeText(job.description, 3000) || 'No description.') + (job.requirements ? '\n\nRequirements: ' + safeText(job.requirements,3000) : '') + (job.responsibilities ? '\n\nResponsibilities: ' + safeText(job.responsibilities,3000) : '') + (job.salary ? '\n\nSalary / rate: ' + safeText(job.salary,100) : '');
                 const actions = document.createElement('div');
                 actions.className = 'inbox-actions';
                 const toggle = document.createElement('button');
@@ -2316,7 +2568,7 @@
                 del.dataset.key = job.key;
                 del.textContent = 'Delete';
                 actions.append(toggle, del);
-                item.append(top, meta, body, actions);
+                item.append(top, meta, pipeline, body, actions);
                 list.appendChild(item);
             }
         }
@@ -2325,27 +2577,33 @@
             $('jobForm').addEventListener('submit', async (event) => {
                 event.preventDefault();
                 const title = safeText($('jobTitle').value, 200);
-                const type = safeText($('jobType').value, 60);
-                const description = safeText($('jobDescription').value, 2000);
+                const employmentType = safeText($('jobEmploymentType').value, 60);
+                const description = safeText($('jobDescription').value, 3000);
+                const jobData = {
+                    title, department: safeText($('jobDepartment').value, 100), employmentType,
+                    workMode: safeText($('jobWorkMode').value, 20), location: safeText($('jobLocation').value, 120),
+                    positions: Math.max(1, Math.min(999, Number($('jobPositions').value) || 1)),
+                    deadline: safeText($('jobDeadline').value, 20), salary: safeText($('jobSalary').value, 100),
+                    description, requirements: safeText($('jobRequirements').value, 3000),
+                    responsibilities: safeText($('jobResponsibilities').value, 3000)
+                };
                 setJobFormStatus('');
                 if (title.length < 2) { setJobFormStatus('Enter a job title.', true); return; }
                 const btn = $('saveJobBtn');
                 btn.disabled = true;
                 try {
                     await db.ref('jobs').push({
-                        title: title,
-                        type: type,
-                        description: description,
+                        ...jobData,
+                        type: employmentType,
                         status: 'open',
                         createdAt: firebase.database.ServerValue.TIMESTAMP,
                         updatedAt: firebase.database.ServerValue.TIMESTAMP
                     });
-                    $('jobTitle').value = '';
-                    $('jobType').value = '';
-                    $('jobDescription').value = '';
+                    $('jobForm').reset();
+                    $('jobPositions').value = '1';
                     setJobFormStatus('Job created and published.');
                     showToast('Job created.');
-                    await recordAudit('Job created', title, type);
+                    await recordAudit('Job created', title, employmentType + (jobData.location ? ' · ' + jobData.location : ''));
                 } catch (_) {
                     setJobFormStatus('Could not create the job. Check Database Rules.', true);
                 } finally {
