@@ -44,7 +44,7 @@ Static public website, a Firebase-backed portfolio administration workspace, and
 
 ## Uploads and portfolio administration
 
-- **All new uploads use the existing connected Cloudinary product environment**: portfolio images, authenticated/private CVs and Worker ID profile photos. Serverless functions create signed requests; no API secret or unsigned upload preset is exposed in browser code.
+- **All new uploads use the existing connected Cloudinary product environment**: portfolio images, authenticated/private CVs and Worker ID profile photos are organised in its `portfolio` asset folder. Serverless functions create signed requests; no API secret or unsigned upload preset is exposed in browser code.
 - Open `admin.html` to manage published portfolio projects, protected image uploads, public portfolio details, share links, **contact inbox** and **job applications**.
 - Open `projects.html` for the live, shareable portfolio.
 - See [FIREBASE_SETUP.md](FIREBASE_SETUP.md) before production use. Confirm the Vercel Cloudinary integration provides `CLOUDINARY_URL`, then deploy the included Firebase Database/Storage Rules.

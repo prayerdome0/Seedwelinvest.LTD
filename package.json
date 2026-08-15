@@ -4,6 +4,9 @@
   "private": true,
   "description": "Seedwel Investment LTD website and secure team portal",
   "license": "UNLICENSED",
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  },
   "dependencies": {
     "cloudinary": "^2.10.0"
   }
