@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#dc2626" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <title>Worker Dashboard | Seedwel Investment LTD</title>
+    <meta name="description" content="Private Seedwel Investment LTD worker dashboard." />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f8fafc; color: #111827; line-height: 1.6; }
+        a { text-decoration: none; }
+
+        .topbar {
+            position: sticky; top: 0; z-index: 50;
+            background: #ffffff; border-bottom: 1px solid #e5e7eb;
+        }
+        .topbar-inner {
+            max-width: 1200px; margin: 0 auto; padding: 14px 28px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo-container { display: flex; align-items: center; gap: 12px; }
+        .logo-img { height: 38px; width: auto; }
+        .company-name { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 0.9rem; }
+        .company-name span { color: #dc2626; }
+        .top-actions { display: flex; align-items: center; gap: 12px; }
+        .user-chip { display: flex; align-items: center; gap: 10px; }
+        .user-avatar {
+            width: 36px; height: 36px; border-radius: 50%; background: #dc2626; color: #fff;
+            display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .user-meta { line-height: 1.2; }
+        .user-meta strong { display: block; font-size: 0.85rem; }
+        .user-meta span { font-size: 0.72rem; color: #6b7280; }
+        .btn-signout {
+            background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; padding: 9px 16px;
+            border-radius: 50px; font-weight: 700; font-size: 0.8rem; cursor: pointer; font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s ease; white-space: nowrap;
+        }
+        .btn-signout:hover { background: #dc2626; color: #fff; }
+
+        .wrap { max-width: 1200px; margin: 0 auto; padding: 30px 28px 60px; }
+
+        /* Status screens */
+        .status-card {
+            max-width: 560px; margin: 60px auto; background: #fff; border: 1px solid #e5e7eb;
+            border-radius: 24px; padding: 48px 40px; text-align: center; box-shadow: 0 24px 60px rgba(15,23,42,0.08);
+        }
+        .status-card i { font-size: 3.2rem; margin-bottom: 16px; display: block; }
+        .status-card.pending i { color: #f59e0b; }
+        .status-card.suspended i { color: #dc2626; }
+        .status-card h1 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.5rem; margin-bottom: 10px; }
+        .status-card p { color: #6b7280; font-size: 0.95rem; }
+        .status-card .note { margin-top: 20px; font-size: 0.82rem; color: #94a3b8; }
+
+        /* Dashboard layout */
+        .welcome { margin-bottom: 26px; }
+        .welcome h1 { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.7rem; letter-spacing: -0.5px; }
+        .welcome p { color: #6b7280; font-size: 0.95rem; }
+        .badges { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+        .badge {
+            display: inline-flex; align-items: center; gap: 7px; padding: 6px 14px; border-radius: 50px;
+            font-size: 0.78rem; font-weight: 700; font-family: 'Montserrat', sans-serif;
+        }
+        .badge.active { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+        .badge.role { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+        .badge.commission { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-bottom: 30px;
+        }
+        .stat-card {
+            background: #fff; border: 1px solid #e5e7eb; border-radius: 18px; padding: 22px;
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover { transform: translateY(-4px); border-color: rgba(220,38,38,0.35); box-shadow: 0 14px 32px rgba(15,23,42,0.07); }
+        .stat-card .label { color: #6b7280; font-size: 0.78rem; font-weight: 600; margin-bottom: 8px; }
+        .stat-card .value { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.9rem; color: #111827; }
+        .stat-card .value.money { color: #059669; }
+        .stat-card .sub { font-size: 0.72rem; color: #94a3b8; margin-top: 4px; }
+
+        .section-card {
+            background: #fff; border: 1px solid #e5e7eb; border-radius: 18px; padding: 26px; margin-bottom: 24px;
+        }
+        .section-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+        .section-head h2 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.15rem; }
+        .section-head .count { font-size: 0.78rem; color: #6b7280; font-weight: 600; }
+
+        .task-list { display: flex; flex-direction: column; gap: 12px; }
+        .task-item {
+            display: flex; justify-content: space-between; align-items: center; gap: 16px;
+            border: 1px solid #e5e7eb; border-radius: 14px; padding: 16px 18px; transition: all 0.25s ease;
+        }
+        .task-item:hover { border-color: rgba(220,38,38,0.3); background: #fef2f2; }
+        .task-main { flex: 1; }
+        .task-main strong { font-size: 0.95rem; display: block; }
+        .task-main .meta { font-size: 0.78rem; color: #6b7280; margin-top: 4px; }
+        .status-pill {
+            padding: 4px 12px; border-radius: 50px; font-size: 0.72rem; font-weight: 700; font-family: 'Montserrat', sans-serif;
+            white-space: nowrap;
+        }
+        .status-pill.pending { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+        .status-pill.in_progress { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+        .status-pill.completed { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+        .prio { font-weight: 700; }
+        .prio.high { color: #dc2626; }
+        .prio.medium { color: #b45309; }
+        .prio.low { color: #059669; }
+
+        .empty {
+            text-align: center; padding: 34px 20px; color: #94a3b8; border: 1px dashed #cbd5e1;
+            border-radius: 14px; font-size: 0.9rem;
+        }
+        .empty i { font-size: 2rem; display: block; margin-bottom: 10px; color: #cbd5e1; }
+
+        .task-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; align-items: center; }
+        .btn-mini {
+            padding: 8px 14px; border-radius: 50px; font-weight: 700; font-size: 0.75rem; cursor: pointer;
+            font-family: 'Montserrat', sans-serif; border: 1px solid #e5e7eb; background: #fff; color: #4b5563;
+            transition: all 0.25s ease; white-space: nowrap;
+        }
+        .btn-mini:hover { border-color: #dc2626; color: #dc2626; }
+        .btn-mini.start { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+        .btn-mini.start:hover { background: #dbeafe; }
+        .btn-mini.complete { background: #ecfdf5; color: #047857; border-color: #a7f3d0; }
+        .btn-mini.complete:hover { background: #d1fae5; }
+        .btn-mini.reopen { background: #fffbeb; color: #b45309; border-color: #fde68a; }
+        .btn-mini.reopen:hover { background: #fef3c7; }
+        .btn-mini:disabled { opacity: 0.55; cursor: not-allowed; }
+        .task-notes { margin-top: 10px; color: #6b7280; font-size: 0.82rem; white-space: pre-wrap; }
+        .task-notes span { color: #9ca3af; font-style: italic; }
+        .note-editor { display: none; margin-top: 12px; }
+        .note-editor.open { display: block; }
+        .note-editor textarea {
+            width: 100%; min-height: 70px; padding: 10px 12px; border: 1px solid #e5e7eb; border-radius: 10px;
+            font-family: 'Inter', sans-serif; font-size: 0.85rem; resize: vertical; color: #111827;
+        }
+        .note-editor textarea:focus { border-color: #dc2626; outline: none; box-shadow: 0 0 0 3px rgba(220,38,38,0.06); }
+        .note-editor .note-actions { display: flex; gap: 8px; margin-top: 8px; }
+        .task-hint { font-size: 0.72rem; color: #94a3b8; margin-top: 6px; }
+
+        footer { text-align: center; padding: 20px; color: #94a3b8; font-size: 0.78rem; }
+
+        @media (max-width: 900px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 560px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .topbar-inner { padding: 12px 16px; }
+            .user-meta { display: none; }
+            .wrap { padding: 20px 16px 50px; }
+            .task-item { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topbar">
+        <div class="topbar-inner">
+            <div class="logo-container">
+                <img src="https://i.ibb.co/svxj52ny/seedwel.png" class="logo-img" alt="Seedwel Investment LTD" />
+                <span class="company-name">Seedwel <span>Investment</span> LTD</span>
+            </div>
+            <div class="top-actions">
+                <div class="user-chip">
+                    <div class="user-avatar" id="avatarInitials">-</div>
+                    <div class="user-meta">
+                        <strong id="topName">—</strong>
+                        <span>Team Member</span>
+                    </div>
+                </div>
+                <button class="btn-signout" id="signOutBtn"><i class="fas fa-right-from-bracket"></i> Sign Out</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="wrap">
+
+        <!-- PENDING STATUS -->
+        <div class="status-card pending" id="pendingView" style="display:none;">
+            <i class="fas fa-hourglass-half"></i>
+            <h1>Application under review</h1>
+            <p>Welcome, <strong id="pendingName"></strong>. Your account status is currently <strong>Pending Approval</strong>.</p>
+            <p>A Seedwel administrator is reviewing your application. You'll gain access to your dashboard and tasks once you are approved.</p>
+            <div class="note">You can sign out and come back later to check your status.</div>
+        </div>
+
+        <!-- SUSPENDED STATUS -->
+        <div class="status-card suspended" id="suspendedView" style="display:none;">
+            <i class="fas fa-circle-exclamation"></i>
+            <h1>Account suspended</h1>
+            <p>Your account has been suspended. If you believe this is a mistake, please contact a Seedwel administrator.</p>
+            <div class="note">Contact us via WhatsApp: +260 973 028 342</div>
+        </div>
+
+        <!-- ACTIVE DASHBOARD -->
+        <div id="dashboardView" style="display:none;">
+            <div class="welcome">
+                <h1>Welcome, <span id="welcomeName">—</span> 👋</h1>
+                <p id="welcomeEmail">—</p>
+                <div class="badges">
+                    <span class="badge active"><i class="fas fa-circle-check"></i> Account Active</span>
+                    <span class="badge role"><i class="fas fa-briefcase"></i> <span id="roleLabel">Role</span></span>
+                    <span class="badge commission"><i class="fas fa-percent"></i> <span id="commissionLabel">10% Commission</span></span>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card"><div class="label">Leads Assigned</div><div class="value" id="stLeads">0</div></div>
+                <div class="stat-card"><div class="label">Calls Completed</div><div class="value" id="stCalls">0</div></div>
+                <div class="stat-card"><div class="label">Interested Prospects</div><div class="value" id="stInterested">0</div></div>
+                <div class="stat-card"><div class="label">Appointments</div><div class="value" id="stAppointments">0</div></div>
+                <div class="stat-card"><div class="label">Sales Generated</div><div class="value" id="stSales">0</div></div>
+                <div class="stat-card"><div class="label">Commission Earned</div><div class="value money" id="stEarned">$0</div></div>
+                <div class="stat-card"><div class="label">Commission Paid</div><div class="value money" id="stPaid">$0</div></div>
+                <div class="stat-card"><div class="label">Commission Pending</div><div class="value money" id="stPending">$0</div></div>
+            </div>
+
+            <div class="section-card">
+                <div class="section-head">
+                    <h2><i class="fas fa-list-check" style="color:#dc2626;"></i> My Tasks</h2>
+                    <span class="count" id="taskCount">0 tasks</span>
+                </div>
+                <div id="taskList" class="task-list">
+                    <div class="empty"><i class="fas fa-inbox"></i> No tasks assigned yet.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>&copy; 2026 Seedwel Investment LTD · Private team portal</footer>
+
+    <script>
+        'use strict';
+
+        const firebaseConfig = {
+            apiKey: 'AIzaSyA-BpRy-RVc2rqIG6uiRu_XrGEu1ZGnQwU',
+            authDomain: 'seedwel-investment-limited.firebaseapp.com',
+            databaseURL: 'https://seedwel-investment-limited-default-rtdb.firebaseio.com',
+            projectId: 'seedwel-investment-limited',
+            storageBucket: 'seedwel-investment-limited.firebasestorage.app',
+            messagingSenderId: '197778268619',
+            appId: '1:197778268619:web:92f29d88fa5a22dbfa964e'
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.database();
+        const ADMIN_EMAIL = 'zacheussimbaya@gmail.com';
+
+        function $(id) { return document.getElementById(id); }
+
+        function initials(name) {
+            if (!name) return '?';
+            const parts = String(name).trim().split(/\s+/);
+            const first = (parts[0] || '?')[0];
+            const last = parts.length > 1 ? parts[parts.length - 1][0] : '';
+            return (first + last).toUpperCase();
+        }
+
+        function money(n) {
+            const v = Number(n) || 0;
+            return '$' + v.toLocaleString(undefined, { maximumFractionDigits: 0 });
+        }
+
+        function labelFor(status) {
+            return { pending: 'Pending', in_progress: 'In Progress', completed: 'Completed' }[status] || status;
+        }
+
+        function renderTasks(uid) {
+            const list = $('taskList');
+            db.ref('tasks/' + uid).on('value', (snap) => {
+                const data = snap.val() || {};
+                const tasks = Object.entries(data).map(([id, t]) => ({ id, ...t }));
+                $('taskCount').textContent = tasks.length + (tasks.length === 1 ? ' task' : ' tasks');
+                list.textContent = '';
+                if (!tasks.length) {
+                    list.innerHTML = '<div class="empty"><i class="fas fa-inbox"></i> No tasks assigned yet. Your administrator will assign tasks here.</div>';
+                    return;
+                }
+                tasks.sort((a, b) => {
+                    const p = { high: 0, medium: 1, low: 2 };
+                    return (p[a.priority] ?? 1) - (p[b.priority] ?? 1);
+                });
+                tasks.forEach(t => list.appendChild(renderTaskItem(uid, t)));
+            });
+        }
+
+        function renderTaskItem(uid, t) {
+            const status = t.status || 'pending';
+            const item = document.createElement('div');
+            item.className = 'task-item';
+
+            const main = document.createElement('div');
+            main.className = 'task-main';
+
+            const title = document.createElement('strong');
+            title.textContent = t.title || 'Untitled task';
+
+            const meta = document.createElement('div');
+            meta.className = 'meta';
+            let metaParts = [];
+            if (t.priority) metaParts.push('<span class="prio ' + t.priority + '">' + (t.priority[0].toUpperCase() + t.priority.slice(1)) + ' priority</span>');
+            if (t.dueDate) metaParts.push('Due ' + String(t.dueDate));
+            meta.innerHTML = metaParts.join(' · ') || '&nbsp;';
+
+            main.appendChild(title);
+            main.appendChild(meta);
+
+            if (t.notes) {
+                const notes = document.createElement('div');
+                notes.className = 'task-notes';
+                notes.textContent = String(t.notes);
+                main.appendChild(notes);
+            }
+
+            const pill = document.createElement('span');
+            pill.className = 'status-pill ' + status;
+            pill.textContent = labelFor(status);
+
+            const actions = document.createElement('div');
+            actions.className = 'task-actions';
+
+            // Status transition buttons
+            if (status === 'pending') {
+                actions.appendChild(miniBtn('start', 'fas fa-play', 'Start work', async () => {
+                    await setTaskStatus(uid, t.id, 'in_progress');
+                }));
+            } else if (status === 'in_progress') {
+                actions.appendChild(miniBtn('complete', 'fas fa-check', 'Mark completed', async () => {
+                    await setTaskStatus(uid, t.id, 'completed');
+                }));
+                actions.appendChild(miniBtn('reopen', 'fas fa-arrow-rotate-left', 'Back to pending', async () => {
+                    await setTaskStatus(uid, t.id, 'pending');
+                }));
+            } else if (status === 'completed') {
+                actions.appendChild(miniBtn('reopen', 'fas fa-arrow-rotate-left', 'Reopen', async () => {
+                    await setTaskStatus(uid, t.id, 'pending');
+                }));
+            }
+
+            // Notes toggle
+            actions.appendChild(miniBtn('', 'fas fa-pen', 'Note', () => {
+                editor.classList.toggle('open');
+                if (editor.classList.contains('open')) editorTextarea.focus();
+            }));
+
+            const editor = document.createElement('div');
+            editor.className = 'note-editor';
+            const editorTextarea = document.createElement('textarea');
+            editorTextarea.maxLength = 2000;
+            editorTextarea.placeholder = 'Leave a progress note…';
+            editorTextarea.value = t.notes || '';
+            const noteActions = document.createElement('div');
+            noteActions.className = 'note-actions';
+            noteActions.appendChild(miniBtn('complete', 'fas fa-floppy-disk', 'Save note', async () => {
+                await saveTaskNote(uid, t.id, editorTextarea.value);
+            }));
+            if (t.notes) {
+                noteActions.appendChild(miniBtn('reopen', 'fas fa-eraser', 'Clear', async () => {
+                    editorTextarea.value = '';
+                    await saveTaskNote(uid, t.id, '');
+                }));
+            }
+            editor.appendChild(editorTextarea);
+            editor.appendChild(noteActions);
+            editorTextarea.addEventListener('input', () => { editorTextarea.style.borderColor = ''; });
+
+            item.appendChild(main);
+            item.appendChild(pill);
+            item.appendChild(actions);
+            item.appendChild(editor);
+            return item;
+        }
+
+        function miniBtn(cls, icon, label, onClick) {
+            const b = document.createElement('button');
+            b.type = 'button';
+            b.className = 'btn-mini' + (cls ? ' ' + cls : '');
+            b.innerHTML = (icon ? '<i class="fas ' + icon + '"></i> ' : '') + label;
+            b.addEventListener('click', async () => {
+                b.disabled = true;
+                try { await onClick(); } catch (_) { b.disabled = false; }
+            });
+            return b;
+        }
+
+        async function setTaskStatus(uid, taskId, status) {
+            try {
+                await db.ref('tasks/' + uid + '/' + taskId).update({
+                    status: status,
+                    updatedAt: firebase.database.ServerValue.TIMESTAMP
+                });
+            } catch (err) {
+                console.error('Task status error:', err);
+                alert('Could not update the task. Please check your connection and try again.');
+            }
+        }
+
+        async function saveTaskNote(uid, taskId, note) {
+            try {
+                await db.ref('tasks/' + uid + '/' + taskId).update({
+                    notes: String(note).slice(0, 2000),
+                    updatedAt: firebase.database.ServerValue.TIMESTAMP
+                });
+            } catch (err) {
+                console.error('Task note error:', err);
+                alert('Could not save the note. Please try again.');
+            }
+        }
+
+        function escapeHtml(str) {
+            return String(str).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        }
+
+        function showOnly(el) {
+            ['pendingView', 'suspendedView', 'dashboardView'].forEach(id => { $(id).style.display = (id === el ? 'block' : 'none'); });
+        }
+
+        function renderDashboard(user, worker) {
+            const status = worker.status || 'pending';
+            $('avatarInitials').textContent = initials(worker.fullName);
+            $('topName').textContent = worker.fullName || user.email;
+
+            if (status === 'pending') {
+                $('pendingName').textContent = worker.fullName || user.email;
+                showOnly('pendingView');
+                return;
+            }
+            if (status === 'suspended' || status === 'rejected') {
+                showOnly('suspendedView');
+                return;
+            }
+
+            // Active
+            $('welcomeName').textContent = worker.fullName || 'there';
+            $('welcomeEmail').textContent = user.email || '';
+            $('roleLabel').textContent = worker.role || 'Team Member';
+            const rate = (typeof worker.commissionRate === 'number') ? worker.commissionRate : 10;
+            $('commissionLabel').textContent = rate + '% Commission';
+
+            const s = worker.stats || {};
+            $('stLeads').textContent = Number(s.leadsAssigned || 0);
+            $('stCalls').textContent = Number(s.callsCompleted || 0);
+            $('stInterested').textContent = Number(s.interestedProspects || 0);
+            $('stAppointments').textContent = Number(s.appointments || 0);
+            $('stSales').textContent = Number(s.salesGenerated || 0);
+            $('stEarned').textContent = money(s.commissionEarned);
+            $('stPaid').textContent = money(s.commissionPaid);
+            $('stPending').textContent = money(s.commissionPending);
+
+            showOnly('dashboardView');
+            renderTasks(user.uid);
+        }
+
+        auth.onAuthStateChanged(async (user) => {
+            if (!user) { window.location.href = 'login.html'; return; }
+            if (user.email && user.email.toLowerCase() === ADMIN_EMAIL) { window.location.href = 'admin.html'; return; }
+
+            try {
+                const snap = await db.ref('workers/' + user.uid).once('value');
+                const worker = snap.val();
+                if (!worker) {
+                    // Signed-in account with no worker record.
+                    await auth.signOut();
+                    window.location.href = 'login.html';
+                    return;
+                }
+                renderDashboard(user, worker);
+            } catch (err) {
+                console.error('Dashboard load error:', err);
+                $('pendingName').textContent = user.email || '';
+                showOnly('pendingView');
+            }
+        });
+
+        $('signOutBtn').addEventListener('click', async () => {
+            await auth.signOut();
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+</html>

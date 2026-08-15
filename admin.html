@@ -468,6 +468,14 @@
         .status-pill.shortlisted, .status-pill.read { color: #a8eed0; border-color: rgba(67,209,158,.28); background: rgba(67,209,158,.1); }
         .status-pill.rejected, .status-pill.archived { color: #ffb0b0; border-color: rgba(239,88,88,.28); background: rgba(239,88,88,.1); }
         .status-pill.hired { color: #ffe19a; border-color: rgba(245,201,103,.3); background: rgba(245,201,103,.1); }
+        .status-pill.active { color: #91ebbf; border-color: rgba(67,209,158,.28); background: rgba(67,209,158,.1); }
+        .status-pill.pending { color: #ffd98d; border-color: rgba(245,201,103,.3); background: rgba(245,201,103,.1); }
+        .status-pill.suspended { color: #ffb0b0; border-color: rgba(239,88,88,.28); background: rgba(239,88,88,.1); }
+        .workers-panel::before { display: block; height: 3px; content: ''; background: linear-gradient(90deg, var(--gold), #78a9ff, #43d19e); }
+        .worker-role { color: #dbe6f5; font-size: .72rem; margin: 2px 0 0; }
+        .task-form { display: grid; gap: 0; }
+        .task-form .form-actions { margin-top: 14px; }
+        .task-form .btn-primary { flex: 1; }
         .metrics { grid-template-columns: repeat(6, minmax(0, 1fr)); }
         .metric:nth-child(5) .metric-icon { color: #fda4af; background: rgba(253,164,175,.12); }
         .metric:nth-child(6) .metric-icon { color: #7dd3fc; background: rgba(125,211,252,.12); }
@@ -801,6 +809,56 @@
                             <div class="inbox-list" id="applicationsList" aria-live="polite"><div class="empty-state"><i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>Loading applications…</div></div>
                         </div>
                     </section>
+
+                    <section class="panel inbox-panel workers-panel" aria-labelledby="workersTitle">
+                        <div class="panel-head">
+                            <div><h2 id="workersTitle">Team workers</h2><p>Approve, suspend or assign tasks to portal members. <span id="pendingWorkersCount"></span></p></div>
+                            <button class="text-button" id="refreshWorkers" type="button">Refresh</button>
+                        </div>
+                        <div class="panel-body">
+                            <div class="inbox-list" id="workersList" aria-live="polite"><div class="empty-state"><i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>Loading workers…</div></div>
+                        </div>
+                    </section>
+
+                    <section class="panel" aria-labelledby="taskFormTitle">
+                        <div class="panel-head">
+                            <div><h2 id="taskFormTitle">Assign a task</h2><p>Send work to an approved team member. They see it in their dashboard.</p></div>
+                        </div>
+                        <div class="panel-body">
+                            <form class="task-form" id="taskForm" novalidate>
+                                <div class="field">
+                                    <label for="taskWorker">Team member <span>(active workers only)</span></label>
+                                    <select id="taskWorker" required><option value="">Select a worker…</option></select>
+                                </div>
+                                <div class="field">
+                                    <label for="taskTitle">Task title</label>
+                                    <input id="taskTitle" type="text" maxlength="200" placeholder="e.g. Contact ABC Construction" required />
+                                </div>
+                                <div class="form-grid">
+                                    <div class="field">
+                                        <label for="taskDue">Due date</label>
+                                        <input id="taskDue" type="text" maxlength="40" placeholder="e.g. August 18" />
+                                    </div>
+                                    <div class="field">
+                                        <label for="taskPriority">Priority</label>
+                                        <select id="taskPriority">
+                                            <option value="medium">Medium</option>
+                                            <option value="high">High</option>
+                                            <option value="low">Low</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label for="taskNotes">Notes <span>(optional)</span></label>
+                                    <textarea id="taskNotes" maxlength="2000" placeholder="Instructions for the worker…"></textarea>
+                                </div>
+                                <div class="form-actions">
+                                    <button class="btn btn-primary" type="submit" id="assignTaskBtn"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Assign task</button>
+                                </div>
+                                <div class="form-status" id="taskFormStatus" role="status" aria-live="polite"></div>
+                            </form>
+                        </div>
+                    </section>
                 </aside>
             </div>
         </div>
@@ -886,6 +944,15 @@
         const projectsList = $('projectsList');
         const messagesList = $('messagesList');
         const applicationsList = $('applicationsList');
+        const workersList = $('workersList');
+        const refreshWorkers = $('refreshWorkers');
+        const taskForm = $('taskForm');
+        const taskWorker = $('taskWorker');
+        const taskTitle = $('taskTitle');
+        const taskDue = $('taskDue');
+        const taskPriority = $('taskPriority');
+        const taskNotes = $('taskNotes');
+        const taskFormStatus = $('taskFormStatus');
         const syncPublicPortfolio = $('syncPublicPortfolio');
         const settingsForm = $('settingsForm');
         const portfolioTitle = $('portfolioTitle');
@@ -904,6 +971,7 @@
         let currentProjects = new Map();
         let currentMessages = new Map();
         let currentApplications = new Map();
+        let currentWorkers = new Map();
         let currentSettings = { ...DEFAULT_SETTINGS };
         let editingKey = null;
         let selectedFile = null;
@@ -1144,6 +1212,14 @@
             }, () => {
                 if (applicationsList) applicationsList.innerHTML = '<div class="empty-state"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>Unable to load applications. Deploy updated Database Rules.</div>';
                 showToast('Job applications could not be loaded.', 'error');
+            });
+            db.ref('workers').on('value', (snapshot) => {
+                currentWorkers = new Map(Object.entries(snapshot.val() || {}));
+                renderWorkers();
+                populateTaskWorkers();
+            }, () => {
+                if (workersList) workersList.innerHTML = '<div class="empty-state"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>Unable to load team workers. Deploy updated Database Rules.</div>';
+                showToast('Team workers could not be loaded.', 'error');
             });
         }
 
@@ -1461,6 +1537,113 @@
             }
         }
 
+        function renderWorkers() {
+            if (!workersList) return;
+            workersList.textContent = '';
+            const entries = sortedMapEntries(currentWorkers);
+            const pending = Array.from(currentWorkers.values()).filter((w) => (w.status || 'pending') === 'pending').length;
+            if ($('pendingWorkersCount')) $('pendingWorkersCount').textContent = pending ? ('· ' + pending + ' pending approval') : '';
+            if (!entries.length) {
+                workersList.innerHTML = '<div class="empty-state"><i class="fa-solid fa-people-group" aria-hidden="true"></i>No team members yet. Workers appear here after they sign up from the careers page.</div>';
+                return;
+            }
+            for (const [uid, worker] of entries) {
+                const status = safeText(worker.status, 20) || 'pending';
+                const item = document.createElement('article');
+                item.className = 'inbox-item';
+                const top = document.createElement('div');
+                top.className = 'inbox-item-top';
+                const title = document.createElement('h3');
+                title.textContent = (safeText(worker.fullName, 120) || 'Worker');
+                const pill = document.createElement('span');
+                pill.className = 'status-pill ' + status;
+                pill.textContent = status;
+                top.append(title, pill);
+                const meta = document.createElement('div');
+                meta.className = 'inbox-meta';
+                const email = safeText(worker.email, 160);
+                const phone = safeText(worker.phone, 40);
+                const country = safeText(worker.country, 80);
+                meta.innerHTML = (email ? '<a href="mailto:' + email.replace(/"/g, '') + '">' + email + '</a>' : 'No email')
+                    + (phone ? ' · ' + phone : '')
+                    + (country ? ' · ' + country : '')
+                    + ' · ' + formatInboxDate(worker.createdAt);
+                const body = document.createElement('div');
+                body.className = 'inbox-body';
+                const role = safeText(worker.role, 120);
+                const rate = (typeof worker.commissionRate === 'number') ? worker.commissionRate : 10;
+                const avail = safeText(worker.availability, 80);
+                let lines = (role ? 'Role: ' + role : 'No role') + ' · ' + rate + '% commission';
+                if (avail) lines += '\nAvailability: ' + avail;
+                const skills = safeText(worker.skills, 500);
+                if (skills) lines += '\nSkills: ' + skills;
+                body.textContent = lines;
+                const actions = document.createElement('div');
+                actions.className = 'inbox-actions';
+                if (status === 'pending') {
+                    actions.append(
+                        workerAction('Approve', 'active', uid, false),
+                        workerAction('Reject', 'rejected', uid, true)
+                    );
+                } else if (status === 'active') {
+                    actions.append(
+                        workerAction('Suspend', 'suspended', uid, true),
+                        assignTaskButton(uid, worker)
+                    );
+                } else if (status === 'suspended') {
+                    actions.append(workerAction('Activate', 'active', uid, false));
+                } else if (status === 'rejected') {
+                    actions.append(workerAction('Approve', 'active', uid, false));
+                }
+                item.append(top, meta, body, actions);
+                workersList.appendChild(item);
+            }
+        }
+
+        function workerAction(label, status, uid, danger) {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = danger ? 'btn btn-danger' : 'btn btn-secondary';
+            btn.dataset.action = 'worker-status';
+            btn.dataset.status = status;
+            btn.dataset.uid = uid;
+            btn.textContent = label;
+            return btn;
+        }
+
+        function assignTaskButton(uid, worker) {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'btn btn-secondary';
+            btn.dataset.action = 'worker-assign';
+            btn.dataset.uid = uid;
+            btn.dataset.name = safeText(worker.fullName, 120);
+            btn.innerHTML = '<i class="fa-solid fa-list-check" aria-hidden="true"></i> Assign task';
+            return btn;
+        }
+
+        function populateTaskWorkers() {
+            if (!taskWorker) return;
+            const current = taskWorker.value;
+            taskWorker.innerHTML = '<option value="">Select a worker…</option>';
+            const active = Array.from(currentWorkers.entries())
+                .filter(([, w]) => (w.status || 'pending') === 'active')
+                .sort(([, a], [, b]) => (safeText(a.fullName) || '').localeCompare(safeText(b.fullName) || ''));
+            for (const [uid, worker] of active) {
+                const opt = document.createElement('option');
+                opt.value = uid;
+                opt.textContent = (safeText(worker.fullName, 120) || 'Worker') + ' · ' + (safeText(worker.role, 120) || 'No role');
+                taskWorker.appendChild(opt);
+            }
+            if (current && Array.from(taskWorker.options).some((o) => o.value === current)) taskWorker.value = current;
+        }
+
+        function setTaskFormStatus(text, isError) {
+            if (!taskFormStatus) return;
+            taskFormStatus.textContent = text;
+            taskFormStatus.className = 'form-status' + (isError ? ' error' : (text ? ' success' : ''));
+        }
+
         if (messagesList) {
             messagesList.addEventListener('click', async (event) => {
                 const btn = event.target.closest('button[data-action]');
@@ -1513,6 +1696,75 @@
 
         if ($('refreshMessages')) $('refreshMessages').addEventListener('click', () => { renderMessages(); showToast('Messages refreshed.'); });
         if ($('refreshApplications')) $('refreshApplications').addEventListener('click', () => { renderApplications(); showToast('Applications refreshed.'); });
+        if (refreshWorkers) refreshWorkers.addEventListener('click', () => { renderWorkers(); populateTaskWorkers(); showToast('Workers refreshed.'); });
+
+        if (workersList) {
+            workersList.addEventListener('click', async (event) => {
+                const btn = event.target.closest('button[data-action]');
+                if (!btn) return;
+                const uid = btn.dataset.uid;
+                if (!uid) return;
+                try {
+                    if (btn.dataset.action === 'worker-status') {
+                        const status = btn.dataset.status;
+                        await db.ref('workers/' + uid).update({ status: status });
+                        showToast('Worker status updated to “' + status + '”.');
+                    } else if (btn.dataset.action === 'worker-assign') {
+                        populateTaskWorkers();
+                        if (Array.from(taskWorker.options).some((o) => o.value === uid)) {
+                            taskWorker.value = uid;
+                            taskForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            taskTitle.focus();
+                        } else {
+                            showToast('This worker is not active yet.', 'error');
+                        }
+                    }
+                } catch (_) {
+                    showToast('Could not update worker. Check Database Rules.', 'error');
+                }
+            });
+        }
+
+        if (taskForm) {
+            taskForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const uid = taskWorker.value;
+                const title = safeText(taskTitle.value).slice(0, 200);
+                const due = safeText(taskDue.value).slice(0, 40);
+                const priority = taskPriority.value;
+                const notes = safeText(taskNotes.value).slice(0, 2000);
+                setTaskFormStatus('');
+                if (!uid) { setTaskFormStatus('Choose an active team member first.', true); return; }
+                if (title.length < 2) { setTaskFormStatus('Enter a task title.', true); return; }
+                const btn = $('assignTaskBtn');
+                btn.disabled = true;
+                const original = btn.innerHTML;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> Assigning…';
+                try {
+                    await db.ref('tasks/' + uid).push().set({
+                        title: title,
+                        dueDate: due,
+                        priority: priority,
+                        notes: notes,
+                        status: 'pending',
+                        assignedBy: ADMIN_EMAIL,
+                        createdAt: firebase.database.ServerValue.TIMESTAMP,
+                        updatedAt: firebase.database.ServerValue.TIMESTAMP
+                    });
+                    taskTitle.value = '';
+                    taskDue.value = '';
+                    taskPriority.value = 'medium';
+                    taskNotes.value = '';
+                    setTaskFormStatus('Task assigned successfully.');
+                    showToast('Task assigned to the worker.');
+                } catch (_) {
+                    setTaskFormStatus('Could not assign the task. Check Database Rules.', true);
+                } finally {
+                    btn.disabled = false;
+                    btn.innerHTML = original;
+                }
+            });
+        }
 
         function previewImage(url) {
             if (!url) {
