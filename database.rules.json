@@ -21,6 +21,15 @@
         },
         "fileSize": {
           ".validate": "!newData.exists() || (newData.isNumber() && newData.val() >= 0 && newData.val() <= 26214400)"
+        },
+        "cloudinaryPublicId": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 512)"
+        },
+        "cloudinaryResourceType": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().matches(/^(|image)$/))"
+        },
+        "uploadProvider": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().matches(/^(|cloudinary)$/))"
         }
       }
     },
@@ -98,6 +107,24 @@
         },
         "updatedAt": {
           ".validate": "!newData.exists() || newData.isNumber()"
+        },
+        "cvCloudinaryPublicId": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 512)"
+        },
+        "cvResourceType": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val() == 'raw')"
+        },
+        "cvDeliveryType": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val() == 'authenticated')"
+        },
+        "cvFormat": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().matches(/^(pdf|doc|docx)$/))"
+        },
+        "cvFileSize": {
+          ".validate": "!newData.exists() || (newData.isNumber() && newData.val() > 0 && newData.val() <= 5242880)"
+        },
+        "cvUploadProvider": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val() == 'cloudinary')"
         }
       }
     },
@@ -139,6 +166,18 @@
         },
         "stats": {
           ".write": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com' && auth.token.email_verified == true"
+        },
+        "profilePhotoUrl": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 2048 && (newData.val() == '' || newData.val().matches(/^https:\\/\\/res\\.cloudinary\\.com\\//)))"
+        },
+        "profilePhotoPublicId": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 512)"
+        },
+        "profilePhotoFileName": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 200)"
+        },
+        "profilePhotoUpdatedAt": {
+          ".validate": "!newData.exists() || newData.isNumber()"
         }
       }
     },
@@ -162,6 +201,10 @@
         },
         "updatedAt": {
           ".validate": "!newData.exists() || newData.isNumber()"
+        },
+        "profilePhotoUrl": {
+          ".write": "auth != null && root.child('workers').child(auth.uid).child('verifyToken').val() == $token",
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 2048 && (newData.val() == '' || newData.val().matches(/^https:\\/\\/res\\.cloudinary\\.com\\//)))"
         }
       }
     },

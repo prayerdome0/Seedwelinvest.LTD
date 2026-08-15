@@ -24,7 +24,8 @@ Static public website, a Firebase-backed portfolio administration workspace, and
 - **One login entry point** (`login.html`): the account role is stored in Firebase (server-side rules), never chosen in the browser. After sign-in, admins are routed to `admin.html`, approved workers to their dashboard, and applicants to their status screen.
 - **Application workflow**: Account Created → Application Submitted → Under Review / Info Required → Approved or Rejected — with clear status screens for the applicant at every step.
 - **Automatic Worker IDs** (`SWL-YYYY-000001`): issued transactionally on approval from a monotonic counter; unique, permanent, never reused, and impossible for applicants to set themselves (blocked by Database Rules).
-- **QR verification**: each approved worker gets a secure random verification token. The QR opens `verify.html?t=…`, which checks the token live against `/verifications` and shows VERIFIED WORKER or VERIFICATION FAILED with limited, non-private data only.
+- **QR verification**: each approved worker gets a secure random verification token. The QR opens `verify.html?t=…`, which checks the token live against `/verifications` and shows VERIFIED WORKER or VERIFICATION FAILED with limited verification data.
+- **Cloudinary Worker ID photos**: active workers can upload or replace their ID profile photo in the dashboard. It appears on the private ID card and the token-based public verification record.
 - **Admin controls**: approve / reject / request info / mark under review / suspend / reactivate, worker search (name, email, Worker ID), a Jobs panel, worker notifications and an append-only audit log.
 - **Important rule shown throughout**: creating an account does **not** guarantee employment or a job award.
 
@@ -35,11 +36,12 @@ Static public website, a Firebase-backed portfolio administration workspace, and
 - `admin.html` has a **Team workers** panel: approve, reject, suspend, or activate workers (sets `/workers/{uid}/status`), plus an **Assign a task** form that writes to `/tasks/{workerUid}/{taskId}`.
 - Task records live under `/tasks/{workerUid}/{taskId}`; a worker can read and update **only their own** tasks, while the administrator manages all workers and tasks.
 
-## Portfolio administration
+## Uploads and portfolio administration
 
+- **All new uploads use the existing connected Cloudinary product environment**: portfolio images, authenticated/private CVs and Worker ID profile photos. Serverless functions create signed requests; no API secret or unsigned upload preset is exposed in browser code.
 - Open `admin.html` to manage published portfolio projects, protected image uploads, public portfolio details, share links, **contact inbox** and **job applications**.
 - Open `projects.html` for the live, shareable portfolio.
-- See [FIREBASE_SETUP.md](FIREBASE_SETUP.md) before using the admin in production. Deploy the included Database/Storage Rules so contact messages and applications can be stored securely.
+- See [FIREBASE_SETUP.md](FIREBASE_SETUP.md) before production use. Confirm the Vercel Cloudinary integration provides `CLOUDINARY_URL`, then deploy the included Firebase Database/Storage Rules.
 
 ## Deploy
 

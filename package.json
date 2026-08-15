@@ -1,0 +1,10 @@
+{
+  "name": "seedwel-investment-ltd",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Seedwel Investment LTD website and secure team portal",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "cloudinary": "^2.10.0"
+  }
+}

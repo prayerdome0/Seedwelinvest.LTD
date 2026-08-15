@@ -17,6 +17,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="cloudinary-upload.js"></script>
     <!-- QR generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
@@ -40,10 +41,11 @@
         .top-actions { display: flex; align-items: center; gap: 12px; }
         .user-chip { display: flex; align-items: center; gap: 10px; }
         .user-avatar {
-            width: 36px; height: 36px; border-radius: 50%; background: #dc2626; color: #fff;
+            width: 36px; height: 36px; border-radius: 50%; background: #dc2626; color: #fff; overflow: hidden;
             display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem;
             font-family: 'Montserrat', sans-serif;
         }
+        .user-avatar img { width: 100%; height: 100%; object-fit: cover; }
         .user-meta { line-height: 1.2; }
         .user-meta strong { display: block; font-size: 0.85rem; }
         .user-meta span { font-size: 0.72rem; color: #6b7280; }
@@ -112,6 +114,12 @@
         .wid-head strong { font-family: 'Montserrat', sans-serif; font-size: 0.85rem; letter-spacing: 0.4px; }
         .wid-head span { display: block; font-size: 0.68rem; color: #cbd5e1; font-weight: 500; }
         .wid-body { position: relative; z-index: 1; display: flex; justify-content: space-between; gap: 18px; align-items: flex-end; flex-wrap: wrap; }
+        .wid-person { display: flex; align-items: center; gap: 15px; }
+        .wid-photo {
+            width: 76px; height: 92px; flex: none; overflow: hidden; border-radius: 12px; border: 2px solid rgba(255,255,255,.32);
+            background: rgba(255,255,255,.1); display: grid; place-items: center; color: #fecaca; font-family: 'Montserrat', sans-serif; font-size: 1.2rem; font-weight: 800;
+        }
+        .wid-photo img { width: 100%; height: 100%; object-fit: cover; }
         .wid-label { font-size: 0.68rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
         .wid-value { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.05rem; }
         .wid-number { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.5rem; letter-spacing: 1px; color: #fecaca; }
@@ -233,6 +241,20 @@
         .field input:focus, .field textarea:focus { border-color: #dc2626; outline: none; background: #fff; box-shadow: 0 0 0 3px rgba(220,38,38,0.06); }
         .field input[disabled] { color: #9ca3af; cursor: not-allowed; }
         .field .locked-hint { font-size: 0.7rem; color: #94a3b8; margin-top: 3px; }
+        .profile-photo-editor {
+            display: flex; align-items: center; gap: 16px; margin-bottom: 18px; padding: 14px; border: 1px solid #e5e7eb; border-radius: 14px; background: #f8fafc;
+        }
+        .profile-photo-preview {
+            width: 82px; height: 82px; flex: none; overflow: hidden; border-radius: 16px; background: #fee2e2; color: #b91c1c;
+            display: grid; place-items: center; font-family: 'Montserrat', sans-serif; font-size: 1.25rem; font-weight: 800;
+        }
+        .profile-photo-preview img { width: 100%; height: 100%; object-fit: cover; }
+        .profile-photo-copy { min-width: 0; }
+        .profile-photo-copy strong { display: block; font-size: .85rem; margin-bottom: 3px; }
+        .profile-photo-copy p { color: #64748b; font-size: .72rem; line-height: 1.45; margin-bottom: 9px; }
+        .profile-photo-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+        .profile-photo-actions button { padding: 7px 12px; border-radius: 50px; border: 1px solid #fecaca; background: #fff; color: #b91c1c; cursor: pointer; font: 700 .72rem 'Montserrat', sans-serif; }
+        .profile-photo-actions button:disabled { cursor: wait; opacity: .6; }
         .btn-primary {
             padding: 12px 24px; border: none; border-radius: 50px; cursor: pointer;
             font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.85rem;
@@ -280,7 +302,7 @@
             </div>
             <div class="top-actions">
                 <div class="user-chip">
-                    <div class="user-avatar" id="avatarInitials">-</div>
+                    <div class="user-avatar"><img id="avatarPhoto" alt="" hidden /><span id="avatarInitials">-</span></div>
                     <div class="user-meta">
                         <strong id="topName">—</strong>
                         <span>Team Member</span>
@@ -347,11 +369,14 @@
                         </div>
                     </div>
                     <div class="wid-body">
-                        <div>
-                            <div class="wid-label">Worker name</div>
-                            <div class="wid-value" id="widName">—</div>
-                            <div class="wid-label" style="margin-top:12px;">Role</div>
-                            <div class="wid-value" id="widRole">—</div>
+                        <div class="wid-person">
+                            <div class="wid-photo"><img id="widPhoto" alt="Worker profile photo" hidden /><span id="widPhotoInitials">—</span></div>
+                            <div>
+                                <div class="wid-label">Worker name</div>
+                                <div class="wid-value" id="widName">—</div>
+                                <div class="wid-label" style="margin-top:12px;">Role</div>
+                                <div class="wid-value" id="widRole">—</div>
+                            </div>
                         </div>
                         <div style="text-align:right;">
                             <div class="wid-label">Worker ID</div>
@@ -405,6 +430,18 @@
                         <h2><i class="fas fa-user-pen" style="color:#dc2626;"></i> My Profile</h2>
                     </div>
                     <form id="profileForm" novalidate>
+                        <div class="profile-photo-editor">
+                            <div class="profile-photo-preview"><img id="profilePhotoPreview" alt="Your profile photo" hidden /><span id="profilePhotoInitials">—</span></div>
+                            <div class="profile-photo-copy">
+                                <strong>Worker ID profile photo</strong>
+                                <p>JPG, PNG or WEBP, up to 5 MB. Uploaded securely to the connected Cloudinary account and shown on your official ID and public QR verification record.</p>
+                                <div class="profile-photo-actions">
+                                    <input id="profilePhotoInput" type="file" accept="image/jpeg,image/png,image/webp" hidden />
+                                    <button id="chooseProfilePhoto" type="button"><i class="fas fa-cloud-arrow-up"></i> Upload photo</button>
+                                    <button id="removeProfilePhoto" type="button" hidden><i class="fas fa-trash"></i> Remove</button>
+                                </div>
+                            </div>
+                        </div>
                         <div class="field">
                             <label>Full name</label>
                             <input type="text" id="pfName" disabled />
@@ -493,6 +530,37 @@
             const first = (parts[0] || '?')[0];
             const last = parts.length > 1 ? parts[parts.length - 1][0] : '';
             return (first + last).toUpperCase();
+        }
+
+        function cloudinaryPhotoUrl(value) {
+            try {
+                const url = new URL(String(value || ''));
+                return url.protocol === 'https:' && url.hostname === 'res.cloudinary.com' ? url.href : '';
+            } catch (_) {
+                return '';
+            }
+        }
+
+        function setPhoto(img, fallback, url, fallbackText) {
+            fallback.textContent = fallbackText;
+            const safeUrl = cloudinaryPhotoUrl(url);
+            if (!safeUrl) {
+                img.hidden = true;
+                img.removeAttribute('src');
+                fallback.hidden = false;
+                return;
+            }
+            img.onload = () => { img.hidden = false; fallback.hidden = true; };
+            img.onerror = () => { img.hidden = true; fallback.hidden = false; };
+            img.src = safeUrl;
+        }
+
+        function renderProfilePhotos(worker) {
+            const fallback = initials(worker.fullName);
+            setPhoto($('avatarPhoto'), $('avatarInitials'), worker.profilePhotoUrl, fallback);
+            setPhoto($('widPhoto'), $('widPhotoInitials'), worker.profilePhotoUrl, fallback);
+            setPhoto($('profilePhotoPreview'), $('profilePhotoInitials'), worker.profilePhotoUrl, fallback);
+            $('removeProfilePhoto').hidden = !cloudinaryPhotoUrl(worker.profilePhotoUrl);
         }
 
         function money(n) {
@@ -724,6 +792,8 @@
         }
 
         // ─── Profile ───
+        let currentWorker = null;
+
         function fillProfile(user, worker) {
             $('pfName').value = worker.fullName || '';
             $('pfEmail').value = user.email || '';
@@ -732,6 +802,80 @@
             $('pfAvailability').value = worker.availability || '';
             $('pfSkills').value = worker.skills || '';
         }
+
+        $('chooseProfilePhoto').addEventListener('click', () => $('profilePhotoInput').click());
+        $('profilePhotoInput').addEventListener('change', async () => {
+            const file = $('profilePhotoInput').files && $('profilePhotoInput').files[0];
+            const user = auth.currentUser;
+            if (!file || !user || !currentWorker) return;
+            if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 5 * 1024 * 1024) {
+                $('profilePhotoInput').value = '';
+                showFormMsg($('pfMsg'), 'Choose a JPG, PNG or WEBP photo no larger than 5 MB.', false);
+                return;
+            }
+
+            const button = $('chooseProfilePhoto');
+            button.disabled = true;
+            const originalLabel = button.innerHTML;
+            try {
+                const asset = await SeedwelCloudinary.upload(file, {
+                    kind: 'profile',
+                    user,
+                    onProgress: (progress) => { button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading ' + progress + '%'; }
+                });
+                await db.ref('workers/' + user.uid).update({
+                    profilePhotoUrl: asset.url,
+                    profilePhotoPublicId: asset.publicId,
+                    profilePhotoFileName: asset.originalFileName,
+                    profilePhotoUpdatedAt: firebase.database.ServerValue.TIMESTAMP,
+                    updatedAt: firebase.database.ServerValue.TIMESTAMP
+                });
+                let verificationSynced = true;
+                if (currentWorker.verifyToken) {
+                    try { await db.ref('verifications/' + currentWorker.verifyToken + '/profilePhotoUrl').set(asset.url); }
+                    catch (_) { verificationSynced = false; }
+                }
+                try { await user.updateProfile({ photoURL: asset.url }); } catch (_) { /* Firebase profile sync is optional. */ }
+                showFormMsg($('pfMsg'), verificationSynced
+                    ? 'Profile photo updated on your Cloudinary-backed Worker ID.'
+                    : 'Photo saved, but the public verification copy could not sync. Ask an administrator to deploy the latest Database Rules.', verificationSynced);
+            } catch (error) {
+                console.error('Profile photo upload error:', error);
+                showFormMsg($('pfMsg'), error && error.message ? error.message : 'Could not upload your profile photo.', false);
+            } finally {
+                button.disabled = false;
+                button.innerHTML = originalLabel;
+                $('profilePhotoInput').value = '';
+            }
+        });
+
+        $('removeProfilePhoto').addEventListener('click', async () => {
+            const user = auth.currentUser;
+            const worker = currentWorker;
+            if (!user || !worker || !window.confirm('Remove this photo from your Worker ID and verification record?')) return;
+            const button = $('removeProfilePhoto');
+            button.disabled = true;
+            try {
+                await db.ref('workers/' + user.uid).update({
+                    profilePhotoUrl: '',
+                    profilePhotoPublicId: '',
+                    profilePhotoFileName: '',
+                    profilePhotoUpdatedAt: firebase.database.ServerValue.TIMESTAMP,
+                    updatedAt: firebase.database.ServerValue.TIMESTAMP
+                });
+                if (worker.verifyToken) await db.ref('verifications/' + worker.verifyToken + '/profilePhotoUrl').set('');
+                try { await user.updateProfile({ photoURL: null }); } catch (_) { /* optional Firebase profile sync */ }
+                if (worker.profilePhotoPublicId) {
+                    try { await SeedwelCloudinary.remove({ kind: 'profile', publicId: worker.profilePhotoPublicId, user }); }
+                    catch (_) { /* The database no longer references the old photo. */ }
+                }
+                showFormMsg($('pfMsg'), 'Profile photo removed.', true);
+            } catch (error) {
+                showFormMsg($('pfMsg'), error && error.message ? error.message : 'Could not remove the profile photo.', false);
+            } finally {
+                button.disabled = false;
+            }
+        });
 
         $('profileForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -796,8 +940,9 @@
         }
 
         function renderDashboard(user, worker) {
+            currentWorker = worker;
             const status = worker.status || 'pending';
-            $('avatarInitials').textContent = initials(worker.fullName);
+            renderProfilePhotos(worker);
             $('topName').textContent = worker.fullName || user.email;
 
             if (status === 'pending' || status === 'under_review') {

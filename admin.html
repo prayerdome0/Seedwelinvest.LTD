@@ -19,6 +19,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+    <script src="cloudinary-upload.js"></script>
 
     <style>
         :root {
@@ -623,7 +624,7 @@
 
             <aside class="notice" aria-label="Storage capacity note">
                 <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
-                <div><strong>1 TB is the dashboard capacity target.</strong> Firebase/Google Cloud must be on a billing plan that supports the required storage before it becomes real capacity. The included <a href="FIREBASE_SETUP.md" target="_blank" rel="noopener">deployment guide</a> explains the one-time provider setup; the meter tracks files uploaded through this dashboard.</div>
+                <div><strong>Cloudinary manages all new uploads.</strong> The connected Cloudinary product environment stores portfolio media, private CVs and worker ID profile photos. The included <a href="FIREBASE_SETUP.md" target="_blank" rel="noopener">deployment guide</a> explains the server-side connection; the meter tracks portfolio files uploaded through this dashboard.</div>
             </aside>
 
             <div class="workspace">
@@ -640,13 +641,13 @@
                                         <label for="projectImage">Project image <span>(up to 25 MB)</span></label>
                                         <label class="upload-area" id="uploadArea" for="projectImage">
                                             <input id="projectImage" type="file" accept="image/png,image/jpeg,image/webp,image/gif,image/avif">
-                                            <div><i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i><strong>Choose or drop a portfolio image</strong><span>PNG, JPG, WEBP, GIF or AVIF — saved to protected Firebase Storage</span></div>
+                                            <div><i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i><strong>Choose or drop a portfolio image</strong><span>PNG, JPG, WEBP, GIF or AVIF — uploaded to connected Cloudinary</span></div>
                                         </label>
                                         <div class="image-preview-wrap" id="previewWrap">
                                             <img class="image-preview" id="imagePreview" alt="Selected project preview">
                                             <button class="remove-image" id="removeImage" type="button" aria-label="Remove selected image"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
                                         </div>
-                                        <small>Alternatively, add a trusted image URL below. New uploads are restricted to the signed-in administrator by Storage Rules.</small>
+                                        <small>Alternatively, add a trusted image URL below. New Cloudinary uploads require a verified administrator session and a server-generated signature.</small>
                                     </div>
                                     <div class="field full">
                                         <label for="externalImageUrl">Trusted image URL <span>(optional)</span></label>
@@ -1589,8 +1590,18 @@
                     btn.textContent = label;
                     actions.appendChild(btn);
                 }
+                const cvPublicId = safeText(app.cvCloudinaryPublicId, 512);
                 const cvUrl = safeText(app.cvDownloadUrl, 2048);
-                if (cvUrl) {
+                if (cvPublicId) {
+                    const cv = document.createElement('button');
+                    cv.type = 'button';
+                    cv.className = 'btn btn-secondary';
+                    cv.dataset.action = 'application-cv';
+                    cv.dataset.key = key;
+                    cv.innerHTML = '<i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> Private CV';
+                    actions.appendChild(cv);
+                } else if (cvUrl) {
+                    // Legacy Firebase CV links remain available during migration.
                     const cv = document.createElement('a');
                     cv.className = 'btn btn-secondary';
                     cv.href = cvUrl;
@@ -1792,17 +1803,44 @@
                         const status = btn.dataset.status;
                         await db.ref('applications/' + key).update({ status: status, updatedAt: firebase.database.ServerValue.TIMESTAMP });
                         showToast('Application updated to “' + status + '”.');
+                    } else if (btn.dataset.action === 'application-cv') {
+                        const app = currentApplications.get(key);
+                        if (!app || !app.cvCloudinaryPublicId) throw new Error('CV metadata is missing.');
+                        const downloadTab = window.open('about:blank', '_blank');
+                        if (downloadTab) {
+                            downloadTab.opener = null;
+                            downloadTab.document.title = 'Preparing secure CV…';
+                            downloadTab.document.body.textContent = 'Preparing secure CV download…';
+                        }
+                        btn.disabled = true;
+                        try {
+                            const download = await SeedwelCloudinary.privateCvUrl({
+                                user: auth.currentUser,
+                                publicId: app.cvCloudinaryPublicId,
+                                fileName: app.cvFileName || 'cv',
+                                format: app.cvFormat || ''
+                            });
+                            if (downloadTab) downloadTab.location.replace(download.url);
+                            else window.location.assign(download.url);
+                        } catch (error) {
+                            if (downloadTab) downloadTab.close();
+                            throw error;
+                        } finally {
+                            btn.disabled = false;
+                        }
                     } else if (btn.dataset.action === 'application-delete') {
-                        if (!window.confirm('Delete this application permanently?')) return;
+                        if (!window.confirm('Delete this application and its CV permanently?')) return;
                         const app = currentApplications.get(key);
                         await db.ref('applications/' + key).remove();
-                        if (app && app.cvStoragePath) {
-                            try { await storage.ref(app.cvStoragePath).delete(); } catch (_) { /* best-effort CV cleanup */ }
+                        if (app && app.cvCloudinaryPublicId) {
+                            try { await SeedwelCloudinary.remove({ kind: 'cv', publicId: app.cvCloudinaryPublicId, user: auth.currentUser }); } catch (_) { /* best-effort CV cleanup */ }
+                        } else if (app && app.cvStoragePath) {
+                            try { await storage.ref(app.cvStoragePath).delete(); } catch (_) { /* legacy Firebase CV cleanup */ }
                         }
-                        showToast('Application deleted.');
+                        showToast('Application and managed CV deleted.');
                     }
-                } catch (_) {
-                    showToast('Could not update application. Check Database Rules.', 'error');
+                } catch (error) {
+                    showToast(error && error.message ? error.message : 'Could not update application. Check Database Rules.', 'error');
                 }
             });
         }
@@ -1886,6 +1924,7 @@
                 workerId: workerId,
                 fullName: safeText(worker.fullName, 120) || 'Seedwel Worker',
                 role: safeText(worker.role, 120),
+                profilePhotoUrl: safeText(worker.profilePhotoUrl, 2048),
                 status: 'active',
                 reference: 'SW-' + String(sequence).padStart(6, '0'),
                 verifiedAt: now
@@ -2248,37 +2287,38 @@
         resetProjectForm.addEventListener('click', resetProjectEditor);
         cancelEdit.addEventListener('click', resetProjectEditor);
 
-        function randomSegment() {
-            if (window.crypto && window.crypto.getRandomValues) {
-                const values = new Uint32Array(2);
-                window.crypto.getRandomValues(values);
-                return Array.from(values).map((value) => value.toString(36)).join('');
-            }
-            return Math.random().toString(36).slice(2) + Date.now().toString(36);
-        }
-
         async function uploadImage(file) {
             const user = auth.currentUser;
             if (!user) throw new Error('Your session has ended. Sign in again before uploading.');
-            const mimeExtension = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp', 'image/gif': 'gif', 'image/avif': 'avif' };
-            const extension = mimeExtension[file.type] || 'img';
-            const path = 'portfolio/' + user.uid + '/' + Date.now() + '-' + randomSegment() + '.' + extension;
-            const ref = storage.ref().child(path);
-            const task = ref.put(file, { contentType: file.type, cacheControl: 'public,max-age=31536000' });
-            task.on('state_changed', (snapshot) => {
-                const progress = snapshot.totalBytes ? Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100) : 0;
-                setStatus(projectStatus, 'Uploading image… ' + progress + '%');
+            const asset = await SeedwelCloudinary.upload(file, {
+                kind: 'portfolio',
+                user,
+                onProgress: (progress) => setStatus(projectStatus, 'Uploading to Cloudinary… ' + progress + '%')
             });
-            const snapshot = await task;
-            return { image: await snapshot.ref.getDownloadURL(), storagePath: snapshot.ref.fullPath, fileSize: file.size };
+            return {
+                image: asset.url,
+                storagePath: asset.publicId,
+                cloudinaryPublicId: asset.publicId,
+                cloudinaryResourceType: asset.resourceType,
+                uploadProvider: 'cloudinary',
+                fileSize: asset.bytes,
+                cleanupToken: asset.cleanupToken
+            };
         }
 
-        async function removeStorageFile(path) {
-            if (!path) return;
-            try { await storage.ref().child(path).delete(); }
-            catch (error) {
-                // A missing legacy file is harmless; surface other failures to the administrator.
-                if (error && error.code !== 'storage/object-not-found') throw error;
+        async function removeManagedProjectFile(project, cleanupToken = '') {
+            if (!project) return;
+            const publicId = project.cloudinaryPublicId || (project.uploadProvider === 'cloudinary' ? project.storagePath : '');
+            if (publicId) {
+                await SeedwelCloudinary.remove({ kind: 'portfolio', publicId, cleanupToken, user: auth.currentUser });
+                return;
+            }
+            // Existing Firebase uploads remain deletable during the Cloudinary migration.
+            if (project.storagePath) {
+                try { await storage.ref().child(project.storagePath).delete(); }
+                catch (error) {
+                    if (error && error.code !== 'storage/object-not-found') throw error;
+                }
             }
         }
 
@@ -2303,11 +2343,17 @@
 
                 let image = imageUrl || (existing && existing.image) || '';
                 let storagePath = imageUrl ? '' : ((existing && existing.storagePath) || '');
+                let cloudinaryPublicId = imageUrl ? '' : ((existing && existing.cloudinaryPublicId) || '');
+                let cloudinaryResourceType = imageUrl ? '' : ((existing && existing.cloudinaryResourceType) || '');
+                let uploadProvider = imageUrl ? '' : ((existing && existing.uploadProvider) || '');
                 let fileSize = imageUrl ? 0 : (Number(existing && existing.fileSize) || 0);
                 if (selectedFile) {
                     upload = await uploadImage(selectedFile);
                     image = upload.image;
                     storagePath = upload.storagePath;
+                    cloudinaryPublicId = upload.cloudinaryPublicId;
+                    cloudinaryResourceType = upload.cloudinaryResourceType;
+                    uploadProvider = upload.uploadProvider;
                     fileSize = upload.fileSize;
                 }
                 if (!image) throw new Error('Choose an image file or enter a trusted image URL.');
@@ -2322,6 +2368,9 @@
                     results,
                     image,
                     storagePath,
+                    cloudinaryPublicId,
+                    cloudinaryResourceType,
+                    uploadProvider,
                     fileSize,
                     published: projectPublished.checked,
                     createdAt: existing && Number(existing.createdAt) ? Number(existing.createdAt) : firebase.database.ServerValue.TIMESTAMP,
@@ -2334,17 +2383,18 @@
                 privateRecordSaved = true;
                 if (record.published !== false) await syncPublicProject(ref.key, record);
 
-                const oldStoragePath = existing && existing.storagePath;
-                if (oldStoragePath && oldStoragePath !== storagePath) {
-                    try { await removeStorageFile(oldStoragePath); }
-                    catch (_) { showToast('Project saved, but the previous image could not be removed. Check Firebase Storage.', 'error'); }
+                const oldManagedId = existing && (existing.cloudinaryPublicId || existing.storagePath);
+                const newManagedId = cloudinaryPublicId || storagePath;
+                if (oldManagedId && oldManagedId !== newManagedId) {
+                    try { await removeManagedProjectFile(existing); }
+                    catch (_) { showToast('Project saved, but the previous managed image could not be removed from storage.', 'error'); }
                 }
                 setStatus(projectStatus, existing ? 'Project updated successfully.' : 'Project added successfully.', 'success');
                 showToast(existing ? 'Portfolio project updated.' : 'Portfolio project added.');
                 resetProjectEditor();
             } catch (error) {
-                if (upload && upload.storagePath && !privateRecordSaved) {
-                    try { await removeStorageFile(upload.storagePath); } catch (_) { /* Do not hide original error. */ }
+                if (upload && upload.cloudinaryPublicId && !privateRecordSaved) {
+                    try { await removeManagedProjectFile(upload, upload.cleanupToken); } catch (_) { /* Do not hide original error. */ }
                 }
                 const message = privateRecordSaved
                     ? 'Project saved privately, but the public portfolio did not sync. Use “Sync public portfolio” and check Database Rules.'
@@ -2387,8 +2437,8 @@
                 try {
                     await db.ref('publicProjects/' + key).remove();
                     await db.ref('projects/' + key).remove();
-                    try { await removeStorageFile(project.storagePath); }
-                    catch (_) { showToast('Project deleted, but its image could not be removed. Check Firebase Storage.', 'error'); }
+                    try { await removeManagedProjectFile(project); }
+                    catch (_) { showToast('Project deleted, but its managed image could not be removed from storage.', 'error'); }
                     if (editingKey === key) resetProjectEditor();
                     showToast('Portfolio project deleted.');
                 } catch (_) { showToast('Unable to delete this project. Check Database Rules.', 'error'); }
@@ -2421,7 +2471,7 @@
             try {
                 for (const seed of SEED_PROJECTS) {
                     const ref = db.ref('projects').push();
-                    const record = { ...seed, liveUrl: '', storagePath: '', fileSize: 0, published: true, createdAt: firebase.database.ServerValue.TIMESTAMP, updatedAt: firebase.database.ServerValue.TIMESTAMP };
+                    const record = { ...seed, liveUrl: '', storagePath: '', cloudinaryPublicId: '', cloudinaryResourceType: '', uploadProvider: '', fileSize: 0, published: true, createdAt: firebase.database.ServerValue.TIMESTAMP, updatedAt: firebase.database.ServerValue.TIMESTAMP };
                     await ref.set(record);
                     await syncPublicProject(ref.key, record);
                 }
