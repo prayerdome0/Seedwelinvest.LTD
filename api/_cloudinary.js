@@ -180,14 +180,15 @@ async function verifyFirebaseUser(req) {
     }
     return {
         uid: String(user.localId),
-        email: String(user.email || '').toLowerCase(),
-        emailVerified: Boolean(user.emailVerified)
+        email: String(user.email || '').toLowerCase()
     };
 }
 
 async function requireUser(req, adminOnly) {
     const user = await verifyFirebaseUser(req);
-    if (adminOnly && (user.email !== ADMIN_EMAIL || !user.emailVerified)) {
+    // Administrator access is granted by the account email alone; email
+    // verification is not required.
+    if (adminOnly && user.email !== ADMIN_EMAIL) {
         const error = new Error('Administrator access is required.');
         error.statusCode = 403;
         throw error;

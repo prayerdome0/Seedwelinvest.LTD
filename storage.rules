@@ -1,10 +1,11 @@
 rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
+    // Administrator access is granted by the account email alone; no email
+    // verification step is required.
     function isAdmin() {
       return request.auth != null
-        && request.auth.token.email == 'zacheussimbaya@gmail.com'
-        && request.auth.token.email_verified == true;
+        && request.auth.token.email == 'zacheussimbaya@gmail.com';
     }
 
     // All new site uploads use Cloudinary. These rules only preserve retrieval

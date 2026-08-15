@@ -460,8 +460,8 @@
                     createdAt: firebase.database.ServerValue.TIMESTAMP
                 });
 
-                // Best-effort: send a verification email (does not block registration).
-                try { await createdUser.sendEmailVerification(); } catch (_) {}
+                // No verification email is sent: Seedwel accounts do not require
+                // email confirmation.
 
                 document.getElementById('statusName').textContent = name;
                 setTab('signin');

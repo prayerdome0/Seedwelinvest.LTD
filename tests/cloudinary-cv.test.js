@@ -91,9 +91,10 @@ test('administrator receives a short-lived authenticated download URL for a mana
         async json() {
             return {
                 users: [{
+                    // Administrator access must work without email verification.
                     localId: 'admin-uid',
                     email: 'zacheussimbaya@gmail.com',
-                    emailVerified: true
+                    emailVerified: false
                 }]
             };
         }

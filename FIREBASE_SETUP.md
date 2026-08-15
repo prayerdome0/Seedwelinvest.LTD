@@ -33,13 +33,13 @@ The upload workflow places every managed asset in the Cloudinary Media Library f
 
 The signed upload includes `asset_folder=portfolio` for modern dynamic-folder product environments. The `portfolio/...` public-ID prefix provides the equivalent folder placement for legacy fixed-folder environments. Do not replace this with an unsigned upload preset.
 
-CVs remain private even though they share the `portfolio` Media Library folder: they are uploaded as `raw` assets with Cloudinary's `authenticated` delivery type. An administrator must be signed in to request the five-minute private download URL. Portfolio signatures require the verified administrator account. Profile-photo signatures require the matching signed-in Firebase user and use one stable Cloudinary public ID per Firebase UID, so replacing a photo does not create duplicate ID photos.
+CVs remain private even though they share the `portfolio` Media Library folder: they are uploaded as `raw` assets with Cloudinary's `authenticated` delivery type. An administrator must be signed in to request the five-minute private download URL. Portfolio signatures require the administrator account. Profile-photo signatures require the matching signed-in Firebase user and use one stable Cloudinary public ID per Firebase UID, so replacing a photo does not create duplicate ID photos.
 
 ## Firebase configuration
 
-- The shared login form accepts the private-facing Admin ID `seedwel@admin`, maps it to the verified Firebase administrator account, and sends the entered password directly to Firebase Authentication.
+- The shared login form accepts the private-facing Admin ID `seedwel@admin`, maps it to the Firebase administrator account, and sends the entered password directly to Firebase Authentication.
 - The administrator's real email is not displayed in the interface. The password is never saved, displayed, hashed in the browser, or committed to Git.
-- A verified Firebase email is required before the admin dashboard opens.
+- Email verification is **not** required. Administrator access is granted as soon as `zacheussimbaya@gmail.com` signs in; the Database Rules, Storage Rules and the Cloudinary helper all check the administrator email address only.
 - `database.rules.json` keeps private portfolio, application and worker records protected while exposing only deliberately public portfolio and verification copies.
 - `storage.rules` now blocks all new Firebase Storage uploads. It retains read/delete access needed to display or clean up files uploaded before the Cloudinary migration.
 
@@ -48,7 +48,7 @@ Firebase web configuration values are public app identifiers, not account secret
 ### One-time Firebase console tasks
 
 1. In the Firebase Console for `seedwel-investment-limited`, enable **Email/Password** under **Authentication → Sign-in method**.
-2. Create or update `zacheussimbaya@gmail.com`, use a strong unique password and complete email verification.
+2. Create or update `zacheussimbaya@gmail.com` in Firebase Authentication with the password you will use for the dashboard. Email verification is not required.
 3. Add `seedwel.ltd` and the required Vercel preview domains under **Authentication → Settings → Authorized domains**.
 4. Deploy the included rules:
 
@@ -66,7 +66,7 @@ The admin email is repeated in `admin.html`, `database.rules.json` and the serve
 
 | Upload | Limit | Access |
 |---|---:|---|
-| Portfolio gallery | Up to 6 images per project, 25 MB each | Public delivery; upload/delete restricted to verified admin |
+| Portfolio gallery | Up to 6 images per project, 25 MB each | Public delivery; upload/delete restricted to the administrator |
 | Job-application CV | 5 MB | Authenticated Cloudinary asset; admin-only temporary download |
 | Worker ID profile photo | 5 MB | Signed-in worker upload; visible on their ID and public token-based verification page |
 
@@ -76,7 +76,7 @@ Existing Firebase Storage files remain readable and deletable for migration, but
 
 ## Contact messages and applications
 
-Public visitors may create records under `/contactMessages` and `/applications`. Only the verified administrator can read, update or delete them. The careers form always attempts the private CV upload first; if that service is unavailable, it still submits the application to the admin inbox with a **CV follow-up required** flag and gives the applicant direct email and WhatsApp options.
+Public visitors may create records under `/contactMessages` and `/applications`. Only the administrator can read, update or delete them. The careers form always attempts the private CV upload first; if that service is unavailable, it still submits the application to the admin inbox with a **CV follow-up required** flag and gives the applicant direct email and WhatsApp options.
 
 The admin inbox supports application search, status/CV filtering, secure CV requests, and CSV export. When an administrator deletes a Cloudinary-backed application, the dashboard also requests deletion of its authenticated CV. Legacy Firebase CVs continue to receive best-effort cleanup.
 

@@ -641,7 +641,6 @@
             <div class="login-actions" id="loginActions" hidden>
                 <a class="btn btn-primary btn-login" id="btnGoToLogin" href="login.html"><i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i> <span>Go to secure login</span></a>
                 <button class="btn btn-secondary btn-login" id="btnSwitchAccount" type="button" hidden><i class="fa-solid fa-arrow-right-arrow-left" aria-hidden="true"></i> <span>Use a different account</span></button>
-                <button class="btn btn-secondary btn-login" id="btnResendVerification" type="button" hidden><i class="fa-solid fa-envelope-circle-check" aria-hidden="true"></i> <span>Resend verification email</span></button>
             </div>
 
             <p class="login-footnote">Access is detected automatically from your Firebase Authentication session and enforced by server-side Database Rules.</p>
@@ -1059,7 +1058,6 @@
         const loginActions = $('loginActions');
         const btnGoToLogin = $('btnGoToLogin');
         const btnSwitchAccount = $('btnSwitchAccount');
-        const btnResendVerification = $('btnResendVerification');
         const loginError = $('loginError');
         const btnLogout = $('btnLogout');
         const projectForm = $('projectForm');
@@ -1231,7 +1229,7 @@
          * any actual sign-in happens on the shared login page.
          */
         function revealLogin(options = {}) {
-            const { message = '', lead = '', user = null, checking = false, canSwitch = false, canResend = false } = options;
+            const { message = '', lead = '', user = null, checking = false, canSwitch = false } = options;
             dashboard.hidden = true;
             loginScreen.hidden = false;
             if (dataListening) stopDataListeners();
@@ -1261,7 +1259,6 @@
             }
 
             btnSwitchAccount.hidden = !canSwitch;
-            btnResendVerification.hidden = !canResend;
             // With an account already detected, "Use a different account" is the
             // meaningful action; the plain login link is only for signed-out visitors.
             btnGoToLogin.hidden = Boolean(user);
@@ -1291,26 +1288,10 @@
                 return;
             }
 
-            if (!user.emailVerified) {
-                // Refresh once: the flag may already have flipped in another tab.
-                try {
-                    await user.reload();
-                    if (auth.currentUser && auth.currentUser.emailVerified) {
-                        revealDashboard();
-                        return;
-                    }
-                } catch (_) { /* fall through to the verification prompt */ }
-
-                revealLogin({
-                    user,
-                    canSwitch: true,
-                    canResend: true,
-                    lead: 'Your administrator email address still needs to be confirmed.',
-                    message: 'Confirm the verification email sent to this account, then reload this page.'
-                });
-                return;
-            }
-
+            // No email confirmation step: the administrator account is trusted as
+            // soon as Firebase Authentication signs it in (see Database Rules,
+            // Storage Rules and the Cloudinary helper, which all check the admin
+            // email address only).
             revealDashboard();
         }
 
@@ -1334,22 +1315,6 @@
             btnSwitchAccount.disabled = true;
             try { await auth.signOut(); } catch (_) { /* the redirect below still applies */ }
             window.location.href = 'login.html';
-        });
-
-        btnResendVerification.addEventListener('click', async () => {
-            const user = auth.currentUser;
-            if (!user) return;
-            btnResendVerification.disabled = true;
-            try {
-                await user.sendEmailVerification();
-                loginError.style.color = '#8ce8bd';
-                loginError.textContent = 'Verification email sent. Confirm it, then reload this page.';
-            } catch (_) {
-                loginError.style.color = '#ff9d9d';
-                loginError.textContent = 'Could not send the verification email right now. Please try again shortly.';
-            } finally {
-                btnResendVerification.disabled = false;
-            }
         });
 
         btnLogout.addEventListener('click', async () => {
