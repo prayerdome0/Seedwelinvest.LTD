@@ -37,8 +37,8 @@ CVs remain private even though they share the `portfolio` Media Library folder: 
 
 ## Firebase configuration
 
-- The login form accepts the assigned Admin ID (`zacheus`) and sends the entered password directly to Firebase Authentication for `zacheussimbaya@gmail.com`.
-- The password is never saved, displayed, hashed in the browser, or committed to Git.
+- The shared login form accepts the private-facing Admin ID `seedwel@admin`, maps it to the verified Firebase administrator account, and sends the entered password directly to Firebase Authentication.
+- The administrator's real email is not displayed in the interface. The password is never saved, displayed, hashed in the browser, or committed to Git.
 - A verified Firebase email is required before the admin dashboard opens.
 - `database.rules.json` keeps private portfolio, application and worker records protected while exposing only deliberately public portfolio and verification copies.
 - `storage.rules` now blocks all new Firebase Storage uploads. It retains read/delete access needed to display or clean up files uploaded before the Cloudinary migration.
@@ -66,7 +66,7 @@ The admin email is repeated in `admin.html`, `database.rules.json` and the serve
 
 | Upload | Limit | Access |
 |---|---:|---|
-| Portfolio image | 25 MB | Public delivery; upload/delete restricted to verified admin |
+| Portfolio gallery | Up to 6 images per project, 25 MB each | Public delivery; upload/delete restricted to verified admin |
 | Job-application CV | 5 MB | Authenticated Cloudinary asset; admin-only temporary download |
 | Worker ID profile photo | 5 MB | Signed-in worker upload; visible on their ID and public token-based verification page |
 
@@ -76,9 +76,9 @@ Existing Firebase Storage files remain readable and deletable for migration, but
 
 ## Contact messages and applications
 
-Public visitors may create records under `/contactMessages` and `/applications`. Only the verified administrator can read, update or delete them. The careers form does not submit an application if its private CV upload fails.
+Public visitors may create records under `/contactMessages` and `/applications`. Only the verified administrator can read, update or delete them. The careers form always attempts the private CV upload first; if that service is unavailable, it still submits the application to the admin inbox with a **CV follow-up required** flag and gives the applicant direct email and WhatsApp options.
 
-When an administrator deletes a Cloudinary-backed application, the dashboard also requests deletion of its authenticated CV. Legacy Firebase CVs continue to receive best-effort cleanup.
+The admin inbox supports application search, status/CV filtering, secure CV requests, and CSV export. When an administrator deletes a Cloudinary-backed application, the dashboard also requests deletion of its authenticated CV. Legacy Firebase CVs continue to receive best-effort cleanup.
 
 ## Worker accounts, IDs and profile photos
 

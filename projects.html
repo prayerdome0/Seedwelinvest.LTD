@@ -138,6 +138,7 @@
         .project-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .55s cubic-bezier(.2,.8,.2,1); }
         .project-card:hover .project-media img { transform: scale(1.065); }
         .project-category { position: absolute; z-index: 1; top: 13px; left: 13px; padding: 5px 9px; color: #8f1b1b; border: 1px solid rgba(255,255,255,.8); border-radius: 999px; background: rgba(255,255,255,.91); box-shadow: 0 3px 10px rgba(15,23,42,.07); font-size: .63rem; font-weight: 850; }
+        .project-photo-count { position: absolute; z-index: 1; right: 13px; bottom: 12px; display: inline-flex; align-items: center; gap: 5px; padding: 5px 8px; color: #fff; border: 1px solid rgba(255,255,255,.28); border-radius: 999px; background: rgba(15,23,42,.66); backdrop-filter: blur(6px); font-size: .62rem; font-weight: 800; }
         .project-content { display: flex; flex: 1; flex-direction: column; padding: 19px; }
         .project-client { min-height: 17px; margin: 0 0 6px; color: #858fa0; font-size: .66rem; font-weight: 700; }
         .project-card h3 { margin: 0; font-family: 'Montserrat', sans-serif; font-size: 1rem; letter-spacing: -.04em; line-height: 1.32; }
@@ -188,8 +189,18 @@
         /* Dialog */
         dialog { width: min(760px, calc(100% - 32px)); max-height: min(770px, calc(100vh - 32px)); padding: 0; overflow: auto; color: var(--ink); border: 0; border-radius: 20px; box-shadow: 0 26px 78px rgba(15,23,42,.35); }
         dialog::backdrop { background: rgba(15,23,42,.67); backdrop-filter: blur(3px); }
-        .modal-media { height: min(310px, 40vh); background: #f4f6f9; }
+        .modal-media { position: relative; height: min(350px, 43vh); background: #f4f6f9; }
         .modal-media img { width: 100%; height: 100%; object-fit: cover; }
+        .modal-nav { position: absolute; top: 50%; display: grid; width: 40px; height: 40px; padding: 0; color: #fff; border: 1px solid rgba(255,255,255,.35); border-radius: 50%; background: rgba(15,23,42,.62); backdrop-filter: blur(8px); cursor: pointer; place-items: center; transform: translateY(-50%); }
+        .modal-nav:hover { background: var(--red); }
+        .modal-nav.prev { left: 13px; }
+        .modal-nav.next { right: 13px; }
+        .modal-photo-position { position: absolute; right: 14px; bottom: 12px; padding: 5px 9px; color: #fff; border-radius: 999px; background: rgba(15,23,42,.68); font-size: .65rem; font-weight: 800; }
+        .modal-thumbnails { display: flex; gap: 8px; padding: 10px 12px; overflow-x: auto; border-bottom: 1px solid var(--line); background: #fff; }
+        .modal-thumbnails[hidden] { display: none; }
+        .modal-thumbnail { flex: 0 0 68px; width: 68px; height: 49px; padding: 0; overflow: hidden; border: 2px solid transparent; border-radius: 8px; background: #eef1f5; cursor: pointer; }
+        .modal-thumbnail.active { border-color: var(--red); }
+        .modal-thumbnail img { width: 100%; height: 100%; object-fit: cover; }
         .modal-body { position: relative; padding: clamp(22px, 4vw, 35px); }
         .dialog-close { position: absolute; top: 13px; right: 13px; display: grid; width: 35px; height: 35px; color: #3d4b60; border: 1px solid #e2e7ee; border-radius: 50%; background: #fff; cursor: pointer; place-items: center; }
         .dialog-close:hover { color: var(--red); border-color: rgba(220,38,38,.3); }
@@ -373,7 +384,13 @@
     <a class="floating-whatsapp" id="floatingWhatsApp" href="https://wa.me/260973028342" target="_blank" rel="noopener" aria-label="Chat with Seedwel on WhatsApp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
 
     <dialog id="projectDialog" aria-labelledby="modalTitle">
-        <div class="modal-media"><img id="modalImage" alt=""></div>
+        <div class="modal-media">
+            <img id="modalImage" alt="">
+            <button class="modal-nav prev" id="modalPrev" type="button" aria-label="Previous project photo"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+            <button class="modal-nav next" id="modalNext" type="button" aria-label="Next project photo"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+            <span class="modal-photo-position" id="modalPhotoPosition"></span>
+        </div>
+        <div class="modal-thumbnails" id="modalThumbnails" aria-label="Project photo gallery"></div>
         <div class="modal-body"><button class="dialog-close" id="dialogClose" type="button" aria-label="Close project details"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button><p class="modal-kicker" id="modalKicker"></p><h2 id="modalTitle"></h2><p id="modalDescription"></p><p class="modal-result" id="modalResults" hidden></p><div class="modal-actions"><a class="button button-primary" id="modalLink" target="_blank" rel="noopener" hidden><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> Visit project</a><button class="button button-quiet" id="modalShare" type="button"><i class="fa-solid fa-share-nodes" aria-hidden="true"></i> Share project</button></div></div>
     </dialog>
 
@@ -409,18 +426,57 @@
             { name: 'Social Media Growth Package', category: 'Digital marketing', client: 'Local business', image: 'https://images.pexels.com/photos/607812/pexels-photo-607812.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Strategic social media management across Facebook, Instagram, and TikTok with content creation, community engagement, and performance analytics to build brand awareness.', results: 'Content creation · Community management · Analytics reporting · Brand growth' }
         ];
 
+        const PROJECT_DETAIL_PHOTOS = [
+            'assets/images/seedwel-strategy-session.jpg',
+            'assets/images/seedwel-digital-craft.jpg',
+            'assets/images/seedwel-client-support.jpg',
+            'assets/images/seedwel-business-advisory.jpg',
+            'assets/images/seedwel-launch-moment.jpg',
+            'assets/images/seedwel-team-studio.jpg',
+            'assets/images/seedwel-process-poster.jpg',
+            'assets/images/seedwel-showreel-poster.jpg'
+        ];
+        STATIC_PROJECTS.forEach((project, index) => {
+            project.gallery = [
+                project.image,
+                PROJECT_DETAIL_PHOTOS[index % PROJECT_DETAIL_PHOTOS.length],
+                PROJECT_DETAIL_PHOTOS[(index + 3) % PROJECT_DETAIL_PHOTOS.length]
+            ];
+        });
+        STATIC_PROJECTS.push(
+            { name: 'Digital Strategy Workshop', category: 'Digital marketing', client: 'Growth-stage business', image: 'assets/images/seedwel-strategy-session.jpg', gallery: ['assets/images/seedwel-strategy-session.jpg', 'assets/images/seedwel-business-advisory.jpg', 'assets/images/seedwel-team-studio.jpg'], description: 'A focused discovery and growth-planning engagement translating business priorities into a practical digital roadmap.', results: 'Research · Digital roadmap · Campaign priorities' },
+            { name: 'Product Design Sprint', category: 'Website', client: 'Technology venture', image: 'assets/images/seedwel-digital-craft.jpg', gallery: ['assets/images/seedwel-digital-craft.jpg', 'assets/images/seedwel-team-studio.jpg', 'assets/images/seedwel-process-poster.jpg'], description: 'Collaborative product design covering user journeys, interface direction and a responsive prototype ready for development.', results: 'UX planning · UI system · Responsive prototype' },
+            { name: 'Customer Care Operations', category: 'Other', client: 'Online service provider', image: 'assets/images/seedwel-client-support.jpg', gallery: ['assets/images/seedwel-client-support.jpg', 'assets/images/seedwel-team-studio.jpg', 'assets/images/seedwel-showreel-poster.jpg'], description: 'A structured virtual support workflow helping a growing company respond faster and keep customer communication consistent.', results: 'Support workflow · Response templates · Service reporting' },
+            { name: 'Business Launch Advisory', category: 'Business registration', client: 'New Zambian enterprise', image: 'assets/images/seedwel-business-advisory.jpg', gallery: ['assets/images/seedwel-business-advisory.jpg', 'assets/images/seedwel-strategy-session.jpg', 'assets/images/seedwel-launch-moment.jpg'], description: 'Launch support bringing registration, positioning and the first digital touchpoints into one clear action plan.', results: 'Registration plan · Brand positioning · Launch checklist' },
+            { name: 'Campaign Launch Creative', category: 'Branding', client: 'Consumer brand', image: 'assets/images/seedwel-launch-moment.jpg', gallery: ['assets/images/seedwel-launch-moment.jpg', 'assets/images/seedwel-digital-craft.jpg', 'assets/images/seedwel-showreel-poster.jpg'], description: 'A coordinated set of digital campaign visuals designed to create a confident and recognisable launch moment.', results: 'Campaign concept · Social assets · Launch toolkit' },
+            { name: 'Collaborative Website Build', category: 'Website', client: 'Professional services team', image: 'assets/images/seedwel-team-studio.jpg', gallery: ['assets/images/seedwel-team-studio.jpg', 'assets/images/seedwel-digital-craft.jpg', 'assets/images/seedwel-client-support.jpg'], description: 'A modern business website shaped through close collaboration, responsive development and a supported handover.', results: 'Content structure · Responsive build · Team training' }
+        );
+
+
         let allProjects = [];
         let activeFilter = 'All';
         let currentSettings = { ...DEFAULT_SETTINGS };
         let selectedProject = null;
+        let selectedProjectImages = [];
+        let selectedProjectImageIndex = 0;
         let usingFallback = false;
         let toastTimer;
 
         function safeText(value, limit = 0) { const result = String(value || '').trim(); return limit ? result.slice(0, limit) : result; }
         function safeHttpUrl(value) {
-            try { const url = new URL(safeText(value, 2048)); return (url.protocol === 'https:' || url.protocol === 'http:') ? url.href : ''; } catch (_) { return ''; }
+            try { const url = new URL(safeText(value, 2048), window.location.href); return (url.protocol === 'https:' || url.protocol === 'http:') ? url.href : ''; } catch (_) { return ''; }
         }
         function safeImageUrl(value) { return safeHttpUrl(value) || 'favicon.svg'; }
+        function projectImages(project) {
+            const raw = project && project.gallery;
+            const gallery = Array.isArray(raw) ? raw : (raw && typeof raw === 'object' ? Object.values(raw) : []);
+            const unique = [];
+            [project && project.image, ...gallery].forEach((value) => {
+                const url = safeHttpUrl(value);
+                if (url && !unique.includes(url) && unique.length < 6) unique.push(url);
+            });
+            return unique.length ? unique : ['favicon.svg'];
+        }
         function getPortfolioLink() { return new URL('projects.html', window.location.href).href; }
         function getShareText() { return 'Explore the Seedwel Investment LTD portfolio: ' + getPortfolioLink(); }
         function normalisedPhone(value) { return safeText(value).replace(/[^\d]/g, ''); }
@@ -471,7 +527,11 @@
                 const media = document.createElement('div'); media.className = 'project-media';
                 const image = document.createElement('img'); image.src = safeImageUrl(project.image); image.alt = safeText(project.name, 120) || 'Portfolio project'; image.loading = 'lazy'; image.addEventListener('error', () => { image.src = 'favicon.svg'; });
                 const category = document.createElement('span'); category.className = 'project-category'; category.textContent = safeText(project.category, 60) || 'Project';
-                media.append(image, category);
+                const photos = projectImages(project);
+                const photoCount = document.createElement('span');
+                photoCount.className = 'project-photo-count';
+                photoCount.innerHTML = '<i class="fa-solid fa-images" aria-hidden="true"></i> ' + photos.length;
+                media.append(image, category, photoCount);
                 const content = document.createElement('div'); content.className = 'project-content';
                 const client = document.createElement('p'); client.className = 'project-client'; client.textContent = safeText(project.client, 120) || 'Seedwel Investment LTD';
                 const title = document.createElement('h3'); title.textContent = safeText(project.name, 120) || 'Untitled project';
@@ -521,9 +581,43 @@
             $('contactCta').href = 'mailto:' + encodeURIComponent(email) + '?subject=' + encodeURIComponent('Project enquiry from the portfolio');
         }
 
+        function renderModalGallery() {
+            const image = selectedProjectImages[selectedProjectImageIndex] || 'favicon.svg';
+            $('modalImage').src = image;
+            $('modalImage').alt = (safeText(selectedProject && selectedProject.name, 120) || 'Portfolio project') + ' — photo ' + (selectedProjectImageIndex + 1);
+            const multiple = selectedProjectImages.length > 1;
+            $('modalPrev').hidden = !multiple;
+            $('modalNext').hidden = !multiple;
+            $('modalPhotoPosition').hidden = !multiple;
+            $('modalPhotoPosition').textContent = (selectedProjectImageIndex + 1) + ' / ' + selectedProjectImages.length;
+            const thumbnails = $('modalThumbnails');
+            thumbnails.textContent = '';
+            thumbnails.hidden = !multiple;
+            selectedProjectImages.forEach((url, index) => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'modal-thumbnail' + (index === selectedProjectImageIndex ? ' active' : '');
+                button.setAttribute('aria-label', 'View project photo ' + (index + 1));
+                const thumb = document.createElement('img');
+                thumb.src = url;
+                thumb.alt = '';
+                button.appendChild(thumb);
+                button.addEventListener('click', () => { selectedProjectImageIndex = index; renderModalGallery(); });
+                thumbnails.appendChild(button);
+            });
+        }
+
+        function moveModalPhoto(direction) {
+            if (selectedProjectImages.length < 2) return;
+            selectedProjectImageIndex = (selectedProjectImageIndex + direction + selectedProjectImages.length) % selectedProjectImages.length;
+            renderModalGallery();
+        }
+
         function openProject(project) {
             selectedProject = project;
-            $('modalImage').src = safeImageUrl(project.image); $('modalImage').alt = safeText(project.name, 120) || 'Portfolio project';
+            selectedProjectImages = projectImages(project);
+            selectedProjectImageIndex = 0;
+            renderModalGallery();
             $('modalKicker').textContent = [safeText(project.category, 60), safeText(project.client, 120)].filter(Boolean).join(' · ');
             $('modalTitle').textContent = safeText(project.name, 120) || 'Portfolio project';
             $('modalDescription').textContent = safeText(project.description, 1200);
@@ -532,6 +626,7 @@
             const dialog = $('projectDialog');
             if (typeof dialog.showModal === 'function') dialog.showModal(); else dialog.setAttribute('open', '');
         }
+
         function closeDialog() { const dialog = $('projectDialog'); if (typeof dialog.close === 'function') dialog.close(); else dialog.removeAttribute('open'); }
         async function shareSelectedProject() {
             if (!selectedProject) return;
@@ -560,7 +655,13 @@
         $('heroShare').addEventListener('click', sharePortfolio);
         $('dialogClose').addEventListener('click', closeDialog);
         $('modalShare').addEventListener('click', shareSelectedProject);
+        $('modalPrev').addEventListener('click', () => moveModalPhoto(-1));
+        $('modalNext').addEventListener('click', () => moveModalPhoto(1));
         $('projectDialog').addEventListener('click', (event) => { if (event.target === $('projectDialog')) closeDialog(); });
+        $('projectDialog').addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowLeft') moveModalPhoto(-1);
+            if (event.key === 'ArrowRight') moveModalPhoto(1);
+        });
         $('header').classList.toggle('scrolled', window.scrollY > 20);
         window.addEventListener('scroll', () => $('header').classList.toggle('scrolled', window.scrollY > 20), { passive: true });
 
@@ -572,11 +673,27 @@
         db.ref('publicProjects').on('value', (snapshot) => {
             const records = Object.entries(snapshot.val() || {});
             usingFallback = records.length === 0;
-            allProjects = usingFallback ? STATIC_PROJECTS : records.map(([, project]) => project).filter((project) => project && project.published !== false);
+            allProjects = usingFallback ? STATIC_PROJECTS : records
+                .map(([, project], index) => {
+                    if (!project || project.published === false) return null;
+                    const hasGallery = Array.isArray(project.gallery)
+                        ? project.gallery.length > 1
+                        : Boolean(project.gallery && typeof project.gallery === 'object' && Object.keys(project.gallery).length > 1);
+                    return hasGallery ? project : {
+                        ...project,
+                        gallery: [
+                            project.image,
+                            PROJECT_DETAIL_PHOTOS[index % PROJECT_DETAIL_PHOTOS.length],
+                            PROJECT_DETAIL_PHOTOS[(index + 3) % PROJECT_DETAIL_PHOTOS.length]
+                        ]
+                    };
+                })
+                .filter(Boolean);
             allProjects.sort((a, b) => Number(b.updatedAt || b.createdAt || 0) - Number(a.updatedAt || a.createdAt || 0));
             renderProjects(); updateStats();
         }, () => { usingFallback = true; allProjects = STATIC_PROJECTS; renderProjects(); updateStats(); $('portfolioStatus').textContent = 'Showcase collection'; });
         updateShareLinks(); applySettings(); updateRevealObservers();
     </script>
+    <script src="assets/js/service-strip.js" defer></script>
 </body>
 </html>

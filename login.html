@@ -185,8 +185,8 @@
                     <div class="msg error" id="signInMsg"></div>
                     <form id="signInForm" novalidate>
                         <div class="field">
-                            <label for="loginEmail">Email address</label>
-                            <input type="email" id="loginEmail" placeholder="you@example.com" autocomplete="email" required />
+                            <label for="loginEmail">Email or account ID</label>
+                            <input type="text" id="loginEmail" placeholder="Email or account ID" autocomplete="username" autocapitalize="none" spellcheck="false" required />
                         </div>
                         <div class="field">
                             <label for="loginPassword">Password</label>
@@ -291,6 +291,15 @@
         const auth = firebase.auth();
         const db = firebase.database();
         const ADMIN_EMAIL = 'zacheussimbaya@gmail.com';
+        // The public-facing admin ID is mapped to the verified Firebase account.
+        // The real email is never displayed in the interface and the password is
+        // sent directly to Firebase Authentication — it is not stored in this site.
+        const ADMIN_LOGIN_ID = 'seedwel@admin';
+
+        function firebaseSignInEmail(value) {
+            const identity = String(value || '').trim().toLowerCase();
+            return identity === ADMIN_LOGIN_ID ? ADMIN_EMAIL : identity;
+        }
 
         // ─── Tab switching ───
         const tabSignIn = document.getElementById('tabSignIn');
@@ -346,9 +355,10 @@
         document.getElementById('signInForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             clearMsg(signInMsg);
-            const email = document.getElementById('loginEmail').value.trim();
+            const identity = document.getElementById('loginEmail').value.trim();
+            const email = firebaseSignInEmail(identity);
             const password = document.getElementById('loginPassword').value;
-            if (!email || !password) { showMsg(signInMsg, 'Please enter your email and password.'); return; }
+            if (!identity || !password) { showMsg(signInMsg, 'Please enter your email or account ID and password.'); return; }
 
             const btn = document.getElementById('signInBtn');
             btn.disabled = true;
@@ -374,12 +384,15 @@
 
         // ─── Forgot password ───
         document.getElementById('forgotLink').addEventListener('click', async () => {
-            const email = document.getElementById('loginEmail').value.trim();
-            if (!email) { showMsg(signInMsg, 'Enter your email above, then click "Forgot your password?"'); return; }
+            const identity = document.getElementById('loginEmail').value.trim();
+            const email = firebaseSignInEmail(identity);
+            if (!identity) { showMsg(signInMsg, 'Enter your email or account ID above, then click "Forgot your password?"'); return; }
             try {
                 await auth.sendPasswordResetEmail(email);
                 showMsg(signInMsg, '');
-                signInMsg.textContent = 'Password reset link sent to ' + email + '.';
+                signInMsg.textContent = identity.toLowerCase() === ADMIN_LOGIN_ID
+                    ? 'Password reset instructions were sent to the private administrator email.'
+                    : 'Password reset link sent to ' + identity + '.';
                 signInMsg.classList.remove('error');
                 signInMsg.classList.add('success');
                 signInMsg.style.display = 'block';

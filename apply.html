@@ -899,14 +899,14 @@
                         <textarea id="coverLetter" placeholder="Tell us about your experience, skills, and why you're interested in this role..." required></textarea>
                     </div>
                     <div class="form-group">
-                        <label>Upload CV / Resume <span class="required">*</span></label>
-                        <div class="file-upload" id="fileUpload" role="button" tabindex="0" aria-required="true" aria-controls="cvFile" aria-describedby="cvUploadNote cvUploadStatus">
+                        <label>Upload CV / Resume <span style="color:#6b7280;font-weight:500;">(recommended)</span></label>
+                        <div class="file-upload" id="fileUpload" role="button" tabindex="0" aria-required="false" aria-controls="cvFile" aria-describedby="cvUploadNote cvUploadStatus">
                             <i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
                             <p>Click or drop your CV here (PDF, DOC, DOCX — max 5 MB)</p>
                             <div class="file-name" id="fileName"></div>
                             <input type="file" id="cvFile" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" style="display:none;" />
                         </div>
-                        <p class="file-upload-note" id="cvUploadNote"><i class="fas fa-shield-halved" aria-hidden="true"></i><span>Your CV is stored as a private, authenticated asset in Seedwel's Cloudinary <strong>portfolio</strong> folder. Only authorised administrators can request a temporary download.</span></p>
+                        <p class="file-upload-note" id="cvUploadNote"><i class="fas fa-shield-halved" aria-hidden="true"></i><span>Your application is always sent to the administrator, even if the private CV service is temporarily unavailable. Uploaded CVs are protected; if no CV can be attached, you can send it to <strong>seedwelinvestltd@gmail.com</strong> or WhatsApp <strong>+260 973 028 342</strong>.</span></p>
                         <div class="file-upload-progress" id="uploadProgress" aria-hidden="true">
                             <div class="file-upload-progress-bar" id="uploadProgressBar"></div>
                         </div>
@@ -927,8 +927,12 @@
             </div>
             <div class="form-success" id="formSuccess">
                 <i class="fas fa-check-circle"></i>
-                <h3>Application Submitted!</h3>
-                <p>Thank you for applying. Our team will review your application and get back to you within 48 hours. Check your email for a confirmation.</p>
+                <h3 id="formSuccessTitle">Application Sent to Admin!</h3>
+                <p id="formSuccessText">Thank you for applying. Your application is now in the administrator's secure inbox for review.</p>
+                <div id="cvFollowUp" hidden style="margin:18px auto 0;max-width:560px;padding:15px;border:1px solid #fde68a;border-radius:14px;background:#fffbeb;color:#854d0e;font-size:.84rem;line-height:1.6;">
+                    <strong style="display:block;margin-bottom:5px;"><i class="fas fa-paperclip" style="font-size:1rem;margin:0 5px 0 0;color:#b45309;"></i> CV follow-up needed</strong>
+                    Your application was received, but the CV was not attached. Send it by <a href="mailto:seedwelinvestltd@gmail.com?subject=CV%20for%20my%20Seedwel%20application" style="color:#b91c1c;font-weight:800;">email</a> or <a href="https://wa.me/260973028342?text=Hello%20Seedwel%2C%20I%20have%20submitted%20an%20application%20and%20would%20like%20to%20send%20my%20CV." target="_blank" rel="noopener" style="color:#15803d;font-weight:800;">WhatsApp</a>.
+                </div>
                 <button onclick="resetForm()" style="margin-top:20px; background:#dc2626; color:#fff; padding:12px 30px; border:none; border-radius:50px; font-weight:700; cursor:pointer; transition:all 0.3s ease; font-family:'Montserrat',sans-serif;">
                     <i class="fas fa-arrow-left"></i> Submit Another Application
                 </button>
@@ -1136,7 +1140,7 @@
         }
 
         function cvValidationError(file) {
-            if (!file) return 'Please choose your CV or resume.';
+            if (!file) return '';
             if (!file.size) return 'The selected file is empty.';
             if (file.size > 5 * 1024 * 1024) return 'Your CV must be 5 MB or smaller.';
             if (!allowedCvExtensions.has(cvExtension(file))) return 'Choose a PDF, DOC or DOCX file.';
@@ -1272,8 +1276,9 @@
                 alert('Please accept the Privacy Policy to submit your application.');
                 return;
             }
+
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending to admin...';
 
             const baseApplication = {
                 fullName: fullName.slice(0, 120),
@@ -1283,57 +1288,93 @@
                 experience: (experience || '').slice(0, 40),
                 portfolioUrl: portfolioUrl.slice(0, 2048),
                 coverLetter: coverLetter.slice(0, 4000),
-                cvFileName: (file.name || 'cv').slice(0, 200),
+                cvFileName: file ? (file.name || 'cv').slice(0, 200) : '',
                 consent: true,
                 status: 'new',
                 submittedAt: firebase.database.ServerValue.TIMESTAMP
             };
 
             let cvAsset = null;
+            let cvUploadError = null;
+            let applicationSaved = false;
             try {
-                uploadProgress.style.display = 'block';
-                uploadProgress.setAttribute('aria-hidden', 'false');
-                uploadProgressBar.style.width = '5%';
-                setCvUploadStatus('Preparing secure Cloudinary upload…', '');
-
-                cvAsset = await SeedwelCloudinary.upload(file, {
-                    kind: 'cv',
-                    ownerName: fullName,
-                    onProgress: (progress) => {
-                        uploadProgressBar.style.width = (5 + progress * 0.85) + '%';
-                        setCvUploadStatus('Uploading CV securely… ' + progress + '%', '');
+                if (file) {
+                    uploadProgress.style.display = 'block';
+                    uploadProgress.setAttribute('aria-hidden', 'false');
+                    uploadProgressBar.style.width = '5%';
+                    setCvUploadStatus('Preparing private CV upload…', '');
+                    try {
+                        cvAsset = await SeedwelCloudinary.upload(file, {
+                            kind: 'cv',
+                            ownerName: fullName,
+                            onProgress: (progress) => {
+                                uploadProgressBar.style.width = (5 + progress * 0.82) + '%';
+                                setCvUploadStatus('Uploading CV securely… ' + progress + '%', '');
+                            }
+                        });
+                    } catch (error) {
+                        // A CV provider outage must never discard the application.
+                        // Save the form to the private admin inbox with a clear
+                        // follow-up flag so the administrator can request the file.
+                        cvUploadError = error;
+                        cvAsset = null;
                     }
-                });
-                uploadProgressBar.style.width = '93%';
-                setCvUploadStatus('Saving your application…', '');
+                }
 
-                await db.ref('applications').push().set({
-                    ...baseApplication,
-                    cvDownloadUrl: '/api/cloudinary-download',
-                    cvStoragePath: cvAsset.publicId,
-                    cvCloudinaryPublicId: cvAsset.publicId,
-                    cvAssetFolder: cvAsset.assetFolder || 'portfolio',
-                    cvResourceType: cvAsset.resourceType,
-                    cvDeliveryType: cvAsset.deliveryType,
-                    cvFormat: cvAsset.format,
-                    cvFileSize: cvAsset.bytes,
-                    cvUploadProvider: 'cloudinary'
-                });
+                uploadProgressBar.style.width = cvAsset ? '93%' : (file ? '55%' : '0');
+                setCvUploadStatus('Delivering your application to the administrator…', '');
 
+                const application = { ...baseApplication };
+                if (cvAsset) {
+                    Object.assign(application, {
+                        cvStatus: 'uploaded',
+                        cvDownloadUrl: '/api/cloudinary-download',
+                        cvStoragePath: cvAsset.publicId,
+                        cvCloudinaryPublicId: cvAsset.publicId,
+                        cvAssetFolder: cvAsset.assetFolder || 'portfolio',
+                        cvResourceType: cvAsset.resourceType,
+                        cvDeliveryType: cvAsset.deliveryType,
+                        cvFormat: cvAsset.format,
+                        cvFileSize: cvAsset.bytes,
+                        cvUploadProvider: 'cloudinary'
+                    });
+                } else {
+                    const needsCv = Boolean(file);
+                    Object.assign(application, {
+                        cvStatus: needsCv ? 'email_required' : 'not_provided',
+                        cvUploadNote: needsCv
+                            ? 'Application received without CV attachment because the private upload service was unavailable. Contact the applicant for the CV by email or WhatsApp.'
+                            : 'Application submitted without a CV. Contact the applicant for the CV by email or WhatsApp.',
+                        cvUploadErrorCode: needsCv
+                            ? String((cvUploadError && (cvUploadError.code || cvUploadError.status)) || 'UPLOAD_UNAVAILABLE').slice(0, 80)
+                            : ''
+                    });
+                }
+
+                await db.ref('applications').push().set(application);
+                applicationSaved = true;
                 uploadProgressBar.style.width = '100%';
-                setTimeout(() => {
+
+                const cvNeedsFollowUp = !cvAsset;
+                document.getElementById('formSuccessTitle').textContent = 'Application Sent to Admin!';
+                document.getElementById('formSuccessText').textContent = cvAsset
+                    ? 'Your application and private CV are now in the administrator\'s secure inbox for review. Our team aims to respond within 48 hours.'
+                    : 'Your application is now in the administrator\'s secure inbox for review. Please send your CV separately using one of the options below.';
+                document.getElementById('cvFollowUp').hidden = !cvNeedsFollowUp;
+
+                window.setTimeout(() => {
                     formContent.style.display = 'none';
                     formSuccess.style.display = 'block';
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Application';
                     uploadProgress.style.display = 'none';
                     uploadProgress.setAttribute('aria-hidden', 'true');
                     uploadProgressBar.style.width = '0';
-                    setCvUploadStatus('CV uploaded securely to the Cloudinary portfolio folder.', 'success');
-                }, 500);
+                    setCvUploadStatus(cvAsset
+                        ? 'Application and CV delivered securely to admin.'
+                        : 'Application delivered to admin; CV follow-up is required.', cvAsset ? 'success' : '');
+                }, 350);
             } catch (error) {
                 console.error('Application submission error:', error);
-                if (cvAsset && cvAsset.publicId) {
+                if (cvAsset && cvAsset.publicId && !applicationSaved) {
                     try {
                         await SeedwelCloudinary.remove({
                             kind: 'cv',
@@ -1342,21 +1383,17 @@
                         });
                     } catch (_) { /* Do not hide the original submission error. */ }
                 }
-                const detail = error && error.message ? error.message : 'The application could not be submitted.';
-                // A 503 means the CV upload service has not been connected yet.
-                // Applicants should not be told to simply "try again" — the
-                // retry cannot succeed until an administrator fixes it.
-                const notConfigured = (error && (error.status === 503 || error.code === 'CLOUDINARY_NOT_CONFIGURED'));
-                const applicantMessage = notConfigured
-                    ? 'We cannot receive CV uploads at the moment. Our team has been notified. Please send your CV to seedwelinvestltd@gmail.com or contact us on WhatsApp: +260 973 028 342.'
-                    : detail + ' Please try again or contact us via WhatsApp.';
+                const applicantMessage = 'Your application could not be delivered to the administrator. Please check your connection, then try again or contact us on WhatsApp: +260 973 028 342.';
                 alert(applicantMessage);
+                setCvUploadStatus(applicantMessage, 'error');
+            } finally {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Application';
-                uploadProgress.style.display = 'none';
-                uploadProgress.setAttribute('aria-hidden', 'true');
-                uploadProgressBar.style.width = '0';
-                setCvUploadStatus(applicantMessage, 'error');
+                if (!applicationSaved) {
+                    uploadProgress.style.display = 'none';
+                    uploadProgress.setAttribute('aria-hidden', 'true');
+                    uploadProgressBar.style.width = '0';
+                }
             }
         });
 
@@ -1378,5 +1415,6 @@
         window.addEventListener('pageshow', (e) => { if (e.persisted) window.scrollTo(0, 0); });
     </script>
 
+    <script src="assets/js/service-strip.js" defer></script>
 </body>
 </html>

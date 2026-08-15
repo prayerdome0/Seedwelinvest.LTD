@@ -409,6 +409,9 @@
         .image-preview-wrap { position: relative; display: none; margin: 12px 0 2px; }
         .image-preview-wrap.visible { display: block; }
         .image-preview { display: block; width: 100%; height: 165px; object-fit: cover; border: 1px solid var(--line); border-radius: 12px; background: #0d1727; }
+        .gallery-preview { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 7px; margin-top: 8px; }
+        .gallery-preview img { width: 100%; height: 58px; object-fit: cover; border: 1px solid var(--line); border-radius: 8px; background: #0d1727; }
+        .gallery-preview .gallery-more { display: grid; min-height: 58px; color: var(--gold); border: 1px dashed rgba(245,201,103,.4); border-radius: 8px; background: rgba(245,201,103,.08); font-size: .68rem; font-weight: 800; place-items: center; }
         .remove-image {
             position: absolute;
             top: 8px;
@@ -512,6 +515,14 @@
         .inbox-body { color: #d5deec; font-size: .8rem; line-height: 1.55; white-space: pre-wrap; word-break: break-word; }
         .inbox-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
         .inbox-actions .btn { min-height: 34px; padding: 7px 10px; font-size: .72rem; }
+        .application-tools { display: grid; grid-template-columns: minmax(180px, 1fr) 150px auto; gap: 9px; margin-bottom: 13px; }
+        .application-tools .panel-search { margin: 0; }
+        .application-tools select { min-height: 39px; padding: 8px 11px; color: var(--white); border: 1px solid var(--line); border-radius: 11px; background: rgba(9,14,24,.6); font: 600 .76rem 'Inter', sans-serif; }
+        .application-tools select:focus { border-color: var(--gold); outline: none; }
+        .cv-state { display: inline-flex; align-items: center; gap: 6px; margin: 1px 0 9px; padding: 5px 8px; border-radius: 8px; font-size: .68rem; font-weight: 800; }
+        .cv-state.uploaded { color: #91ebbf; background: rgba(67,209,158,.1); }
+        .cv-state.pending { color: #ffd98d; background: rgba(245,201,103,.1); }
+        @media (max-width: 700px) { .application-tools { grid-template-columns: 1fr; } }
         .status-pill.reviewing { color: #b8d3ff; border-color: rgba(120,169,255,.28); background: rgba(120,169,255,.1); }
         .status-pill.shortlisted, .status-pill.read { color: #a8eed0; border-color: rgba(67,209,158,.28); background: rgba(67,209,158,.1); }
         .status-pill.rejected, .status-pill.archived { color: #ffb0b0; border-color: rgba(239,88,88,.28); background: rgba(239,88,88,.1); }
@@ -667,6 +678,7 @@
                 <article class="metric"><div class="metric-icon"><i class="fa-solid fa-chart-pie" aria-hidden="true"></i></div><strong id="storageUsed">0 B</strong><span id="storageUsageCaption">Tracked upload usage</span><div class="storage-meter" aria-hidden="true"><span id="storageMeter"></span></div></article>
                 <article class="metric"><div class="metric-icon"><i class="fa-solid fa-envelope-open-text" aria-hidden="true"></i></div><strong id="newMessagesCount">0</strong><span>New contact messages</span></article>
                 <article class="metric"><div class="metric-icon"><i class="fa-solid fa-user-tie" aria-hidden="true"></i></div><strong id="newApplicationsCount">0</strong><span>New job applications</span></article>
+                <article class="metric"><div class="metric-icon"><i class="fa-solid fa-file-circle-exclamation" aria-hidden="true"></i></div><strong id="cvFollowUpCount">0</strong><span>CVs needing follow-up</span></article>
                 <article class="metric"><div class="metric-icon"><i class="fa-solid fa-user-clock" aria-hidden="true"></i></div><strong id="pendingWorkersMetric">0</strong><span>Pending applicants</span></article>
                 <article class="metric"><div class="metric-icon"><i class="fa-solid fa-user-check" aria-hidden="true"></i></div><strong id="activeWorkersMetric">0</strong><span>Active workers</span></article>
             </section>
@@ -687,20 +699,25 @@
                             <form class="project-form" id="projectForm" novalidate>
                                 <div class="form-grid">
                                     <div class="field full">
-                                        <label for="projectImage">Project image <span>(up to 25 MB)</span></label>
+                                        <label for="projectImage">Project photo gallery <span>(up to 6 photos, 25 MB each)</span></label>
                                         <label class="upload-area" id="uploadArea" for="projectImage">
-                                            <input id="projectImage" type="file" accept="image/png,image/jpeg,image/webp,image/gif,image/avif">
-                                            <div><i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i><strong>Choose or drop a portfolio image</strong><span>PNG, JPG, WEBP, GIF or AVIF — uploaded to connected Cloudinary</span></div>
+                                            <input id="projectImage" type="file" accept="image/png,image/jpeg,image/webp,image/gif,image/avif" multiple>
+                                            <div><i class="fa-solid fa-images" aria-hidden="true"></i><strong>Choose or drop up to 6 project photos</strong><span>The first photo becomes the cover · PNG, JPG, WEBP, GIF or AVIF</span></div>
                                         </label>
                                         <div class="image-preview-wrap" id="previewWrap">
-                                            <img class="image-preview" id="imagePreview" alt="Selected project preview">
-                                            <button class="remove-image" id="removeImage" type="button" aria-label="Remove selected image"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+                                            <img class="image-preview" id="imagePreview" alt="Selected project cover preview">
+                                            <div class="gallery-preview" id="galleryPreview" aria-label="Selected project photos"></div>
+                                            <button class="remove-image" id="removeImage" type="button" aria-label="Clear selected project photos"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
                                         </div>
-                                        <small>Alternatively, add a trusted image URL below. New Cloudinary uploads require a verified administrator session and a server-generated signature.</small>
+                                        <small>Upload a complete gallery or use trusted image URLs below. New uploads require a verified administrator session and a server-generated signature.</small>
                                     </div>
                                     <div class="field full">
-                                        <label for="externalImageUrl">Trusted image URL <span>(optional)</span></label>
-                                        <input id="externalImageUrl" type="url" inputmode="url" placeholder="https://example.com/project-image.jpg" maxlength="2048">
+                                        <label for="externalImageUrl">Trusted cover photo URL <span>(optional)</span></label>
+                                        <input id="externalImageUrl" type="url" inputmode="url" placeholder="https://example.com/project-cover.jpg" maxlength="2048">
+                                    </div>
+                                    <div class="field full">
+                                        <label for="projectGalleryUrls">Additional photo URLs <span>(optional · one per line, up to 5)</span></label>
+                                        <textarea id="projectGalleryUrls" maxlength="10240" placeholder="https://example.com/project-detail-1.jpg&#10;https://example.com/project-detail-2.jpg"></textarea>
                                     </div>
                                     <div class="field">
                                         <label for="projectName">Project title</label>
@@ -869,6 +886,19 @@
                             <button class="text-button" id="refreshApplications" type="button">Refresh</button>
                         </div>
                         <div class="panel-body">
+                            <div class="application-tools" aria-label="Application inbox tools">
+                                <input class="panel-search" id="applicationSearch" type="search" placeholder="Search name, email, phone or position…" autocomplete="off" />
+                                <select id="applicationStatusFilter" aria-label="Filter applications by status">
+                                    <option value="all">All statuses</option>
+                                    <option value="new">New</option>
+                                    <option value="reviewing">Reviewing</option>
+                                    <option value="shortlisted">Shortlisted</option>
+                                    <option value="hired">Hired</option>
+                                    <option value="rejected">Rejected</option>
+                                    <option value="cv_pending">CV follow-up</option>
+                                </select>
+                                <button class="btn btn-secondary" id="exportApplications" type="button"><i class="fa-solid fa-file-csv" aria-hidden="true"></i> Export CSV</button>
+                            </div>
                             <div class="inbox-list" id="applicationsList" aria-live="polite"><div class="empty-state"><i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>Loading applications…</div></div>
                         </div>
                     </section>
@@ -975,7 +1005,9 @@
         // enforced server-side by the deployed Database Rules. No Admin ID or
         // password is collected or stored by this page.
         const ADMIN_EMAIL = 'zacheussimbaya@gmail.com';
+        const ADMIN_DISPLAY_ID = 'seedwel@admin';
         const MAX_IMAGE_BYTES = 25 * 1024 * 1024;
+        const MAX_PROJECT_IMAGES = 6;
         const DEFAULT_SETTINGS = Object.freeze({
             portfolioTitle: 'Portfolio & Projects',
             portfolioIntro: 'A selection of thoughtful digital products, business services and creative work delivered by Seedwel Investment LTD.',
@@ -1035,8 +1067,10 @@
         const uploadArea = $('uploadArea');
         const previewWrap = $('previewWrap');
         const imagePreview = $('imagePreview');
+        const galleryPreview = $('galleryPreview');
         const removeImage = $('removeImage');
         const externalImageUrl = $('externalImageUrl');
+        const projectGalleryUrls = $('projectGalleryUrls');
         const projectName = $('projectName');
         const projectCategory = $('projectCategory');
         const projectClient = $('projectClient');
@@ -1051,6 +1085,9 @@
         const projectsList = $('projectsList');
         const messagesList = $('messagesList');
         const applicationsList = $('applicationsList');
+        const applicationSearch = $('applicationSearch');
+        const applicationStatusFilter = $('applicationStatusFilter');
+        const exportApplications = $('exportApplications');
         const workersList = $('workersList');
         const refreshWorkers = $('refreshWorkers');
         const taskForm = $('taskForm');
@@ -1082,9 +1119,11 @@
         let currentJobs = new Map();
         let currentAudit = new Map();
         let workerSearchTerm = '';
+        let applicationSearchTerm = '';
+        let applicationStatus = 'all';
         let currentSettings = { ...DEFAULT_SETTINGS };
         let editingKey = null;
-        let selectedFile = null;
+        let selectedFiles = [];
         let settingsTouched = false;
         let toastTimer;
         let dataListening = false;
@@ -1127,6 +1166,27 @@
 
         function safeImageUrl(value) {
             try { return safeHttpUrl(value, true); } catch (_) { return 'favicon.svg'; }
+        }
+
+        function projectGallery(project) {
+            const rawGallery = project && project.gallery;
+            const values = Array.isArray(rawGallery) ? rawGallery : (rawGallery && typeof rawGallery === 'object' ? Object.values(rawGallery) : []);
+            const candidates = [project && project.image, ...values];
+            const unique = [];
+            for (const value of candidates) {
+                try {
+                    const url = safeHttpUrl(value, true);
+                    if (!unique.includes(url)) unique.push(url);
+                } catch (_) { /* Ignore invalid project image URLs. */ }
+                if (unique.length >= MAX_PROJECT_IMAGES) break;
+            }
+            return unique;
+        }
+
+        function parseGalleryUrls(value) {
+            const urls = String(value || '').split(/\r?\n/).map((item) => item.trim()).filter(Boolean);
+            if (urls.length > MAX_PROJECT_IMAGES - 1) throw new Error('Add no more than 5 additional photo URLs.');
+            return urls.map((url) => safeHttpUrl(url, true));
         }
 
         function formatBytes(bytes) {
@@ -1186,8 +1246,8 @@
 
             if (user) {
                 signedInAs.hidden = false;
-                signedInName.textContent = user.displayName || 'Signed-in account';
-                signedInEmail.textContent = user.email || '';
+                signedInName.textContent = accountIsAdmin(user) ? 'Seedwel Administrator' : (user.displayName || 'Signed-in account');
+                signedInEmail.textContent = accountIsAdmin(user) ? ADMIN_DISPLAY_ID : (user.email || '');
                 if (user.photoURL) {
                     signedInAvatar.src = user.photoURL;
                     signedInAvatar.hidden = false;
@@ -1398,6 +1458,7 @@
                 liveUrl: safeText(project.liveUrl, 2048),
                 results: safeText(project.results, 500),
                 image: safeText(project.image, 2048) || 'favicon.svg',
+                gallery: projectGallery(project),
                 published: true,
                 createdAt: Number(project.createdAt) || firebase.database.ServerValue.TIMESTAMP,
                 updatedAt: Number(project.updatedAt) || firebase.database.ServerValue.TIMESTAMP
@@ -1471,7 +1532,8 @@
                 status.textContent = isPublished ? 'Published' : 'Draft';
                 top.append(title, status);
                 const details = document.createElement('p');
-                details.textContent = [safeText(project.category, 60) || 'Other', safeText(project.client, 120)].filter(Boolean).join(' · ');
+                const photoCount = projectGallery(project).length || 1;
+                details.textContent = [safeText(project.category, 60) || 'Other', safeText(project.client, 120), photoCount + ' photo' + (photoCount === 1 ? '' : 's')].filter(Boolean).join(' · ');
                 const actions = document.createElement('div');
                 actions.className = 'project-item-actions';
                 actions.append(
@@ -1489,7 +1551,11 @@
         function updateMetrics() {
             const projects = Array.from(currentProjects.values());
             const published = projects.filter((project) => project.published !== false).length;
-            const usage = projects.reduce((sum, project) => sum + Math.max(0, Number(project.fileSize) || 0), 0);
+            const usage = projects.reduce((sum, project) => {
+                const assets = Array.isArray(project.galleryAssets) ? project.galleryAssets : [];
+                if (assets.length) return sum + assets.reduce((assetSum, asset) => assetSum + Math.max(0, Number(asset && asset.fileSize) || 0), 0);
+                return sum + Math.max(0, Number(project.fileSize) || 0);
+            }, 0);
             const capacityTB = Math.max(.01, Number(currentSettings.storageCapacityTB) || 1);
             const capacity = capacityTB * Math.pow(1024, 4);
             const percentage = Math.min(100, (usage / capacity) * 100);
@@ -1500,9 +1566,12 @@
             $('storageUsageCaption').textContent = formatBytes(usage) + ' of ' + $('storageTarget').textContent + ' tracked';
             $('storageMeter').style.width = percentage + '%';
             const newMessages = Array.from(currentMessages.values()).filter((item) => (item.status || 'new') === 'new').length;
-            const newApps = Array.from(currentApplications.values()).filter((item) => (item.status || 'new') === 'new').length;
+            const applications = Array.from(currentApplications.values());
+            const newApps = applications.filter((item) => (item.status || 'new') === 'new').length;
+            const cvFollowUps = applications.filter((item) => item.cvStatus !== 'uploaded' && !item.cvCloudinaryPublicId && !item.cvDownloadUrl).length;
             if ($('newMessagesCount')) $('newMessagesCount').textContent = newMessages;
             if ($('newApplicationsCount')) $('newApplicationsCount').textContent = newApps;
+            if ($('cvFollowUpCount')) $('cvFollowUpCount').textContent = cvFollowUps;
         }
 
         function formatInboxDate(value) {
@@ -1595,12 +1664,35 @@
             }
         }
 
+        function applicationNeedsCv(app) {
+            return !app.cvCloudinaryPublicId && !app.cvDownloadUrl && app.cvStatus !== 'uploaded';
+        }
+
+        function appendMetaPart(container, nodeOrText) {
+            if (container.childNodes.length) container.appendChild(document.createTextNode(' · '));
+            container.appendChild(typeof nodeOrText === 'string' ? document.createTextNode(nodeOrText) : nodeOrText);
+        }
+
+        function filteredApplicationEntries() {
+            return sortedMapEntries(currentApplications).filter(([, app]) => {
+                const status = safeText(app.status, 20) || 'new';
+                if (applicationStatus === 'cv_pending' && !applicationNeedsCv(app)) return false;
+                if (applicationStatus !== 'all' && applicationStatus !== 'cv_pending' && status !== applicationStatus) return false;
+                if (!applicationSearchTerm) return true;
+                const searchable = [app.fullName, app.email, app.phone, app.position, app.experience]
+                    .map((value) => safeText(value, 200).toLowerCase()).join(' ');
+                return searchable.includes(applicationSearchTerm.toLowerCase());
+            });
+        }
+
         function renderApplications() {
             if (!applicationsList) return;
             applicationsList.textContent = '';
-            const entries = sortedMapEntries(currentApplications);
+            const entries = filteredApplicationEntries();
             if (!entries.length) {
-                applicationsList.innerHTML = '<div class="empty-state"><i class="fa-solid fa-user-plus" aria-hidden="true"></i>No job applications yet.</div>';
+                const hasAny = currentApplications.size > 0;
+                applicationsList.innerHTML = '<div class="empty-state"><i class="fa-solid fa-user-plus" aria-hidden="true"></i>'
+                    + (hasAny ? 'No applications match the selected filters.' : 'No job applications yet.') + '</div>';
                 return;
             }
             for (const [key, app] of entries) {
@@ -1615,22 +1707,46 @@
                 pill.className = 'status-pill ' + status;
                 pill.textContent = status;
                 top.append(title, pill);
+
                 const meta = document.createElement('div');
                 meta.className = 'inbox-meta';
                 const email = safeText(app.email, 160);
                 const phone = safeText(app.phone, 40);
                 const exp = safeText(app.experience, 40);
                 const portfolio = safeText(app.portfolioUrl, 2048);
-                meta.innerHTML = (email ? '<a href="mailto:' + email.replace(/"/g, '') + '">' + email + '</a>' : 'No email')
-                    + (phone ? ' · ' + phone : '')
-                    + (exp ? ' · Exp: ' + exp : '')
-                    + ' · ' + formatInboxDate(app.submittedAt)
-                    + (portfolio ? ' · <a href="' + portfolio.replace(/"/g, '') + '" target="_blank" rel="noopener">Portfolio</a>' : '');
+                if (email) {
+                    const emailLink = document.createElement('a');
+                    emailLink.href = 'mailto:' + encodeURIComponent(email);
+                    emailLink.textContent = email;
+                    appendMetaPart(meta, emailLink);
+                } else appendMetaPart(meta, 'No email');
+                if (phone) appendMetaPart(meta, phone);
+                if (exp) appendMetaPart(meta, 'Exp: ' + exp);
+                appendMetaPart(meta, formatInboxDate(app.submittedAt));
+                if (portfolio) {
+                    try {
+                        const portfolioLink = document.createElement('a');
+                        portfolioLink.href = safeHttpUrl(portfolio);
+                        portfolioLink.target = '_blank';
+                        portfolioLink.rel = 'noopener';
+                        portfolioLink.textContent = 'Portfolio';
+                        appendMetaPart(meta, portfolioLink);
+                    } catch (_) { /* Ignore unsafe applicant-provided URLs. */ }
+                }
+
+                const cvPending = applicationNeedsCv(app);
+                const cvState = document.createElement('div');
+                cvState.className = 'cv-state ' + (cvPending ? 'pending' : 'uploaded');
+                cvState.innerHTML = cvPending
+                    ? '<i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> CV follow-up required'
+                    : '<i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Private CV attached';
+
                 const body = document.createElement('div');
                 body.className = 'inbox-body';
                 let note = safeText(app.coverLetter, 4000) || '';
-                if (app.cvUploadNote) note += (note ? '\n\n' : '') + 'Note: ' + safeText(app.cvUploadNote, 300);
+                if (app.cvUploadNote) note += (note ? '\n\n' : '') + 'Admin note: ' + safeText(app.cvUploadNote, 300);
                 body.textContent = note;
+
                 const actions = document.createElement('div');
                 actions.className = 'inbox-actions';
                 const statuses = [
@@ -1650,6 +1766,7 @@
                     btn.textContent = label;
                     actions.appendChild(btn);
                 }
+
                 const cvPublicId = safeText(app.cvCloudinaryPublicId, 512);
                 const cvUrl = safeText(app.cvDownloadUrl, 2048);
                 if (cvPublicId) {
@@ -1662,15 +1779,35 @@
                     cv.innerHTML = '<i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> Private CV';
                     actions.appendChild(cv);
                 } else if (cvUrl) {
-                    // Legacy Firebase CV links remain available during migration.
-                    const cv = document.createElement('a');
-                    cv.className = 'btn btn-secondary';
-                    cv.href = cvUrl;
-                    cv.target = '_blank';
-                    cv.rel = 'noopener';
-                    cv.innerHTML = '<i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> CV';
-                    actions.appendChild(cv);
+                    try {
+                        const cv = document.createElement('a');
+                        cv.className = 'btn btn-secondary';
+                        cv.href = safeHttpUrl(cvUrl);
+                        cv.target = '_blank';
+                        cv.rel = 'noopener';
+                        cv.innerHTML = '<i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> CV';
+                        actions.appendChild(cv);
+                    } catch (_) { /* Ignore invalid legacy URLs. */ }
+                } else {
+                    if (email) {
+                        const requestEmail = document.createElement('a');
+                        requestEmail.className = 'btn btn-secondary';
+                        requestEmail.href = 'mailto:' + encodeURIComponent(email) + '?subject=' + encodeURIComponent('CV required for your Seedwel application') + '&body=' + encodeURIComponent('Hello ' + (safeText(app.fullName, 120) || 'Applicant') + ',\n\nWe received your Seedwel application, but your CV was not attached. Please reply to this email with your CV.\n\nSeedwel Investment LTD');
+                        requestEmail.innerHTML = '<i class="fa-solid fa-envelope" aria-hidden="true"></i> Request CV';
+                        actions.appendChild(requestEmail);
+                    }
+                    const phoneDigits = phone.replace(/[^0-9]/g, '');
+                    if (phoneDigits) {
+                        const requestWhatsApp = document.createElement('a');
+                        requestWhatsApp.className = 'btn btn-secondary';
+                        requestWhatsApp.href = 'https://wa.me/' + phoneDigits + '?text=' + encodeURIComponent('Hello ' + (safeText(app.fullName, 120) || '') + ', we received your Seedwel application but need your CV. Please send it here or email seedwelinvestltd@gmail.com.');
+                        requestWhatsApp.target = '_blank';
+                        requestWhatsApp.rel = 'noopener';
+                        requestWhatsApp.innerHTML = '<i class="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp';
+                        actions.appendChild(requestWhatsApp);
+                    }
                 }
+
                 const delBtn = document.createElement('button');
                 delBtn.type = 'button';
                 delBtn.className = 'btn btn-danger';
@@ -1678,9 +1815,34 @@
                 delBtn.dataset.key = key;
                 delBtn.innerHTML = '<i class="fa-solid fa-trash" aria-hidden="true"></i> Delete';
                 actions.appendChild(delBtn);
-                item.append(top, meta, body, actions);
+                item.append(top, meta, cvState, body, actions);
                 applicationsList.appendChild(item);
             }
+        }
+
+        function csvCell(value) {
+            return '"' + String(value == null ? '' : value).replace(/"/g, '""').replace(/^([=+\-@])/g, "'$1") + '"';
+        }
+
+        function exportApplicationsCsv() {
+            const rows = [['Submitted', 'Name', 'Email', 'Phone', 'Position', 'Experience', 'Status', 'CV status', 'Portfolio', 'Cover letter']];
+            filteredApplicationEntries().forEach(([, app]) => rows.push([
+                formatInboxDate(app.submittedAt), safeText(app.fullName, 120), safeText(app.email, 160),
+                safeText(app.phone, 40), safeText(app.position, 120), safeText(app.experience, 40),
+                safeText(app.status, 20) || 'new', applicationNeedsCv(app) ? 'Follow-up required' : 'Attached',
+                safeText(app.portfolioUrl, 2048), safeText(app.coverLetter, 4000)
+            ]));
+            if (rows.length === 1) { showToast('There are no matching applications to export.', 'error'); return; }
+            const csv = '\ufeff' + rows.map((row) => row.map(csvCell).join(',')).join('\r\n');
+            const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'seedwel-applications-' + new Date().toISOString().slice(0, 10) + '.csv';
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            URL.revokeObjectURL(url);
+            showToast('Application CSV exported.');
         }
 
         function updateWorkerMetrics() {
@@ -1908,6 +2070,15 @@
 
         if ($('refreshMessages')) $('refreshMessages').addEventListener('click', () => { renderMessages(); showToast('Messages refreshed.'); });
         if ($('refreshApplications')) $('refreshApplications').addEventListener('click', () => { renderApplications(); showToast('Applications refreshed.'); });
+        if (applicationSearch) applicationSearch.addEventListener('input', () => {
+            applicationSearchTerm = safeText(applicationSearch.value, 200);
+            renderApplications();
+        });
+        if (applicationStatusFilter) applicationStatusFilter.addEventListener('change', () => {
+            applicationStatus = applicationStatusFilter.value || 'all';
+            renderApplications();
+        });
+        if (exportApplications) exportApplications.addEventListener('click', exportApplicationsCsv);
         if (refreshWorkers) refreshWorkers.addEventListener('click', () => { renderWorkers(); populateTaskWorkers(); showToast('Workers refreshed.'); });
 
         // ─── Audit log ───
@@ -2243,26 +2414,57 @@
             });
         }
 
-        function previewImage(url) {
-            if (!url) {
+        function asList(value) {
+            if (Array.isArray(value)) return value.filter(Boolean);
+            if (value && typeof value === 'object') return Object.keys(value).sort((a, b) => Number(a) - Number(b)).map((key) => value[key]).filter(Boolean);
+            return [];
+        }
+
+        function previewImages(urls) {
+            const images = Array.from(new Set((urls || []).filter(Boolean))).slice(0, MAX_PROJECT_IMAGES);
+            galleryPreview.textContent = '';
+            if (!images.length) {
                 imagePreview.removeAttribute('src');
                 previewWrap.classList.remove('visible');
                 return;
             }
-            imagePreview.src = url;
+            imagePreview.src = images[0];
+            images.slice(1).forEach((url, index) => {
+                if (index >= 4) return;
+                const image = document.createElement('img');
+                image.src = url;
+                image.alt = 'Project gallery photo ' + (index + 2);
+                galleryPreview.appendChild(image);
+            });
+            if (images.length > 5) {
+                const more = document.createElement('span');
+                more.className = 'gallery-more';
+                more.textContent = '+' + (images.length - 5);
+                galleryPreview.appendChild(more);
+            }
             previewWrap.classList.add('visible');
+        }
+
+        function urlsForEditorPreview() {
+            if (selectedFiles.length) return [];
+            const existing = editingKey ? currentProjects.get(editingKey) : null;
+            let cover = '';
+            try { cover = externalImageUrl.value.trim() ? safeHttpUrl(externalImageUrl.value, true) : (projectGallery(existing)[0] || ''); } catch (_) { return []; }
+            let extras = [];
+            try { extras = parseGalleryUrls(projectGalleryUrls.value); } catch (_) { return cover ? [cover] : []; }
+            return [cover, ...extras].filter(Boolean).slice(0, MAX_PROJECT_IMAGES);
         }
 
         function resetProjectEditor() {
             editingKey = null;
-            selectedFile = null;
+            selectedFiles = [];
             projectForm.reset();
             projectPublished.checked = true;
             projectCategory.value = 'Website';
-            previewImage('');
+            previewImages([]);
             setStatus(projectStatus);
             $('projectFormTitle').textContent = 'Add a portfolio project';
-            $('projectFormDescription').textContent = 'Draft it first, then publish when it is ready for the public page.';
+            $('projectFormDescription').textContent = 'Add up to six photos, save a draft, then publish when it is ready.';
             setButtonLoading(saveProject, false, 'Add project', 'fa-solid fa-plus');
             cancelEdit.hidden = true;
             window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
@@ -2272,7 +2474,7 @@
             const project = currentProjects.get(key);
             if (!project) return;
             editingKey = key;
-            selectedFile = null;
+            selectedFiles = [];
             projectImage.value = '';
             projectName.value = safeText(project.name, 120);
             projectCategory.value = safeText(project.category, 60) || 'Other';
@@ -2282,10 +2484,12 @@
             projectDescription.value = safeText(project.description, 1200);
             projectResults.value = safeText(project.results, 500);
             externalImageUrl.value = '';
+            const gallery = projectGallery(project);
+            projectGalleryUrls.value = gallery.slice(1).join('\n');
             projectPublished.checked = project.published !== false;
-            previewImage(safeImageUrl(project.image));
+            previewImages(gallery);
             $('projectFormTitle').textContent = 'Edit portfolio project';
-            $('projectFormDescription').textContent = 'Save changes to update the portfolio immediately. The old image is removed only after a successful replacement.';
+            $('projectFormDescription').textContent = 'Replace or reorder the photo gallery and save changes to update the public portfolio.';
             setButtonLoading(saveProject, false, 'Save changes', 'fa-solid fa-floppy-disk');
             cancelEdit.hidden = false;
             setStatus(projectStatus);
@@ -2295,99 +2499,126 @@
 
         function validateFile(file) {
             if (!file) return;
-            if (!file.type || !file.type.startsWith('image/')) throw new Error('Please choose an image file.');
-            if (file.size > MAX_IMAGE_BYTES) throw new Error('That image is larger than 25 MB. Choose a smaller file.');
+            if (!file.type || !file.type.startsWith('image/')) throw new Error('Every selected file must be an image.');
+            if (file.size > MAX_IMAGE_BYTES) throw new Error(file.name + ' is larger than 25 MB. Choose a smaller file.');
         }
 
-        function chooseFile(file) {
-            try {
-                validateFile(file);
-                if (!file) return;
-                selectedFile = file;
-                externalImageUrl.value = '';
+        function fileDataUrl(file) {
+            return new Promise((resolve, reject) => {
                 const reader = new FileReader();
-                reader.addEventListener('load', () => previewImage(reader.result));
+                reader.addEventListener('load', () => resolve(reader.result));
+                reader.addEventListener('error', () => reject(new Error('Could not preview ' + file.name + '.')));
                 reader.readAsDataURL(file);
-                setStatus(projectStatus, file.name + ' selected (' + formatBytes(file.size) + ').');
+            });
+        }
+
+        async function chooseFiles(fileList) {
+            try {
+                const files = Array.from(fileList || []);
+                if (!files.length) return;
+                if (files.length > MAX_PROJECT_IMAGES) throw new Error('Choose no more than 6 project photos.');
+                files.forEach(validateFile);
+                selectedFiles = files;
+                externalImageUrl.value = '';
+                projectGalleryUrls.value = '';
+                const previews = await Promise.all(files.map(fileDataUrl));
+                previewImages(previews);
+                const totalSize = files.reduce((sum, file) => sum + file.size, 0);
+                setStatus(projectStatus, files.length + ' photo' + (files.length === 1 ? '' : 's') + ' selected (' + formatBytes(totalSize) + '). The first is the cover.');
             } catch (error) {
                 projectImage.value = '';
-                selectedFile = null;
+                selectedFiles = [];
                 setStatus(projectStatus, error.message, 'error');
             }
         }
 
-        projectImage.addEventListener('change', () => chooseFile(projectImage.files && projectImage.files[0]));
+        projectImage.addEventListener('change', () => chooseFiles(projectImage.files));
         uploadArea.addEventListener('dragover', (event) => { event.preventDefault(); uploadArea.classList.add('dragging'); });
         uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragging'));
         uploadArea.addEventListener('drop', (event) => {
             event.preventDefault();
             uploadArea.classList.remove('dragging');
-            const file = event.dataTransfer.files && event.dataTransfer.files[0];
-            chooseFile(file);
+            chooseFiles(event.dataTransfer.files);
         });
         externalImageUrl.addEventListener('change', () => {
-            if (!externalImageUrl.value.trim()) return;
+            if (!externalImageUrl.value.trim()) { previewImages(urlsForEditorPreview()); return; }
             try {
-                const url = safeHttpUrl(externalImageUrl.value);
-                selectedFile = null;
+                safeHttpUrl(externalImageUrl.value, true);
+                selectedFiles = [];
                 projectImage.value = '';
-                previewImage(url);
-                setStatus(projectStatus, 'Trusted external image URL selected.');
+                previewImages(urlsForEditorPreview());
+                setStatus(projectStatus, 'Trusted cover URL selected. Add up to 5 detail photos below.');
+            } catch (error) { setStatus(projectStatus, error.message, 'error'); }
+        });
+        projectGalleryUrls.addEventListener('change', () => {
+            try {
+                parseGalleryUrls(projectGalleryUrls.value);
+                selectedFiles = [];
+                projectImage.value = '';
+                previewImages(urlsForEditorPreview());
+                setStatus(projectStatus, 'External project gallery ready.');
             } catch (error) { setStatus(projectStatus, error.message, 'error'); }
         });
         removeImage.addEventListener('click', () => {
-            selectedFile = null;
+            selectedFiles = [];
             projectImage.value = '';
             externalImageUrl.value = '';
-            if (editingKey) {
-                const project = currentProjects.get(editingKey);
-                previewImage(project ? safeImageUrl(project.image) : '');
-            } else previewImage('');
-            setStatus(projectStatus);
+            projectGalleryUrls.value = '';
+            const project = editingKey ? currentProjects.get(editingKey) : null;
+            previewImages(projectGallery(project));
+            setStatus(projectStatus, project ? 'New selection cleared; the saved gallery is unchanged.' : '');
         });
         resetProjectForm.addEventListener('click', resetProjectEditor);
         cancelEdit.addEventListener('click', resetProjectEditor);
 
-        async function uploadImage(file) {
+        async function uploadImage(file, index, total) {
             const user = auth.currentUser;
             if (!user) throw new Error('Your session has ended. Sign in again before uploading.');
             const asset = await SeedwelCloudinary.upload(file, {
                 kind: 'portfolio',
                 user,
-                ownerName: safeText(projectName.value, 60),
-                onProgress: (progress) => setStatus(projectStatus, 'Uploading to Cloudinary… ' + progress + '%')
+                ownerName: safeText(projectName.value, 54) + '-photo-' + (index + 1),
+                onProgress: (progress) => setStatus(projectStatus, 'Uploading photo ' + (index + 1) + ' of ' + total + '… ' + progress + '%')
             });
             return {
-                image: asset.url,
-                storagePath: asset.publicId,
-                cloudinaryPublicId: asset.publicId,
-                cloudinaryResourceType: asset.resourceType,
+                url: asset.url,
+                publicId: asset.publicId,
+                resourceType: asset.resourceType,
                 uploadProvider: 'cloudinary',
                 fileSize: asset.bytes,
                 cleanupToken: asset.cleanupToken
             };
         }
 
-        async function removeManagedProjectFile(project, cleanupToken = '') {
+        function projectAssetIds(project) {
+            const ids = new Set();
+            asList(project && project.galleryAssets).forEach((asset) => {
+                const id = safeText(asset && (asset.publicId || asset.cloudinaryPublicId), 512);
+                if (id) ids.add(id);
+            });
+            const mainId = safeText(project && (project.cloudinaryPublicId || (project.uploadProvider === 'cloudinary' ? project.storagePath : '')), 512);
+            if (mainId) ids.add(mainId);
+            return ids;
+        }
+
+        async function removeManagedProjectFile(project, keepIds = new Set()) {
             if (!project) return;
-            const publicId = project.cloudinaryPublicId || (project.uploadProvider === 'cloudinary' ? project.storagePath : '');
-            if (publicId) {
-                await SeedwelCloudinary.remove({ kind: 'portfolio', publicId, cleanupToken, user: auth.currentUser });
-                return;
+            const ids = projectAssetIds(project);
+            for (const publicId of ids) {
+                if (keepIds.has(publicId)) continue;
+                await SeedwelCloudinary.remove({ kind: 'portfolio', publicId, user: auth.currentUser });
             }
             // Existing Firebase uploads remain deletable during the Cloudinary migration.
-            if (project.storagePath) {
+            if (!ids.size && project.storagePath && !keepIds.has(project.storagePath)) {
                 try { await storage.ref().child(project.storagePath).delete(); }
-                catch (error) {
-                    if (error && error.code !== 'storage/object-not-found') throw error;
-                }
+                catch (error) { if (error && error.code !== 'storage/object-not-found') throw error; }
             }
         }
 
         projectForm.addEventListener('submit', async (event) => {
             event.preventDefault();
             const existing = editingKey ? currentProjects.get(editingKey) : null;
-            let upload = null;
+            const uploadedAssets = [];
             let privateRecordSaved = false;
             try {
                 const name = safeText(projectName.value, 120);
@@ -2396,67 +2627,68 @@
                 const client = safeText(projectClient.value, 120);
                 const results = safeText(projectResults.value, 500);
                 const liveUrl = safeHttpUrl(projectUrl.value);
-                const imageUrl = externalImageUrl.value.trim() ? safeHttpUrl(externalImageUrl.value) : '';
                 if (name.length < 2) throw new Error('Enter a project title of at least 2 characters.');
                 if (description.length < 10) throw new Error('Add a project summary of at least 10 characters.');
                 if (!category) throw new Error('Choose a category.');
                 setButtonLoading(saveProject, true, existing ? 'Saving…' : 'Adding…', existing ? 'fa-solid fa-floppy-disk' : 'fa-solid fa-plus');
-                setStatus(projectStatus, 'Preparing secure project record…');
+                setStatus(projectStatus, 'Preparing secure project gallery…');
 
-                let image = imageUrl || (existing && existing.image) || '';
-                let storagePath = imageUrl ? '' : ((existing && existing.storagePath) || '');
-                let cloudinaryPublicId = imageUrl ? '' : ((existing && existing.cloudinaryPublicId) || '');
-                let cloudinaryResourceType = imageUrl ? '' : ((existing && existing.cloudinaryResourceType) || '');
-                let uploadProvider = imageUrl ? '' : ((existing && existing.uploadProvider) || '');
-                let fileSize = imageUrl ? 0 : (Number(existing && existing.fileSize) || 0);
-                if (selectedFile) {
-                    upload = await uploadImage(selectedFile);
-                    image = upload.image;
-                    storagePath = upload.storagePath;
-                    cloudinaryPublicId = upload.cloudinaryPublicId;
-                    cloudinaryResourceType = upload.cloudinaryResourceType;
-                    uploadProvider = upload.uploadProvider;
-                    fileSize = upload.fileSize;
+                let gallery = [];
+                let galleryAssets = [];
+                if (selectedFiles.length) {
+                    for (let index = 0; index < selectedFiles.length; index += 1) {
+                        const asset = await uploadImage(selectedFiles[index], index, selectedFiles.length);
+                        uploadedAssets.push(asset);
+                    }
+                    gallery = uploadedAssets.map((asset) => asset.url);
+                    galleryAssets = uploadedAssets.map(({ cleanupToken, ...asset }) => asset);
+                } else {
+                    const existingGallery = projectGallery(existing);
+                    const cover = externalImageUrl.value.trim()
+                        ? safeHttpUrl(externalImageUrl.value, true)
+                        : (existingGallery[0] || '');
+                    const extras = parseGalleryUrls(projectGalleryUrls.value);
+                    gallery = Array.from(new Set([cover, ...extras].filter(Boolean))).slice(0, MAX_PROJECT_IMAGES);
+                    const savedAssets = asList(existing && existing.galleryAssets);
+                    galleryAssets = savedAssets.filter((asset) => gallery.includes(safeText(asset && asset.url, 2048)));
                 }
-                if (!image) throw new Error('Choose an image file or enter a trusted image URL.');
+                if (!gallery.length) throw new Error('Choose at least one project photo or enter a trusted cover photo URL.');
+
+                const image = gallery[0];
+                const coverAsset = galleryAssets.find((asset) => safeText(asset && asset.url, 2048) === image) || null;
+                const keepExistingMain = existing && safeImageUrl(existing.image) === image && !coverAsset;
+                const storagePath = coverAsset ? coverAsset.publicId : (keepExistingMain ? safeText(existing.storagePath, 512) : '');
+                const cloudinaryPublicId = coverAsset ? coverAsset.publicId : (keepExistingMain ? safeText(existing.cloudinaryPublicId, 512) : '');
+                const cloudinaryResourceType = coverAsset ? coverAsset.resourceType : (keepExistingMain ? safeText(existing.cloudinaryResourceType, 20) : '');
+                const uploadProvider = coverAsset ? coverAsset.uploadProvider : (keepExistingMain ? safeText(existing.uploadProvider, 20) : '');
+                const fileSize = coverAsset ? Number(coverAsset.fileSize) || 0 : (keepExistingMain ? Number(existing.fileSize) || 0 : 0);
 
                 const ref = existing ? db.ref('projects/' + editingKey) : db.ref('projects').push();
                 const record = {
-                    name,
-                    description,
-                    category,
-                    client,
-                    liveUrl,
-                    results,
-                    image,
-                    storagePath,
-                    cloudinaryPublicId,
-                    cloudinaryResourceType,
-                    uploadProvider,
-                    fileSize,
+                    name, description, category, client, liveUrl, results,
+                    image, gallery, galleryAssets,
+                    storagePath, cloudinaryPublicId, cloudinaryResourceType, uploadProvider, fileSize,
                     published: projectPublished.checked,
                     createdAt: existing && Number(existing.createdAt) ? Number(existing.createdAt) : firebase.database.ServerValue.TIMESTAMP,
                     updatedAt: firebase.database.ServerValue.TIMESTAMP
                 };
-                // When moving an entry to drafts, remove its public copy first. This favors privacy
-                // over visibility if a network request fails halfway through the operation.
                 if (record.published === false) await syncPublicProject(ref.key, record);
                 await ref.set(record);
                 privateRecordSaved = true;
                 if (record.published !== false) await syncPublicProject(ref.key, record);
 
-                const oldManagedId = existing && (existing.cloudinaryPublicId || existing.storagePath);
-                const newManagedId = cloudinaryPublicId || storagePath;
-                if (oldManagedId && oldManagedId !== newManagedId) {
-                    try { await removeManagedProjectFile(existing); }
-                    catch (_) { showToast('Project saved, but the previous managed image could not be removed from storage.', 'error'); }
+                if (existing) {
+                    try { await removeManagedProjectFile(existing, projectAssetIds(record)); }
+                    catch (_) { showToast('Project saved, but one or more old gallery photos could not be removed.', 'error'); }
                 }
-                setStatus(projectStatus, existing ? 'Project updated successfully.' : 'Project added successfully.', 'success');
+                setStatus(projectStatus, existing ? 'Project and photo gallery updated.' : 'Project and photo gallery added.', 'success');
                 showToast(existing ? 'Portfolio project updated.' : 'Portfolio project added.');
                 resetProjectEditor();
             } catch (error) {
-                if (upload && upload.cloudinaryPublicId && !privateRecordSaved) {
-                    try { await removeManagedProjectFile(upload, upload.cleanupToken); } catch (_) { /* Do not hide original error. */ }
+                if (!privateRecordSaved) {
+                    for (const asset of uploadedAssets) {
+                        try { await SeedwelCloudinary.remove({ kind: 'portfolio', publicId: asset.publicId, cleanupToken: asset.cleanupToken, user: auth.currentUser }); } catch (_) { /* Best-effort rollback. */ }
+                    }
                 }
                 const message = privateRecordSaved
                     ? 'Project saved privately, but the public portfolio did not sync. Use “Sync public portfolio” and check Database Rules.'
@@ -2527,7 +2759,7 @@
         });
 
         async function importSeedProjects() {
-            if (!window.confirm('Import the nine current showcase cards? They will become editable portfolio entries.')) return;
+            if (!window.confirm('Import all ' + SEED_PROJECTS.length + ' current showcase cards? They will become editable portfolio entries.')) return;
             const button = $('importSeeds');
             if (button) { button.disabled = true; button.innerHTML = '<i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> Importing…'; }
             try {
