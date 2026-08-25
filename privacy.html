@@ -40,6 +40,7 @@
         footer { background: #0f172a; color: #94a3b8; padding: 28px 22px; text-align: center; font-size: .85rem; }
         footer a { color: #fca5a5; text-decoration: none; margin: 0 8px; }
     </style>
+    <link rel="stylesheet" href="assets/css/local-ai.css" />
 </head>
 <body>
     <header class="header">
@@ -62,7 +63,7 @@
     </section>
 
     <main class="content">
-        <span class="updated">Last updated: 15 August 2026</span>
+        <span class="updated">Last updated: 25 August 2026</span>
         <p>Seedwel Investment LTD (“Seedwel”, “we”, “us”) respects your privacy. This policy explains what information we collect when you use <strong>seedwel.ltd</strong>, our contact and careers forms, and related services.</p>
 
         <h2>1. Information we collect</h2>
@@ -71,6 +72,7 @@
             <li><strong>Job applications</strong> — name, email, phone, position, experience, portfolio link, cover letter and CV file.</li>
             <li><strong>Worker accounts and verification</strong> — profile details, account status, Worker ID, work information and an optional profile photo displayed on the Worker ID and token-based public verification page.</li>
             <li><strong>Technical data</strong> — basic browser user-agent on form submit (for abuse prevention), and standard server/hosting logs.</li>
+            <li><strong>Local AI chat</strong> — questions and generated answers are processed on your device and may be kept temporarily in your browser's session storage so the conversation survives page navigation. Seedwel does not receive these chat messages.</li>
             <li><strong>Portfolio admin data</strong> — used only by authenticated administrators managing the public portfolio.</li>
         </ul>
 
@@ -103,13 +105,16 @@
         <h2>7. Your rights</h2>
         <p>Subject to applicable law, you may request access, correction or deletion of personal data we hold about you. Contact us using the details below. We may need to verify your identity before acting on a request.</p>
 
-        <h2>8. Cookies &amp; similar technologies</h2>
-        <p>The public site is primarily static. Third-party fonts, icons and Firebase scripts may set technical cookies or local storage required for authentication on the admin area. We do not run third-party advertising trackers on these pages by default.</p>
+        <h2>8. Local AI assistant</h2>
+        <p>The optional Seedwel Local AI assistant runs a small language model directly in supported browsers using WebGPU. It does not use a remote AI inference API and chat content is not sent to Seedwel. On first use, your browser downloads public runtime and model files from third-party distribution hosts; those hosts may receive normal request data such as your IP address and browser headers, but not your chat prompts. The files are cached by your browser, while recent chat messages are stored only for the current browser session. You can clear the conversation from the assistant at any time or clear the site's browser data to remove cached files.</p>
 
-        <h2>9. Children</h2>
+        <h2>9. Cookies &amp; similar technologies</h2>
+        <p>The public site is primarily static. Third-party fonts, icons and Firebase scripts may set technical cookies or local storage required for authentication on the admin area. The optional local AI uses browser cache and session storage as described above. We do not run third-party advertising trackers on these pages by default.</p>
+
+        <h2>10. Children</h2>
         <p>Our services are directed at businesses and adult professionals. We do not knowingly collect personal information from children under 16.</p>
 
-        <h2>10. Contact</h2>
+        <h2>11. Contact</h2>
         <p>
             Seedwel Investment LTD<br />
             Email: <a href="mailto:seedwelinvestltd@gmail.com">seedwelinvestltd@gmail.com</a><br />
@@ -118,7 +123,7 @@
             Locations: Kabwe &amp; Chama, Zambia · Global remote
         </p>
 
-        <h2>11. Changes</h2>
+        <h2>12. Changes</h2>
         <p>We may update this policy from time to time. The “Last updated” date at the top will change when we do. Continued use of the site after updates constitutes acceptance of the revised policy where permitted by law.</p>
     </main>
 
@@ -130,5 +135,6 @@
         </p>
     </footer>
     <script src="assets/js/service-strip.js" defer></script>
+    <script src="assets/js/local-ai.js" defer></script>
 </body>
 </html>
