@@ -42,6 +42,14 @@ Static public website and a Firebase-backed Seedwel Operations & Workforce Manag
 - Two lightweight H.264 films in `assets/videos/` present the company story and three-step delivery process. They are muted, inline, visibility-aware and include accessible play/pause controls.
 - `assets/css/media-showcase.css` and `assets/js/media-showcase.js` provide responsive editorial layouts, scroll reveals, hover motion and reduced-motion support across the Home, About and Services pages.
 
+## On-device public AI assistant
+
+- Public pages include **Seedwel Local AI**, a real small language model running in the visitor's browser through WebGPU and [WebLLM](https://github.com/mlc-ai/web-llm). It does not use a paid or remote inference API, needs no API key, and never sends chat prompts to Seedwel.
+- The assistant uses the quantized `Qwen2.5-0.5B-Instruct-q4f16_1-MLC` model in a dedicated Web Worker. The first opt-in setup downloads roughly 300 MB of public model files; the browser caches them for later visits. Runtime generation needs a compatible, up-to-date browser and approximately 1 GB of available graphics memory.
+- Its system context is limited to verified Seedwel services, careers, support and contact facts. It is explicitly instructed not to invent prices, vacancies, project names, application decisions or guarantees and hands account-specific questions to the Seedwel team.
+- `assets/js/local-ai.js`, `assets/js/local-ai-worker.js` and `assets/css/local-ai.css` contain the integration. Update the curated facts in `systemPrompt()` when business information changes. The WebLLM CDN version is pinned so runtime updates are deliberate.
+- Recent conversation is kept only in browser `sessionStorage`; no chat history is written to Firebase. Visitors must approve the one-time model download, and unsupported devices receive direct WhatsApp/email fallbacks.
+
 ## Uploads and portfolio administration
 
 - **All new uploads use the existing connected Cloudinary product environment**: portfolio images, authenticated/private CVs and Worker ID profile photos are organised in its `portfolio` asset folder. Serverless functions create signed requests; no API secret or unsigned upload preset is exposed in browser code.
