@@ -18,7 +18,7 @@ function check(label, condition) {
     const html = fs.readFileSync(path.join(root, 'request.html'), 'utf8');
     const dom = new JSDOM(html, {
         runScripts: 'outside-only',
-        url: 'https://seedwel.ltd/request.html?service=zra',
+        url: 'https://seedwel.ltd/request.html?service=website-package',
         pretendToBeVisual: true
     });
     const w = dom.window;
@@ -54,7 +54,7 @@ function check(label, condition) {
     await new Promise((r) => setTimeout(r, 120));
 
     const doc = w.document;
-    check('service preselected from ?service=zra', doc.getElementById('reqService').value === 'zra');
+    check('service preselected from ?service=website-package', doc.getElementById('reqService').value === 'website-package');
 
     // Fill and submit
     doc.getElementById('reqName').value = 'Jane Mwansa';
@@ -70,8 +70,8 @@ function check(label, condition) {
     check('exactly one request pushed', pushes.length === 1);
     const req = pushes[0] || {};
     check('status starts as new', req.status === 'new');
-    check('service key saved', req.service === 'zra');
-    check('service label saved', req.serviceLabel === 'ZRA Tax Services (registration assistance)');
+    check('service key saved', req.service === 'website-package');
+    check('service label saved', req.serviceLabel === 'Website + Branding Package (website, logo, cards & graphics)');
     check('name saved', req.fullName === 'Jane Mwansa');
     check('business name saved', req.businessName === 'Mwansa Traders');
     check('consent recorded', req.consent === true);

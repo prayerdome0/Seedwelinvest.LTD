@@ -301,6 +301,30 @@
         .report-status.reviewed { background:#ecfdf5; color:#047857; }
         @media(max-width:700px){ .daily-form-grid{grid-template-columns:1fr}.daily-form-grid .full{grid-column:auto} }
 
+        /* My Documents (role library) */
+        .doc-list { display:flex; flex-direction:column; gap:12px; }
+        .doc-item {
+            display:flex; justify-content:space-between; align-items:center; gap:16px;
+            border:1px solid #e5e7eb; border-radius:14px; padding:16px 18px; transition: all 0.25s ease;
+        }
+        .doc-item:hover { border-color:rgba(220,38,38,0.3); background:#fef8f8; }
+        .doc-main { flex:1; min-width:0; }
+        .doc-main strong { font-size:0.95rem; display:block; }
+        .doc-main .meta { font-size:0.78rem; color:#6b7280; margin-top:4px; }
+        .doc-main .desc { font-size:0.8rem; color:#64748b; margin-top:6px; }
+        .doc-cat {
+            display:inline-block; margin-top:8px; padding:3px 10px; border-radius:999px;
+            background:#f1f5f9; color:#475569; font-size:0.66rem; font-weight:700;
+            font-family:'Montserrat',sans-serif; text-transform:uppercase; letter-spacing:0.05em;
+        }
+        .doc-open {
+            padding:9px 16px; border-radius:50px; border:1px solid #fecaca; background:#fff;
+            color:#b91c1c; cursor:pointer; font:700 0.74rem 'Montserrat',sans-serif; white-space:nowrap;
+            transition: all 0.25s ease;
+        }
+        .doc-open:hover { background:#dc2626; color:#fff; border-color:#dc2626; }
+        .doc-open:disabled { opacity:0.6; cursor:wait; }
+
     </style>
 </head>
 <body>
@@ -365,7 +389,7 @@
                     <span class="badge active"><i class="fas fa-circle-check"></i> Active Worker</span>
                     <span class="badge wid" id="widBadge" style="display:none;"><i class="fas fa-id-card"></i> <span id="widBadgeText"></span></span>
                     <span class="badge role"><i class="fas fa-briefcase"></i> <span id="roleLabel">Role</span></span>
-                    <span class="badge commission"><i class="fas fa-percent"></i> <span id="commissionLabel">10% Commission</span></span>
+                    <span class="badge commission"><i class="fas fa-percent"></i> <span id="commissionLabel">10% Commission on eligible sales</span></span>
                 </div>
             </div>
 
@@ -432,6 +456,17 @@
                 </div>
                 <div id="taskList" class="task-list">
                     <div class="empty"><i class="fas fa-inbox"></i> No assignments yet. Your dashboard will be updated when work is assigned to you.</div>
+                </div>
+            </div>
+
+            <div class="section-card" id="documentsSection">
+                <div class="section-head">
+                    <h2><i class="fas fa-folder-open" style="color:#dc2626;"></i> My Documents</h2>
+                    <span class="count" id="docCount">0 documents</span>
+                </div>
+                <p style="font-size:0.8rem;color:#94a3b8;margin:-8px 0 14px;">Guides, policies and templates published for your role (<span id="docRoleLabel">—</span>). Files open through a secure, expiring link.</p>
+                <div id="docList" class="doc-list">
+                    <div class="empty"><i class="fas fa-folder-open"></i> No documents have been published for your role yet. They will appear here when the administrator publishes them.</div>
                 </div>
             </div>
 
@@ -780,6 +815,91 @@
             finally { button.disabled=false; }
         });
 
+        // ─── My Documents (role library) ───
+        const DOC_CATEGORY_LABELS = {
+            onboarding: 'Onboarding', role: 'Role Description', handbook: 'Handbook',
+            guidelines: 'Guidelines', policy: 'Policy', procedure: 'Procedure / SOP',
+            template: 'Template', contacts: 'Contacts', other: 'Document'
+        };
+
+        function renderDocuments(worker) {
+            const list = $('docList');
+            const role = String(worker.role || worker.position || '').trim();
+            $('docRoleLabel').textContent = role || 'your role';
+            if (!role) {
+                list.innerHTML = '<div class="empty"><i class="fas fa-folder-open"></i> Your role has no document library yet.</div>';
+                return;
+            }
+            db.ref('documentsByRole/' + role).on('value', (snapshot) => {
+                const data = snapshot.val() || {};
+                const docs = Object.entries(data).map(([id, doc]) => ({ id, ...doc }))
+                    .sort((a, b) => Number(b.updatedAt || 0) - Number(a.updatedAt || 0));
+                $('docCount').textContent = docs.length + (docs.length === 1 ? ' document' : ' documents');
+                list.textContent = '';
+                if (!docs.length) {
+                    list.innerHTML = '<div class="empty"><i class="fas fa-folder-open"></i> No documents have been published for your role yet. They will appear here when the administrator publishes them.</div>';
+                    return;
+                }
+                docs.forEach((doc) => list.appendChild(renderDocumentItem(doc)));
+            }, () => {
+                list.innerHTML = '<div class="empty"><i class="fas fa-folder-open"></i> Your document library is temporarily unavailable.</div>';
+            });
+        }
+
+        function renderDocumentItem(doc) {
+            const item = document.createElement('div');
+            item.className = 'doc-item';
+
+            const main = document.createElement('div');
+            main.className = 'doc-main';
+            const title = document.createElement('strong');
+            title.textContent = String(doc.title || 'Untitled document');
+            const meta = document.createElement('div');
+            meta.className = 'meta';
+            const parts = [];
+            if (doc.fileName) parts.push(String(doc.fileName));
+            if (doc.fileSize) parts.push((Number(doc.fileSize) / (1024 * 1024)).toFixed(2) + ' MB');
+            if (doc.updatedAt) parts.push(new Date(Number(doc.updatedAt)).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }));
+            meta.textContent = parts.join(' · ');
+            main.appendChild(title);
+            main.appendChild(meta);
+            if (doc.description) {
+                const desc = document.createElement('div');
+                desc.className = 'desc';
+                desc.textContent = String(doc.description);
+                main.appendChild(desc);
+            }
+            const cat = document.createElement('span');
+            cat.className = 'doc-cat';
+            cat.textContent = DOC_CATEGORY_LABELS[doc.category] || 'Document';
+            main.appendChild(cat);
+
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'doc-open';
+            btn.innerHTML = '<i class="fas fa-lock-open"></i> Open';
+            btn.addEventListener('click', async () => {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Opening…';
+                try {
+                    const user = auth.currentUser;
+                    if (!user) throw new Error('Your session has expired. Sign in again.');
+                    const download = await SeedwelCloudinary.documentUrl({ documentId: doc.id, user });
+                    window.open(download.url, '_blank', 'noopener');
+                } catch (err) {
+                    console.error('Document open error:', err);
+                    alert(err && err.message ? err.message : 'The document could not be opened. Please try again.');
+                } finally {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-lock-open"></i> Open';
+                }
+            });
+
+            item.appendChild(main);
+            item.appendChild(btn);
+            return item;
+        }
+
         // ─── Notifications ───
         function renderNotifications(uid) {
             const list = $('notifList');
@@ -1035,7 +1155,7 @@
             $('welcomeEmail').textContent = user.email || '';
             $('roleLabel').textContent = worker.position || worker.role || 'Member';
             const rate = (typeof worker.commissionRate === 'number') ? worker.commissionRate : 10;
-            $('commissionLabel').textContent = rate + '% Commission';
+            $('commissionLabel').textContent = rate + '% Commission on eligible sales';
 
             const s = worker.stats || {};
             $('stLeads').textContent = Number(s.leadsAssigned || 0);
@@ -1069,6 +1189,7 @@
                     renderTasks(user.uid);
                     renderNotifications(user.uid);
                     renderWorkerReports(user.uid);
+                    renderDocuments(worker);
                 }
             }, (err) => {
                 console.error('Dashboard load error:', err);

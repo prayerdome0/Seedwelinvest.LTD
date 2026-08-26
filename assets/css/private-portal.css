@@ -242,6 +242,7 @@ button, input, select, textarea { font: inherit; }
     border-radius: 14px;
     font-weight: 600;
 }
+.sidebar-nav a i { width: 20px; text-align: center; color: #f87171; font-size: 0.85rem; }
 .sidebar-nav a:hover,
 .sidebar-nav a.active {
     background: rgba(248, 113, 113, 0.12);

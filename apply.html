@@ -7,13 +7,13 @@
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="manifest" href="site.webmanifest" />
     <title>Careers — Join Our Team | Seedwel Investment LTD</title>
-    <meta name="description" content="Apply for commission-based remote roles with Seedwel Investment LTD — cold callers, virtual assistants, developers, designers and more. Submit your application online." />
+    <meta name="description" content="Join Seedwel Investment LTD. Current remote roles: Virtual Assistant and Cold Caller — $600/month plus commission on eligible sales. Apply online." />
 
     <link rel="canonical" href="https://seedwel.ltd/apply.html" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Seedwel Investment LTD" />
     <meta property="og:title" content="Careers at Seedwel Investment LTD" />
-    <meta property="og:description" content="Commission-based remote roles and live openings — apply online." />
+    <meta property="og:description" content="Virtual Assistant and Cold Caller roles — remote work, clear compensation, honest process." />
     <meta property="og:url" content="https://seedwel.ltd/apply.html" />
     <meta name="twitter:card" content="summary" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
@@ -25,7 +25,42 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
     <script src="cloudinary-upload.js"></script>
 
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "Current openings at Seedwel Investment LTD",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@type": "JobPosting",
+            "title": "Virtual Assistant",
+            "employmentType": "FULL_TIME",
+            "description": "Remote Virtual Assistant role providing administrative support, customer communication, online research, data organization, email/calendar support and business operations support.",
+            "hiringOrganization": { "@type": "Organization", "name": "Seedwel Investment LTD" },
+            "jobLocationType": "TELECOMMUTE"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@type": "JobPosting",
+            "title": "Cold Caller",
+            "employmentType": "FULL_TIME",
+            "description": "Remote Cold Caller role calling prospective customers, following up with leads, explaining Seedwel services, recording customer information and passing qualified opportunities to the relevant team.",
+            "hiringOrganization": { "@type": "Organization", "name": "Seedwel Investment LTD" },
+            "jobLocationType": "TELECOMMUTE"
+          }
+        }
+      ]
+    }
+    </script>
+
     <style>
+        .jobs-notice { max-width: 760px; margin: 0 auto 40px; }
         .job-card { display: flex; flex-direction: column; padding: 26px; }
         .job-card h3 { font-size: 1.08rem; font-weight: 700; margin-bottom: 8px; }
         .job-card .job-meta { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 12px; }
@@ -70,7 +105,6 @@
             border: 1px solid #fde68a; border-radius: 12px;
             background: #fffbeb; color: #854d0e; font-size: 0.84rem; text-align: left;
         }
-        .jobs-notice { max-width: 760px; margin: 0 auto 40px; }
     </style>
 </head>
 
@@ -87,10 +121,10 @@
                 <a href="index.html">Home</a>
                 <a href="about.html">About</a>
                 <a href="services.html">Services</a>
+                <a href="education.html">Education</a>
                 <a href="projects.html">Projects</a>
                 <a href="apply.html" class="active" aria-current="page">Careers</a>
                 <a href="contact.html">Contact</a>
-                <a href="support.html">Support</a>
                 <a href="login.html" class="btn btn-ghost nav-login">Login</a>
                 <a href="request.html" class="btn btn-primary nav-cta">Request a Service</a>
             </nav>
@@ -105,6 +139,7 @@
         <a href="index.html"><i class="fa-solid fa-house" aria-hidden="true"></i> Home</a>
         <a href="about.html"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> About</a>
         <a href="services.html"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Services</a>
+        <a href="education.html"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> Education</a>
         <a href="projects.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i> Projects</a>
         <a href="apply.html" class="active"><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Careers</a>
         <a href="contact.html"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Contact</a>
@@ -120,8 +155,8 @@
         <section class="page-hero">
             <div class="container">
                 <p class="eyebrow">Careers</p>
-                <h1>Join the <span>Seedwel</span> team</h1>
-                <p>We work with remote, commission-based team members across sales, technology, creative and support roles. Submit an application online — it goes directly to our hiring team.</p>
+                <h1>Join <span>Seedwel</span></h1>
+                <p>We are building a remote team for two roles right now: Virtual Assistants and Cold Callers. If that is you, we would genuinely like to hear from you.</p>
             </div>
         </section>
 
@@ -138,84 +173,125 @@
             </div>
         </section>
 
-        <!-- ========== OPENINGS ========== -->
+        <!-- ========== CURRENT ROLES ========== -->
         <section class="section" aria-labelledby="openingsTitle">
             <div class="container">
                 <div class="section-head reveal">
-                    <p class="eyebrow">Openings</p>
-                    <h2 class="section-title" id="openingsTitle">Current opportunities</h2>
-                    <p class="section-intro">Live openings posted by our team appear here first, followed by our ongoing commission-based roles.</p>
+                    <p class="eyebrow">Current Opportunities</p>
+                    <h2 class="section-title" id="openingsTitle">Two roles we are hiring for</h2>
+                    <p class="section-intro">These are the positions we are actively recruiting for. We do not advertise roles we are not actually hiring for.</p>
+                </div>
+
+                <div class="role-grid">
+                    <!-- Virtual Assistant -->
+                    <article class="card role-card reveal" id="virtual-assistant">
+                        <div class="role-head">
+                            <div class="icon"><i class="fa-solid fa-user-tie" aria-hidden="true"></i></div>
+                            <div>
+                                <h3>Virtual Assistant</h3>
+                                <div class="role-meta">
+                                    <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Remote</span>
+                                    <span><i class="fa-solid fa-clock" aria-hidden="true"></i> Full-time</span>
+                                    <span><i class="fa-solid fa-globe" aria-hidden="true"></i> Online work</span>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="pay-badge"><i class="fa-solid fa-money-bill-wave" aria-hidden="true"></i> $600/month + 10% commission on eligible sales</span>
+                        <div class="role-body">
+                            <h4>What you would do</h4>
+                            <ul class="resp-list">
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Administrative support for the team</li>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Customer communication</li>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Online research</li>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Data organization</li>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Email and calendar support</li>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Supporting business operations</li>
+                            </ul>
+                            <button class="btn btn-primary" type="button" onclick="openApplication('Virtual Assistant')">Apply for Virtual Assistant <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+                        </div>
+                    </article>
+
+                    <!-- Cold Caller -->
+                    <article class="card role-card reveal d1" id="cold-caller">
+                        <div class="role-head">
+                            <div class="icon"><i class="fa-solid fa-phone-volume" aria-hidden="true"></i></div>
+                            <div>
+                                <h3>Cold Caller</h3>
+                                <div class="role-meta">
+                                    <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Remote</span>
+                                    <span><i class="fa-solid fa-clock" aria-hidden="true"></i> Full-time</span>
+                                    <span><i class="fa-solid fa-globe" aria-hidden="true"></i> Online work</span>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="pay-badge"><i class="fa-solid fa-money-bill-wave" aria-hidden="true"></i> $600/month + 10% commission on eligible sales</span>
+                        <div class="role-body">
+                            <h4>What you would do</h4>
+                            <ul class="resp-list">
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Calling prospective customers</li>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Following up with leads</li>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Explaining Seedwel services</li>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Recording customer information</li>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Passing qualified opportunities to the relevant team</li>
+                            </ul>
+                            <button class="btn btn-primary" type="button" onclick="openApplication('Cold Caller')">Apply for Cold Caller <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+                        </div>
+                    </article>
+                </div>
+
+                <p class="compensation-note reveal">
+                    <strong>About compensation:</strong> the figures above are a summary of the current role arrangement —
+                    $600 per month plus 10% commission on <strong>eligible</strong> sales. Which sales are eligible, and the exact
+                    terms of payment, are defined in the job description and work agreement you receive before starting.
+                    We do not promise anything we have not written down.
+                </p>
+            </div>
+        </section>
+
+        <!-- ========== LIVE OPENINGS (from admin) ========== -->
+        <section class="section section-alt" style="padding-top:64px;" aria-labelledby="liveTitle">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="eyebrow">Posted Openings</p>
+                    <h2 class="section-title" id="liveTitle">Additional openings posted by our team</h2>
+                    <p class="section-intro">When the Seedwel team posts an extra opening, it appears here first.</p>
                 </div>
 
                 <div class="jobs-notice card mini-card reveal" id="liveJobsNote" hidden>
                     <i class="fa-solid fa-bolt" aria-hidden="true"></i>
-                    <div><h3>Live openings</h3><p>Positions posted by the Seedwel team are shown at the top of the list below.</p></div>
+                    <div><h3>Live openings</h3><p>Positions posted by the Seedwel team are shown in the list below.</p></div>
                 </div>
 
                 <div class="grid-3" id="jobsGrid">
+                    <div class="card mini-card reveal" style="grid-column:1/-1;justify-content:center;text-align:center;">
+                        <p class="muted" style="margin:0 auto;">No additional openings are posted right now — the Virtual Assistant and Cold Caller roles above are our active positions.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-                    <article class="card job-card reveal">
-                        <h3>Cold Caller</h3>
-                        <div class="job-meta">
-                            <span><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Commission based</span>
-                            <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Remote</span>
-                            <span><i class="fa-solid fa-clock" aria-hidden="true"></i> Flexible hours</span>
-                        </div>
-                        <p>Make outbound calls to potential clients, introduce Seedwel's services and close sales. Training provided. Earn commission on every completed sale.</p>
-                        <button class="btn btn-outline" type="button" onclick="openApplication('Cold Caller')">Apply Now <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
-                    </article>
-
-                    <article class="card job-card reveal d1">
-                        <h3>Virtual Assistant</h3>
-                        <div class="job-meta">
-                            <span><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Commission based</span>
-                            <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Remote</span>
-                            <span><i class="fa-solid fa-clock" aria-hidden="true"></i> Flexible hours</span>
-                        </div>
-                        <p>Help manage client communications, scheduling and administrative support for the team. Strong organisation and communication skills needed.</p>
-                        <button class="btn btn-outline" type="button" onclick="openApplication('Virtual Assistant')">Apply Now <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
-                    </article>
-
-                    <article class="card job-card reveal d2">
-                        <h3>Web Developer</h3>
-                        <div class="job-meta">
-                            <span><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Per project</span>
-                            <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Remote</span>
-                        </div>
-                        <p>Build modern, responsive websites and web applications for Seedwel clients. A portfolio of previous work is required.</p>
-                        <button class="btn btn-outline" type="button" onclick="openApplication('Web Developer')">Apply Now <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
-                    </article>
-
-                    <article class="card job-card reveal">
-                        <h3>Graphic Designer</h3>
-                        <div class="job-meta">
-                            <span><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Per project</span>
-                            <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Remote</span>
-                        </div>
-                        <p>Create logos, branding, social media graphics and marketing materials for client projects.</p>
-                        <button class="btn btn-outline" type="button" onclick="openApplication('Graphic Designer')">Apply Now <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
-                    </article>
-
-                    <article class="card job-card reveal d1">
-                        <h3>Digital Marketer</h3>
-                        <div class="job-meta">
-                            <span><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Commission based</span>
-                            <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Remote</span>
-                        </div>
-                        <p>Run SEO, social media and paid campaigns for client businesses, with honest reporting on results.</p>
-                        <button class="btn btn-outline" type="button" onclick="openApplication('Digital Marketer')">Apply Now <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
-                    </article>
-
-                    <article class="card job-card reveal d2">
-                        <h3>Video Editor</h3>
-                        <div class="job-meta">
-                            <span><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Per project</span>
-                            <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Remote</span>
-                        </div>
-                        <p>Edit promotional videos, social content and client campaigns with a clean, professional finish.</p>
-                        <button class="btn btn-outline" type="button" onclick="openApplication('Video Editor')">Apply Now <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
-                    </article>
-
+        <!-- ========== HOW HIRING WORKS ========== -->
+        <section class="section" aria-labelledby="howTitle">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="eyebrow">How Hiring Works</p>
+                    <h2 class="section-title" id="howTitle">From application to dashboard</h2>
+                    <p class="section-intro">One clear process. No passwords are generated for you — after approval you receive a secure registration invitation and create your own password.</p>
+                </div>
+                <div class="flow-chips reveal">
+                    <span class="flow-step"><i class="fa-solid fa-file-lines" aria-hidden="true"></i> Application</span>
+                    <span class="flow-arrow" aria-hidden="true">→</span>
+                    <span class="flow-step"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> Review</span>
+                    <span class="flow-arrow" aria-hidden="true">→</span>
+                    <span class="flow-step"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Shortlisted</span>
+                    <span class="flow-arrow" aria-hidden="true">→</span>
+                    <span class="flow-step"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Approved</span>
+                    <span class="flow-arrow" aria-hidden="true">→</span>
+                    <span class="flow-step"><i class="fa-solid fa-envelope-open-text" aria-hidden="true"></i> Registration Invitation</span>
+                    <span class="flow-arrow" aria-hidden="true">→</span>
+                    <span class="flow-step"><i class="fa-solid fa-user-plus" aria-hidden="true"></i> Registration</span>
+                    <span class="flow-arrow" aria-hidden="true">→</span>
+                    <span class="flow-step"><i class="fa-solid fa-gauge-high" aria-hidden="true"></i> Dashboard</span>
                 </div>
             </div>
         </section>
@@ -231,22 +307,22 @@
                     <article class="card icon-card reveal">
                         <div class="icon"><i class="fa-solid fa-globe" aria-hidden="true"></i></div>
                         <h3>Fully Remote</h3>
-                        <p>Work from anywhere — all you need is a laptop and a reliable internet connection.</p>
+                        <p>Work from anywhere — all you need is a laptop, a headset and a reliable internet connection.</p>
                     </article>
                     <article class="card icon-card reveal d1">
-                        <div class="icon"><i class="fa-solid fa-money-bill-trend-up" aria-hidden="true"></i></div>
-                        <h3>Commission Earnings</h3>
-                        <p>Earn a share of the work you bring in. Terms are confirmed before you start.</p>
+                        <div class="icon"><i class="fa-solid fa-money-bill-wave" aria-hidden="true"></i></div>
+                        <h3>Clear Compensation</h3>
+                        <p>Monthly pay plus commission on eligible sales. Exact terms are confirmed in writing before you start.</p>
                     </article>
                     <article class="card icon-card reveal d2">
-                        <div class="icon"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i></div>
-                        <h3>Guidance &amp; Training</h3>
-                        <p>Onboarding and ongoing support so you can do your best work with the team.</p>
+                        <div class="icon"><i class="fa-solid fa-folder-open" aria-hidden="true"></i></div>
+                        <h3>Documents &amp; Structure</h3>
+                        <p>Role descriptions, guidelines and procedures are provided in your dashboard — you always know how we work.</p>
                     </article>
                     <article class="card icon-card reveal d3">
-                        <div class="icon"><i class="fa-solid fa-clock" aria-hidden="true"></i></div>
-                        <h3>Flexible Schedule</h3>
-                        <p>Plan your hours around what you deliver, not the clock.</p>
+                        <div class="icon"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i></div>
+                        <h3>Guidance &amp; Support</h3>
+                        <p>Onboarding and ongoing support so you can do your best work with the team.</p>
                     </article>
                 </div>
             </div>
@@ -258,7 +334,7 @@
                 <div class="form-card reveal">
                     <div id="formContent">
                         <h2 id="applyTitle" style="font-size:1.3rem;margin-bottom:6px;">Apply for a position</h2>
-                        <p class="muted small" style="margin-bottom:24px;">Fill in the form below. Applications are reviewed by our hiring team, who will contact you if your profile matches an opening.</p>
+                        <p class="muted small" style="margin-bottom:24px;">Fill in the form below. Applications are reviewed by our hiring team, who will contact you if your profile matches the role.</p>
 
                         <form id="applicationForm" novalidate>
                             <div class="form-grid">
@@ -278,14 +354,8 @@
                                     <label for="position">Position Applying For <span class="req">*</span></label>
                                     <select id="position" required>
                                         <option value="">Select a position…</option>
-                                        <option value="Cold Caller">Cold Caller (commission based)</option>
-                                        <option value="Virtual Assistant">Virtual Assistant (commission based)</option>
-                                        <option value="Web Developer">Web Developer (per project)</option>
-                                        <option value="Graphic Designer">Graphic Designer (per project)</option>
-                                        <option value="Digital Marketer">Digital Marketer (commission based)</option>
-                                        <option value="Video Editor">Video Editor (per project)</option>
-                                        <option value="Mobile App Developer">Mobile App Developer (per project)</option>
-                                        <option value="Online Tutor">Online Tutor (per session)</option>
+                                        <option value="Virtual Assistant">Virtual Assistant — $600/month + 10% commission on eligible sales</option>
+                                        <option value="Cold Caller">Cold Caller — $600/month + 10% commission on eligible sales</option>
                                     </select>
                                 </div>
                                 <div class="field">
@@ -379,6 +449,7 @@
                 if (!openJobs.length) return;
                 var note = document.getElementById('liveJobsNote');
                 if (note) note.hidden = false;
+                grid.replaceChildren();
                 openJobs.forEach(function (job) {
                     var card = document.createElement('article');
                     card.className = 'card job-card reveal visible';
@@ -397,7 +468,7 @@
                     apply.innerHTML = 'Apply Now <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>';
                     apply.addEventListener('click', function () { openApplication(String(job.title).slice(0, 120)); });
                     card.append(title, meta, description, apply);
-                    grid.prepend(card);
+                    grid.appendChild(card);
                 });
             }).catch(function () { /* public jobs are optional; standing roles remain visible */ });
         })();
@@ -543,7 +614,6 @@
             var fullName = document.getElementById('fullName').value.trim();
             var email = document.getElementById('email').value.trim();
             var phone = document.getElementById('phone').value.trim();
-            var location = document.getElementById('location').value.trim();
             var position = document.getElementById('position').value;
             var experience = document.getElementById('experience').value;
             var portfolioUrl = document.getElementById('portfolioUrl').value.trim();
@@ -684,15 +754,6 @@
             clearSelectedCv('');
             uploadProgress.setAttribute('aria-hidden', 'true');
             uploadProgressBar.style.width = '0';
-            formContent.hidden = false;
-            formSuccess.hidden = true;
-            document.getElementById('applyFormSection').scrollIntoView({ behavior: 'smooth' });
-        }
-    </script>
-    <script src="assets/js/site.js" defer></script>
-</body>
-</html>
-0';
             formContent.hidden = false;
             formSuccess.hidden = true;
             document.getElementById('applyFormSection').scrollIntoView({ behavior: 'smooth' });

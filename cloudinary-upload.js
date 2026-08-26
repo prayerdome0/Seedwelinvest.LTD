@@ -105,5 +105,17 @@
         }, options.user);
     }
 
-    global.SeedwelCloudinary = Object.freeze({ upload: upload, remove: remove, privateCvUrl: privateCvUrl });
+    /**
+     * Secure worker-document download. Sends the signed-in user's Firebase ID
+     * token; the API re-checks document visibility against the Database Rules
+     * before returning a short-lived signed URL.
+     */
+    async function documentUrl(options) {
+        options = options || {};
+        return apiRequest('/api/cloudinary-document', {
+            documentId: options.documentId
+        }, options.user || null);
+    }
+
+    global.SeedwelCloudinary = Object.freeze({ upload: upload, remove: remove, privateCvUrl: privateCvUrl, documentUrl: documentUrl });
 })(window);

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#dc2626" />
+    <title>Documents | Seedwel Admin</title>
+    <meta name="description" content="Upload and publish role-specific worker documents for the Seedwel team." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/private-portal.css" />
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="/assets/js/firebase-config.js"></script>
+    <script src="/assets/js/recruitment-utils.js"></script>
+    <script src="/assets/js/admin-shared.js"></script>
+    <script src="/cloudinary-upload.js"></script>
+    <style>
+        .doc-upload-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 22px; align-items: start; }
+        .role-pick { display: flex; flex-wrap: wrap; gap: 10px; }
+        .role-pick label {
+            display: inline-flex; align-items: center; gap: 9px;
+            padding: 11px 16px; border: 1.5px solid var(--line); border-radius: 12px;
+            background: #fff; cursor: pointer; font-weight: 700; font-size: 0.86rem;
+            transition: border-color 0.2s ease, background 0.2s ease;
+        }
+        .role-pick label:hover { border-color: rgba(220, 38, 38, 0.4); }
+        .role-pick input { accent-color: var(--brand); width: 17px; height: 17px; }
+        .doc-file {
+            border: 2px dashed #d1d5db; border-radius: 12px; background: var(--panel);
+            padding: 22px 18px; text-align: center; cursor: pointer;
+            transition: border-color 0.2s ease, background 0.2s ease;
+        }
+        .doc-file:hover, .doc-file:focus-visible, .doc-file.is-dragging { border-color: var(--brand); background: #fff5f5; }
+        .doc-file i { color: var(--brand); font-size: 1.4rem; display: block; margin-bottom: 8px; }
+        .doc-file p { color: var(--muted); font-size: 0.82rem; margin: 0; }
+        .doc-file .file-name { display: none; font-weight: 700; color: var(--ink); font-size: 0.84rem; margin-top: 6px; }
+        .doc-file.has-file { border-color: var(--green); background: #f0fdf4; }
+        .doc-file.has-file .file-name { display: block; }
+        .upload-progress { height: 7px; margin-top: 14px; overflow: hidden; border-radius: 999px; background: var(--line); display: none; }
+        .upload-progress[aria-hidden="false"] { display: block; }
+        .upload-progress-bar { width: 0; height: 100%; border-radius: 999px; background: var(--brand); transition: width 0.25s ease; }
+        .upload-status { margin: 10px 0 0; font-size: 0.84rem; font-weight: 600; color: var(--muted); }
+        .suggested h3 { margin: 0 0 6px; font-size: 0.95rem; }
+        .suggested ul { margin: 0 0 16px; padding-left: 18px; color: var(--muted); font-size: 0.84rem; line-height: 1.75; }
+        .row-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+        .row-actions .btn { min-height: 36px; padding: 7px 12px; font-size: 0.76rem; }
+        @media (max-width: 1100px) { .doc-upload-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body class="portal-body" data-page="documents">
+    <div class="portal-shell">
+        <aside class="portal-sidebar">
+            <a class="portal-brand" href="/admin/dashboard">
+                <img src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel Investment LTD" />
+                <strong>Seedwel <span>Admin</span></strong>
+            </a>
+            <div class="sidebar-copy">Upload a document, choose which roles can see it, then publish it to their dashboards.</div>
+            <nav class="sidebar-nav" aria-label="Admin navigation">
+                <a data-page="dashboard" href="/admin/dashboard"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+                <a data-page="applications" href="/admin/applications"><i class="fa-solid fa-user-check"></i> Applications</a>
+                <a data-page="members" href="/admin/members"><i class="fa-solid fa-users"></i> Members</a>
+                <a data-page="documents" href="/admin/documents"><i class="fa-solid fa-folder-open"></i> Documents</a>
+            </nav>
+            <div class="sidebar-copy" style="font-size:0.76rem;color:#94a3b8;">Operations workspace</div>
+            <nav class="sidebar-nav" aria-label="Operations workspace">
+                <a href="/admin.html#requests"><i class="fa-solid fa-inbox"></i> Service Requests</a>
+                <a href="/admin.html#jobs"><i class="fa-solid fa-briefcase"></i> Recruitment Jobs</a>
+                <a href="/admin.html#tasks"><i class="fa-solid fa-list-check"></i> Tasks</a>
+                <a href="/admin.html#portfolio"><i class="fa-solid fa-layer-group"></i> Projects &amp; Media</a>
+                <a href="/admin.html#messages"><i class="fa-solid fa-envelope"></i> Messages</a>
+                <a href="/admin.html#verification"><i class="fa-solid fa-shield-halved"></i> Verification</a>
+                <a href="/admin.html#audit"><i class="fa-solid fa-clock-rotate-left"></i> Audit Logs</a>
+                <a href="/admin.html#settings"><i class="fa-solid fa-gear"></i> Settings</a>
+            </nav>
+            <div class="sidebar-foot">Workers only ever see published documents assigned to their own role — and files are delivered through signed, expiring links.</div>
+        </aside>
+        <main class="portal-main">
+            <header class="page-header">
+                <div>
+                    <p class="auth-eyebrow">Worker documents</p>
+                    <h1>Documents</h1>
+                    <p>Upload → Select role → Publish. Each worker's dashboard shows only the documents published for their role.</p>
+                </div>
+                <div class="header-meta">
+                    <div class="header-chip" id="signedInEmail">Checking session…</div>
+                    <button class="btn btn-secondary" id="logoutBtn" type="button"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+                </div>
+            </header>
+
+            <div id="pageMessage" class="msg"></div>
+
+            <div class="doc-upload-grid">
+                <section class="panel">
+                    <div class="panel-head">
+                        <div>
+                            <h2>Upload a document</h2>
+                            <p>PDF, DOC or DOCX up to 10 MB. Uploaded files are stored privately in Cloudinary and are never exposed on a public URL.</p>
+                        </div>
+                    </div>
+                    <form id="documentForm" novalidate>
+                        <div class="form-grid">
+                            <div class="field">
+                                <label for="docTitle">Document title <span style="color:var(--brand);">*</span></label>
+                                <input id="docTitle" type="text" maxlength="200" placeholder="e.g. VA Onboarding Guide" required />
+                            </div>
+                            <div class="field">
+                                <label for="docCategory">Category</label>
+                                <select id="docCategory">
+                                    <option value="onboarding">Onboarding / Welcome</option>
+                                    <option value="role">Role Description</option>
+                                    <option value="handbook">Company Handbook</option>
+                                    <option value="guidelines">Guidelines</option>
+                                    <option value="policy">Policy</option>
+                                    <option value="procedure">Procedure / SOP</option>
+                                    <option value="template">Template / Form</option>
+                                    <option value="contacts">Support Contacts</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="field full">
+                                <label for="docDescription">Short description <span class="muted">(optional)</span></label>
+                                <textarea id="docDescription" rows="2" maxlength="1000" placeholder="One line the worker will see under the title…"></textarea>
+                            </div>
+                            <div class="field full">
+                                <label>Visible to roles <span style="color:var(--brand);">*</span></label>
+                                <div class="role-pick" id="rolePick">
+                                    <label><input type="checkbox" name="role" value="Virtual Assistant" /> Virtual Assistants</label>
+                                    <label><input type="checkbox" name="role" value="Cold Caller" /> Cold Callers</label>
+                                </div>
+                            </div>
+                            <div class="field full">
+                                <label>Document file <span style="color:var(--brand);">*</span></label>
+                                <div class="doc-file" id="docFileDrop" role="button" tabindex="0" aria-controls="docFileInput" aria-describedby="uploadStatus">
+                                    <i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i>
+                                    <p>Click or drop the file here (PDF, DOC, DOCX — max 10 MB)</p>
+                                    <div class="file-name" id="docFileName"></div>
+                                    <input type="file" id="docFileInput" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden />
+                                </div>
+                                <div class="upload-progress" id="uploadProgress" aria-hidden="true">
+                                    <div class="upload-progress-bar" id="uploadProgressBar"></div>
+                                </div>
+                                <p class="upload-status" id="uploadStatus" role="status" aria-live="polite"></p>
+                            </div>
+                        </div>
+                        <div class="auth-actions">
+                            <button class="btn btn-primary" id="uploadBtn" type="submit"><i class="fa-solid fa-cloud-arrow-up"></i> Upload Document</button>
+                        </div>
+                    </form>
+                </section>
+
+                <section class="panel">
+                    <div class="panel-head">
+                        <div>
+                            <h2>Suggested library</h2>
+                            <p>Documents the team will expect, based on the current roles.</p>
+                        </div>
+                    </div>
+                    <div class="suggested">
+                        <h3><i class="fa-solid fa-user-tie" style="color:var(--brand);"></i> Virtual Assistant</h3>
+                        <ul>
+                            <li>Welcome / Onboarding Guide</li>
+                            <li>VA Role Description</li>
+                            <li>Company Handbook</li>
+                            <li>Communication Guidelines</li>
+                            <li>Customer Service Guidelines</li>
+                            <li>Data Privacy &amp; Confidentiality Policy</li>
+                            <li>Work Procedures / SOPs</li>
+                            <li>Daily / Weekly Work Checklist</li>
+                            <li>Timesheet / Work Report Template</li>
+                            <li>Sales Commission Policy</li>
+                            <li>Performance Review Form</li>
+                            <li>Leave / Absence Procedure</li>
+                            <li>Emergency / Support Contacts</li>
+                        </ul>
+                        <h3><i class="fa-solid fa-phone-volume" style="color:var(--brand);"></i> Cold Caller</h3>
+                        <ul>
+                            <li>Welcome / Onboarding Guide</li>
+                            <li>Cold Caller Role Description</li>
+                            <li>Company Handbook</li>
+                            <li>Calling Guidelines</li>
+                            <li>Lead Qualification Guide</li>
+                            <li>Call Script</li>
+                            <li>Objection-Handling Guide</li>
+                            <li>CRM / Lead Recording Instructions</li>
+                            <li>Follow-up Procedure</li>
+                            <li>Data Privacy &amp; Confidentiality Policy</li>
+                            <li>Sales Commission Policy</li>
+                            <li>Daily Call Report</li>
+                            <li>Performance Review Form</li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+
+            <section class="panel" style="margin-top:22px;">
+                <div class="panel-head">
+                    <div>
+                        <h2>Document library</h2>
+                        <p>Everything uploaded so far. Publishing a document makes it appear in the dashboards of the selected roles only.</p>
+                    </div>
+                    <button class="btn btn-secondary" id="refreshDocuments" type="button"><i class="fa-solid fa-rotate"></i> Refresh</button>
+                </div>
+                <div class="filters">
+                    <input id="documentSearch" type="search" placeholder="Search title, file or role…" autocomplete="off" />
+                    <select id="documentFilter" aria-label="Filter documents">
+                        <option value="all">All documents</option>
+                        <option value="published">Published</option>
+                        <option value="draft">Drafts</option>
+                        <option value="Virtual Assistant">Virtual Assistants</option>
+                        <option value="Cold Caller">Cold Callers</option>
+                    </select>
+                </div>
+                <div class="table-wrap">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Document</th>
+                                <th>Visible to</th>
+                                <th>Status</th>
+                                <th>Updated</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="documentsTableBody">
+                            <tr><td colspan="5"><div class="empty-state">Loading documents…</div></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/assets/js/admin-documents.js"></script>
+</body>
+</html>

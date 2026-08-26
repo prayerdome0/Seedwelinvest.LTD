@@ -16,8 +16,13 @@ if (RAW_CLOUDINARY_URL && !/^cloudinary:\/\/[^:@\s/]+:[^@\s/]+@[^\s/?#]+/i.test(
 const { v2: cloudinary } = require('cloudinary');
 
 const FIREBASE_WEB_API_KEY = process.env.FIREBASE_WEB_API_KEY || 'AIzaSyA-BpRy-RVc2rqIG6uiRu_XrGEu1ZGnQwU';
+const FIREBASE_DATABASE_URL = process.env.FIREBASE_DATABASE_URL || 'https://seedwel-investment-limited-default-rtdb.firebaseio.com';
 const ADMIN_EMAIL = 'zacheussimbaya@gmail.com';
+// Legacy asset kinds (CVs, profile photos, portfolio images) live under `portfolio/`.
+// New Seedwel-managed assets are organised under the `seedwel/` root, e.g.
+// seedwel/worker-documents/virtual-assistant/… (admin-uploaded role documents).
 const ROOT_FOLDER = 'portfolio';
+const DOCUMENT_ROOT_FOLDER = 'seedwel';
 
 /**
  * Trim an environment variable and ignore the placeholder values that get
@@ -260,12 +265,15 @@ function isManagedPublicId(publicId, kind, uid) {
     if (kind === 'portfolio') return Boolean(value);
     if (kind === 'cv') return value.startsWith(ROOT_FOLDER + '/job-applications/');
     if (kind === 'profile') return value === ROOT_FOLDER + '/profile-pictures/' + uid;
+    if (kind === 'document') return value.startsWith(DOCUMENT_ROOT_FOLDER + '/worker-documents/');
     return false;
 }
 
 module.exports = {
     ADMIN_EMAIL,
     ROOT_FOLDER,
+    DOCUMENT_ROOT_FOLDER,
+    FIREBASE_DATABASE_URL,
     applyCloudinaryConfig,
     bearerToken,
     cleanupToken,

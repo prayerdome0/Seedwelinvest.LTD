@@ -3,6 +3,7 @@
 const { v2: cloudinary } = require('cloudinary');
 const {
     ROOT_FOLDER,
+    DOCUMENT_ROOT_FOLDER,
     applyCloudinaryConfig,
     cleanupToken,
     getBody,
@@ -18,7 +19,8 @@ const {
 const uploadLimits = {
     portfolio: { maxBytes: 25 * 1024 * 1024, resourceType: 'image', deliveryType: 'upload' },
     profile: { maxBytes: 5 * 1024 * 1024, resourceType: 'image', deliveryType: 'upload' },
-    cv: { maxBytes: 5 * 1024 * 1024, resourceType: 'raw', deliveryType: 'authenticated' }
+    cv: { maxBytes: 5 * 1024 * 1024, resourceType: 'raw', deliveryType: 'authenticated' },
+    document: { maxBytes: 10 * 1024 * 1024, resourceType: 'raw', deliveryType: 'authenticated' }
 };
 
 const publicCvRequests = new Map();
@@ -51,6 +53,7 @@ module.exports = async function handler(req, res) {
         let user = null;
         if (kind === 'portfolio') user = await requireUser(req, true);
         if (kind === 'profile') user = await requireUser(req, false);
+        if (kind === 'document') user = await requireUser(req, true);
         if (kind === 'cv' && !allowPublicCvRequest(req)) {
             return json(res, 429, { error: 'Too many upload attempts. Please wait a few minutes and try again.' });
         }
@@ -83,8 +86,8 @@ module.exports = async function handler(req, res) {
         if (kind === 'profile' && !['image/jpeg', 'image/png', 'image/webp'].includes(mimeType)) {
             return json(res, 400, { error: 'Profile photos must be JPG, PNG or WEBP.' });
         }
-        if (kind === 'cv' && !['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'].includes(mimeType)) {
-            return json(res, 400, { error: 'CV files must be PDF, DOC or DOCX.' });
+        if ((kind === 'cv' || kind === 'document') && !['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'].includes(mimeType)) {
+            return json(res, 400, { error: 'Files must be PDF, DOC or DOCX.' });
         }
 
         // Throws a 503 with an actionable message when the Vercel project has no
@@ -98,6 +101,14 @@ module.exports = async function handler(req, res) {
             publicId = ROOT_FOLDER + '/projects/' + title + '-' + timestamp + '-' + randomId();
         } else if (kind === 'profile') {
             publicId = ROOT_FOLDER + '/profile-pictures/' + user.uid;
+        } else if (kind === 'document') {
+            const extension = safeExtension(originalName);
+            if (!['pdf', 'doc', 'docx'].includes(extension)) {
+                return json(res, 400, { error: 'The document filename must end in .pdf, .doc or .docx.' });
+            }
+            // Role-scoped folder, e.g. seedwel/worker-documents/virtual-assistant/…
+            const roleFolder = safeSegment(body.ownerName, 'shared', 50) || 'shared';
+            publicId = DOCUMENT_ROOT_FOLDER + '/worker-documents/' + roleFolder + '/' + safeSegment(originalName.replace(/\.[a-z0-9]+$/i, ''), 'document', 60) + '-' + timestamp + '-' + randomId() + '.' + extension;
         } else {
             const extension = safeExtension(originalName);
             if (!['pdf', 'doc', 'docx'].includes(extension)) {
@@ -122,7 +133,7 @@ module.exports = async function handler(req, res) {
         // Keep the stable profile public ID on one predictable image format, and
         // preserve an applicant's sanitised original CV filename as asset metadata.
         if (kind === 'profile') signedParams.format = 'jpg';
-        if (kind === 'cv') signedParams.filename_override = originalName;
+        if (kind === 'cv' || kind === 'document') signedParams.filename_override = originalName;
         const signature = cloudinary.utils.api_sign_request(signedParams, apiSecret);
 
         return json(res, 200, {
