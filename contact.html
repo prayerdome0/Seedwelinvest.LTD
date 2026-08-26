@@ -7,942 +7,247 @@
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="manifest" href="site.webmanifest" />
     <title>Contact Us | Seedwel Investment LTD</title>
-    <meta name="description" content="Get in touch with Seedwel Investment LTD. Contact us for web development, graphic design, business registration, and more." />
+    <meta name="description" content="Contact Seedwel Investment LTD — email, phone, WhatsApp or send a message through our website. Based in Kabwe, Zambia." />
 
-    
     <link rel="canonical" href="https://seedwel.ltd/contact.html" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Seedwel Investment LTD" />
     <meta property="og:title" content="Contact Us | Seedwel Investment LTD" />
-    <meta property="og:description" content="Contact Seedwel Investment LTD for web development, graphic design, business registration, SEO and more. Kabwe, Zambia · Global remote." />
+    <meta property="og:description" content="Email, phone, WhatsApp or send a message through our website." />
     <meta property="og:url" content="https://seedwel.ltd/contact.html" />
-    <meta property="og:image" content="https://i.ibb.co/svxj52ny/seedwel.png" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Contact Us | Seedwel Investment LTD" />
-    <meta name="twitter:description" content="Contact Seedwel Investment LTD for web development, graphic design, business registration, SEO and more. Kabwe, Zambia · Global remote." />
-    <meta name="twitter:image" content="https://i.ibb.co/svxj52ny/seedwel.png" />
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #ffffff;
-            color: #111827;
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #dc2626;
-            border-radius: 10px;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        @keyframes fadeInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        @keyframes fadeInRight {
-            from {
-                opacity: 0;
-                transform: translateX(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .animate-fade-up {
-            animation: fadeInUp 0.8s ease forwards;
-        }
-        .animate-fade-left {
-            animation: fadeInLeft 0.8s ease forwards;
-        }
-        .animate-fade-right {
-            animation: fadeInRight 0.8s ease forwards;
-        }
-        .delay-1 {
-            animation-delay: 0.1s;
-            opacity: 0;
-        }
-        .delay-2 {
-            animation-delay: 0.2s;
-            opacity: 0;
-        }
-        .delay-3 {
-            animation-delay: 0.3s;
-            opacity: 0;
-        }
-        .delay-4 {
-            animation-delay: 0.4s;
-            opacity: 0;
-        }
-
-        /* ───────── HEADER ───────── */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.97);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(220, 38, 38, 0.12);
-            transition: all 0.3s ease;
-        }
-        .header.scrolled {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-        }
-        .header-inner {
-            max-width: 1300px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 28px;
-        }
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-        .logo-img {
-            height: 42px;
-            width: auto;
-        }
-        .company-name-header {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            font-size: 0.95rem;
-            color: #111827;
-            letter-spacing: -0.5px;
-        }
-        .company-name-header span {
-            color: #dc2626;
-        }
-        .nav-links {
-            display: flex;
-            gap: 28px;
-            align-items: center;
-        }
-        .nav-links a {
-            text-decoration: none;
-            color: #111827;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: color 0.3s;
-            cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
-            position: relative;
-        }
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: #dc2626;
-            transition: width 0.3s ease;
-        }
-        .nav-links a:hover::after,
-        .nav-links a.active::after {
-            width: 100%;
-        }
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: #dc2626;
-        }
-
-        .hamburger {
-            display: none;
-            width: 40px;
-            height: 40px;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 5px;
-            cursor: pointer;
-            background: rgba(220, 38, 38, 0.06);
-            border-radius: 50%;
-            border: 1px solid rgba(220, 38, 38, 0.12);
-            transition: all 0.3s ease;
-        }
-        .hamburger:hover {
-            background: rgba(220, 38, 38, 0.12);
-        }
-        .hamburger span {
-            width: 20px;
-            height: 2.5px;
-            background: #111827;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(6px, -6px);
-        }
-
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            right: -320px;
-            width: 280px;
-            height: 100vh;
-            background: #ffffff;
-            z-index: 999;
-            padding: 100px 25px 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            transition: right 0.35s cubic-bezier(0.65, 0, 0.35, 1);
-            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.08);
-        }
-        .mobile-menu.active {
-            right: 0;
-        }
-        .mobile-menu a {
-            color: #111827;
-            text-decoration: none;
-            font-size: 1rem;
-            font-weight: 600;
-            padding: 12px 18px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            font-family: 'Montserrat', sans-serif;
-            transition: all 0.3s ease;
-        }
-        .mobile-menu a i {
-            color: #dc2626;
-            width: 24px;
-        }
-        .mobile-menu a:hover {
-            background: rgba(220, 38, 38, 0.06);
-            color: #dc2626;
-        }
-        .menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.35);
-            z-index: 998;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        .menu-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        /* ───────── PAGE HERO ───────── */
-        .page-hero {
-            padding: 130px 28px 50px;
-            text-align: center;
-            background: linear-gradient(180deg, #fef2f2 0%, #ffffff 50%);
-        }
-        .page-hero .section-subtitle {
-            color: #dc2626;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 0.8rem;
-            letter-spacing: 3px;
-            margin-bottom: 10px;
-        }
-        .page-hero h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 900;
-            font-size: clamp(2rem, 4vw, 3rem);
-            color: #111827;
-        }
-        .page-hero h1 span {
-            color: #dc2626;
-        }
-        .page-hero p {
-            color: #4b5563;
-            max-width: 500px;
-            margin: 10px auto 0;
-            font-size: 1rem;
-        }
-
-        /* ───────── CONTACT SECTION ───────── */
-        .contact-section {
-            padding: 40px 28px 60px;
-        }
-        .contact-inner {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            gap: 50px;
-        }
-
-        .contact-info h2 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            font-size: 1.6rem;
-            color: #111827;
-            margin-bottom: 8px;
-        }
-        .contact-info h2 span {
-            color: #dc2626;
-        }
-        .contact-info>p {
-            color: #4b5563;
-            font-size: 0.9rem;
-            margin-bottom: 28px;
-            line-height: 1.6;
-        }
-        .contact-details {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-bottom: 30px;
-        }
-        .contact-detail-item {
-            display: flex;
-            gap: 14px;
-            align-items: flex-start;
-            background: #f8fafc;
-            border: 1px solid #e5e7eb;
-            border-radius: 14px;
-            padding: 18px 16px;
-            transition: all 0.3s ease;
-        }
-        .contact-detail-item:hover {
-            border-color: #dc2626;
-            background: #ffffff;
-            transform: translateX(4px);
-        }
-        .contact-detail-icon {
-            width: 42px;
-            height: 42px;
-            background: rgba(220, 38, 38, 0.06);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            color: #dc2626;
-            font-size: 1rem;
-        }
-        .contact-detail-text h4 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 0.9rem;
-            color: #111827;
-            margin-bottom: 2px;
-        }
-        .contact-detail-text p,
-        .contact-detail-text a {
-            color: #4b5563;
-            font-size: 0.85rem;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        .contact-detail-text a:hover {
-            color: #dc2626;
-        }
-
-        /* ───────── CONTACT FORM ───────── */
-        .contact-form-wrapper {
-            background: #f8fafc;
-            border: 1px solid #e5e7eb;
-            border-radius: 20px;
-            padding: 35px 30px;
-        }
-        .contact-form-wrapper h3 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 1.3rem;
-            color: #111827;
-            margin-bottom: 6px;
-        }
-        .contact-form-wrapper>p {
-            color: #4b5563;
-            font-size: 0.85rem;
-            margin-bottom: 22px;
-        }
-        .form-group {
-            margin-bottom: 16px;
-        }
-        .form-group label {
-            display: block;
-            color: #4b5563;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 6px;
-        }
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 13px 16px;
-            background: #ffffff;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            color: #111827;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.88rem;
-            transition: all 0.3s ease;
-            outline: none;
-            resize: vertical;
-        }
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            border-color: #dc2626;
-            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.06);
-        }
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-        }
-        .btn-submit {
-            width: 100%;
-            padding: 15px;
-            background: #dc2626;
-            color: #ffffff;
-            border: none;
-            border-radius: 50px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 16px rgba(220, 38, 38, 0.2);
-        }
-        .btn-submit:hover {
-            background: #b91c1c;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(220, 38, 38, 0.3);
-        }
-
-        /* ───────── MAP ───────── */
-        .map-section {
-            padding: 10px 28px 60px;
-        }
-        .map-inner {
-            max-width: 1100px;
-            margin: 0 auto;
-            background: #f8fafc;
-            border: 1px solid #e5e7eb;
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-            color: #4b5563;
-        }
-        .map-inner i {
-            font-size: 2.5rem;
-            color: #dc2626;
-            margin-bottom: 12px;
-            display: block;
-        }
-
-        /* ───────── FOOTER ───────── */
-        footer {
-            background: #0f172a;
-            padding: 50px 28px 25px;
-            border-top: 1px solid #1e293b;
-        }
-        .footer-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 35px;
-        }
-        .footer-brand img {
-            height: 42px;
-            margin-bottom: 12px;
-        }
-        .footer-brand p {
-            color: #94a3b8;
-            font-size: 0.85rem;
-            line-height: 1.6;
-        }
-        .footer-col h4 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 16px;
-            font-size: 1rem;
-        }
-        .footer-col a {
-            color: #94a3b8;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 8px;
-            font-size: 0.85rem;
-            transition: all 0.3s ease;
-        }
-        .footer-col a:hover {
-            color: #dc2626;
-            transform: translateX(4px);
-        }
-        .footer-col p {
-            color: #94a3b8;
-            font-size: 0.85rem;
-            margin-bottom: 4px;
-        }
-        .footer-bottom {
-            max-width: 1200px;
-            margin: 35px auto 0;
-            padding-top: 20px;
-            border-top: 1px solid #1e293b;
-            text-align: center;
-            color: #64748b;
-            font-size: 0.8rem;
-        }
-
-        .floating-whatsapp {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background: #25d366;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 99;
-            animation: pulse 2s infinite;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
-        }
-        .floating-whatsapp:hover {
-            transform: scale(1.1);
-        }
-        .floating-whatsapp i {
-            color: #fff;
-            font-size: 1.8rem;
-        }
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4);
-            }
-            70% {
-                box-shadow: 0 0 0 16px rgba(37, 211, 102, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
-            }
-        }
-
-        @media (max-width: 900px) {
-            .nav-links {
-                display: none;
-            }
-            .hamburger {
-                display: flex;
-            }
-            .contact-inner {
-                grid-template-columns: 1fr;
-                gap: 35px;
-            }
-            .footer-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-        @media (max-width: 640px) {
-            .header-inner {
-                padding: 10px 16px;
-            }
-            .logo-img {
-                height: 34px;
-            }
-            .company-name-header {
-                font-size: 0.75rem;
-            }
-            .page-hero {
-                padding: 110px 16px 30px;
-            }
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-            .contact-form-wrapper {
-                padding: 24px 16px;
-            }
-            .footer-grid {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            .floating-whatsapp {
-                width: 48px;
-                height: 48px;
-                bottom: 18px;
-                right: 18px;
-            }
-            .floating-whatsapp i {
-                font-size: 1.4rem;
-            }
-            .mobile-menu {
-                width: 260px;
-            }
-        }
-            .nav-links a.nav-login {
-            background: #dc2626; color: #fff !important; padding: 8px 20px; border-radius: 50px;
-            box-shadow: 0 4px 14px rgba(220,38,38,.25); transition: all .3s ease;
-        }
-        .nav-links a.nav-login::after { display: none; }
-        .nav-links a.nav-login:hover { background: #b91c1c; color: #fff; transform: translateY(-1px); }
-</style>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "ProfessionalService",
-      "name": "Seedwel Investment LTD",
-      "url": "https://seedwel.ltd/",
-      "logo": "https://i.ibb.co/svxj52ny/seedwel.png",
-      "image": "https://i.ibb.co/svxj52ny/seedwel.png",
-      "description": "Premium digital agency offering web development, SEO, branding, graphic design and business registration services.",
-      "email": "seedwelinvestltd@gmail.com",
-      "telephone": "+260973028342",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Kabwe",
-        "addressCountry": "ZM"
-      },
-      "areaServed": ["ZM", "Global"],
-      "sameAs": [
-        "https://wa.me/260973028342"
-      ]
-    }
-    </script>
-    <link rel="stylesheet" href="assets/css/local-ai.css" />
+    <link rel="stylesheet" href="assets/css/site.css" />
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js" defer></script>
 </head>
 
-<body>
+<body data-page="contact">
 
     <!-- ========== HEADER ========== -->
     <header class="header" id="header">
-        <div class="header-inner">
-            <a href="index.html" class="logo-container">
-                <img src="https://i.ibb.co/svxj52ny/seedwel.png" class="logo-img" alt="Seedwel Investment LTD" />
+        <div class="container header-inner">
+            <a href="index.html" class="logo-container" aria-label="Seedwel Investment LTD — Home">
+                <img src="https://i.ibb.co/svxj52ny/seedwel.png" class="logo-img" alt="Seedwel Investment LTD logo" />
                 <span class="company-name-header">Seedwel <span>Investment</span> LTD</span>
             </a>
-            <div class="nav-links">
+            <nav class="nav-links" aria-label="Main navigation">
                 <a href="index.html">Home</a>
-                <a href="about.html">About Us</a>
+                <a href="about.html">About</a>
                 <a href="services.html">Services</a>
                 <a href="projects.html">Projects</a>
                 <a href="apply.html">Careers</a>
-                <a href="contact.html" class="active">Contact</a>
+                <a href="contact.html" class="active" aria-current="page">Contact</a>
                 <a href="support.html">Support</a>
-                <a href="login.html" class="nav-login">Login</a>
-            </div>
-            <div class="hamburger" id="hamburger" aria-label="Menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+                <a href="login.html" class="btn btn-ghost nav-login">Login</a>
+                <a href="request.html" class="btn btn-primary nav-cta">Request a Service</a>
+            </nav>
+            <button class="hamburger" id="hamburger" type="button" aria-label="Open menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </header>
 
-    <!-- ========== MOBILE MENU ========== -->
     <div class="menu-overlay" id="menuOverlay"></div>
-    <nav class="mobile-menu" id="mobileMenu">
-        <a href="index.html"><i class="fas fa-home"></i> Home</a>
-        <a href="apply.html"><i class="fas fa-pen"></i> Job Apply</a>
-        <a href="about.html"><i class="fas fa-info-circle"></i> About Us</a>
-        <a href="services.html"><i class="fas fa-cogs"></i> Services</a>
-        <a href="projects.html"><i class="fas fa-folder-open"></i> Projects</a>
-        <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
-        <a href="support.html"><i class="fas fa-headset"></i> Support</a>
-        <a href="login.html"><i class="fas fa-right-to-bracket"></i> Login</a>
+    <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+        <a href="index.html"><i class="fa-solid fa-house" aria-hidden="true"></i> Home</a>
+        <a href="about.html"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> About</a>
+        <a href="services.html"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Services</a>
+        <a href="projects.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i> Projects</a>
+        <a href="apply.html"><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Careers</a>
+        <a href="contact.html" class="active"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Contact</a>
+        <a href="support.html"><i class="fa-solid fa-headset" aria-hidden="true"></i> Support</a>
+        <a href="login.html"><i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i> Login</a>
+        <div class="menu-divider"></div>
+        <a href="request.html" class="menu-request"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Request a Service</a>
     </nav>
 
-    <!-- ========== PAGE HERO ========== -->
-    <section class="page-hero">
-        <p class="section-subtitle animate-fade-up">Get In Touch</p>
-        <h1 class="animate-fade-up delay-1">Contact <span>Us</span></h1>
-        <p class="animate-fade-up delay-2">We'd love to hear from you. Let's start a conversation.</p>
-    </section>
+    <main>
 
-    <!-- ========== CONTACT SECTION ========== -->
-    <section class="contact-section">
-        <div class="contact-inner">
-            <div class="contact-info animate-fade-left">
-                <h2>Let's <span>Talk</span></h2>
-                <p>Have a project in mind? Need help with registration? Just want to say hello? We're here for you.</p>
-                <div class="contact-details">
-                    <div class="contact-detail-item">
-                        <div class="contact-detail-icon"><i class="fas fa-phone"></i></div>
-                        <div class="contact-detail-text">
-                            <h4>Call Us</h4>
-                            <a href="tel:+260973028342">+260 973 028 342</a>
-                            <br /><a href="tel:+353870005227">+353 87 000 5227</a>
-                        </div>
-                    </div>
-                    <div class="contact-detail-item">
-                        <div class="contact-detail-icon"><i class="fas fa-envelope"></i></div>
-                        <div class="contact-detail-text">
-                            <h4>Email Us</h4>
+        <!-- ========== PAGE HERO ========== -->
+        <section class="page-hero">
+            <div class="container">
+                <p class="eyebrow">Get In Touch</p>
+                <h1>Contact <span>Us</span></h1>
+                <p>Have a question or want to discuss a project? We usually reply within one business day.</p>
+            </div>
+        </section>
+
+        <!-- ========== CONTACT ========== -->
+        <section class="section" style="padding-top:48px;">
+            <div class="container contact-grid">
+
+                <div class="reveal">
+                    <h2 style="font-size:1.4rem;margin-bottom:8px;">Talk to the team</h2>
+                    <p class="muted" style="margin-bottom:10px;">Choose whichever way suits you best.</p>
+
+                    <div class="contact-detail">
+                        <div class="icon"><i class="fa-solid fa-envelope" aria-hidden="true"></i></div>
+                        <div>
+                            <h3>Email</h3>
                             <a href="mailto:seedwelinvestltd@gmail.com">seedwelinvestltd@gmail.com</a>
                         </div>
                     </div>
-                    <div class="contact-detail-item">
-                        <div class="contact-detail-icon"><i class="fab fa-whatsapp"></i></div>
-                        <div class="contact-detail-text">
-                            <h4>WhatsApp</h4>
-                            <a href="https://wa.me/260973028342" target="_blank">Chat with us on WhatsApp</a>
+                    <div class="contact-detail">
+                        <div class="icon" style="background:#e8faf0;color:#16a34a;"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></div>
+                        <div>
+                            <h3>WhatsApp</h3>
+                            <a href="https://wa.me/260973028342" target="_blank" rel="noopener">+260 973 028 342 — chat with us</a>
                         </div>
                     </div>
-                    <div class="contact-detail-item">
-                        <div class="contact-detail-icon"><i class="fas fa-map-marker-alt"></i></div>
-                        <div class="contact-detail-text">
-                            <h4>Locations</h4>
-                            <p>Kabwe, Zambia | Chama, Zambia | Global</p>
+                    <div class="contact-detail">
+                        <div class="icon"><i class="fa-solid fa-phone" aria-hidden="true"></i></div>
+                        <div>
+                            <h3>Call</h3>
+                            <a href="tel:+260973028342">+260 973 028 342</a>
+                        </div>
+                    </div>
+                    <div class="contact-detail">
+                        <div class="icon"><i class="fa-solid fa-location-dot" aria-hidden="true"></i></div>
+                        <div>
+                            <h3>Location</h3>
+                            <p>Kabwe, Zambia — working with clients across Zambia and worldwide.</p>
+                        </div>
+                    </div>
+
+                    <div class="card mini-card" style="margin-top:22px;">
+                        <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+                        <div>
+                            <h3>Ready to start?</h3>
+                            <p>Submit a service request and it goes straight into our work queue.</p>
+                            <p style="margin-top:10px;"><a href="request.html" class="btn btn-primary" style="min-height:42px;padding:9px 18px;">Request a Service</a></p>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="contact-form-wrapper animate-fade-right">
-                <h3>Send Us a Message</h3>
-                <p>Fill in the form below and we'll get back to you shortly.</p>
-                <form id="contactForm" novalidate>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="contactName">Full Name *</label>
-                            <input type="text" id="contactName" name="fullName" placeholder="Your full name" maxlength="120" required autocomplete="name" />
+                <div class="form-card reveal d1">
+                    <h2 style="font-size:1.25rem;margin-bottom:6px;">Send us a message</h2>
+                    <p class="muted small" style="margin-bottom:22px;">For general questions. For specific work, please use the <a href="request.html">service request form</a>.</p>
+
+                    <form id="contactForm" novalidate>
+                        <div class="form-grid">
+                            <div class="field">
+                                <label for="contactName">Full Name <span class="req">*</span></label>
+                                <input type="text" id="contactName" name="fullName" placeholder="Your full name" maxlength="120" required autocomplete="name" />
+                            </div>
+                            <div class="field">
+                                <label for="contactEmail">Email Address <span class="req">*</span></label>
+                                <input type="email" id="contactEmail" name="email" placeholder="you@example.com" maxlength="160" required autocomplete="email" />
+                            </div>
+                            <div class="field">
+                                <label for="contactPhone">Phone <span class="muted">(optional)</span></label>
+                                <input type="tel" id="contactPhone" name="phone" placeholder="+260 XXX XXX XXX" maxlength="40" autocomplete="tel" />
+                            </div>
+                            <div class="field">
+                                <label for="contactService">Topic</label>
+                                <select id="contactService" name="service">
+                                    <option value="">Select a topic…</option>
+                                    <option value="zra">ZRA Tax Services</option>
+                                    <option value="napsa">NAPSA Services</option>
+                                    <option value="pacra">PACRA Registration</option>
+                                    <option value="web-development">Website Development</option>
+                                    <option value="ai-automation">AI Automation</option>
+                                    <option value="digital-marketing">Digital Marketing</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="field full">
+                                <label for="contactMessage">Your Message <span class="req">*</span></label>
+                                <textarea id="contactMessage" name="message" rows="5" placeholder="How can we help?" maxlength="3000" required></textarea>
+                            </div>
+                            <div class="field full">
+                                <div class="consent-row">
+                                    <input type="checkbox" id="contactConsent" required />
+                                    <label for="contactConsent">I agree to the <a href="privacy.html">Privacy Policy</a> and consent to Seedwel contacting me about this enquiry. <span style="color:var(--brand);">*</span></label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="contactEmail">Email Address *</label>
-                            <input type="email" id="contactEmail" name="email" placeholder="you@example.com" maxlength="160" required autocomplete="email" />
+                        <p class="form-status" id="contactFormStatus" role="status" aria-live="polite" hidden></p>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary" id="contactSubmitBtn"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Send Message</button>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="contactPhone">Phone Number</label>
-                            <input type="tel" id="contactPhone" name="phone" placeholder="+260 XXX XXX XXX" maxlength="40" autocomplete="tel" />
-                        </div>
-                        <div class="form-group">
-                            <label for="contactService">Service Interested In</label>
-                            <select id="contactService" name="service">
-                                <option value="">Select a service...</option>
-                                <option value="web-development">Web Development</option>
-                                <option value="graphic-design">Graphic Design</option>
-                                <option value="business-registration">Business Registration</option>
-                                <option value="seo-marketing">SEO & Marketing</option>
-                                <option value="app-development">App Development</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="contactMessage">Your Message *</label>
-                        <textarea id="contactMessage" name="message" rows="4" placeholder="Tell us about your project..." maxlength="3000" required></textarea>
-                    </div>
-                    <div class="form-group" style="display:flex;align-items:flex-start;gap:10px;">
-                        <input type="checkbox" id="contactConsent" name="consent" required style="margin-top:4px;width:auto;accent-color:#dc2626;" />
-                        <label for="contactConsent" style="font-weight:500;font-size:0.85rem;color:#4b5563;margin:0;">I agree to the <a href="privacy.html" style="color:#dc2626;">Privacy Policy</a> and consent to Seedwel contacting me about this enquiry. *</label>
-                    </div>
-                    <p id="contactFormStatus" role="status" aria-live="polite" style="display:none;margin:0 0 14px;font-size:0.9rem;font-weight:600;"></p>
-                    <button type="submit" class="btn-submit" id="contactSubmitBtn">
-                        <i class="fas fa-paper-plane"></i> Send Message
-                    </button>
-                </form>
-            </div>
-        </div>
-    </section>
+                    </form>
+                </div>
 
-    <!-- ========== MAP ========== -->
-    <section class="map-section">
-        <div class="map-inner animate-fade-up">
-            <i class="fas fa-map-marked-alt"></i>
-            <p><strong>📍 Kabwe, Zambia</strong> | Chama, Zambia | Global</p>
-            <p style="font-size:0.85rem; color:#6b7280;">Serving clients locally and worldwide</p>
-        </div>
-    </section>
+            </div>
+        </section>
 
-    <!-- ========== FOOTER ========== -->
-    <footer>
-        <div class="footer-grid">
-            <div class="footer-brand">
-                <img src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel Investment LTD" />
-                <p>Premium digital agency delivering excellence worldwide. We build digital experiences that drive growth for modern businesses.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Quick Links</h4>
-                <a href="index.html">Home</a>
-                <a href="about.html">About Us</a>
-                <a href="services.html">Services</a>
-                <a href="projects.html">Projects</a>
-            </div>
-            <div class="footer-col">
-                <h4>Support</h4>
-                <a href="contact.html">Contact</a>
-                <a href="support.html">Help Center</a>
-                <a href="privacy.html">Privacy</a>
-                <a href="terms.html">Terms</a>
-                <a href="tel:+260973028342"><i class="fas fa-phone" style="color:#dc2626; width:18px;"></i> +260 973 028 342</a>
-                <a href="mailto:seedwelinvestltd@gmail.com"><i class="fas fa-envelope" style="color:#dc2626; width:18px;"></i> seedwelinvestltd@gmail.com</a>
-            </div>
-            <div class="footer-col">
-                <h4>Locations</h4>
-                <p><i class="fas fa-location-dot" style="color:#dc2626; width:18px;"></i> Kabwe, Zambia</p>
-                <p><i class="fas fa-location-dot" style="color:#dc2626; width:18px;"></i> Chama, Zambia</p>
-                <p>🌍 Global Remote</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Seedwel Investment LTD. All rights reserved.</p>
-        </div>
-    </footer>
+    </main>
 
-    <!-- ========== FLOATING WHATSAPP ========== -->
-    <a href="https://wa.me/260973028342" class="floating-whatsapp" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-
+    <!-- ========== SCRIPTS ========== -->
     <script>
-        const hamburger = document.getElementById('hamburger');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const menuOverlay = document.getElementById('menuOverlay');
+        window.addEventListener('DOMContentLoaded', function () {
+            var firebaseConfig = {
+                apiKey: 'AIzaSyA-BpRy-RVc2rqIG6uiRu_XrGEu1ZGnQwU',
+                authDomain: 'seedwel-investment-limited.firebaseapp.com',
+                databaseURL: 'https://seedwel-investment-limited-default-rtdb.firebaseio.com',
+                projectId: 'seedwel-investment-limited',
+                storageBucket: 'seedwel-investment-limited.firebasestorage.app',
+                messagingSenderId: '197778268619',
+                appId: '1:197778268619:web:92f29d88fa5a22dbfa964e'
+            };
+            if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+            var db = firebase.database();
 
-        function toggleMenu() {
-            hamburger.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-            menuOverlay.classList.toggle('active');
-            document.body.style.overflow = hamburger.classList.contains('active') ? 'hidden' : '';
-        }
-        hamburger.addEventListener('click', toggleMenu);
-        menuOverlay.addEventListener('click', toggleMenu);
-        document.querySelectorAll('.mobile-menu a').forEach(l => l.addEventListener('click', toggleMenu));
-
-        const header = document.getElementById('header');
-        window.addEventListener('scroll', () => {
-            header.classList.toggle('scrolled', window.scrollY > 40);
-        });
-
-        const contactFirebaseConfig = {
-            apiKey: 'AIzaSyA-BpRy-RVc2rqIG6uiRu_XrGEu1ZGnQwU',
-            authDomain: 'seedwel-investment-limited.firebaseapp.com',
-            databaseURL: 'https://seedwel-investment-limited-default-rtdb.firebaseio.com',
-            projectId: 'seedwel-investment-limited',
-            storageBucket: 'seedwel-investment-limited.firebasestorage.app',
-            messagingSenderId: '197778268619',
-            appId: '1:197778268619:web:92f29d88fa5a22dbfa964e'
-        };
-        if (!firebase.apps.length) firebase.initializeApp(contactFirebaseConfig);
-        const contactDb = firebase.database();
-
-        function setContactStatus(message, type) {
-            const el = document.getElementById('contactFormStatus');
-            if (!el) return;
-            el.style.display = message ? 'block' : 'none';
-            el.textContent = message || '';
-            el.style.color = type === 'error' ? '#b91c1c' : '#15803d';
-        }
-
-        document.getElementById('contactForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const btn = document.getElementById('contactSubmitBtn');
-            const fullName = document.getElementById('contactName').value.trim();
-            const email = document.getElementById('contactEmail').value.trim();
-            const phone = document.getElementById('contactPhone').value.trim();
-            const service = document.getElementById('contactService').value;
-            const message = document.getElementById('contactMessage').value.trim();
-            const consent = document.getElementById('contactConsent').checked;
-
-            if (fullName.length < 2 || fullName.length > 120) {
-                setContactStatus('Please enter your full name.', 'error');
-                return;
-            }
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                setContactStatus('Please enter a valid email address.', 'error');
-                return;
-            }
-            if (message.length < 10) {
-                setContactStatus('Please write a short message (at least 10 characters).', 'error');
-                return;
-            }
-            if (!consent) {
-                setContactStatus('Please accept the Privacy Policy to continue.', 'error');
-                return;
+            function setStatus(message, type) {
+                var el = document.getElementById('contactFormStatus');
+                if (!el) return;
+                el.hidden = !message;
+                el.textContent = message || '';
+                el.className = 'form-status' + (type === 'error' ? ' error' : ' success');
             }
 
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-            btn.disabled = true;
-            setContactStatus('');
+            document.getElementById('contactForm').addEventListener('submit', async function (e) {
+                e.preventDefault();
+                var btn = document.getElementById('contactSubmitBtn');
+                var fullName = document.getElementById('contactName').value.trim();
+                var email = document.getElementById('contactEmail').value.trim();
+                var phone = document.getElementById('contactPhone').value.trim();
+                var service = document.getElementById('contactService').value;
+                var message = document.getElementById('contactMessage').value.trim();
+                var consent = document.getElementById('contactConsent').checked;
 
-            try {
-                await contactDb.ref('contactMessages').push({
-                    fullName: fullName.slice(0, 120),
-                    email: email.slice(0, 160),
-                    phone: phone.slice(0, 40),
-                    service: (service || '').slice(0, 80),
-                    message: message.slice(0, 3000),
-                    consent: true,
-                    status: 'new',
-                    source: 'contact.html',
-                    userAgent: (navigator.userAgent || '').slice(0, 300),
-                    submittedAt: firebase.database.ServerValue.TIMESTAMP
-                });
-                btn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
-                btn.style.background = '#22c55e';
-                setContactStatus('Thank you — your message was delivered. We typically reply within one business day.', 'success');
-                this.reset();
-                setTimeout(() => {
-                    btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
-                    btn.style.background = '';
+                if (fullName.length < 2) { setStatus('Please enter your full name.', 'error'); return; }
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setStatus('Please enter a valid email address.', 'error'); return; }
+                if (message.length < 10) { setStatus('Please write a short message (at least 10 characters).', 'error'); return; }
+                if (!consent) { setStatus('Please accept the Privacy Policy to continue.', 'error'); return; }
+
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Sending…';
+                setStatus('', '');
+
+                try {
+                    await db.ref('contactMessages').push({
+                        fullName: fullName.slice(0, 120),
+                        email: email.slice(0, 160),
+                        phone: phone.slice(0, 40),
+                        service: (service || '').slice(0, 80),
+                        message: message.slice(0, 3000),
+                        consent: true,
+                        status: 'new',
+                        source: 'contact.html',
+                        userAgent: (navigator.userAgent || '').slice(0, 300),
+                        submittedAt: firebase.database.ServerValue.TIMESTAMP
+                    });
+                    btn.innerHTML = '<i class="fas fa-check" aria-hidden="true"></i> Message Sent';
+                    setStatus('Thank you — your message was delivered. We typically reply within one business day.', 'success');
+                    this.reset();
+                    setTimeout(function () {
+                        btn.innerHTML = '<i class="fas fa-paper-plane" aria-hidden="true"></i> Send Message';
+                        btn.disabled = false;
+                    }, 2500);
+                } catch (err) {
+                    console.error('Contact form error:', err);
+                    btn.innerHTML = '<i class="fas fa-paper-plane" aria-hidden="true"></i> Send Message';
                     btn.disabled = false;
-                }, 2500);
-            } catch (err) {
-                console.error('Contact form error:', err);
-                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
-                btn.disabled = false;
-                setContactStatus('Could not send right now. Please try WhatsApp or email seedwelinvestltd@gmail.com.', 'error');
-            }
+                    setStatus('Could not send right now. Please try WhatsApp or email seedwelinvestltd@gmail.com.', 'error');
+                }
+            });
         });
-
-        window.scrollTo(0, 0);
-        window.addEventListener('load', () => window.scrollTo(0, 0));
-        window.addEventListener('pageshow', (e) => { if (e.persisted) window.scrollTo(0, 0); });
     </script>
-    <script src="assets/js/service-strip.js" defer></script>
-    <script src="assets/js/local-ai.js" defer></script>
+    <script src="assets/js/site.js" defer></script>
 </body>
 </html>

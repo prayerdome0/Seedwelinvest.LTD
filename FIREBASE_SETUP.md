@@ -76,7 +76,7 @@ Existing Firebase Storage files remain readable and deletable for migration, but
 
 ## Contact messages and applications
 
-Public visitors may create records under `/contactMessages` and `/applications`. Only the administrator can read, update or delete them. The careers form always attempts the private CV upload first; if that service is unavailable, it still submits the application to the admin inbox with a **CV follow-up required** flag and gives the applicant direct email and WhatsApp options.
+Public visitors may create records under `/contactMessages`, `/serviceRequests` and `/applications`. Only the administrator can read, update or delete them. Service requests from `request.html` are created with status `new` and managed in the admin dashboard through New → Reviewing → Assigned → In Progress → Completed (plus Cancelled). The careers form always attempts the private CV upload first; if that service is unavailable, it still submits the application to the admin inbox with a **CV follow-up required** flag and gives the applicant direct email and WhatsApp options.
 
 The admin inbox supports application search, status/CV filtering, secure CV requests, and CSV export. When an administrator deletes a Cloudinary-backed application, the dashboard also requests deletion of its authenticated CV. Legacy Firebase CVs continue to receive best-effort cleanup.
 

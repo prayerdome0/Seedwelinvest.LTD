@@ -534,6 +534,11 @@
         .status-pill.info_required { color: #ffd98d; border-color: rgba(245,201,103,.3); background: rgba(245,201,103,.1); }
         .status-pill.open { color: #91ebbf; border-color: rgba(67,209,158,.28); background: rgba(67,209,158,.1); }
         .status-pill.closed { color: #ffb0b0; border-color: rgba(239,88,88,.28); background: rgba(239,88,88,.1); }
+        .status-pill.new { color: #ffd98d; border-color: rgba(245,201,103,.3); background: rgba(245,201,103,.1); }
+        .status-pill.assigned { color: #d9c8ff; border-color: rgba(167,139,250,.3); background: rgba(167,139,250,.1); }
+        .status-pill.in_progress { color: #b8d3ff; border-color: rgba(120,169,255,.28); background: rgba(120,169,255,.1); }
+        .status-pill.completed { color: #91ebbf; border-color: rgba(67,209,158,.28); background: rgba(67,209,158,.1); }
+        .status-pill.cancelled { color: #ffb0b0; border-color: rgba(239,88,88,.28); background: rgba(239,88,88,.1); }
         .worker-id-tag { display: inline-block; margin-top: 4px; padding: 2px 10px; border-radius: 999px; font-family: 'Montserrat', sans-serif; font-size: .68rem; font-weight: 800; letter-spacing: .4px; color: #ffd98d; background: rgba(245,201,103,.12); border: 1px solid rgba(245,201,103,.3); }
         .panel-search { width: 100%; margin-bottom: 12px; padding: 10px 14px; border-radius: 11px; border: 1px solid var(--line); background: rgba(9,14,24,.6); color: var(--white); font-family: 'Inter', sans-serif; font-size: .82rem; }
         .panel-search:focus { border-color: var(--gold); outline: none; }
@@ -640,6 +645,7 @@
         body[data-admin-view="portfolio"] .panel[data-admin-view="portfolio"],
         body[data-admin-view="settings"] .panel[data-admin-view="settings"],
         body[data-admin-view="messages"] .panel[data-admin-view="messages"],
+        body[data-admin-view="requests"] .panel[data-admin-view="requests"],
         body[data-admin-view="applications"] .panel[data-admin-view="applications"],
         body[data-admin-view="workers"] .panel[data-admin-view="workers"],
         body[data-admin-view="jobs"] .panel[data-admin-view="jobs"],
@@ -756,6 +762,7 @@
                 <p class="admin-sidebar-label">Operations</p>
                 <nav class="admin-nav" id="adminNav">
                     <button type="button" class="active" data-view="overview"><i class="fa-solid fa-chart-line"></i>Overview</button>
+                    <button type="button" data-view="requests"><i class="fa-solid fa-inbox"></i>Requests</button>
                     <button type="button" data-view="applications"><i class="fa-solid fa-user-plus"></i>Applicants</button>
                     <button type="button" data-view="workers"><i class="fa-solid fa-people-group"></i>Workers</button>
                     <button type="button" data-view="jobs"><i class="fa-solid fa-briefcase"></i>Jobs</button>
@@ -789,6 +796,7 @@
                 <article class="metric"><div class="metric-icon"><i class="fa-solid fa-hard-drive" aria-hidden="true"></i></div><strong id="storageTarget">1 TB</strong><span>Configured media capacity</span></article>
                 <article class="metric"><div class="metric-icon"><i class="fa-solid fa-chart-pie" aria-hidden="true"></i></div><strong id="storageUsed">0 B</strong><span id="storageUsageCaption">Tracked upload usage</span><div class="storage-meter" aria-hidden="true"><span id="storageMeter"></span></div></article>
                 <article class="metric"><div class="metric-icon"><i class="fa-solid fa-envelope-open-text" aria-hidden="true"></i></div><strong id="newMessagesCount">0</strong><span>New contact messages</span></article>
+                <article class="metric"><div class="metric-icon"><i class="fa-solid fa-inbox" aria-hidden="true"></i></div><strong id="newRequestsCount">0</strong><span>New service requests</span></article>
                 <article class="metric"><div class="metric-icon"><i class="fa-solid fa-user-tie" aria-hidden="true"></i></div><strong id="newApplicationsCount">0</strong><span>New job applications</span></article>
                 <article class="metric"><div class="metric-icon"><i class="fa-solid fa-file-circle-exclamation" aria-hidden="true"></i></div><strong id="cvFollowUpCount">0</strong><span>CVs needing follow-up</span></article>
                 <article class="metric"><div class="metric-icon"><i class="fa-solid fa-user-clock" aria-hidden="true"></i></div><strong id="pendingWorkersMetric">0</strong><span>Pending applicants</span></article>
@@ -992,6 +1000,28 @@
                         </div>
                     </section>
 
+                    <section class="panel inbox-panel" data-admin-view="requests" aria-labelledby="requestsTitle">
+                        <div class="panel-head">
+                            <div><h2 id="requestsTitle">Service requests</h2><p>Customer requests submitted from the public website. Manage each one from <strong>New</strong> to <strong>Completed</strong>.</p></div>
+                            <div style="display:flex;gap:8px;align-items:center;">
+                                <select id="requestStatusFilter" aria-label="Filter requests by status" style="min-height:36px;padding:7px 10px;border-radius:10px;border:1px solid var(--line);background:rgba(9,14,24,.6);color:var(--white);font-size:.78rem;">
+                                    <option value="all">All statuses</option>
+                                    <option value="new">New</option>
+                                    <option value="reviewing">Reviewing</option>
+                                    <option value="assigned">Assigned</option>
+                                    <option value="in_progress">In progress</option>
+                                    <option value="completed">Completed</option>
+                                    <option value="cancelled">Cancelled</option>
+                                </select>
+                                <button class="text-button" id="refreshRequests" type="button">Refresh</button>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <input class="panel-search" id="requestSearch" type="search" placeholder="Search requests by name, service, phone or email…" aria-label="Search service requests" />
+                            <div class="inbox-list" id="requestsList" aria-live="polite"><div class="empty-state"><i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>Loading service requests…</div></div>
+                        </div>
+                    </section>
+
                     <section class="panel inbox-panel" data-admin-view="applications" aria-labelledby="applicationsTitle">
                         <div class="panel-head">
                             <div><h2 id="applicationsTitle">Job applications</h2><p>Careers form submissions and CV downloads.</p></div>
@@ -1178,23 +1208,6 @@
             businessPhone: '+260 973 028 342',
             storageCapacityTB: 1
         });
-        const SEED_PROJECTS = Object.freeze([
-            { name: 'App Development & Publishing', category: 'Mobile app', client: 'Business technology', image: 'https://i.ibb.co/b50zqq9W/91923a7aeb2120244d50966b9cb69f19.jpg', description: 'Modern, responsive application development and Google Play publishing support for a growing business.', results: 'App development · Play Store publishing · Ongoing support' },
-            { name: 'E-Commerce Platform', category: 'E-commerce', client: 'Retail', image: 'https://i.ibb.co/sdsgbKT1/7ab503270d8ec0cdfd8ab91b9d7513ed.jpg', description: 'A full-featured online store with payment integration, product management and reliable hosting.', results: 'Online sales · Payment integration · Product management' },
-            { name: 'Portfolio Website', category: 'Website', client: 'Creative professional', image: 'https://i.ibb.co/G4xsCdd3/0231d8ff81750c9e0c533f563acf7d14.jpg', description: 'A visual portfolio that puts a professional photographer’s work front and centre across all devices.', results: 'Responsive portfolio · Optimised visuals · Fast loading' },
-            { name: 'Business Landing Page', category: 'Website', client: 'Service business', image: 'https://i.ibb.co/20YyyXCL/2e1921520a41a8019241c94dfdd5b905.jpg', description: 'A conversion-focused landing page designed to create clear next steps and capture qualified leads.', results: 'Lead generation · Mobile ready · Clear calls to action' },
-            { name: 'School Management System', category: 'Website', client: 'Education', image: 'https://i.ibb.co/nqMZdp2R/bfebc06c230536c04c2b0e2a20e20d07.jpg', description: 'A school management platform for student records, fee tracking and a connected parent experience.', results: 'Student records · Fees tracking · Parent portal' },
-            { name: 'Brand Identity Package', category: 'Branding', client: 'Growing business', image: 'https://i.ibb.co/svxj52ny/seedwel.png', description: 'A cohesive identity package with a distinctive logo, supporting collateral and practical brand guidance.', results: 'Logo system · Business cards · Brand guidelines' },
-            { name: 'Company Registration (PACRA)', category: 'Business registration', client: 'Zambian business', image: 'https://i.ibb.co/gMRs5XZ2/images.jpg', description: 'End-to-end PACRA company registration support to establish a business efficiently and compliantly.', results: 'PACRA support · Clear process · Compliance guidance' },
-            { name: 'ZRA VAT, TPIN & TOT Registration', category: 'Business registration', client: 'Zambian business', image: 'https://i.ibb.co/j9ws2d51/1.jpg', description: 'Practical assistance with TPIN, VAT and TOT registration so a business can meet key tax requirements.', results: 'TPIN · VAT · TOT registration' },
-            { name: 'Workers’ Compensation Registration', category: 'Business registration', client: 'Employer', image: 'https://i.ibb.co/67bgY0K3/images-3.jpg', description: 'Registration support for statutory employee protection and Workers’ Compensation compliance.', results: 'Statutory registration · Employer guidance · Compliance' }
-,
-            { name: 'Flavour House Restaurant', category: 'Restaurant', client: 'Fine dining restaurant', image: 'https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'A stunning restaurant website with online reservations, interactive menu showcase, photo galleries, and location mapping.', results: 'Online reservations · Interactive menu · Photo gallery · Google Maps' },
-            { name: 'Savanna Grill & Bar', category: 'Restaurant', client: 'Casual dining', image: 'https://images.pexels.com/photos/1581384/pexels-photo-1581384.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Modern restaurant website featuring online ordering, daily specials, customer reviews, and social media integration.', results: 'Online ordering · Daily specials · Customer reviews · Mobile-first' },
-            { name: 'Digital Marketing Campaign', category: 'Digital marketing', client: 'E-commerce business', image: 'https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Comprehensive digital marketing strategy including SEO, Google Ads, social media campaigns, and content marketing.', results: 'SEO optimization · Google Ads · Social media growth · Content strategy' },
-            { name: 'Social Media Growth Package', category: 'Digital marketing', client: 'Local business', image: 'https://images.pexels.com/photos/607812/pexels-photo-607812.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Strategic social media management across Facebook, Instagram, and TikTok with content creation and analytics.', results: 'Content creation · Community management · Analytics · Brand growth' }
-        ]);
-
         const firebaseConfig = {
             apiKey: 'AIzaSyA-BpRy-RVc2rqIG6uiRu_XrGEu1ZGnQwU',
             authDomain: 'seedwel-investment-limited.firebaseapp.com',
@@ -1276,6 +1289,7 @@
 
         let currentProjects = new Map();
         let currentMessages = new Map();
+        let currentRequests = new Map();
         let currentApplications = new Map();
         let currentWorkers = new Map();
         let currentJobs = new Map();
@@ -1285,6 +1299,9 @@
         let workerSearchTerm = '';
         let applicationSearchTerm = '';
         let applicationStatus = 'all';
+        let requestSearchTerm = '';
+        let requestStatusFilter = 'all';
+        const requestsList = $('requestsList');
         let currentSettings = { ...DEFAULT_SETTINGS };
         let editingKey = null;
         let selectedFiles = [];
@@ -1294,6 +1311,7 @@
 
         const ADMIN_VIEWS = Object.freeze({
             overview: ['Operations overview', 'Live recruitment, workforce, jobs and portfolio activity.'],
+            requests: ['Service Requests', 'Customer requests from the public website, from New to Completed.'],
             applications: ['Applicants', 'Review applications and move candidates through the recruitment workflow.'],
             workers: ['Workers', 'Manage approved workers, Worker IDs, status and task assignment.'],
             jobs: ['Jobs', 'Create detailed openings and monitor recruitment.'],
@@ -1591,6 +1609,14 @@
                 if (messagesList) messagesList.innerHTML = '<div class="empty-state"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>Unable to load contact messages. Deploy updated Database Rules.</div>';
                 showToast('Contact messages could not be loaded.', 'error');
             });
+            db.ref('serviceRequests').on('value', (snapshot) => {
+                currentRequests = new Map(Object.entries(snapshot.val() || {}));
+                renderRequests();
+                updateMetrics();
+            }, () => {
+                if (requestsList) requestsList.innerHTML = '<div class="empty-state"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>Unable to load service requests. Deploy updated Database Rules (serviceRequests).</div>';
+                showToast('Service requests could not be loaded.', 'error');
+            });
             db.ref('applications').on('value', (snapshot) => {
                 currentApplications = new Map(Object.entries(snapshot.val() || {}));
                 renderApplications();
@@ -1632,6 +1658,7 @@
             db.ref('projects').off();
             db.ref('siteSettings').off();
             db.ref('contactMessages').off();
+            db.ref('serviceRequests').off();
             db.ref('applications').off();
             db.ref('workers').off();
             db.ref('jobs').off();
@@ -1640,6 +1667,7 @@
             dataListening = false;
             currentProjects = new Map();
             currentMessages = new Map();
+            currentRequests = new Map();
             currentApplications = new Map();
             currentWorkers = new Map();
             currentJobs = new Map();
@@ -1718,14 +1746,7 @@
             if (!entries.length) {
                 const empty = document.createElement('div');
                 empty.className = 'empty-state';
-                empty.innerHTML = '<i class="fa-solid fa-folder-open" aria-hidden="true"></i>No portfolio entries yet. Add a project above or import the current showcase cards.';
-                const seed = document.createElement('button');
-                seed.type = 'button';
-                seed.id = 'importSeeds';
-                seed.className = 'btn btn-secondary seed-button';
-                seed.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Import current showcase cards';
-                seed.addEventListener('click', importSeedProjects);
-                empty.appendChild(seed);
+                empty.innerHTML = '<i class="fa-solid fa-folder-open" aria-hidden="true"></i>No portfolio entries yet. Add your first real project above — only work you publish appears on the public portfolio.';
                 projectsList.appendChild(empty);
                 return;
             }
@@ -1784,10 +1805,12 @@
             $('storageUsageCaption').textContent = formatBytes(usage) + ' of ' + $('storageTarget').textContent + ' tracked';
             $('storageMeter').style.width = percentage + '%';
             const newMessages = Array.from(currentMessages.values()).filter((item) => (item.status || 'new') === 'new').length;
+            const newRequests = Array.from(currentRequests.values()).filter((item) => (item.status || 'new') === 'new').length;
             const applications = Array.from(currentApplications.values());
             const newApps = applications.filter((item) => (item.status || 'new') === 'new').length;
             const cvFollowUps = applications.filter((item) => item.cvStatus !== 'uploaded' && !item.cvCloudinaryPublicId && !item.cvDownloadUrl).length;
             if ($('newMessagesCount')) $('newMessagesCount').textContent = newMessages;
+            if ($('newRequestsCount')) $('newRequestsCount').textContent = newRequests;
             if ($('newApplicationsCount')) $('newApplicationsCount').textContent = newApps;
             if ($('cvFollowUpCount')) $('cvFollowUpCount').textContent = cvFollowUps;
         }
@@ -1881,6 +1904,132 @@
                 item.append(top, meta, body, actions);
                 messagesList.appendChild(item);
             }
+        }
+
+        const REQUEST_FLOW = Object.freeze({
+            new: { next: 'reviewing', nextLabel: 'Start Review', icon: 'fa-magnifying-glass' },
+            reviewing: { next: 'assigned', nextLabel: 'Assign', icon: 'fa-user-check' },
+            assigned: { next: 'in_progress', nextLabel: 'Start Work', icon: 'fa-play' },
+            in_progress: { next: 'completed', nextLabel: 'Mark Completed', icon: 'fa-flag-checkered' },
+            completed: { next: '', nextLabel: '', icon: '' },
+            cancelled: { next: '', nextLabel: '', icon: '' }
+        });
+        const REQUEST_LABELS = Object.freeze({ new: 'New', reviewing: 'Reviewing', assigned: 'Assigned', in_progress: 'In Progress', completed: 'Completed', cancelled: 'Cancelled' });
+        const REQUEST_SERVICE_LABELS = Object.freeze({
+            zra: 'ZRA Tax Services', napsa: 'NAPSA Services', pacra: 'PACRA Registration', 'workers-comp': "Workers' Compensation",
+            'web-development': 'Website Development', 'ai-automation': 'AI Automation', 'digital-marketing': 'Digital Marketing',
+            'graphic-design': 'Graphic Design', 'virtual-assistant': 'Virtual Assistant', typing: 'Typing & Transcription',
+            'it-consulting': 'IT Consulting', other: 'Other'
+        });
+
+        function filteredRequestEntries() {
+            return sortedMapEntries(currentRequests).filter(([, req]) => {
+                const status = safeText(req.status, 20) || 'new';
+                if (requestStatusFilter !== 'all' && status !== requestStatusFilter) return false;
+                if (!requestSearchTerm) return true;
+                const haystack = [req.fullName, req.email, req.phone, req.businessName, req.service, req.serviceLabel, req.details]
+                    .map((value) => safeText(value, 200).toLowerCase()).join(' ');
+                return haystack.includes(requestSearchTerm.toLowerCase());
+            });
+        }
+
+        function renderRequests() {
+            if (!requestsList) return;
+            requestsList.textContent = '';
+            const entries = filteredRequestEntries();
+            if (!entries.length) {
+                requestsList.innerHTML = '<div class="empty-state"><i class="fa-solid fa-inbox" aria-hidden="true"></i>No service requests match this view yet. New requests from the website will appear here.</div>';
+                return;
+            }
+            for (const [key, req] of entries) {
+                const status = safeText(req.status, 20) || 'new';
+                const serviceKey = safeText(req.service, 80);
+                const service = REQUEST_SERVICE_LABELS[serviceKey] || safeText(req.serviceLabel, 120) || serviceKey || 'Service request';
+                const item = document.createElement('article');
+                item.className = 'inbox-item' + (status === 'new' ? ' is-new' : '');
+                item.dataset.key = key;
+
+                const top = document.createElement('div');
+                top.className = 'inbox-item-top';
+                const title = document.createElement('h3');
+                title.textContent = (safeText(req.fullName, 120) || 'Customer') + (safeText(req.businessName, 120) ? ' — ' + safeText(req.businessName, 120) : '');
+                const pill = document.createElement('span');
+                pill.className = 'status-pill ' + status;
+                pill.textContent = REQUEST_LABELS[status] || status;
+                top.append(title, pill);
+
+                const meta = document.createElement('div');
+                meta.className = 'inbox-meta';
+                const email = safeText(req.email, 160);
+                const phone = safeText(req.phone, 40);
+                meta.innerHTML = '<strong style="color:#f5c97b;">' + service.replace(/</g, '') + '</strong>'
+                    + (email ? ' · <a href="mailto:' + email.replace(/"/g, '') + '">' + email + '</a>' : '')
+                    + (phone ? ' · ' + phone.replace(/</g, '') : '')
+                    + ' · ' + formatInboxDate(req.submittedAt);
+                if (safeText(req.assignedTo, 120)) {
+                    const assigned = document.createElement('div');
+                    assigned.className = 'inbox-meta';
+                    assigned.innerHTML = 'Assigned to: <strong>' + safeText(req.assignedTo, 120).replace(/</g, '') + '</strong>';
+                    meta.append(document.createElement('br'), assigned);
+                }
+
+                const body = document.createElement('div');
+                body.className = 'inbox-body';
+                body.textContent = safeText(req.details, 3000) || '';
+
+                const actions = document.createElement('div');
+                actions.className = 'inbox-actions';
+                const flow = REQUEST_FLOW[status];
+                if (flow && flow.next) {
+                    const advance = document.createElement('button');
+                    advance.type = 'button';
+                    advance.className = 'btn btn-primary';
+                    advance.dataset.action = 'request-advance';
+                    advance.dataset.key = key;
+                    advance.dataset.next = flow.next;
+                    advance.innerHTML = '<i class="fa-solid ' + flow.icon + '" aria-hidden="true"></i> ' + flow.nextLabel;
+                    actions.appendChild(advance);
+                }
+                if (status !== 'cancelled' && status !== 'completed') {
+                    const cancel = document.createElement('button');
+                    cancel.type = 'button';
+                    cancel.className = 'btn btn-secondary';
+                    cancel.dataset.action = 'request-cancel';
+                    cancel.dataset.key = key;
+                    cancel.innerHTML = '<i class="fa-solid fa-ban" aria-hidden="true"></i> Cancel';
+                    actions.appendChild(cancel);
+                }
+                const delBtn = document.createElement('button');
+                delBtn.type = 'button';
+                delBtn.className = 'btn btn-danger';
+                delBtn.dataset.action = 'request-delete';
+                delBtn.dataset.key = key;
+                delBtn.innerHTML = '<i class="fa-solid fa-trash" aria-hidden="true"></i> Delete';
+                actions.appendChild(delBtn);
+                if (email) {
+                    const reply = document.createElement('a');
+                    reply.className = 'btn btn-secondary';
+                    reply.href = 'mailto:' + encodeURIComponent(email) + '?subject=' + encodeURIComponent('Your service request to Seedwel Investment LTD') + '&body=' + encodeURIComponent('Hello ' + (safeText(req.fullName, 60) || '') + ',\n\nRegarding your "' + service + '" request:\n\n');
+                    reply.innerHTML = '<i class="fa-solid fa-reply" aria-hidden="true"></i> Reply';
+                    actions.appendChild(reply);
+                }
+
+                item.append(top, meta, body, actions);
+                requestsList.appendChild(item);
+            }
+        }
+
+        async function setRequestStatus(key, next, extra) {
+            const req = currentRequests.get(key);
+            if (!req) return;
+            const update = Object.assign({ status: next, updatedAt: firebase.database.ServerValue.TIMESTAMP }, extra || {});
+            await db.ref('serviceRequests/' + key).update(update);
+            await recordAudit(
+                'Service request ' + (REQUEST_LABELS[next] || next),
+                safeText(req.fullName, 80) + (safeText(req.businessName, 80) ? ' — ' + safeText(req.businessName, 80) : '') + ' (' + (REQUEST_SERVICE_LABELS[safeText(req.service, 80)] || safeText(req.service, 80)) + ')',
+                next === 'cancelled' ? 'Request cancelled by administrator.' : safeText(update.assignedTo, 200)
+            );
+            showToast('Request marked as ' + (REQUEST_LABELS[next] || next) + '.');
         }
 
         function applicationNeedsCv(app) {
@@ -2220,6 +2369,48 @@
             taskFormStatus.textContent = text;
             taskFormStatus.className = 'form-status' + (isError ? ' error' : (text ? ' success' : ''));
         }
+
+        if (requestsList) {
+            requestsList.addEventListener('click', async (event) => {
+                const btn = event.target.closest('button[data-action]');
+                if (!btn) return;
+                const key = btn.dataset.key;
+                if (!key) return;
+                try {
+                    if (btn.dataset.action === 'request-advance') {
+                        const next = btn.dataset.next;
+                        const extra = {};
+                        if (next === 'assigned') {
+                            const who = window.prompt('Assign this request to (team member name):', '');
+                            if (who === null) return;
+                            if (safeText(who, 120)) extra.assignedTo = safeText(who, 120);
+                        }
+                        if (next === 'completed') {
+                            const note = window.prompt('Optional completion note (visible to the administrator only):', '');
+                            if (note === null) return;
+                            if (safeText(note, 500)) extra.statusNote = safeText(note, 500);
+                        }
+                        btn.disabled = true;
+                        await setRequestStatus(key, next, extra);
+                    } else if (btn.dataset.action === 'request-cancel') {
+                        if (!window.confirm('Cancel this service request? The customer record is kept with status Cancelled.')) return;
+                        btn.disabled = true;
+                        await setRequestStatus(key, 'cancelled');
+                    } else if (btn.dataset.action === 'request-delete') {
+                        if (!window.confirm('Delete this service request permanently?')) return;
+                        const req = currentRequests.get(key);
+                        await db.ref('serviceRequests/' + key).remove();
+                        await recordAudit('Service request deleted', safeText(req && req.fullName, 80) || key, safeText(req && req.service, 80));
+                        showToast('Service request deleted.');
+                    }
+                } catch (_) {
+                    showToast('Could not update the request. Check Database Rules (serviceRequests).', 'error');
+                }
+            });
+            if ($('requestStatusFilter')) $('requestStatusFilter').addEventListener('change', (event) => { requestStatusFilter = event.target.value; renderRequests(); });
+            if ($('requestSearch')) $('requestSearch').addEventListener('input', (event) => { requestSearchTerm = safeText(event.target.value, 120); renderRequests(); });
+        }
+        if ($('refreshRequests')) $('refreshRequests').addEventListener('click', () => { renderRequests(); showToast('Service requests refreshed.'); });
 
         if (messagesList) {
             messagesList.addEventListener('click', async (event) => {
@@ -3092,24 +3283,6 @@ ${safeText(report.nextPlan,2000)}`;
                 syncPublicPortfolio.textContent = 'Sync public portfolio';
             }
         });
-
-        async function importSeedProjects() {
-            if (!window.confirm('Import all ' + SEED_PROJECTS.length + ' current showcase cards? They will become editable portfolio entries.')) return;
-            const button = $('importSeeds');
-            if (button) { button.disabled = true; button.innerHTML = '<i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> Importing…'; }
-            try {
-                for (const seed of SEED_PROJECTS) {
-                    const ref = db.ref('projects').push();
-                    const record = { ...seed, liveUrl: '', storagePath: '', cloudinaryPublicId: '', cloudinaryResourceType: '', uploadProvider: '', fileSize: 0, published: true, createdAt: firebase.database.ServerValue.TIMESTAMP, updatedAt: firebase.database.ServerValue.TIMESTAMP };
-                    await ref.set(record);
-                    await syncPublicProject(ref.key, record);
-                }
-                showToast('Current showcase cards imported. You can now edit every one.');
-            } catch (_) {
-                showToast('Unable to import showcase cards. Check Database Rules.', 'error');
-                if (button) { button.disabled = false; button.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Import current showcase cards'; }
-            }
-        }
 
         settingsForm.addEventListener('input', () => { settingsTouched = true; });
         settingsForm.addEventListener('submit', async (event) => {

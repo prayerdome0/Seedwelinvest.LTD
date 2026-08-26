@@ -3,1372 +3,33 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Seedwel Investment LTD | Digital Agency</title>
-    <meta name="description" content="Seedwel Investment LTD - We Build Digital Experiences That Drive Growth" />
-    
+    <title>Seedwel Investment LTD | Business Solutions, Technology &amp; Marketing in Zambia</title>
+    <meta name="description" content="Seedwel Investment LTD assists Zambian businesses with ZRA, NAPSA and PACRA processes, builds professional websites, and provides digital marketing and AI automation services." />
+
     <link rel="canonical" href="https://seedwel.ltd/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Seedwel Investment LTD" />
-    <meta property="og:title" content="Seedwel Investment LTD | Digital Agency" />
-    <meta property="og:description" content="Seedwel Investment LTD builds digital experiences that drive growth — web development, SEO, branding and business registration across Zambia and globally." />
+    <meta property="og:title" content="Seedwel Investment LTD | Business Solutions, Technology &amp; Marketing" />
+    <meta property="og:description" content="Assistance with ZRA, NAPSA and PACRA processes, professional website development, digital marketing and AI automation for growing businesses." />
     <meta property="og:url" content="https://seedwel.ltd/" />
-    <meta property="og:image" content="https://seedwel.ltd/assets/images/seedwel-team-studio.jpg" />
-    <meta property="og:image:alt" content="Seedwel Investment LTD digital team collaborating in a modern studio" />
+    <meta property="og:image" content="https://seedwel.ltd/assets/images/hero-home.jpg" />
+    <meta property="og:image:alt" content="Seedwel Investment LTD team collaborating in a modern office" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Seedwel Investment LTD | Digital Agency" />
-    <meta name="twitter:description" content="Seedwel Investment LTD builds digital experiences that drive growth — web development, SEO, branding and business registration across Zambia and globally." />
-    <meta name="twitter:image" content="https://seedwel.ltd/assets/images/seedwel-team-studio.jpg" />
-<meta name="theme-color" content="#dc2626" />
+    <meta name="twitter:title" content="Seedwel Investment LTD | Business Solutions, Technology &amp; Marketing" />
+    <meta name="twitter:description" content="Assistance with ZRA, NAPSA and PACRA processes, professional website development, digital marketing and AI automation for growing businesses." />
+    <meta name="twitter:image" content="https://seedwel.ltd/assets/images/hero-home.jpg" />
+    <meta name="theme-color" content="#dc2626" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="manifest" href="site.webmanifest" />
+    <link rel="preload" as="image" href="assets/images/hero-home.jpg" fetchpriority="high" />
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <link rel="preload" as="image" href="assets/images/seedwel-team-studio.jpg" fetchpriority="high" />
-    <link rel="stylesheet" href="assets/css/media-showcase.css" />
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <link rel="stylesheet" href="assets/css/site.css" />
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js" defer></script>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #ffffff;
-            color: #111827;
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #dc2626;
-            border-radius: 10px;
-        }
-
-        /* ───────── ANIMATIONS ───────── */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        @keyframes fadeInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        @keyframes fadeInRight {
-            from {
-                opacity: 0;
-                transform: translateX(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        @keyframes pulseGlow {
-            0%,
-            100% {
-                box-shadow: 0 0 20px rgba(220, 38, 38, 0.1);
-            }
-            50% {
-                box-shadow: 0 0 40px rgba(220, 38, 38, 0.25);
-            }
-        }
-        @keyframes float {
-            0%,
-            100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-        @keyframes shimmer {
-            0% {
-                background-position: -200% 0;
-            }
-            100% {
-                background-position: 200% 0;
-            }
-        }
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .animate-fade-up {
-            animation: fadeInUp 0.8s ease forwards;
-        }
-        .animate-fade-left {
-            animation: fadeInLeft 0.8s ease forwards;
-        }
-        .animate-fade-right {
-            animation: fadeInRight 0.8s ease forwards;
-        }
-        .animate-float {
-            animation: float 3s ease-in-out infinite;
-        }
-        .animate-pulse-glow {
-            animation: pulseGlow 2s ease-in-out infinite;
-        }
-        .delay-1 {
-            animation-delay: 0.1s;
-            opacity: 0;
-        }
-        .delay-2 {
-            animation-delay: 0.2s;
-            opacity: 0;
-        }
-        .delay-3 {
-            animation-delay: 0.3s;
-            opacity: 0;
-        }
-        .delay-4 {
-            animation-delay: 0.4s;
-            opacity: 0;
-        }
-        .delay-5 {
-            animation-delay: 0.5s;
-            opacity: 0;
-        }
-        .delay-6 {
-            animation-delay: 0.6s;
-            opacity: 0;
-        }
-
-        /* ───────── HEADER ───────── */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.97);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(220, 38, 38, 0.12);
-            transition: all 0.3s ease;
-        }
-        .header.scrolled {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-        }
-        .header-inner {
-            max-width: 1300px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 28px;
-        }
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-        .logo-img {
-            height: 42px;
-            width: auto;
-        }
-        .company-name-header {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            font-size: 0.95rem;
-            color: #111827;
-            letter-spacing: -0.5px;
-        }
-        .company-name-header span {
-            color: #dc2626;
-        }
-        .nav-links {
-            display: flex;
-            gap: 28px;
-            align-items: center;
-        }
-        .nav-links a {
-            text-decoration: none;
-            color: #111827;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: color 0.3s;
-            cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
-            position: relative;
-        }
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: #dc2626;
-            transition: width 0.3s ease;
-        }
-        .nav-links a:hover::after,
-        .nav-links a.active::after {
-            width: 100%;
-        }
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: #dc2626;
-        }
-
-        .hamburger {
-            display: none;
-            width: 40px;
-            height: 40px;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 5px;
-            cursor: pointer;
-            background: rgba(220, 38, 38, 0.06);
-            border-radius: 50%;
-            border: 1px solid rgba(220, 38, 38, 0.12);
-            transition: all 0.3s ease;
-        }
-        .hamburger:hover {
-            background: rgba(220, 38, 38, 0.12);
-        }
-        .hamburger span {
-            width: 20px;
-            height: 2.5px;
-            background: #111827;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(6px, -6px);
-        }
-
-        /* ───────── MOBILE MENU ───────── */
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            right: -320px;
-            width: 280px;
-            height: 100vh;
-            background: #ffffff;
-            z-index: 999;
-            padding: 100px 25px 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            transition: right 0.35s cubic-bezier(0.65, 0, 0.35, 1);
-            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.08);
-        }
-        .mobile-menu.active {
-            right: 0;
-        }
-        .mobile-menu a {
-            color: #111827;
-            text-decoration: none;
-            font-size: 1rem;
-            font-weight: 600;
-            padding: 12px 18px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            font-family: 'Montserrat', sans-serif;
-            transition: all 0.3s ease;
-        }
-        .mobile-menu a i {
-            color: #dc2626;
-            width: 24px;
-        }
-        .mobile-menu a:hover {
-            background: rgba(220, 38, 38, 0.06);
-            color: #dc2626;
-        }
-        .menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.35);
-            z-index: 998;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        .menu-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        /* ───────── HERO ───────── */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 120px 28px 80px;
-            background: linear-gradient(180deg, #fef2f2 0%, #ffffff 50%);
-            position: relative;
-            overflow: hidden;
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(220, 38, 38, 0.03) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: float 8s ease-in-out infinite;
-        }
-        .hero-content {
-            max-width: 1300px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-        }
-        .hero-text .badge {
-            display: inline-block;
-            padding: 6px 18px;
-            background: rgba(220, 38, 38, 0.08);
-            border-radius: 50px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: #dc2626;
-            margin-bottom: 20px;
-            font-family: 'Montserrat', sans-serif;
-            letter-spacing: 0.5px;
-        }
-        .hero-text h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 900;
-            font-size: clamp(2.2rem, 4.5vw, 3.8rem);
-            line-height: 1.2;
-            margin-bottom: 20px;
-            color: #111827;
-            letter-spacing: -1px;
-        }
-        .hero-text h1 span {
-            color: #dc2626;
-            position: relative;
-        }
-        .hero-text h1 span::after {
-            content: '';
-            position: absolute;
-            bottom: 4px;
-            left: 0;
-            width: 100%;
-            height: 6px;
-            background: rgba(220, 38, 38, 0.15);
-            border-radius: 4px;
-        }
-        .hero-text p {
-            color: #4b5563;
-            margin-bottom: 25px;
-            font-size: 1.05rem;
-        }
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        .btn-primary {
-            background: #dc2626;
-            color: #ffffff;
-            padding: 14px 32px;
-            border-radius: 50px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 16px rgba(220, 38, 38, 0.25);
-            position: relative;
-            overflow: hidden;
-        }
-        .btn-primary::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transform: rotate(45deg);
-            transition: all 0.5s ease;
-        }
-        .btn-primary:hover::after {
-            left: 100%;
-        }
-        .btn-primary:hover {
-            background: #b91c1c;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(220, 38, 38, 0.35);
-        }
-        .btn-outline {
-            border: 2px solid #dc2626;
-            color: #dc2626;
-            background: transparent;
-            padding: 14px 32px;
-            border-radius: 50px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-        }
-        .btn-outline:hover {
-            background: rgba(220, 38, 38, 0.06);
-            transform: translateY(-3px);
-            box-shadow: 0 4px 20px rgba(220, 38, 38, 0.1);
-        }
-        .hero-image img {
-            width: 100%;
-            border-radius: 30px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-            transition: all 0.5s ease;
-        }
-        .hero-image img:hover {
-            transform: scale(1.02);
-        }
-
-        /* ───────── STATS ───────── */
-        .stats-section {
-            padding: 60px 28px;
-            background: #ffffff;
-        }
-        .stats-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 30px;
-        }
-        .stat-card {
-            text-align: center;
-            padding: 30px 20px;
-            background: #f8fafc;
-            border-radius: 20px;
-            border: 1px solid #e5e7eb;
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            cursor: default;
-        }
-        .stat-card:hover {
-            transform: translateY(-8px);
-            border-color: #dc2626;
-            box-shadow: 0 12px 30px rgba(220, 38, 38, 0.06);
-        }
-        .stat-card:hover .stat-icon {
-            transform: scale(1.1) rotate(5deg);
-        }
-        .stat-icon {
-            font-size: 2rem;
-            color: #dc2626;
-            margin-bottom: 12px;
-            display: inline-block;
-            transition: all 0.4s ease;
-        }
-        .stat-number {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 900;
-            font-size: 2.5rem;
-            color: #111827;
-        }
-        .stat-label {
-            font-weight: 600;
-            color: #4b5563;
-            font-size: 0.9rem;
-        }
-
-        /* ───────── FREE OFFER BANNER ───────── */
-        .offer-banner {
-            padding: 30px 28px;
-            background: linear-gradient(135deg, #dc2626, #b91c1c);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .offer-banner::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 200%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            animation: shimmer 4s infinite;
-        }
-        .offer-banner h3 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            font-size: 1.5rem;
-            color: #ffffff;
-            position: relative;
-            z-index: 1;
-        }
-        .offer-banner p {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 1rem;
-            position: relative;
-            z-index: 1;
-        }
-        .offer-banner .highlight {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 2px 12px;
-            border-radius: 20px;
-            font-weight: 700;
-        }
-
-        /* ───────── SERVICES PREVIEW ───────── */
-        .services-preview {
-            padding: 70px 28px;
-            background: #f8fafc;
-        }
-        .section-header {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 50px;
-        }
-        .section-subtitle {
-            color: #dc2626;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 0.8rem;
-            letter-spacing: 3px;
-            margin-bottom: 10px;
-        }
-        .section-title {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 900;
-            font-size: clamp(1.8rem, 3vw, 2.5rem);
-            color: #111827;
-        }
-        .services-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-        }
-        .service-card {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-            border: 1px solid #e5e7eb;
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
-            position: relative;
-            overflow: hidden;
-        }
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: #dc2626;
-            transform: scaleX(0);
-            transition: transform 0.4s ease;
-        }
-        .service-card:hover::before {
-            transform: scaleX(1);
-        }
-        .service-card:hover {
-            transform: translateY(-8px);
-            border-color: #dc2626;
-            box-shadow: 0 16px 40px rgba(220, 38, 38, 0.08);
-        }
-        .service-card:hover .service-icon {
-            transform: scale(1.1) rotate(5deg);
-            background: rgba(220, 38, 38, 0.12);
-        }
-        .service-icon {
-            width: 70px;
-            height: 70px;
-            background: rgba(220, 38, 38, 0.06);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 18px;
-            transition: all 0.4s ease;
-        }
-        .service-icon i {
-            font-size: 2rem;
-            color: #dc2626;
-        }
-        .service-card h3 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: #111827;
-            margin-bottom: 8px;
-        }
-        .service-card p {
-            color: #4b5563;
-            font-size: 0.85rem;
-        }
-
-        /* ───────── PROJECTS PREVIEW ───────── */
-        .projects-preview {
-            padding: 70px 28px;
-            background: #ffffff;
-        }
-        .projects-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-        }
-        .project-card {
-            background: #ffffff;
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid #e5e7eb;
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-        .project-card:hover {
-            transform: translateY(-8px);
-            border-color: #dc2626;
-            box-shadow: 0 16px 40px rgba(220, 38, 38, 0.08);
-        }
-        .project-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            transition: all 0.5s ease;
-        }
-        .project-card:hover img {
-            transform: scale(1.05);
-        }
-        .project-card .content {
-            padding: 20px;
-        }
-        .project-card h3 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            color: #111827;
-            margin-bottom: 6px;
-        }
-        .project-card p {
-            color: #4b5563;
-            font-size: 0.85rem;
-        }
-
-        /* ───────── CTA ───────── */
-        .cta-section {
-            padding: 70px 28px;
-            background: #111827;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .cta-section::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -30%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(220, 38, 38, 0.05) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-        .cta-section h3 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            font-size: 2rem;
-            color: #ffffff;
-            margin-bottom: 12px;
-            position: relative;
-            z-index: 1;
-        }
-        .cta-section p {
-            color: #9ca3af;
-            margin-bottom: 25px;
-            position: relative;
-            z-index: 1;
-        }
-        .btn-white {
-            background: #ffffff;
-            color: #dc2626;
-            padding: 14px 35px;
-            border-radius: 50px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 1;
-        }
-        .btn-white:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 30px rgba(255, 255, 255, 0.15);
-        }
-
-        /* ───────── FOOTER ───────── */
-        footer {
-            background: #0f172a;
-            padding: 50px 28px 25px;
-            border-top: 1px solid #1e293b;
-        }
-        .footer-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 35px;
-        }
-        .footer-brand img {
-            height: 42px;
-            margin-bottom: 12px;
-        }
-        .footer-brand p {
-            color: #94a3b8;
-            font-size: 0.85rem;
-            line-height: 1.6;
-        }
-        .footer-col h4 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 16px;
-            font-size: 1rem;
-        }
-        .footer-col a {
-            color: #94a3b8;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 8px;
-            font-size: 0.85rem;
-            transition: all 0.3s ease;
-        }
-        .footer-col a:hover {
-            color: #dc2626;
-            transform: translateX(4px);
-        }
-        .footer-col p {
-            color: #94a3b8;
-            font-size: 0.85rem;
-            margin-bottom: 4px;
-        }
-        .footer-bottom {
-            max-width: 1200px;
-            margin: 35px auto 0;
-            padding-top: 20px;
-            border-top: 1px solid #1e293b;
-            text-align: center;
-            color: #64748b;
-            font-size: 0.8rem;
-        }
-
-        /* ───────── FLOATING WHATSAPP ───────── */
-        .floating-whatsapp {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background: #25d366;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 99;
-            animation: pulse 2s infinite;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
-        }
-        .floating-whatsapp:hover {
-            transform: scale(1.1);
-        }
-        .floating-whatsapp i {
-            color: #fff;
-            font-size: 1.8rem;
-        }
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4);
-            }
-            70% {
-                box-shadow: 0 0 0 16px rgba(37, 211, 102, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
-            }
-        }
-
-
-        /* ───────── HOME UPGRADE: MOTION + PORTFOLIO OPERATIONS ───────── */
-        @keyframes heroGlowDrift {
-            0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: .55; }
-            50% { transform: translate3d(-28px, 22px, 0) scale(1.09); opacity: .95; }
-        }
-        @keyframes gentleOrbit {
-            from { transform: translateY(-50%) rotate(0deg); }
-            to { transform: translateY(-50%) rotate(360deg); }
-        }
-        @keyframes homeFloatCard {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        .hero::after {
-            content: '';
-            position: absolute;
-            width: 430px;
-            height: 430px;
-            right: 7%;
-            bottom: -250px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(220, 38, 38, .10), transparent 67%);
-            animation: heroGlowDrift 11s ease-in-out infinite;
-            pointer-events: none;
-        }
-        .hero-image { position: relative; }
-        .hero-image .home-float-card {
-            position: absolute;
-            z-index: 2;
-            left: -24px;
-            bottom: 26px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 11px 14px;
-            color: #334155;
-            border: 1px solid rgba(255, 255, 255, .88);
-            border-radius: 14px;
-            background: rgba(255, 255, 255, .93);
-            box-shadow: 0 15px 32px rgba(15, 23, 42, .14);
-            font-size: .73rem;
-            font-weight: 700;
-            animation: homeFloatCard 4.5s ease-in-out infinite;
-        }
-        .home-float-card i {
-            display: grid;
-            width: 30px;
-            height: 30px;
-            color: #dc2626;
-            border-radius: 9px;
-            background: #fef2f2;
-            place-items: center;
-        }
-        .home-float-card strong { display: block; font-family: 'Montserrat', sans-serif; font-size: .79rem; }
-        .home-float-card span { display: block; color: #64748b; font-size: .65rem; font-weight: 600; }
-        .projects-preview .section-header { position: relative; }
-        .projects-preview .section-header::after {
-            display: block;
-            width: 54px;
-            height: 3px;
-            margin: 16px auto 0;
-            content: '';
-            border-radius: 99px;
-            background: linear-gradient(90deg, #dc2626, #fca5a5);
-        }
-        .home-project-category {
-            display: inline-block;
-            margin-bottom: 8px;
-            padding: 4px 8px;
-            color: #b91c1c;
-            border-radius: 999px;
-            background: #fef2f2;
-            font-size: .64rem;
-            font-weight: 800;
-            letter-spacing: .02em;
-            text-transform: uppercase;
-        }
-        .home-project-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            margin-top: 12px;
-            color: #dc2626;
-            font-size: .74rem;
-            font-weight: 800;
-            text-decoration: none;
-        }
-        .home-project-link:hover { color: #991b1b; text-decoration: underline; }
-        .home-project-empty {
-            grid-column: 1 / -1;
-            padding: 32px;
-            color: #64748b;
-            border: 1px dashed #cbd5e1;
-            border-radius: 16px;
-            background: #f8fafc;
-            text-align: center;
-            font-size: .85rem;
-        }
-        .insight-section {
-            position: relative;
-            padding: 82px 28px;
-            overflow: hidden;
-            background: linear-gradient(180deg, #ffffff, #f8fafc);
-        }
-        .insight-section::before {
-            position: absolute;
-            top: -100px;
-            left: -130px;
-            width: 280px;
-            height: 280px;
-            content: '';
-            border: 1px dashed rgba(220, 38, 38, .17);
-            border-radius: 50%;
-            animation: gentleOrbit 32s linear infinite;
-        }
-        .insight-inner { position: relative; max-width: 1200px; margin: 0 auto; }
-        .insight-heading { max-width: 680px; margin-bottom: 34px; }
-        .insight-heading h2 {
-            margin-top: 4px;
-            color: #111827;
-            font-family: 'Montserrat', sans-serif;
-            font-size: clamp(1.8rem, 3vw, 2.5rem);
-            font-weight: 900;
-            letter-spacing: -1px;
-        }
-        .insight-heading > p:last-child { margin-top: 12px; color: #64748b; font-size: .93rem; }
-        .insight-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        .insight-card {
-            position: relative;
-            padding: 26px;
-            overflow: hidden;
-            border: 1px solid #e5e7eb;
-            border-radius: 19px;
-            background: #ffffff;
-            box-shadow: 0 5px 15px rgba(15, 23, 42, .025);
-            transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease, border-color .35s ease;
-        }
-        .insight-card::after {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 65px;
-            height: 3px;
-            content: '';
-            background: #dc2626;
-            transform: scaleX(0);
-            transform-origin: right;
-            transition: transform .35s ease;
-        }
-        .insight-card:hover { border-color: rgba(220, 38, 38, .38); box-shadow: 0 18px 35px rgba(15,23,42,.10); transform: translateY(-8px); }
-        .insight-card:hover::after { transform: scaleX(1); }
-        .insight-icon {
-            display: grid;
-            width: 48px;
-            height: 48px;
-            margin-bottom: 17px;
-            color: #dc2626;
-            border-radius: 14px;
-            background: #fef2f2;
-            font-size: 1.1rem;
-            place-items: center;
-            transition: transform .35s ease;
-        }
-        .insight-card:nth-child(2) .insight-icon { color: #2563eb; background: #eff6ff; }
-        .insight-card:nth-child(3) .insight-icon { color: #059669; background: #ecfdf5; }
-        .insight-card:hover .insight-icon { transform: rotate(-6deg) scale(1.08); }
-        .insight-card h3 { margin-bottom: 8px; color: #111827; font-family: 'Montserrat', sans-serif; font-size: 1rem; }
-        .insight-card p { color: #64748b; font-size: .8rem; line-height: 1.65; }
-        .insight-card .capacity-chip {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            margin-top: 14px;
-            color: #2563eb;
-            font-size: .7rem;
-            font-weight: 800;
-        }
-        @media (prefers-reduced-motion: reduce) {
-            .hero::after, .hero-image .home-float-card, .insight-section::before { animation: none !important; }
-        }
-
-        /* ───────── RESPONSIVE ───────── */
-
-        /* ───────── TESTIMONIALS ───────── */
-        .testimonials-section {
-            padding: 70px 28px;
-            background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
-        }
-        .testimonials-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-        }
-        .testimonial-card {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 30px;
-            border: 1px solid #e5e7eb;
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        .testimonial-card::before {
-            content: '"';
-            position: absolute;
-            top: -10px;
-            right: 20px;
-            font-size: 8rem;
-            color: rgba(220, 38, 38, 0.05);
-            font-family: Georgia, serif;
-            line-height: 1;
-        }
-        .testimonial-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(220, 38, 38, 0.3);
-            box-shadow: 0 16px 40px rgba(220, 38, 38, 0.08);
-        }
-        .testimonial-stars {
-            color: #f59e0b;
-            margin-bottom: 15px;
-            font-size: 0.9rem;
-        }
-        .testimonial-text {
-            color: #4b5563;
-            font-size: 0.95rem;
-            line-height: 1.7;
-            margin-bottom: 20px;
-            font-style: italic;
-        }
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .testimonial-author img {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #dc2626;
-        }
-        .testimonial-author strong {
-            display: block;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            color: #111827;
-            font-size: 0.9rem;
-        }
-        .testimonial-author span {
-            color: #6b7280;
-            font-size: 0.8rem;
-        }
-
-        /* ───────── PROCESS STEPS ───────── */
-        .process-section {
-            padding: 70px 28px;
-            background: #ffffff;
-        }
-        .process-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .process-steps {
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        .process-step {
-            flex: 1;
-            min-width: 220px;
-            max-width: 260px;
-            text-align: center;
-            padding: 30px 20px;
-            background: #f8fafc;
-            border-radius: 20px;
-            border: 1px solid #e5e7eb;
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            position: relative;
-        }
-        .process-step:hover {
-            transform: translateY(-8px);
-            border-color: #dc2626;
-            box-shadow: 0 16px 40px rgba(220, 38, 38, 0.1);
-            background: #ffffff;
-        }
-        .step-number {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 900;
-            font-size: 2.5rem;
-            color: rgba(220, 38, 38, 0.08);
-        }
-        .step-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #dc2626, #b91c1c);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            transition: all 0.4s ease;
-        }
-        .process-step:hover .step-icon {
-            transform: scale(1.1) rotate(10deg);
-            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.3);
-        }
-        .step-icon i {
-            font-size: 1.8rem;
-            color: #ffffff;
-        }
-        .process-step h3 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: #111827;
-            margin-bottom: 10px;
-        }
-        .process-step p {
-            color: #4b5563;
-            font-size: 0.85rem;
-            line-height: 1.6;
-        }
-        .process-connector {
-            display: flex;
-            align-items: center;
-            color: #dc2626;
-            font-size: 1.5rem;
-            padding-top: 60px;
-        }
-
-        /* ───────── CLIENTS SECTION ───────── */
-        .clients-section {
-            padding: 50px 28px;
-            background: #f8fafc;
-            border-top: 1px solid #e5e7eb;
-        }
-        .clients-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        .clients-label {
-            color: #6b7280;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 30px;
-        }
-        .clients-logos {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 40px;
-            flex-wrap: wrap;
-        }
-        .client-logo {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            opacity: 0.6;
-            transition: all 0.3s ease;
-        }
-        .client-logo:hover {
-            opacity: 1;
-            transform: translateY(-5px);
-        }
-        .client-logo i {
-            font-size: 2.5rem;
-            color: #dc2626;
-        }
-        .client-logo span {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #4b5563;
-        }
-
-
-        /* ───────── SCROLL REVEAL ───────── */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.7s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .reveal.delay-1 { transition-delay: 0.1s; }
-        .reveal.delay-2 { transition-delay: 0.2s; }
-        .reveal.delay-3 { transition-delay: 0.3s; }
-        .reveal.delay-4 { transition-delay: 0.4s; }
-        .reveal.delay-5 { transition-delay: 0.5s; }
-        .reveal.delay-6 { transition-delay: 0.6s; }
-        .reveal.delay-7 { transition-delay: 0.7s; }
-
-        /* ───────── EXTRA ANIMATIONS ───────── */
-        @keyframes counterPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        @keyframes gradientText {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        @keyframes slideInFromBottom {
-            from { opacity: 0; transform: translateY(60px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes glowPulse {
-            0%, 100% { filter: drop-shadow(0 0 5px rgba(220, 38, 38, 0.2)); }
-            50% { filter: drop-shadow(0 0 15px rgba(220, 38, 38, 0.4)); }
-        }
-        .stat-card:hover .stat-number {
-            animation: counterPulse 0.5s ease;
-        }
-        .service-card:hover .service-icon {
-            animation: glowPulse 1s ease infinite;
-        }
-
-        @media (max-width: 900px) {
-            .nav-links {
-                display: none;
-            }
-            .hamburger {
-                display: flex;
-            }
-            .hero-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            .hero-buttons {
-                justify-content: center;
-            }
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .footer-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .insight-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-        @media (max-width: 640px) {
-            .header-inner {
-                padding: 10px 16px;
-            }
-            .logo-img {
-                height: 34px;
-            }
-            .company-name-header {
-                font-size: 0.75rem;
-            }
-            .hero {
-                padding: 100px 16px 50px;
-            }
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            .services-grid,
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-            .footer-grid {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            .offer-banner h3 {
-                font-size: 1.1rem;
-            }
-            .floating-whatsapp {
-                width: 48px;
-                height: 48px;
-                bottom: 18px;
-                right: 18px;
-            }
-            .floating-whatsapp i {
-                font-size: 1.4rem;
-            }
-            .mobile-menu {
-                width: 260px;
-            }
-            .insight-section {
-                padding: 58px 16px;
-            }
-            .insight-grid {
-                grid-template-columns: 1fr;
-            }
-            .hero-image .home-float-card {
-                left: 10px;
-                bottom: 12px;
-            }
-        }
-
-        @media (max-width: 900px) {
-            .process-connector { display: none; }
-            .process-steps { flex-direction: column; align-items: center; }
-            .process-step { max-width: 100%; }
-            .clients-logos { gap: 25px; }
-        }
-        @media (max-width: 640px) {
-            .testimonials-section { padding: 50px 16px; }
-            .testimonials-grid { grid-template-columns: 1fr; }
-            .process-section { padding: 50px 16px; }
-            .clients-section { padding: 35px 16px; }
-            .clients-logos { gap: 16px; }
-            .client-logo i { font-size: 2rem; }
-        }
-            .nav-links a.nav-login {
-            background: #dc2626; color: #fff !important; padding: 8px 20px; border-radius: 50px;
-            box-shadow: 0 4px 14px rgba(220,38,38,.25); transition: all .3s ease;
-        }
-        .nav-links a.nav-login::after { display: none; }
-        .nav-links a.nav-login:hover { background: #b91c1c; color: #fff; transform: translateY(-1px); }
-</style>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -1376,8 +37,8 @@
       "name": "Seedwel Investment LTD",
       "url": "https://seedwel.ltd/",
       "logo": "https://i.ibb.co/svxj52ny/seedwel.png",
-      "image": "https://i.ibb.co/svxj52ny/seedwel.png",
-      "description": "Premium digital agency offering web development, SEO, branding, graphic design and business registration services.",
+      "image": "https://seedwel.ltd/assets/images/hero-home.jpg",
+      "description": "Private Zambian company providing assistance with business registration and compliance processes (ZRA, NAPSA, PACRA), website development, digital marketing and AI automation.",
       "email": "seedwelinvestltd@gmail.com",
       "telephone": "+260973028342",
       "address": {
@@ -1386,641 +47,348 @@
         "addressCountry": "ZM"
       },
       "areaServed": ["ZM", "Global"],
-      "sameAs": [
-        "https://wa.me/260973028342"
-      ]
+      "sameAs": ["https://wa.me/260973028342"]
     }
     </script>
-    <link rel="stylesheet" href="assets/css/local-ai.css" />
 </head>
 
-<body>
+<body data-page="home">
 
     <!-- ========== HEADER ========== -->
     <header class="header" id="header">
-        <div class="header-inner">
-            <a href="index.html" class="logo-container">
-                <img src="https://i.ibb.co/svxj52ny/seedwel.png" class="logo-img" alt="Seedwel Investment LTD" />
+        <div class="container header-inner">
+            <a href="index.html" class="logo-container" aria-label="Seedwel Investment LTD — Home">
+                <img src="https://i.ibb.co/svxj52ny/seedwel.png" class="logo-img" alt="Seedwel Investment LTD logo" />
                 <span class="company-name-header">Seedwel <span>Investment</span> LTD</span>
             </a>
-            <div class="nav-links">
-                <a href="index.html" class="active">Home</a>
-                <a href="about.html">About Us</a>
+            <nav class="nav-links" aria-label="Main navigation">
+                <a href="index.html" class="active" aria-current="page">Home</a>
+                <a href="about.html">About</a>
                 <a href="services.html">Services</a>
                 <a href="projects.html">Projects</a>
                 <a href="apply.html">Careers</a>
                 <a href="contact.html">Contact</a>
                 <a href="support.html">Support</a>
-                <a href="login.html" class="nav-login">Login</a>
-            </div>
-            <div class="hamburger" id="hamburger" aria-label="Menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+                <a href="login.html" class="btn btn-ghost nav-login">Login</a>
+                <a href="request.html" class="btn btn-primary nav-cta">Request a Service</a>
+            </nav>
+            <button class="hamburger" id="hamburger" type="button" aria-label="Open menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </header>
 
-    <!-- ========== MOBILE MENU ========== -->
     <div class="menu-overlay" id="menuOverlay"></div>
-    <nav class="mobile-menu" id="mobileMenu">
-        <a href="index.html"><i class="fas fa-home"></i> Home</a>
-        <a href="apply.html"><i class="fas fa-pen"></i> Job Apply</a>
-        <a href="about.html"><i class="fas fa-info-circle"></i> About Us</a>
-        <a href="services.html"><i class="fas fa-cogs"></i> Services</a>
-        <a href="projects.html"><i class="fas fa-folder-open"></i> Projects</a>
-        <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
-        <a href="support.html"><i class="fas fa-headset"></i> Support</a>
-        <a href="login.html"><i class="fas fa-right-to-bracket"></i> Login</a>
+    <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+        <a href="index.html" class="active"><i class="fa-solid fa-house" aria-hidden="true"></i> Home</a>
+        <a href="about.html"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> About</a>
+        <a href="services.html"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Services</a>
+        <a href="projects.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i> Projects</a>
+        <a href="apply.html"><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Careers</a>
+        <a href="contact.html"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Contact</a>
+        <a href="support.html"><i class="fa-solid fa-headset" aria-hidden="true"></i> Support</a>
+        <a href="login.html"><i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i> Login</a>
+        <div class="menu-divider"></div>
+        <a href="request.html" class="menu-request"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Request a Service</a>
     </nav>
 
-    <!-- ========== HERO ========== -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-text">
-                <span class="badge animate-fade-up"><i class="fas fa-star"></i> Premium Digital Agency</span>
-                <h1 class="animate-fade-up delay-1">We Build <span>Digital Experiences</span> That Drive Growth</h1>
-                <p class="animate-fade-up delay-2">Web development, SEO, branding, business registration & more. 150+ projects delivered with 98.9% client satisfaction across Zambia and globally.</p>
-                <div class="hero-buttons animate-fade-up delay-3">
-                    <a href="projects.html" class="btn-primary"><i class="fas fa-book"></i> View Projects</a>
-                    <a href="contact.html" class="btn-outline"><i class="fas fa-headset"></i> Contact Us</a>
-                </div>
-            </div>
-            <div class="hero-image animate-fade-right delay-2">
-                <div class="home-float-card" aria-label="Portfolio management highlight">
-                    <i class="fas fa-paper-plane" aria-hidden="true"></i>
-                    <div><strong>Share-ready portfolio</strong><span>Send live work in one link</span></div>
-                </div>
-                <div class="home-location-card" aria-label="Based in Zambia and working globally">
-                    <i class="fas fa-location-dot" aria-hidden="true"></i>
-                    <span>Zambia based · Globally connected</span>
-                </div>
-                <img class="seedwel-hero-photo" src="assets/images/seedwel-team-studio.jpg" alt="Seedwel digital specialists collaborating in a modern studio" width="1312" height="816" loading="eager" fetchpriority="high" decoding="async" />
-            </div>
-        </div>
-    </section>
-    
-    <!-- ========== FREE OFFER BANNER ========== -->
-    <section class="offer-banner animate-fade-up">
-        <h3> Special Offer: <span class="highlight">Free Website Hosting</span> + <span class="highlight">1 Year Free Domain</span></h3>
-        <p>For all web development projects — get your business online with zero hosting costs for the first year!</p>
-    </section>
+    <main>
 
-    <!-- ========== STATS ========== -->
-    <section class="stats-section">
-        <div class="stats-grid">
-            <div class="stat-card animate-fade-up delay-1">
-                <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
-                <div class="stat-number">150+</div>
-                <div class="stat-label">Projects Delivered</div>
+        <!-- ========== HERO ========== -->
+        <section class="hero">
+            <div class="container hero-grid">
+                <div class="hero-text reveal">
+                    <p class="eyebrow">Based in Kabwe, Zambia · Working with clients worldwide</p>
+                    <h1>Business services and digital solutions, <span>done properly</span></h1>
+                    <p class="hero-lead">
+                        Seedwel Investment LTD assists Zambian businesses with registration and compliance
+                        processes — including ZRA, NAPSA and PACRA — and builds the websites, marketing
+                        and automation that help them grow.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="request.html" class="btn btn-primary"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Request a Service</a>
+                        <a href="services.html" class="btn btn-outline"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Explore Our Services</a>
+                    </div>
+                    <ul class="hero-points">
+                        <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Clear, step-by-step guidance</li>
+                        <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Transparent communication</li>
+                        <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Secure handling of your information</li>
+                    </ul>
+                </div>
+                <div class="hero-image reveal d2">
+                    <img src="assets/images/hero-home.jpg" alt="Seedwel Investment LTD team collaborating in a modern office" width="1536" height="1024" fetchpriority="high" decoding="async" />
+                </div>
             </div>
-            <div class="stat-card animate-fade-up delay-2">
-                <div class="stat-icon"><i class="fas fa-star"></i></div>
-                <div class="stat-number">98.9%</div>
-                <div class="stat-label">Client Satisfaction</div>
-            </div>
-            <div class="stat-card animate-fade-up delay-3">
-                <div class="stat-icon"><i class="fas fa-award"></i></div>
-                <div class="stat-number">6+</div>
-                <div class="stat-label">Years Experience</div>
-            </div>
-            <div class="stat-card animate-fade-up delay-4">
-                <div class="stat-icon"><i class="fas fa-clock"></i></div>
-                <div class="stat-number">24/7</div>
-                <div class="stat-label">Support Available</div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- ========== ORIGINAL COMPANY SHOWREEL ========== -->
-    <section class="seedwel-media-section" aria-labelledby="seedwelShowreelTitle">
-        <div class="seedwel-media-container">
-            <header class="seedwel-media-heading seedwel-media-reveal">
+        <!-- ========== WHY CHOOSE SEEDWEL ========== -->
+        <section class="section section-alt" aria-labelledby="whyTitle">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="eyebrow">Why Choose Seedwel?</p>
+                    <h2 class="section-title" id="whyTitle">A dependable partner for everyday business work</h2>
+                    <p class="section-intro">We focus on the things that matter to a business owner: clarity, follow-through and results you can use.</p>
+                </div>
+                <div class="grid-4">
+                    <article class="card icon-card reveal">
+                        <div class="icon"><i class="fa-solid fa-briefcase" aria-hidden="true"></i></div>
+                        <h3>Professional</h3>
+                        <p>Clear, structured business services with proper documentation at every step.</p>
+                    </article>
+                    <article class="card icon-card reveal d1">
+                        <div class="icon"><i class="fa-solid fa-handshake" aria-hidden="true"></i></div>
+                        <h3>Reliable</h3>
+                        <p>Transparent communication throughout the process — you always know where things stand.</p>
+                    </article>
+                    <article class="card icon-card reveal d2">
+                        <div class="icon"><i class="fa-solid fa-laptop-code" aria-hidden="true"></i></div>
+                        <h3>Technology Driven</h3>
+                        <p>Modern digital tools and workflows that keep your work organised and efficient.</p>
+                    </article>
+                    <article class="card icon-card reveal d3">
+                        <div class="icon"><i class="fa-solid fa-chart-line" aria-hidden="true"></i></div>
+                        <h3>Business Focused</h3>
+                        <p>Solutions designed around your business needs — not one-size-fits-all packages.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SERVICES PREVIEW ========== -->
+        <section class="section" aria-labelledby="servicesTitle">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="eyebrow">What We Do</p>
+                    <h2 class="section-title" id="servicesTitle">Services for every stage of your business</h2>
+                    <p class="section-intro">From registering your business to building its online presence, our team handles the process with care.</p>
+                </div>
+                <div class="grid-3" id="homeServicesGrid">
+                    <article class="card service-card reveal">
+                        <div class="service-media"><img src="assets/images/service-zra-tax.jpg" alt="Tax consultant assisting a client with tax registration documents" width="1536" height="864" loading="lazy" decoding="async" /></div>
+                        <div class="service-body">
+                            <h3>ZRA Tax Services</h3>
+                            <p>Assistance with Zambian tax registration and related business compliance processes.</p>
+                            <div class="service-actions">
+                                <a href="services.html#zra" class="text-link">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                                <a href="request.html?service=zra" class="text-link">Request Service <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="card service-card reveal d1">
+                        <div class="service-media"><img src="assets/images/service-napsa.jpg" alt="Benefits advisor helping an employer with pension scheme registration" width="1536" height="864" loading="lazy" decoding="async" /></div>
+                        <div class="service-body">
+                            <h3>NAPSA Services</h3>
+                            <p>Assistance with National Pension Scheme employer registration and compliance processes.</p>
+                            <div class="service-actions">
+                                <a href="services.html#napsa" class="text-link">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                                <a href="request.html?service=napsa" class="text-link">Request Service <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="card service-card reveal d2">
+                        <div class="service-media"><img src="assets/images/service-pacra.jpg" alt="Business registration advisor congratulating an entrepreneur" width="1536" height="864" loading="lazy" decoding="async" /></div>
+                        <div class="service-body">
+                            <h3>PACRA Registration</h3>
+                            <p>Assistance with company and business name registration at Zambia's company registry.</p>
+                            <div class="service-actions">
+                                <a href="services.html#pacra" class="text-link">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                                <a href="request.html?service=pacra" class="text-link">Request Service <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="card service-card reveal">
+                        <div class="service-media"><img src="assets/images/service-web-development.jpg" alt="Web developer building a responsive business website" width="1536" height="864" loading="lazy" decoding="async" /></div>
+                        <div class="service-body">
+                            <h3>Website Development</h3>
+                            <p>Modern, responsive websites and online stores built around your business goals.</p>
+                            <div class="service-actions">
+                                <a href="services.html#web-development" class="text-link">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                                <a href="request.html?service=web-development" class="text-link">Request Service <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="card service-card reveal d1">
+                        <div class="service-media"><img src="assets/images/service-ai-automation.jpg" alt="Consultant setting up a business workflow automation" width="1536" height="864" loading="lazy" decoding="async" /></div>
+                        <div class="service-body">
+                            <h3>AI Automation</h3>
+                            <p>Practical workflow automation that saves your team time on repetitive business tasks.</p>
+                            <div class="service-actions">
+                                <a href="services.html#ai-automation" class="text-link">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                                <a href="request.html?service=ai-automation" class="text-link">Request Service <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="card service-card reveal d2">
+                        <div class="service-media"><img src="assets/images/service-digital-marketing.jpg" alt="Marketing specialists reviewing campaign performance" width="1536" height="864" loading="lazy" decoding="async" /></div>
+                        <div class="service-body">
+                            <h3>Digital Marketing</h3>
+                            <p>Search, social and content marketing designed to reach and convert your audience.</p>
+                            <div class="service-actions">
+                                <a href="services.html#digital-marketing" class="text-link">Learn More <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                                <a href="request.html?service=digital-marketing" class="text-link">Request Service <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                <p class="small muted text-center mt-3 reveal">
+                    Seedwel Investment LTD is a private company. We are not ZRA, NAPSA or PACRA, and we are not affiliated with any government agency — we provide private assistance with the relevant processes.
+                </p>
+            </div>
+        </section>
+
+        <!-- ========== PROJECTS PREVIEW (live portfolio) ========== -->
+        <section class="section section-alt" aria-labelledby="workTitle">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="eyebrow">Our Work</p>
+                    <h2 class="section-title" id="workTitle">Recent projects</h2>
+                    <p class="section-intro">Selected work from our live portfolio. Every published project is managed by the Seedwel team.</p>
+                </div>
+                <div class="grid-3" id="homeProjectsGrid">
+                    <div class="mini-card card reveal" style="grid-column:1/-1;justify-content:center;text-align:center;">
+                        <p class="muted" style="margin:0 auto;">Loading live portfolio…</p>
+                    </div>
+                </div>
+                <p class="text-center mt-3 reveal">
+                    <a href="projects.html" class="btn btn-outline">View all projects <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                </p>
+            </div>
+        </section>
+
+        <!-- ========== HOW WE WORK ========== -->
+        <section class="section" aria-labelledby="processTitle">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="eyebrow">How We Work</p>
+                    <h2 class="section-title" id="processTitle">A simple, transparent process</h2>
+                </div>
+                <div class="steps">
+                    <div class="card step reveal">
+                        <p class="step-num">STEP 01</p>
+                        <h3>Tell us what you need</h3>
+                        <p>Submit a service request or message us on WhatsApp. Tell us about your business and what you want to achieve.</p>
+                    </div>
+                    <div class="card step reveal d1">
+                        <p class="step-num">STEP 02</p>
+                        <h3>We review and confirm</h3>
+                        <p>We check the requirements, confirm what is needed, and agree a clear scope, timeline and fee before starting.</p>
+                    </div>
+                    <div class="card step reveal d2">
+                        <p class="step-num">STEP 03</p>
+                        <h3>We handle the process</h3>
+                        <p>Our team carries out the work and keeps you updated at every stage — no guesswork, no silence.</p>
+                    </div>
+                    <div class="card step reveal d3">
+                        <p class="step-num">STEP 04</p>
+                        <h3>Handover &amp; support</h3>
+                        <p>You receive your documents, website or campaign — with continued support after delivery.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== CTA ========== -->
+        <section class="cta-band">
+            <div class="container reveal">
                 <div>
-                    <p class="seedwel-media-eyebrow">Seedwel in motion</p>
-                    <h2 id="seedwelShowreelTitle">See how ideas become <span>useful experiences.</span></h2>
-                    <p>Meet the thinking, craft and client care behind our digital products and business services — from Zambia to teams around the world.</p>
+                    <h2>Need ZRA assistance, a website, or digital marketing?</h2>
+                    <p>Send a service request and the Seedwel team will get back to you to discuss the next steps.</p>
                 </div>
-                <span class="seedwel-original-mark"><i class="fas fa-wand-magic-sparkles" aria-hidden="true"></i> Original Seedwel visual story</span>
-            </header>
+                <div style="display:flex;gap:14px;flex-wrap:wrap;">
+                    <a href="request.html" class="btn btn-light"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Request a Service</a>
+                    <a href="https://wa.me/260973028342" class="btn btn-whatsapp" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp Us</a>
+                </div>
+            </div>
+        </section>
 
-            <div class="seedwel-showcase-grid">
-                <div class="seedwel-video-shell seedwel-media-reveal" data-reveal="left">
-                    <video data-seedwel-video autoplay muted loop playsinline preload="metadata" poster="assets/images/seedwel-showreel-poster.jpg" aria-label="Seedwel Investment LTD company showreel">
-                        <source src="assets/videos/seedwel-company-showreel.mp4" type="video/mp4" />
-                        Your browser does not support embedded video. <a href="assets/videos/seedwel-company-showreel.mp4">Open the Seedwel company film</a>.
-                    </video>
-                    <span class="seedwel-video-badge">16-second company film</span>
-                    <button class="seedwel-video-toggle" type="button" data-video-toggle aria-label="Pause company film">
-                        <i class="fas fa-pause" aria-hidden="true"></i><span>Pause film</span>
-                    </button>
-                </div>
-
-                <aside class="seedwel-showcase-copy seedwel-media-reveal" data-reveal="right">
-                    <p class="seedwel-card-kicker">One team. Many capabilities.</p>
-                    <h3>Strategy, design and support under one roof.</h3>
-                    <p>We bring business thinking and digital execution together, giving every project a clear direction and a dependable path to launch.</p>
-                    <div class="seedwel-story-points">
-                        <div class="seedwel-story-point"><i class="fas fa-lightbulb" aria-hidden="true"></i><span>Clear thinking before production</span></div>
-                        <div class="seedwel-story-point"><i class="fas fa-laptop-code" aria-hidden="true"></i><span>Modern, responsive digital delivery</span></div>
-                        <div class="seedwel-story-point"><i class="fas fa-headset" aria-hidden="true"></i><span>Human support after launch</span></div>
-                    </div>
-                    <a class="seedwel-media-link" href="about.html">Meet Seedwel <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-                </aside>
-            </div>
-
-            <div class="seedwel-photo-grid" aria-label="Seedwel ways of working">
-                <figure class="seedwel-photo-card seedwel-media-reveal">
-                    <img src="assets/images/seedwel-strategy-session.jpg" alt="Digital strategy workshop with business specialists" width="1376" height="768" loading="lazy" decoding="async" />
-                    <figcaption><span>Discover</span><strong>Plan with clarity</strong></figcaption>
-                </figure>
-                <figure class="seedwel-photo-card seedwel-media-reveal">
-                    <img src="assets/images/seedwel-digital-craft.jpg" alt="Product designers and developers creating a digital experience" width="1376" height="768" loading="lazy" decoding="async" />
-                    <figcaption><span>Create</span><strong>Build with purpose</strong></figcaption>
-                </figure>
-                <figure class="seedwel-photo-card seedwel-media-reveal">
-                    <img src="assets/images/seedwel-client-support.jpg" alt="Customer success specialist providing professional support" width="1376" height="768" loading="lazy" decoding="async" />
-                    <figcaption><span>Support</span><strong>Stay close after launch</strong></figcaption>
-                </figure>
-                <figure class="seedwel-photo-card seedwel-media-reveal">
-                    <img src="assets/images/seedwel-launch-celebration.jpg" alt="Seedwel team celebrating a successful website launch" width="1376" height="768" loading="lazy" decoding="async" />
-                    <figcaption><span>Launch</span><strong>Go live with confidence</strong></figcaption>
-                </figure>
-                <figure class="seedwel-photo-card seedwel-media-reveal">
-                    <img src="assets/images/seedwel-analytics-review.jpg" alt="Marketing specialists reviewing growth analytics on screen" width="1376" height="768" loading="lazy" decoding="async" />
-                    <figcaption><span>Grow</span><strong>Measure what matters</strong></figcaption>
-                </figure>
-                <figure class="seedwel-photo-card seedwel-media-reveal">
-                    <img src="assets/images/seedwel-client-partnership.jpg" alt="Seedwel consultant shaking hands with a happy client" width="1376" height="768" loading="lazy" decoding="async" />
-                    <figcaption><span>Partner</span><strong>Relationships that last</strong></figcaption>
-                </figure>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========== SERVICES PREVIEW ========== -->
-    <section class="services-preview">
-        <div class="section-header animate-fade-up">
-            <p class="section-subtitle">What We Do</p>
-            <h2 class="section-title">Premium Services For Modern Businesses</h2>
-        </div>
-        <div class="services-grid">
-            <div class="service-card animate-fade-up delay-1">
-                <div class="service-icon"><i class="fas fa-building"></i></div>
-                <h3>Business Registration</h3>
-                <p>PACRA, ZRA, Workers Compensation, NAPSA, EIZ & more — we handle all your compliance needs so you can focus on growing your business.</p>
-            </div>
-            <div class="service-card animate-fade-up delay-2">
-              <div class="service-icon"><i
-              class="fas fa-pen"></i
-              ></div>
-              <h3>Job Apply</h3>
-              <p>Apply as Virtual Assistant and Cold caller based on commission 10%.</p>
-              </div>
-            <div class="service-card animate-fade-up delay-2">
-                <div class="service-icon"><i class="fas fa-paint-brush"></i></div>
-                <h3>Graphic Design</h3>
-                <p>Logos, flyers, branding, and visual identity that make your brand memorable and help you stand out in a crowded market.</p>
-            </div>
-            <div class="service-card animate-fade-up delay-3">
-                <div class="service-icon"><i class="fas fa-code"></i></div>
-                <h3>Web Development</h3>
-                <p>Custom websites, e-commerce, landing pages built with modern technology. Includes FREE hosting + 1 year free domain!</p>
-            </div>
-            <div class="service-card animate-fade-up delay-4">
-                <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
-                <h3>Mobile Apps</h3>
-                <p>iOS, Android, and school management apps that help you reach customers wherever they are and streamline your operations.</p>
-            </div>
-            <div class="service-card animate-fade-up delay-5">
-                <div class="service-icon"><i class="fas fa-headset"></i></div>
-                <h3>Virtual Assistant</h3>
-                <p>24/7 admin & customer support services that save you time and money, allowing you to focus on what matters most.</p>
-            </div>
-            <div class="service-card animate-fade-up delay-6">
-                <div class="service-icon"><i class="fas fa-chart-line"></i></div>
-                <h3>Digital Marketing</h3>
-                <p>SEO, Google Ads, social media growth strategies that drive targeted traffic and convert visitors into loyal customers.</p>
-            </div>
-            <div class="service-card animate-fade-up delay-1">
-                <div class="service-icon"><i class="fas fa-keyboard"></i></div>
-                <h3>Typing & Transcription</h3>
-                <p>Fast, accurate document services that help you maintain professional records and streamline your administrative workflow.</p>
-            </div>
-            <div class="service-card animate-fade-up delay-2">
-                <div class="service-icon"><i class="fas fa-chalkboard-user"></i></div>
-                <h3>Online Tutoring</h3>
-                <p>Mathematics, programming & more — personalized learning that helps students excel in their academic and professional journeys.</p>
-            </div>
-            <div class="service-card animate-fade-up delay-3">
-                <div class="service-icon"><i class="fas fa-video"></i></div>
-                <h3>Video Editing</h3>
-                <p>Professional video production that brings your stories to life and engages your audience across all platforms.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========== PROJECTS PREVIEW ========== -->
-    <section class="projects-preview">
-        <div class="section-header animate-fade-up">
-            <p class="section-subtitle">Our Portfolio</p>
-            <h2 class="section-title">Featured Projects</h2>
-        </div>
-        <div class="projects-grid" id="homeProjectsGrid">
-            <div class="project-card animate-fade-up delay-1">
-                <img src="https://i.ibb.co/hxrCWMb7/424e989de0aa94a201234cb283cdabcd.jpg" alt="Web Development Project" />
-                <div class="content">
-                    <h3>Corporate Website</h3>
-                    <p>Modern, responsive website for a leading business in Zambia and worldwide. Includes free hosting and domain.</p>
-                </div>
-            </div>
-            <div class="project-card animate-fade-up delay-2">
-                <img src="https://i.ibb.co/sdsgbKT1/7ab503270d8ec0cdfd8ab91b9d7513ed.jpg" alt="Web Development Project" />
-                <div class="content">
-                    <h3>E-Commerce Platform</h3>
-                    <p>Full-featured online store with payment integration, product management, and free hosting.</p>
-                </div>
-            </div>
-            <div class="project-card animate-fade-up delay-3">
-                <img src="https://i.ibb.co/gFJqYkSV/c1c5a3537d3a2ed0b448cf64e92df76d.jpg" alt="Web Development Project" />
-                <div class="content">
-                    <h3>Portfolio Website</h3>
-                    <p>Creative portfolio for a professional photographer with stunning visuals and fast loading.</p>
-                </div>
-            </div>
-            <div class="project-card animate-fade-up delay-1">
-                <img src="https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Restaurant Website Project" />
-                <div class="content">
-                    <span class="home-project-category">Restaurant</span>
-                    <h3>Flavour House Restaurant</h3>
-                    <p>Stunning restaurant website with online reservations, interactive menu, and photo galleries for a premium dining experience.</p>
-                    <a href="projects.html" class="home-project-link">View project <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-            <div class="project-card animate-fade-up delay-2">
-                <img src="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Digital Marketing" />
-                <div class="content">
-                    <span class="home-project-category">Marketing</span>
-                    <h3>Digital Marketing Campaign</h3>
-                    <p>Full SEO, Google Ads, and social media strategy driving targeted traffic and conversions for growing businesses.</p>
-                    <a href="projects.html" class="home-project-link">View project <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-            <div class="project-card animate-fade-up delay-3">
-                <img src="https://i.ibb.co/nqMZdp2R/bfebc06c230536c04c2b0e2a20e20d07.jpg" alt="School Management System" />
-                <div class="content">
-                    <span class="home-project-category">Website</span>
-                    <h3>School Management System</h3>
-                    <p>Complete school platform for student records, fee tracking, and a connected parent experience.</p>
-                    <a href="projects.html" class="home-project-link">View project <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========== HOW WE HELP ========== -->
-    <section class="insight-section">
-        <div class="insight-inner">
-            <div class="insight-heading animate-fade-up">
-                <p class="section-subtitle">Built For Clearer Growth</p>
-                <h2>More than a service provider — a practical digital partner.</h2>
-                <p>From first idea to launch, our team brings the right information, secure project handling and simple next steps together in one place.</p>
-            </div>
-            <div class="insight-grid">
-                <article class="insight-card animate-fade-up delay-1">
-                    <div class="insight-icon"><i class="fas fa-compass" aria-hidden="true"></i></div>
-                    <h3>Clear project direction</h3>
-                    <p>We turn business goals into a focused plan, practical deliverables and a digital experience your customers can use with confidence.</p>
-                </article>
-                <article class="insight-card animate-fade-up delay-2">
-                    <div class="insight-icon"><i class="fas fa-hard-drive" aria-hidden="true"></i></div>
-                    <h3>Media library ready to grow</h3>
-                    <p>Our portfolio workflow is designed around a 1 TB media-capacity target, with protected uploads and a transparent usage view for the administrator.</p>
-                    <span class="capacity-chip"><i class="fas fa-database" aria-hidden="true"></i> 1 TB capacity target</span>
-                </article>
-                <article class="insight-card animate-fade-up delay-3">
-                    <div class="insight-icon"><i class="fas fa-share-nodes" aria-hidden="true"></i></div>
-                    <h3>Portfolio-ready handover</h3>
-                    <p>Published work can be shared by link, WhatsApp or email, helping you present the latest projects to clients and partners without delay.</p>
-                </article>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- ========== TESTIMONIALS ========== -->
-    <section class="testimonials-section">
-        <div class="testimonials-inner">
-            <div class="section-header reveal">
-                <p class="section-subtitle">Client Love</p>
-                <h2 class="section-title">What Our Clients Say</h2>
-            </div>
-            <div class="testimonials-grid">
-                <div class="testimonial-card reveal delay-1">
-                    <div class="testimonial-stars">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
-                    <p class="testimonial-text">"Seedwel built our restaurant website with online reservations and it transformed our business. We're getting 40% more bookings now!"</p>
-                    <div class="testimonial-author">
-                        <img src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=150" alt="Client" />
-                        <div>
-                            <strong>James M.</strong>
-                            <span>Restaurant Owner, Lusaka</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card reveal delay-2">
-                    <div class="testimonial-stars">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
-                    <p class="testimonial-text">"Professional, responsive, and delivered on time. Our e-commerce site is generating real revenue. Highly recommend Seedwel Investment!"</p>
-                    <div class="testimonial-author">
-                        <img src="https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150" alt="Client" />
-                        <div>
-                            <strong>Sarah K.</strong>
-                            <span>E-commerce Entrepreneur</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card reveal delay-3">
-                    <div class="testimonial-stars">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
-                    <p class="testimonial-text">"They handled our PACRA registration and ZRA compliance flawlessly. Saved us weeks of paperwork and confusion. Amazing team!"</p>
-                    <div class="testimonial-author">
-                        <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=150" alt="Client" />
-                        <div>
-                            <strong>David C.</strong>
-                            <span>Business Owner, Kabwe</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========== WORK PROCESS ========== -->
-    <section class="process-section">
-        <div class="process-inner">
-            <div class="section-header reveal">
-                <p class="section-subtitle">How We Work</p>
-                <h2 class="section-title">Simple Steps to Your Project</h2>
-            </div>
-            <div class="process-steps">
-                <div class="process-step reveal delay-1">
-                    <div class="step-number">01</div>
-                    <div class="step-icon"><i class="fas fa-comments"></i></div>
-                    <h3>Discovery Call</h3>
-                    <p>We discuss your vision, goals, and requirements in a free consultation call.</p>
-                </div>
-                <div class="process-connector reveal delay-2"><i class="fas fa-arrow-right"></i></div>
-                <div class="process-step reveal delay-3">
-                    <div class="step-number">02</div>
-                    <div class="step-icon"><i class="fas fa-pencil-ruler"></i></div>
-                    <h3>Design & Plan</h3>
-                    <p>We create mockups, wireframes, and a detailed project plan for your approval.</p>
-                </div>
-                <div class="process-connector reveal delay-4"><i class="fas fa-arrow-right"></i></div>
-                <div class="process-step reveal delay-5">
-                    <div class="step-number">03</div>
-                    <div class="step-icon"><i class="fas fa-code"></i></div>
-                    <h3>Build & Test</h3>
-                    <p>Our team develops your project with regular updates and thorough testing.</p>
-                </div>
-                <div class="process-connector reveal delay-6"><i class="fas fa-arrow-right"></i></div>
-                <div class="process-step reveal delay-7">
-                    <div class="step-number">04</div>
-                    <div class="step-icon"><i class="fas fa-rocket"></i></div>
-                    <h3>Launch & Support</h3>
-                    <p>We deploy your project and provide ongoing support and maintenance.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========== CLIENT LOGOS ========== -->
-    <section class="clients-section reveal">
-        <div class="clients-inner">
-            <p class="clients-label">Trusted by businesses across Zambia and beyond</p>
-            <div class="clients-logos">
-                <div class="client-logo"><i class="fas fa-utensils"></i><span>Restaurants</span></div>
-                <div class="client-logo"><i class="fas fa-graduation-cap"></i><span>Schools</span></div>
-                <div class="client-logo"><i class="fas fa-shopping-bag"></i><span>Retail</span></div>
-                <div class="client-logo"><i class="fas fa-hospital"></i><span>Healthcare</span></div>
-                <div class="client-logo"><i class="fas fa-building"></i><span>Corporate</span></div>
-                <div class="client-logo"><i class="fas fa-landmark"></i><span>Government</span></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========== CTA ========== -->
-    <section class="cta-section">
-        <h3 class="animate-fade-up">Ready to Grow Your Business?</h3>
-        <p class="animate-fade-up delay-1">Let's work together and bring your vision to life. Get free hosting + 1 year domain with your website!</p>
-        <a href="https://wa.me/260973028342" class="btn-white animate-fade-up delay-2"><i class="fab fa-whatsapp"></i> WhatsApp Us</a>
-    </section>
-
-    <!-- ========== FOOTER ========== -->
-    <footer>
-        <div class="footer-grid">
-            <div class="footer-brand">
-                <img src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel Investment LTD" />
-                <p>Premium digital agency delivering excellence worldwide. We build digital experiences that drive growth for modern businesses.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Quick Links</h4>
-                <a href="index.html">Home</a>
-                <a href="about.html">About Us</a>
-                <a href="services.html">Services</a>
-                <a href="projects.html">Projects</a>
-                <a href="login.html">Login</a>
-            </div>
-            <div class="footer-col">
-                <h4>Support</h4>
-                <a href="contact.html">Contact</a>
-                <a href="support.html">Help Center</a>
-                <a href="privacy.html">Privacy</a>
-                <a href="terms.html">Terms</a>
-                <a href="tel:+260973028342"><i class="fas fa-phone" style="color:#dc2626; width:18px;"></i> +260 973 028 342</a>
-                <a href="mailto:seedwelinvestltd@gmail.com"><i class="fas fa-envelope" style="color:#dc2626; width:18px;"></i> seedwelinvestltd@gmail.com</a>
-            </div>
-            <div class="footer-col">
-                <h4>Locations</h4>
-                <p><i class="fas fa-location-dot" style="color:#dc2626; width:18px;"></i>Kabwe, Zambia</p>
-                <p><i class="fas fa-location-dot" style="color:#dc2626; width:18px;"></i> Chama, Zambia</p>
-                <p>🌍 Global Remote</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Seedwel Investment LTD. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- ========== FLOATING WHATSAPP ========== -->
-    <a href="https://wa.me/260973028342" class="floating-whatsapp" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
-        <i class="fab fa-whatsapp"></i>
-    </a>
+    </main>
 
     <!-- ========== SCRIPTS ========== -->
     <script>
-        // ─── Mobile Menu ───
-        const hamburger = document.getElementById('hamburger');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const menuOverlay = document.getElementById('menuOverlay');
+        window.addEventListener('DOMContentLoaded', function () {
+            // Firebase configuration is public by design; deployed Database Rules control access.
+            var firebaseConfig = {
+                apiKey: 'AIzaSyA-BpRy-RVc2rqIG6uiRu_XrGEu1ZGnQwU',
+                authDomain: 'seedwel-investment-limited.firebaseapp.com',
+                databaseURL: 'https://seedwel-investment-limited-default-rtdb.firebaseio.com',
+                projectId: 'seedwel-investment-limited',
+                storageBucket: 'seedwel-investment-limited.firebasestorage.app',
+                messagingSenderId: '197778268619',
+                appId: '1:197778268619:web:92f29d88fa5a22dbfa964e'
+            };
+            if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
 
-        function toggleMenu() {
-            hamburger.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-            menuOverlay.classList.toggle('active');
-            document.body.style.overflow = hamburger.classList.contains('active') ? 'hidden' : '';
-        }
-        hamburger.addEventListener('click', toggleMenu);
-        menuOverlay.addEventListener('click', toggleMenu);
-        document.querySelectorAll('.mobile-menu a').forEach(l => l.addEventListener('click', toggleMenu));
+            var grid = document.getElementById('homeProjectsGrid');
+            if (!grid) return;
 
-        // ─── Header Scroll Effect ───
-        const header = document.getElementById('header');
-        window.addEventListener('scroll', () => {
-            header.classList.toggle('scrolled', window.scrollY > 40);
-        });
-
-        // ─── Intersection Observer for scroll animations ───
-        const animateElements = document.querySelectorAll('.animate-fade-up, .animate-fade-left, .animate-fade-right');
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, {
-            threshold: 0.1
-        });
-
-        animateElements.forEach(el => {
-            observer.observe(el);
-        });
-
-        // ─── Scroll Reveal for new sections ───
-        const revealElements = document.querySelectorAll('.reveal');
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    revealObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
-        revealElements.forEach(el => revealObserver.observe(el));
-
-        // ─── Counter Animation ───
-        const statNumbers = document.querySelectorAll('.stat-number');
-        const counterObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const el = entry.target;
-                    const text = el.textContent;
-                    const match = text.match(/^([\d.]+)/);
-                    if (match) {
-                        const target = parseFloat(match[1]);
-                        const suffix = text.replace(match[1], '');
-                        const duration = 1500;
-                        const start = performance.now();
-                        const isFloat = text.includes('.');
-                        function updateCounter(now) {
-                            const progress = Math.min((now - start) / duration, 1);
-                            const eased = 1 - Math.pow(1 - progress, 3);
-                            const current = isFloat ? (target * eased).toFixed(1) : Math.floor(target * eased);
-                            el.textContent = current + suffix;
-                            if (progress < 1) requestAnimationFrame(updateCounter);
-                        }
-                        requestAnimationFrame(updateCounter);
-                    }
-                    counterObserver.unobserve(el);
-                }
-            });
-        }, { threshold: 0.5 });
-        statNumbers.forEach(el => counterObserver.observe(el));
-
-        // ─── Live Portfolio Preview ───
-        // Firebase configuration is public by design. The deployed Database Rules control data access.
-        const homeFirebaseConfig = {
-            apiKey: 'AIzaSyA-BpRy-RVc2rqIG6uiRu_XrGEu1ZGnQwU',
-            authDomain: 'seedwel-investment-limited.firebaseapp.com',
-            databaseURL: 'https://seedwel-investment-limited-default-rtdb.firebaseio.com',
-            projectId: 'seedwel-investment-limited',
-            storageBucket: 'seedwel-investment-limited.firebasestorage.app',
-            messagingSenderId: '197778268619',
-            appId: '1:197778268619:web:92f29d88fa5a22dbfa964e'
-        };
-        firebase.initializeApp(homeFirebaseConfig);
-        const homeProjectsGrid = document.getElementById('homeProjectsGrid');
-
-        function safeHomeText(value, max = 0) {
-            const text = String(value || '').trim();
-            return max ? text.slice(0, max) : text;
-        }
-        function safeHomeImage(value) {
-            try {
-                const url = new URL(String(value || ''));
-                return (url.protocol === 'https:' || url.protocol === 'http:') ? url.href : 'favicon.svg';
-            } catch (_) {
-                return 'favicon.svg';
+            function safeText(value, max) {
+                var text = String(value || '').trim();
+                return max ? text.slice(0, max) : text;
             }
-        }
-        function renderHomeProject(project, index) {
-            const card = document.createElement('article');
-            card.className = 'project-card animate-fade-up delay-' + Math.min(index + 1, 3);
-            const image = document.createElement('img');
-            image.src = safeHomeImage(project.image);
-            image.alt = safeHomeText(project.name, 120) || 'Seedwel portfolio project';
-            image.loading = 'lazy';
-            image.addEventListener('error', () => { image.src = 'favicon.svg'; });
-            const content = document.createElement('div');
-            content.className = 'content';
-            const category = document.createElement('span');
-            category.className = 'home-project-category';
-            category.textContent = safeHomeText(project.category, 60) || 'Portfolio project';
-            const title = document.createElement('h3');
-            title.textContent = safeHomeText(project.name, 120) || 'Untitled project';
-            const summary = document.createElement('p');
-            summary.textContent = safeHomeText(project.description, 260) || 'Explore this Seedwel project in our live portfolio.';
-            const link = document.createElement('a');
-            link.className = 'home-project-link';
-            link.href = 'projects.html';
-            link.innerHTML = 'View portfolio <i class="fas fa-arrow-right" aria-hidden="true"></i>';
-            content.append(category, title, summary, link);
-            card.append(image, content);
-            return card;
-        }
-        firebase.database().ref('publicProjects').on('value', (snapshot) => {
-            const entries = Object.entries(snapshot.val() || {});
-            // Existing cards remain as a useful fallback until the admin imports or creates managed entries.
-            if (!entries.length) return;
-            const published = entries.map(([, project]) => project)
-                .filter((project) => project && project.published !== false)
-                .sort((a, b) => Number(b.updatedAt || b.createdAt || 0) - Number(a.updatedAt || a.createdAt || 0))
-                .slice(0, 6);
-            homeProjectsGrid.replaceChildren();
-            if (!published.length) {
-                const empty = document.createElement('div');
-                empty.className = 'home-project-empty';
-                empty.textContent = 'New portfolio work is being prepared. Visit the portfolio page again soon.';
-                homeProjectsGrid.appendChild(empty);
-                return;
+            function safeImage(value) {
+                try {
+                    var url = new URL(String(value || ''), window.location.href);
+                    return (url.protocol === 'https:' || url.protocol === 'http:') ? url.href : '';
+                } catch (_) { return ''; }
             }
-            published.forEach((project, index) => homeProjectsGrid.appendChild(renderHomeProject(project, index)));
-        });
 
-        // ─── Scroll to Top ───
-        window.scrollTo(0, 0);
-        window.addEventListener('load', () => window.scrollTo(0, 0));
-        window.addEventListener('pageshow', (e) => { if (e.persisted) window.scrollTo(0, 0); });
+            function renderProject(project) {
+                var card = document.createElement('article');
+                card.className = 'card service-card reveal';
+                var media = document.createElement('div');
+                media.className = 'service-media';
+                var img = document.createElement('img');
+                img.src = safeImage(project.image) || 'favicon.svg';
+                img.alt = safeText(project.name, 120) || 'Seedwel portfolio project';
+                img.loading = 'lazy';
+                img.decoding = 'async';
+                img.addEventListener('error', function () { img.src = 'favicon.svg'; });
+                media.appendChild(img);
+                var body = document.createElement('div');
+                body.className = 'service-body';
+                var tag = document.createElement('span');
+                tag.className = 'service-tag';
+                tag.textContent = safeText(project.category, 60) || 'Project';
+                var title = document.createElement('h3');
+                title.textContent = safeText(project.name, 120) || 'Untitled project';
+                var summary = document.createElement('p');
+                summary.textContent = safeText(project.description, 200) || 'Explore this project in our live portfolio.';
+                var actions = document.createElement('div');
+                actions.className = 'service-actions';
+                var link = document.createElement('a');
+                link.className = 'text-link';
+                link.href = 'projects.html';
+                link.innerHTML = 'View project <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>';
+                actions.appendChild(link);
+                body.append(tag, title, summary, actions);
+                card.append(media, body);
+                return card;
+            }
+
+            firebase.database().ref('publicProjects').limitToLast(3).on('value', function (snapshot) {
+                var entries = Object.values(snapshot.val() || {}).filter(function (p) { return p && p.published !== false; });
+                entries.sort(function (a, b) { return Number(b.updatedAt || b.createdAt || 0) - Number(a.updatedAt || a.createdAt || 0); });
+                grid.replaceChildren();
+                if (!entries.length) {
+                    var empty = document.createElement('p');
+                    empty.className = 'muted text-center';
+                    empty.style.gridColumn = '1 / -1';
+                    empty.textContent = 'New portfolio work is being prepared. Check back soon.';
+                    grid.appendChild(empty);
+                    return;
+                }
+                entries.slice(0, 3).forEach(function (project) { grid.appendChild(renderProject(project)); });
+                if (window.__seedwelSiteJs && window.SeedwelRefreshReveals) window.SeedwelRefreshReveals();
+            }, function () {
+                grid.replaceChildren();
+                var note = document.createElement('p');
+                note.className = 'muted text-center';
+                note.style.gridColumn = '1 / -1';
+                note.textContent = 'Our live portfolio is temporarily unavailable. Please visit the projects page.';
+                grid.appendChild(note);
+            });
+        });
     </script>
-    <script src="assets/js/media-showcase.js" defer></script>
-
-    <script src="assets/js/service-strip.js" defer></script>
-    <script src="assets/js/local-ai.js" defer></script>
+    <script src="assets/js/site.js" defer></script>
 </body>
 </html>

@@ -112,6 +112,37 @@
         }
       }
     },
+    "serviceRequests": {
+      ".read": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com'",
+      "$requestId": {
+        ".write": "(!data.exists() && newData.exists() && newData.child('status').val() == 'new') || (auth != null && auth.token.email == 'zacheussimbaya@gmail.com')",
+        ".validate": "!newData.exists() || (newData.hasChildren(['fullName', 'email', 'phone', 'service', 'details', 'status', 'submittedAt']) && newData.child('fullName').isString() && newData.child('fullName').val().length >= 2 && newData.child('fullName').val().length <= 120 && newData.child('email').isString() && newData.child('email').val().length >= 5 && newData.child('email').val().length <= 160 && newData.child('phone').isString() && newData.child('phone').val().length >= 5 && newData.child('phone').val().length <= 40 && newData.child('service').isString() && newData.child('service').val().length >= 2 && newData.child('service').val().length <= 80 && newData.child('details').isString() && newData.child('details').val().length >= 10 && newData.child('details').val().length <= 3000 && newData.child('status').isString() && newData.child('status').val().matches(/^(new|reviewing|assigned|in_progress|completed|cancelled)$/) && newData.child('submittedAt').isNumber())",
+        "businessName": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 120)"
+        },
+        "serviceLabel": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 120)"
+        },
+        "source": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 40)"
+        },
+        "consent": {
+          ".validate": "!newData.exists() || newData.isBoolean()"
+        },
+        "assignedTo": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 120)"
+        },
+        "adminNote": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 2000)"
+        },
+        "statusNote": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 500)"
+        },
+        "updatedAt": {
+          ".validate": "!newData.exists() || newData.isNumber()"
+        }
+      }
+    },
     "applications": {
       ".read": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com'",
       "$applicationId": {

@@ -7,1119 +7,312 @@
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="manifest" href="site.webmanifest" />
     <title>Our Services | Seedwel Investment LTD</title>
-    <meta name="description" content="Premium digital services - Graphic Design, Virtual Assistant, Web Development, Business Registration and more." />
+    <meta name="description" content="Seedwel Investment LTD services: assistance with ZRA, NAPSA and PACRA processes, website development, AI automation, digital marketing, graphic design and professional support." />
 
-    
     <link rel="canonical" href="https://seedwel.ltd/services.html" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Seedwel Investment LTD" />
     <meta property="og:title" content="Our Services | Seedwel Investment LTD" />
-    <meta property="og:description" content="Premium digital services from Seedwel Investment LTD: web development, graphic design, SEO, business registration, virtual assistance and more." />
+    <meta property="og:description" content="Assistance with ZRA, NAPSA and PACRA processes, website development, AI automation, digital marketing and professional business support." />
     <meta property="og:url" content="https://seedwel.ltd/services.html" />
-    <meta property="og:image" content="https://seedwel.ltd/assets/images/seedwel-digital-craft.jpg" />
-    <meta property="og:image:alt" content="Seedwel digital specialists designing and developing a client experience" />
+    <meta property="og:image" content="https://seedwel.ltd/assets/images/service-web-development.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Our Services | Seedwel Investment LTD" />
-    <meta name="twitter:description" content="Premium digital services from Seedwel Investment LTD: web development, graphic design, SEO, business registration, virtual assistance and more." />
-    <meta name="twitter:image" content="https://seedwel.ltd/assets/images/seedwel-digital-craft.jpg" />
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="assets/css/media-showcase.css" />
+    <link rel="stylesheet" href="assets/css/site.css" />
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #ffffff;
-            color: #111827;
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #dc2626;
-            border-radius: 10px;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        @keyframes fadeInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        @keyframes fadeInRight {
-            from {
-                opacity: 0;
-                transform: translateX(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        @keyframes float {
-            0%,
-            100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-        @keyframes shimmer {
-            0% {
-                background-position: -200% 0;
-            }
-            100% {
-                background-position: 200% 0;
-            }
-        }
-        @keyframes scrollMarquee {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(-50%);
-            }
-        }
-
-        .animate-fade-up {
-            animation: fadeInUp 0.8s ease forwards;
-        }
-        .animate-fade-left {
-            animation: fadeInLeft 0.8s ease forwards;
-        }
-        .animate-fade-right {
-            animation: fadeInRight 0.8s ease forwards;
-        }
-        .animate-float {
-            animation: float 3s ease-in-out infinite;
-        }
-        .delay-1 {
-            animation-delay: 0.1s;
-            opacity: 0;
-        }
-        .delay-2 {
-            animation-delay: 0.2s;
-            opacity: 0;
-        }
-        .delay-3 {
-            animation-delay: 0.3s;
-            opacity: 0;
-        }
-        .delay-4 {
-            animation-delay: 0.4s;
-            opacity: 0;
-        }
-        .delay-5 {
-            animation-delay: 0.5s;
-            opacity: 0;
-        }
-        .delay-6 {
-            animation-delay: 0.6s;
-            opacity: 0;
-        }
-
-        /* ───────── HEADER ───────── */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.97);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(220, 38, 38, 0.12);
-            transition: all 0.3s ease;
-        }
-        .header.scrolled {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-        }
-        .header-inner {
-            max-width: 1300px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 28px;
-        }
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-        .logo-img {
-            height: 42px;
-            width: auto;
-        }
-        .company-name-header {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            font-size: 0.95rem;
-            color: #111827;
-            letter-spacing: -0.5px;
-        }
-        .company-name-header span {
-            color: #dc2626;
-        }
-        .nav-links {
-            display: flex;
-            gap: 28px;
-            align-items: center;
-        }
-        .nav-links a {
-            text-decoration: none;
-            color: #111827;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: color 0.3s;
-            cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
-            position: relative;
-        }
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: #dc2626;
-            transition: width 0.3s ease;
-        }
-        .nav-links a:hover::after,
-        .nav-links a.active::after {
-            width: 100%;
-        }
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: #dc2626;
-        }
-
-        .hamburger {
-            display: none;
-            width: 40px;
-            height: 40px;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 5px;
-            cursor: pointer;
-            background: rgba(220, 38, 38, 0.06);
-            border-radius: 50%;
-            border: 1px solid rgba(220, 38, 38, 0.12);
-            transition: all 0.3s ease;
-        }
-        .hamburger:hover {
-            background: rgba(220, 38, 38, 0.12);
-        }
-        .hamburger span {
-            width: 20px;
-            height: 2.5px;
-            background: #111827;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(6px, -6px);
-        }
-
-        /* ───────── MOBILE MENU ───────── */
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            right: -320px;
-            width: 280px;
-            height: 100vh;
-            background: #ffffff;
-            z-index: 999;
-            padding: 100px 25px 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            transition: right 0.35s cubic-bezier(0.65, 0, 0.35, 1);
-            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.08);
-        }
-        .mobile-menu.active {
-            right: 0;
-        }
-        .mobile-menu a {
-            color: #111827;
-            text-decoration: none;
-            font-size: 1rem;
-            font-weight: 600;
-            padding: 12px 18px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            font-family: 'Montserrat', sans-serif;
-            transition: all 0.3s ease;
-        }
-        .mobile-menu a i {
-            color: #dc2626;
-            width: 24px;
-        }
-        .mobile-menu a:hover {
-            background: rgba(220, 38, 38, 0.06);
-            color: #dc2626;
-        }
-        .menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.35);
-            z-index: 998;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        .menu-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        /* ───────── HERO ───────── */
-        .hero-services {
-            padding: 130px 28px 40px;
-            text-align: center;
-            background: linear-gradient(180deg, #fef2f2 0%, #ffffff 50%);
-            position: relative;
-            overflow: hidden;
-        }
-        .hero-services::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(220, 38, 38, 0.03) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-        .hero-services h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 900;
-            font-size: clamp(2rem, 5vw, 3.8rem);
-            color: #111827;
-            margin-bottom: 12px;
-            letter-spacing: -1px;
-            position: relative;
-            z-index: 1;
-        }
-        .hero-services h1 span {
-            color: #dc2626;
-            position: relative;
-        }
-        .hero-services h1 span::after {
-            content: '';
-            position: absolute;
-            bottom: 4px;
-            left: 0;
-            width: 100%;
-            height: 6px;
-            background: rgba(220, 38, 38, 0.15);
-            border-radius: 4px;
-        }
-        .hero-services p {
-            color: #4b5563;
-            max-width: 600px;
-            margin: 0 auto;
-            font-size: 1.05rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* ───────── FREE OFFER BANNER ───────── */
-        .offer-banner {
-            padding: 22px 28px;
-            background: linear-gradient(135deg, #dc2626, #b91c1c);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .offer-banner::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 200%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            animation: shimmer 4s infinite;
-        }
-        .offer-banner h3 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            font-size: 1.3rem;
-            color: #ffffff;
-            position: relative;
-            z-index: 1;
-        }
-        .offer-banner p {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 0.95rem;
-            position: relative;
-            z-index: 1;
-        }
-        .offer-banner .highlight {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 2px 12px;
-            border-radius: 20px;
-            font-weight: 700;
-        }
-
-        /* ───────── MARQUEE ───────── */
-        .marquee-section {
-            background: #f8fafc;
-            padding: 16px 0;
-            overflow: hidden;
-            border-top: 1px solid #e5e7eb;
-            border-bottom: 1px solid #e5e7eb;
-        }
-        .marquee-track {
-            display: flex;
-            gap: 40px;
-            animation: scrollMarquee 22s linear infinite;
-            white-space: nowrap;
-        }
-        .marquee-item {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 1rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: #ffffff;
-            padding: 8px 22px;
-            border-radius: 50px;
-            color: #111827;
-            border: 1px solid #e5e7eb;
-            transition: all 0.3s ease;
-        }
-        .marquee-item i {
-            color: #dc2626;
-        }
-        .marquee-item:hover {
-            border-color: #dc2626;
-            transform: scale(1.04);
-            box-shadow: 0 4px 16px rgba(220, 38, 38, 0.08);
-        }
-
-        /* ───────── SERVICES GRID ───────── */
-        .services-grid-section {
-            padding: 60px 28px;
-            background: #ffffff;
-        }
-        .services-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
-        }
-        .service-card {
-            background: #ffffff;
-            border: 1px solid #e5e7eb;
-            border-radius: 20px;
-            padding: 30px 24px;
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: #dc2626;
-            transform: scaleX(0);
-            transition: transform 0.4s ease;
-        }
-        .service-card:hover::before {
-            transform: scaleX(1);
-        }
-        .service-card:hover {
-            transform: translateY(-6px);
-            border-color: #dc2626;
-            box-shadow: 0 16px 40px rgba(220, 38, 38, 0.06);
-        }
-        .service-card .service-icon {
-            width: 60px;
-            height: 60px;
-            background: rgba(220, 38, 38, 0.06);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 16px;
-            transition: all 0.3s ease;
-        }
-        .service-card:hover .service-icon {
-            background: rgba(220, 38, 38, 0.12);
-            transform: scale(1.05);
-        }
-        .service-card .service-icon i {
-            font-size: 1.8rem;
-            color: #dc2626;
-        }
-        .service-card h3 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: #111827;
-            margin-bottom: 8px;
-        }
-        .service-card p {
-            color: #4b5563;
-            font-size: 0.88rem;
-            line-height: 1.6;
-            margin-bottom: 12px;
-        }
-        .service-card .service-features {
-            list-style: none;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-        .service-card .service-features li {
-            background: #f8fafc;
-            padding: 4px 14px;
-            border-radius: 50px;
-            font-size: 0.7rem;
-            color: #4b5563;
-            font-weight: 500;
-            border: 1px solid #e5e7eb;
-        }
-        .service-card .service-features li i {
-            color: #dc2626;
-            margin-right: 4px;
-            font-size: 0.6rem;
-        }
-
-        /* ───────── CTA ───────── */
-        .cta-section {
-            padding: 60px 28px;
-            text-align: center;
-            background: #111827;
-        }
-        .cta-section h3 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            font-size: 1.8rem;
-            color: #ffffff;
-            margin-bottom: 12px;
-        }
-        .cta-section p {
-            color: #9ca3af;
-            margin-bottom: 20px;
-        }
-        .btn-white {
-            background: #ffffff;
-            color: #dc2626;
-            padding: 14px 35px;
-            border-radius: 50px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-        }
-        .btn-white:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(255, 255, 255, 0.15);
-        }
-
-        /* ───────── FOOTER ───────── */
-        footer {
-            background: #0f172a;
-            padding: 50px 28px 25px;
-            border-top: 1px solid #1e293b;
-        }
-        .footer-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 35px;
-        }
-        .footer-brand img {
-            height: 42px;
-            margin-bottom: 12px;
-        }
-        .footer-brand p {
-            color: #94a3b8;
-            font-size: 0.85rem;
-            line-height: 1.6;
-        }
-        .footer-col h4 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 16px;
-            font-size: 1rem;
-        }
-        .footer-col a {
-            color: #94a3b8;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 8px;
-            font-size: 0.85rem;
-            transition: all 0.3s ease;
-        }
-        .footer-col a:hover {
-            color: #dc2626;
-            transform: translateX(4px);
-        }
-        .footer-col p {
-            color: #94a3b8;
-            font-size: 0.85rem;
-            margin-bottom: 4px;
-        }
-        .footer-bottom {
-            max-width: 1200px;
-            margin: 35px auto 0;
-            padding-top: 20px;
-            border-top: 1px solid #1e293b;
-            text-align: center;
-            color: #64748b;
-            font-size: 0.8rem;
-        }
-
-        /* ───────── FLOATING WHATSAPP ───────── */
-        .floating-whatsapp {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background: #25d366;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 99;
-            animation: pulse 2s infinite;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
-        }
-        .floating-whatsapp:hover {
-            transform: scale(1.1);
-        }
-        .floating-whatsapp i {
-            color: #fff;
-            font-size: 1.8rem;
-        }
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4);
-            }
-            70% {
-                box-shadow: 0 0 0 16px rgba(37, 211, 102, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
-            }
-        }
-
-        @media (max-width: 900px) {
-            .nav-links {
-                display: none;
-            }
-            .hamburger {
-                display: flex;
-            }
-            .footer-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-        @media (max-width: 640px) {
-            .header-inner {
-                padding: 10px 16px;
-            }
-            .logo-img {
-                height: 34px;
-            }
-            .company-name-header {
-                font-size: 0.75rem;
-            }
-            .hero-services {
-                padding: 110px 16px 30px;
-            }
-            .hero-services h1 {
-                font-size: 1.8rem;
-            }
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-            .footer-grid {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            .offer-banner h3 {
-                font-size: 1rem;
-            }
-            .marquee-item {
-                font-size: 0.8rem;
-                padding: 6px 14px;
-            }
-            .floating-whatsapp {
-                width: 48px;
-                height: 48px;
-                bottom: 18px;
-                right: 18px;
-            }
-            .floating-whatsapp i {
-                font-size: 1.4rem;
-            }
-            .mobile-menu {
-                width: 260px;
-            }
-        }
-            .nav-links a.nav-login {
-            background: #dc2626; color: #fff !important; padding: 8px 20px; border-radius: 50px;
-            box-shadow: 0 4px 14px rgba(220,38,38,.25); transition: all .3s ease;
-        }
-        .nav-links a.nav-login::after { display: none; }
-        .nav-links a.nav-login:hover { background: #b91c1c; color: #fff; transform: translateY(-1px); }
-</style>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "ProfessionalService",
-      "name": "Seedwel Investment LTD",
-      "url": "https://seedwel.ltd/",
-      "logo": "https://i.ibb.co/svxj52ny/seedwel.png",
-      "image": "https://i.ibb.co/svxj52ny/seedwel.png",
-      "description": "Premium digital agency offering web development, SEO, branding, graphic design and business registration services.",
-      "email": "seedwelinvestltd@gmail.com",
-      "telephone": "+260973028342",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Kabwe",
-        "addressCountry": "ZM"
-      },
-      "areaServed": ["ZM", "Global"],
-      "sameAs": [
-        "https://wa.me/260973028342"
-      ]
-    }
-    </script>
-    <link rel="stylesheet" href="assets/css/local-ai.css" />
+        /* Service detail rows */
+        .service-detail { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 0; overflow: hidden; }
+        .service-detail .service-media { position: relative; min-height: 280px; overflow: hidden; background: var(--soft); }
+        .service-detail .service-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .service-detail:hover .service-media img { transform: scale(1.03); }
+        .service-detail .service-body { display: flex; flex-direction: column; padding: clamp(26px, 3.5vw, 42px); }
+        .service-detail h2 { font-size: 1.45rem; font-weight: 800; margin-bottom: 12px; }
+        .service-detail > .service-body > p { color: var(--muted); font-size: 0.95rem; }
+        .service-detail ul { list-style: none; margin: 18px 0 22px; display: grid; gap: 9px; }
+        .service-detail ul li { display: flex; gap: 10px; align-items: flex-start; color: var(--ink); font-size: 0.9rem; }
+        .service-detail ul li i { color: var(--green); margin-top: 4px; font-size: 0.8rem; }
+        .service-detail .service-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: auto; }
+        .service-detail .service-agency { margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--line); color: var(--muted-2); font-size: 0.78rem; }
+        @media (max-width: 860px) {
+            .service-detail { grid-template-columns: 1fr; }
+            .service-detail .service-media { min-height: 210px; position: relative; aspect-ratio: 16 / 9; }
+        }
+    </style>
 </head>
 
-<body>
+<body data-page="services">
 
     <!-- ========== HEADER ========== -->
     <header class="header" id="header">
-        <div class="header-inner">
-            <a href="index.html" class="logo-container">
-                <img src="https://i.ibb.co/svxj52ny/seedwel.png" class="logo-img" alt="Seedwel Investment LTD" />
+        <div class="container header-inner">
+            <a href="index.html" class="logo-container" aria-label="Seedwel Investment LTD — Home">
+                <img src="https://i.ibb.co/svxj52ny/seedwel.png" class="logo-img" alt="Seedwel Investment LTD logo" />
                 <span class="company-name-header">Seedwel <span>Investment</span> LTD</span>
             </a>
-            <div class="nav-links">
+            <nav class="nav-links" aria-label="Main navigation">
                 <a href="index.html">Home</a>
-                <a href="about.html">About Us</a>
-                <a href="services.html" class="active">Services</a>
+                <a href="about.html">About</a>
+                <a href="services.html" class="active" aria-current="page">Services</a>
                 <a href="projects.html">Projects</a>
                 <a href="apply.html">Careers</a>
                 <a href="contact.html">Contact</a>
                 <a href="support.html">Support</a>
-                <a href="login.html" class="nav-login">Login</a>
-            </div>
-            <div class="hamburger" id="hamburger" aria-label="Menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+                <a href="login.html" class="btn btn-ghost nav-login">Login</a>
+                <a href="request.html" class="btn btn-primary nav-cta">Request a Service</a>
+            </nav>
+            <button class="hamburger" id="hamburger" type="button" aria-label="Open menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </header>
 
-    <!-- ========== MOBILE MENU ========== -->
     <div class="menu-overlay" id="menuOverlay"></div>
-    <nav class="mobile-menu" id="mobileMenu">
-        <a href="index.html"><i class="fas fa-home"></i> Home</a>
-        <a href="apply.html"><i class="fas fa-pen"></i> Job Apply</a>
-        <a href="about.html"><i class="fas fa-info-circle"></i> About Us</a>
-        <a href="services.html"><i class="fas fa-cogs"></i> Services</a>
-        <a href="projects.html"><i class="fas fa-folder-open"></i> Projects</a>
-        <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
-        <a href="support.html"><i class="fas fa-headset"></i> Support</a>
-        <a href="login.html"><i class="fas fa-right-to-bracket"></i> Login</a>
+    <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+        <a href="index.html"><i class="fa-solid fa-house" aria-hidden="true"></i> Home</a>
+        <a href="about.html"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> About</a>
+        <a href="services.html" class="active"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Services</a>
+        <a href="projects.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i> Projects</a>
+        <a href="apply.html"><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Careers</a>
+        <a href="contact.html"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Contact</a>
+        <a href="support.html"><i class="fa-solid fa-headset" aria-hidden="true"></i> Support</a>
+        <a href="login.html"><i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i> Login</a>
+        <div class="menu-divider"></div>
+        <a href="request.html" class="menu-request"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Request a Service</a>
     </nav>
 
-    <!-- ========== HERO ========== -->
-    <section class="hero-services">
-        <h1 class="animate-fade-up">Premium Digital & <span>Creative Services</span></h1>
-        <p class="animate-fade-up delay-1">From Graphic Design to Business Registration — we deliver excellence worldwide.</p>
-    </section>
+    <main>
 
-    <!-- ========== FREE OFFER BANNER ========== -->
-    <section class="offer-banner animate-fade-up">
-        <h3> Special Offer: <span class="highlight">Free Website Hosting</span> + <span class="highlight">1 Year Free Domain</span></h3>
-        <p>For all web development projects — get your business online with zero hosting costs for the first year!</p>
-    </section>
-
-    <!-- ========== MARQUEE ========== -->
-    <div class="marquee-section">
-        <div class="marquee-track" id="marqueeTrack">
-            <span class="marquee-item"><i class="fas fa-paintbrush"></i> Graphic Design</span>
-            <span class="marquee-item"><i class="fas fa-headset"></i> Virtual Assistant</span>
-            <span class="marquee-item"><i class="fas fa-keyboard"></i> Typing & Transcription</span>
-            <span class="marquee-item"><i class="fas fa-code"></i> Web Development</span>
-            <span class="marquee-item"><i class="fas fa-chart-line"></i> SEO & Marketing</span>
-            <span class="marquee-item"><i class="fas fa-store"></i> Shopify Expert</span>
-            <span class="marquee-item"><i class="fas fa-mobile-alt"></i> Mobile Apps</span>
-            <span class="marquee-item"><i class="fas fa-chalkboard-user"></i> Online Tutoring</span>
-            <span class="marquee-item"><i class="fas fa-video"></i> Video Editing</span>
-            <span class="marquee-item"><i class="fas fa-building"></i> Business Registration</span>
-            <span class="marquee-item"><i class="fas fa-globe"></i> All Online Services</span>
-            <!-- Duplicate for seamless loop -->
-            <span class="marquee-item"><i class="fas fa-paintbrush"></i> Graphic Design</span>
-            <span class="marquee-item"><i class="fas fa-headset"></i> Virtual Assistant</span>
-            <span class="marquee-item"><i class="fas fa-keyboard"></i> Typing & Transcription</span>
-            <span class="marquee-item"><i class="fas fa-code"></i> Web Development</span>
-            <span class="marquee-item"><i class="fas fa-chart-line"></i> SEO & Marketing</span>
-            <span class="marquee-item"><i class="fas fa-store"></i> Shopify Expert</span>
-            <span class="marquee-item"><i class="fas fa-mobile-alt"></i> Mobile Apps</span>
-            <span class="marquee-item"><i class="fas fa-chalkboard-user"></i> Online Tutoring</span>
-            <span class="marquee-item"><i class="fas fa-video"></i> Video Editing</span>
-            <span class="marquee-item"><i class="fas fa-building"></i> Business Registration</span>
-            <span class="marquee-item"><i class="fas fa-globe"></i> All Online Services</span>
-        </div>
-    </div>
-
-    <!-- ========== SERVICES IN PICTURES ========== -->
-    <section class="seedwel-service-visuals" aria-labelledby="serviceVisualTitle">
-        <div class="seedwel-media-container">
-            <header class="seedwel-media-reveal">
-                <p class="seedwel-media-eyebrow">Expertise you can see</p>
-                <h2 id="serviceVisualTitle">Three disciplines. <span>One dependable partner.</span></h2>
-                <p class="seedwel-visual-intro">We connect digital delivery, business guidance and responsive client care so your next move feels simpler and more confident.</p>
-            </header>
-            <div class="seedwel-photo-grid">
-                <figure class="seedwel-photo-card seedwel-media-reveal">
-                    <img src="assets/images/seedwel-digital-craft.jpg" alt="Product design and web development specialists at work" width="1376" height="768" loading="lazy" decoding="async" />
-                    <figcaption><span>Digital</span><strong>Web, mobile and brand experiences</strong></figcaption>
-                </figure>
-                <figure class="seedwel-photo-card seedwel-media-reveal">
-                    <img src="assets/images/seedwel-business-advisory.jpg" alt="Business registration advisor working with an entrepreneur" width="1376" height="768" loading="lazy" decoding="async" />
-                    <figcaption><span>Business</span><strong>Registration and practical guidance</strong></figcaption>
-                </figure>
-                <figure class="seedwel-photo-card seedwel-media-reveal">
-                    <img src="assets/images/seedwel-client-support.jpg" alt="Professional virtual assistant supporting a client" width="1376" height="768" loading="lazy" decoding="async" />
-                    <figcaption><span>Support</span><strong>Responsive help when it matters</strong></figcaption>
-                </figure>
-                <figure class="seedwel-photo-card seedwel-media-reveal">
-                    <img src="assets/images/seedwel-analytics-review.jpg" alt="Marketing specialists reviewing SEO and campaign analytics" width="1376" height="768" loading="lazy" decoding="async" />
-                    <figcaption><span>Marketing</span><strong>Campaigns that convert</strong></figcaption>
-                </figure>
-                <figure class="seedwel-photo-card seedwel-media-reveal">
-                    <img src="assets/images/seedwel-code-collaboration.jpg" alt="Developers building a responsive website together" width="1376" height="768" loading="lazy" decoding="async" />
-                    <figcaption><span>Development</span><strong>Websites and apps that scale</strong></figcaption>
-                </figure>
-                <figure class="seedwel-photo-card seedwel-media-reveal">
-                    <img src="assets/images/seedwel-client-partnership.jpg" alt="Advisor welcoming a new business client with a handshake" width="1376" height="768" loading="lazy" decoding="async" />
-                    <figcaption><span>Advisory</span><strong>Registration and compliance help</strong></figcaption>
-                </figure>
+        <!-- ========== PAGE HERO ========== -->
+        <section class="page-hero">
+            <div class="container">
+                <p class="eyebrow">Our Services</p>
+                <h1>Business Solutions <span>&amp;</span> Technology</h1>
+                <p>Practical services for growing businesses — from registration assistance and compliance support to websites, marketing and automation.</p>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- ========== SERVICES GRID ========== -->
-    <section class="services-grid-section">
-        <div class="section-header" style="text-align:center; max-width:700px; margin:0 auto 50px;">
-            <p class="section-subtitle" style="color:#dc2626; font-family:'Montserrat',sans-serif; font-weight:700; font-size:0.8rem; letter-spacing:3px; margin-bottom:10px;">What We Do</p>
-            <h2 style="font-family:'Montserrat',sans-serif; font-weight:900; font-size:clamp(1.8rem,3vw,2.5rem); color:#111827;">Premium Services For Modern Businesses</h2>
-        </div>
-
-        <div class="services-grid">
-
-            <!-- 1. Business Registration -->
-            <div class="service-card animate-fade-up delay-1">
-                <div class="service-icon"><i class="fas fa-building"></i></div>
-                <h3>Business Registration</h3>
-                <p>Complete business registration services including PACRA, ZRA, Workers Compensation, NAPSA, and EIZ registration. We handle all the paperwork so you can focus on growing your business.</p>
-                <ul class="service-features">
-                    <li><i class="fas fa-check"></i> PACRA</li>
-                    <li><i class="fas fa-check"></i> ZRA TPIN</li>
-                    <li><i class="fas fa-check"></i> Workers Comp</li>
-                    <li><i class="fas fa-check"></i> NAPSA</li>
-                    <li><i class="fas fa-check"></i> EIZ</li>
-                </ul>
+        <!-- ========== GOVERNMENT SERVICES DISCLAIMER ========== -->
+        <section class="section-tight" style="padding-bottom:0;">
+            <div class="container">
+                <div class="notice reveal">
+                    <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+                    <div>
+                        <strong>Please note:</strong> Seedwel Investment LTD is a private, independent company.
+                        We are <strong>not</strong> the Zambia Revenue Authority (ZRA), the National Pension Scheme Authority (NAPSA),
+                        the Patents and Companies Registration Agency (PACRA), or any other government body, and we are not affiliated with them.
+                        We provide <strong>private assistance</strong> with the relevant application and compliance processes. Official registrations
+                        are issued by the respective government institutions.
+                    </div>
+                </div>
             </div>
+        </section>
 
-            <!-- 2. Graphic Design -->
-            <div class="service-card animate-fade-up delay-2">
-                <div class="service-icon"><i class="fas fa-paint-brush"></i></div>
-                <h3>Graphic Design</h3>
-                <p>Professional visual design services that make your brand memorable. From logos and flyers to complete branding packages, we create designs that help you stand out in a crowded market.</p>
-                <ul class="service-features">
-                    <li><i class="fas fa-check"></i> Logo Design</li>
-                    <li><i class="fas fa-check"></i> Flyers & Posters</li>
-                    <li><i class="fas fa-check"></i> Branding</li>
-                    <li><i class="fas fa-check"></i> Social Media Graphics</li>
-                    <li><i class="fas fa-check"></i> Packaging Design</li>
-                </ul>
+        <!-- ========== MAIN SERVICES ========== -->
+        <section class="section" aria-labelledby="mainServicesTitle">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="eyebrow">Core Services</p>
+                    <h2 class="section-title" id="mainServicesTitle">What we can help you with</h2>
+                </div>
+
+                <div class="grid-2" style="gap:30px;">
+
+                    <!-- ZRA -->
+                    <article class="card service-detail reveal" id="zra">
+                        <div class="service-media">
+                            <img src="assets/images/service-zra-tax.jpg" alt="Tax consultant assisting a client with tax registration documents" width="1536" height="1024" loading="lazy" decoding="async" />
+                        </div>
+                        <div class="service-body">
+                            <span class="service-tag">Business Compliance</span>
+                            <h2>ZRA Tax Services</h2>
+                            <p>Assistance with Zambian tax registration and related business compliance processes, so your business can meet its tax obligations with confidence.</p>
+                            <ul>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Guidance on Taxpayer Identification Number (TPIN) registration</li>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Assistance with VAT and Turnover Tax registration processes</li>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Help preparing and organising required documents</li>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Follow-up support and clear explanations at each step</li>
+                            </ul>
+                            <div class="service-ctas">
+                                <a href="request.html?service=zra" class="btn btn-primary">Request Service <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                            </div>
+                            <p class="service-agency">ZRA is the Zambia Revenue Authority. Seedwel helps you prepare and complete the process — the authority itself issues registrations and rulings.</p>
+                        </div>
+                    </article>
+
+                    <!-- NAPSA -->
+                    <article class="card service-detail reveal d1" id="napsa">
+                        <div class="service-media">
+                            <img src="assets/images/service-napsa.jpg" alt="Benefits advisor helping an employer with pension scheme registration" width="1536" height="1024" loading="lazy" decoding="async" />
+                        </div>
+                        <div class="service-body">
+                            <span class="service-tag">Employer Compliance</span>
+                            <h2>NAPSA Services</h2>
+                            <p>Assistance with National Pension Scheme employer registration and ongoing contribution compliance processes for Zambian employers.</p>
+                            <ul>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Guidance on employer registration with NAPSA</li>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Help gathering employee and company details</li>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Support with understanding contribution obligations</li>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Assistance with Workers' Compensation registration</li>
+                            </ul>
+                            <div class="service-ctas">
+                                <a href="request.html?service=napsa" class="btn btn-primary">Request Service <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                            </div>
+                            <p class="service-agency">NAPSA is the National Pension Scheme Authority of Zambia. Seedwel assists with the process — memberships and records are issued by NAPSA.</p>
+                        </div>
+                    </article>
+
+                    <!-- PACRA -->
+                    <article class="card service-detail reveal" id="pacra">
+                        <div class="service-media">
+                            <img src="assets/images/service-pacra.jpg" alt="Business registration advisor congratulating an entrepreneur" width="1536" height="1024" loading="lazy" decoding="async" />
+                        </div>
+                        <div class="service-body">
+                            <span class="service-tag">Business Registration</span>
+                            <h2>PACRA Registration</h2>
+                            <p>Assistance with company and business name registration at the Patents and Companies Registration Agency — the first formal step for many Zambian businesses.</p>
+                            <ul>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Business name and company registration assistance</li>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Help choosing a suitable business structure</li>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Document preparation and submission support</li>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Post-registration guidance (certificates, records, next steps)</li>
+                            </ul>
+                            <div class="service-ctas">
+                                <a href="request.html?service=pacra" class="btn btn-primary">Request Service <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                            </div>
+                            <p class="service-agency">PACRA is the Patents and Companies Registration Agency of Zambia. Seedwel assists with preparation and filing — certificates are issued by PACRA.</p>
+                        </div>
+                    </article>
+
+                    <!-- Web Development -->
+                    <article class="card service-detail reveal d1" id="web-development">
+                        <div class="service-media">
+                            <img src="assets/images/service-web-development.jpg" alt="Web developer building a responsive business website" width="1536" height="1024" loading="lazy" decoding="async" />
+                        </div>
+                        <div class="service-body">
+                            <span class="service-tag">Technology</span>
+                            <h2>Website Development</h2>
+                            <p>Modern, responsive websites and online stores built around your business goals — designed to load fast, work on every device and present your business professionally.</p>
+                            <ul>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Business websites and landing pages</li>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> E-commerce and online ordering</li>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> School and business management platforms</li>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Hosting, domains, maintenance and support</li>
+                            </ul>
+                            <div class="service-ctas">
+                                <a href="request.html?service=web-development" class="btn btn-primary">Request Service <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- AI Automation -->
+                    <article class="card service-detail reveal" id="ai-automation">
+                        <div class="service-media">
+                            <img src="assets/images/service-ai-automation.jpg" alt="Consultant setting up a business workflow automation" width="1536" height="1024" loading="lazy" decoding="async" />
+                        </div>
+                        <div class="service-body">
+                            <span class="service-tag">Technology</span>
+                            <h2>AI Automation</h2>
+                            <p>Practical automation for everyday business work. We look at where your team spends repetitive effort and set up simple, reliable automations that save time.</p>
+                            <ul>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Workflow review and automation planning</li>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Document and data-entry automation</li>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Customer enquiry routing and follow-up reminders</li>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Integration with the tools you already use</li>
+                            </ul>
+                            <div class="service-ctas">
+                                <a href="request.html?service=ai-automation" class="btn btn-primary">Request Service <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Digital Marketing -->
+                    <article class="card service-detail reveal d1" id="digital-marketing">
+                        <div class="service-media">
+                            <img src="assets/images/service-digital-marketing.jpg" alt="Marketing specialists reviewing campaign performance" width="1536" height="1024" loading="lazy" decoding="async" />
+                        </div>
+                        <div class="service-body">
+                            <span class="service-tag">Marketing</span>
+                            <h2>Digital Marketing</h2>
+                            <p>Search, social and content marketing designed to reach the right audience and turn attention into customers — with honest reporting on what is working.</p>
+                            <ul>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Search engine optimisation (SEO)</li>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Social media management and content</li>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Google Ads and paid campaign management</li>
+                                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Performance reporting you can understand</li>
+                            </ul>
+                            <div class="service-ctas">
+                                <a href="request.html?service=digital-marketing" class="btn btn-primary">Request Service <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
             </div>
+        </section>
 
-            <!-- 3. Web Development -->
-            <div class="service-card animate-fade-up delay-3">
-                <div class="service-icon"><i class="fas fa-code"></i></div>
-                <h3>Web Development</h3>
-                <p>Custom websites, e-commerce stores, and landing pages built with modern technology. <strong>Includes FREE hosting + 1 year free domain!</strong> Responsive, fast, and SEO-optimized.</p>
-                <ul class="service-features">
-                    <li><i class="fas fa-check"></i> Business Websites</li>
-                    <li><i class="fas fa-check"></i> E-Commerce</li>
-                    <li><i class="fas fa-check"></i> Landing Pages</li>
-                    <li><i class="fas fa-check"></i> WordPress</li>
-                    <li><i class="fas fa-check"></i> React</li>
-                </ul>
+        <!-- ========== ADDITIONAL PROFESSIONAL SERVICES ========== -->
+        <section class="section section-alt" aria-labelledby="extraTitle">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="eyebrow">Professional Services</p>
+                    <h2 class="section-title" id="extraTitle">More ways we support your business</h2>
+                </div>
+                <div class="grid-4">
+                    <article class="card mini-card reveal">
+                        <i class="fa-solid fa-pen-nib" aria-hidden="true"></i>
+                        <div>
+                            <h3>Graphic Design</h3>
+                            <p>Logos, brand identity, flyers and social media graphics that make your business look established.</p>
+                        </div>
+                    </article>
+                    <article class="card mini-card reveal d1">
+                        <i class="fa-solid fa-headset" aria-hidden="true"></i>
+                        <div>
+                            <h3>Virtual Assistant</h3>
+                            <p>Reliable administrative support — email, scheduling, customer communication and records.</p>
+                        </div>
+                    </article>
+                    <article class="card mini-card reveal d2">
+                        <i class="fa-solid fa-keyboard" aria-hidden="true"></i>
+                        <div>
+                            <h3>Typing &amp; Transcription</h3>
+                            <p>Accurate document typing, data entry, audio transcription and PDF conversion.</p>
+                        </div>
+                    </article>
+                    <article class="card mini-card reveal d3">
+                        <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+                        <div>
+                            <h3>IT Consulting</h3>
+                            <p>Cloud setup, security basics and sensible technology advice for small and growing teams.</p>
+                        </div>
+                    </article>
+                </div>
+                <p class="text-center mt-3 reveal">
+                    <a href="request.html?service=other" class="btn btn-outline">Request any of these services <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                </p>
             </div>
+        </section>
 
-            <!-- 4. Mobile App Development -->
-            <div class="service-card animate-fade-up delay-4">
-                <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
-                <h3>Mobile App Development</h3>
-                <p>Native and cross-platform mobile applications for iOS and Android. School management apps, business apps, booking systems, and more to help you reach customers on the go.</p>
-                <ul class="service-features">
-                    <li><i class="fas fa-check"></i> iOS & Android</li>
-                    <li><i class="fas fa-check"></i> School Management</li>
-                    <li><i class="fas fa-check"></i> Business Apps</li>
-                    <li><i class="fas fa-check"></i> Booking Systems</li>
-                    <li><i class="fas fa-check"></i> Cross-Platform</li>
-                </ul>
+        <!-- ========== CTA ========== -->
+        <section class="cta-band">
+            <div class="container reveal">
+                <div>
+                    <h2>Not sure which service you need?</h2>
+                    <p>Tell us about your business and what you are trying to do — we will point you in the right direction, honestly.</p>
+                </div>
+                <div style="display:flex;gap:14px;flex-wrap:wrap;">
+                    <a href="request.html" class="btn btn-light"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Request a Service</a>
+                    <a href="contact.html" class="btn btn-outline" style="color:#fff;">Ask a question</a>
+                </div>
             </div>
+        </section>
 
-            <!-- 5. Virtual Assistant -->
-            <div class="service-card animate-fade-up delay-5">
-                <div class="service-icon"><i class="fas fa-headset"></i></div>
-                <h3>Virtual Assistant</h3>
-                <p>24/7 admin and customer support services that save you time and money. Let our professional VAs handle your daily operations so you can focus on what matters most.</p>
-                <ul class="service-features">
-                    <li><i class="fas fa-check"></i> Customer Support</li>
-                    <li><i class="fas fa-check"></i> Admin Tasks</li>
-                    <li><i class="fas fa-check"></i> Email Management</li>
-                    <li><i class="fas fa-check"></i> CRM Management</li>
-                    <li><i class="fas fa-check"></i> 24/7 Availability</li>
-                </ul>
-            </div>
+    </main>
 
-            <!-- 6. Digital Marketing -->
-            <div class="service-card animate-fade-up delay-6">
-                <div class="service-icon"><i class="fas fa-chart-line"></i></div>
-                <h3>Digital Marketing</h3>
-                <p>Data-driven marketing strategies that drive targeted traffic and convert visitors into loyal customers. SEO, Google Ads, social media growth, and more.</p>
-                <ul class="service-features">
-                    <li><i class="fas fa-check"></i> SEO Optimization</li>
-                    <li><i class="fas fa-check"></i> Google Ads</li>
-                    <li><i class="fas fa-check"></i> Social Media</li>
-                    <li><i class="fas fa-check"></i> Email Marketing</li>
-                    <li><i class="fas fa-check"></i> Analytics</li>
-                </ul>
-            </div>
-
-            <!-- 7. Typing & Transcription -->
-            <div class="service-card animate-fade-up delay-1">
-                <div class="service-icon"><i class="fas fa-keyboard"></i></div>
-                <h3>Typing & Transcription</h3>
-                <p>Fast, accurate document services including audio transcription, document typing, data entry, and PDF conversion. Maintain professional records and streamline your workflow.</p>
-                <ul class="service-features">
-                    <li><i class="fas fa-check"></i> Audio Transcription</li>
-                    <li><i class="fas fa-check"></i> Document Typing</li>
-                    <li><i class="fas fa-check"></i> Data Entry</li>
-                    <li><i class="fas fa-check"></i> PDF Conversion</li>
-                    <li><i class="fas fa-check"></i> Copywriting</li>
-                </ul>
-            </div>
-
-            <!-- 8. Online Tutoring -->
-            <div class="service-card animate-fade-up delay-2">
-                <div class="service-icon"><i class="fas fa-chalkboard-user"></i></div>
-                <h3>Online Tutoring</h3>
-                <p>Personalized learning in Mathematics, programming, and more. Help students excel in their academic and professional journeys with expert online tutoring.</p>
-                <ul class="service-features">
-                    <li><i class="fas fa-check"></i> Mathematics</li>
-                    <li><i class="fas fa-check"></i> Programming</li>
-                    <li><i class="fas fa-check"></i> Exam Prep</li>
-                    <li><i class="fas fa-check"></i> Homework Help</li>
-                    <li><i class="fas fa-check"></i> Zoom/Skype</li>
-                </ul>
-            </div>
-
-            <!-- 9. Video Editing -->
-            <div class="service-card animate-fade-up delay-3">
-                <div class="service-icon"><i class="fas fa-video"></i></div>
-                <h3>Video Editing</h3>
-                <p>Professional video production that brings your stories to life. YouTube editing, promotional videos, motion graphics, and more to engage your audience across all platforms.</p>
-                <ul class="service-features">
-                    <li><i class="fas fa-check"></i> YouTube Editing</li>
-                    <li><i class="fas fa-check"></i> Promo Videos</li>
-                    <li><i class="fas fa-check"></i> Motion Graphics</li>
-                    <li><i class="fas fa-check"></i> Animation</li>
-                    <li><i class="fas fa-check"></i> Voice Over</li>
-                </ul>
-            </div>
-
-            <!-- 10. Shopify & E-Commerce -->
-            <div class="service-card animate-fade-up delay-4">
-                <div class="service-icon"><i class="fas fa-store"></i></div>
-                <h3>Shopify & E-Commerce</h3>
-                <p>Complete e-commerce solutions including Shopify store setup, custom themes, product upload, and SEO optimization. Get your online store up and running quickly.</p>
-                <ul class="service-features">
-                    <li><i class="fas fa-check"></i> Store Setup</li>
-                    <li><i class="fas fa-check"></i> Custom Themes</li>
-                    <li><i class="fas fa-check"></i> Product Upload</li>
-                    <li><i class="fas fa-check"></i> Payment Integration</li>
-                    <li><i class="fas fa-check"></i> SEO Optimization</li>
-                </ul>
-            </div>
-            
-            <!-- 11. IT Consulting -->
-            <div class="service-card animate-fade-up delay-5">
-                <div class="service-icon"><i class="fas fa-shield-alt"></i></div>
-                <h3>IT Consulting</h3>
-                <p>Expert guidance on technology solutions including cloud computing, cybersecurity, and workflow automation. Improve efficiency, security, and business performance.</p>
-                <ul class="service-features">
-                    <li><i class="fas fa-check"></i> Cloud Solutions</li>
-                    <li><i class="fas fa-check"></i> Cybersecurity</li>
-                    <li><i class="fas fa-check"></i> Automation</li>
-                    <li><i class="fas fa-check"></i> Database Management</li>
-                    <li><i class="fas fa-check"></i> Technical Support</li>
-                </ul>
-            </div>
-
-            <!-- 12. Voice Over & Recording -->
-            <div class="service-card animate-fade-up delay-6">
-                <div class="service-icon"><i class="fas fa-microphone"></i></div>
-                <h3>Voice Over & Recording</h3>
-                <p>Professional voice over services for commercials, explainer videos, audiobooks, and more. Clear, engaging, and professional audio for all your media needs.</p>
-                <ul class="service-features">
-                    <li><i class="fas fa-check"></i> Commercial VO</li>
-                    <li><i class="fas fa-check"></i> Explainer Videos</li>
-                    <li><i class="fas fa-check"></i> Audiobooks</li>
-                    <li><i class="fas fa-check"></i> IVR Recordings</li>
-                    <li><i class="fas fa-check"></i> Podcast Production</li>
-                </ul>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- ========== CTA ========== -->
-    <section class="cta-section">
-        <h3 class="animate-fade-up">Ready to Get Started?</h3>
-        <p class="animate-fade-up delay-1">Let's discuss your project and create something amazing together. Get free hosting + 1 year domain!</p>
-        <a href="contact.html" class="btn-white animate-fade-up delay-2"><i class="fas fa-paper-plane"></i> Contact Us Today</a>
-    </section>
-
-    <!-- ========== FOOTER ========== -->
-    <footer>
-        <div class="footer-grid">
-            <div class="footer-brand">
-                <img src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel Investment LTD" />
-                <p>Premium digital agency delivering excellence worldwide. We build digital experiences that drive growth for modern businesses.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Quick Links</h4>
-                <a href="index.html">Home</a>
-                <a href="about.html">About Us</a>
-                <a href="services.html">Services</a>
-                <a href="projects.html">Projects</a>
-            </div>
-            <div class="footer-col">
-                <h4>Support</h4>
-                <a href="contact.html">Contact</a>
-                <a href="support.html">Help Center</a>
-                <a href="privacy.html">Privacy</a>
-                <a href="terms.html">Terms</a>
-                <a href="tel:+260973028342"><i class="fas fa-phone" style="color:#dc2626; width:18px;"></i> +260 973 028 342</a>
-                <a href="mailto:seedwelinvestltd@gmail.com"><i class="fas fa-envelope" style="color:#dc2626; width:18px;"></i> seedwelinvestltd@gmail.com</a>
-            </div>
-            <div class="footer-col">
-                <h4>Locations</h4>
-                <p><i class="fas fa-location-dot" style="color:#dc2626; width:18px;"></i> Kabwe, Zambia</p>
-                <p><i class="fas fa-location-dot" style="color:#dc2626; width:18px;"></i> Chama, Zambia</p>
-                <p>🌍 Global Remote</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Seedwel Investment LTD. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- ========== FLOATING WHATSAPP ========== -->
-    <a href="https://wa.me/260973028342" class="floating-whatsapp" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-
-    <script>
-        // ─── Mobile Menu ───
-        const hamburger = document.getElementById('hamburger');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const menuOverlay = document.getElementById('menuOverlay');
-
-        function toggleMenu() {
-            hamburger.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-            menuOverlay.classList.toggle('active');
-            document.body.style.overflow = hamburger.classList.contains('active') ? 'hidden' : '';
-        }
-        hamburger.addEventListener('click', toggleMenu);
-        menuOverlay.addEventListener('click', toggleMenu);
-        document.querySelectorAll('.mobile-menu a').forEach(l => l.addEventListener('click', toggleMenu));
-
-        // ─── Header Scroll Effect ───
-        const header = document.getElementById('header');
-        window.addEventListener('scroll', () => {
-            header.classList.toggle('scrolled', window.scrollY > 40);
-        });
-
-        // ─── Scroll to Top ───
-        window.scrollTo(0, 0);
-        window.addEventListener('load', () => window.scrollTo(0, 0));
-        window.addEventListener('pageshow', (e) => { if (e.persisted) window.scrollTo(0, 0); });
-    </script>
-    <script src="assets/js/media-showcase.js" defer></script>
-
-    <script src="assets/js/service-strip.js" defer></script>
-    <script src="assets/js/local-ai.js" defer></script>
+    <script src="assets/js/site.js" defer></script>
 </body>
 </html>

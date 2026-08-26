@@ -6,856 +6,173 @@
     <meta name="theme-color" content="#dc2626" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="manifest" href="site.webmanifest" />
-    <title>Support | Seedwel Investment LTD</title>
-    <meta name="description" content="Need help? Contact Seedwel Investment LTD support. WhatsApp, phone, and email support available 24/7." />
+    <title>Support Center | Seedwel Investment LTD</title>
+    <meta name="description" content="Get help from Seedwel Investment LTD — WhatsApp, phone and email support, plus answers to common questions about our services, requests and privacy." />
 
-    
     <link rel="canonical" href="https://seedwel.ltd/support.html" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Seedwel Investment LTD" />
-    <meta property="og:title" content="Support | Seedwel Investment LTD" />
-    <meta property="og:description" content="Get help from Seedwel Investment LTD support via WhatsApp, phone or email. FAQs and client assistance." />
+    <meta property="og:title" content="Support Center | Seedwel Investment LTD" />
+    <meta property="og:description" content="WhatsApp, phone and email support, plus answers to common questions." />
     <meta property="og:url" content="https://seedwel.ltd/support.html" />
-    <meta property="og:image" content="https://i.ibb.co/svxj52ny/seedwel.png" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Support | Seedwel Investment LTD" />
-    <meta name="twitter:description" content="Get help from Seedwel Investment LTD support via WhatsApp, phone or email. FAQs and client assistance." />
-    <meta name="twitter:image" content="https://i.ibb.co/svxj52ny/seedwel.png" />
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="assets/css/site.css" />
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #ffffff;
-            color: #111827;
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #dc2626;
-            border-radius: 10px;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .animate-fade-up {
-            animation: fadeInUp 0.8s ease forwards;
-        }
-        .delay-1 {
-            animation-delay: 0.1s;
-            opacity: 0;
-        }
-        .delay-2 {
-            animation-delay: 0.2s;
-            opacity: 0;
-        }
-        .delay-3 {
-            animation-delay: 0.3s;
-            opacity: 0;
-        }
-
-        /* ───────── HEADER ───────── */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.97);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(220, 38, 38, 0.12);
-            transition: all 0.3s ease;
-        }
-        .header.scrolled {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-        }
-        .header-inner {
-            max-width: 1300px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 28px;
-        }
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .support-channels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .support-channel {
+            display: flex; flex-direction: column; gap: 6px; padding: 30px 26px;
             text-decoration: none;
         }
-        .logo-img {
-            height: 42px;
-            width: auto;
-        }
-        .company-name-header {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            font-size: 0.95rem;
-            color: #111827;
-            letter-spacing: -0.5px;
-        }
-        .company-name-header span {
-            color: #dc2626;
-        }
-        .nav-links {
-            display: flex;
-            gap: 28px;
-            align-items: center;
-        }
-        .nav-links a {
-            text-decoration: none;
-            color: #111827;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: color 0.3s;
-            cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
-            position: relative;
-        }
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: #dc2626;
-            transition: width 0.3s ease;
-        }
-        .nav-links a:hover::after,
-        .nav-links a.active::after {
-            width: 100%;
-        }
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: #dc2626;
-        }
-
-        .hamburger {
-            display: none;
-            width: 40px;
-            height: 40px;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 5px;
-            cursor: pointer;
-            background: rgba(220, 38, 38, 0.06);
-            border-radius: 50%;
-            border: 1px solid rgba(220, 38, 38, 0.12);
-            transition: all 0.3s ease;
-        }
-        .hamburger:hover {
-            background: rgba(220, 38, 38, 0.12);
-        }
-        .hamburger span {
-            width: 20px;
-            height: 2.5px;
-            background: #111827;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(6px, -6px);
-        }
-
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            right: -320px;
-            width: 280px;
-            height: 100vh;
-            background: #ffffff;
-            z-index: 999;
-            padding: 100px 25px 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            transition: right 0.35s cubic-bezier(0.65, 0, 0.35, 1);
-            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.08);
-        }
-        .mobile-menu.active {
-            right: 0;
-        }
-        .mobile-menu a {
-            color: #111827;
-            text-decoration: none;
-            font-size: 1rem;
-            font-weight: 600;
-            padding: 12px 18px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            font-family: 'Montserrat', sans-serif;
-            transition: all 0.3s ease;
-        }
-        .mobile-menu a i {
-            color: #dc2626;
-            width: 24px;
-        }
-        .mobile-menu a:hover {
-            background: rgba(220, 38, 38, 0.06);
-            color: #dc2626;
-        }
-        .menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.35);
-            z-index: 998;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        .menu-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        /* ───────── PAGE HERO ───────── */
-        .page-hero {
-            padding: 130px 28px 50px;
-            text-align: center;
-            background: linear-gradient(180deg, #fef2f2 0%, #ffffff 50%);
-        }
-        .page-hero .section-subtitle {
-            color: #dc2626;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 0.8rem;
-            letter-spacing: 3px;
-            margin-bottom: 10px;
-        }
-        .page-hero h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 900;
-            font-size: clamp(2rem, 4vw, 3rem);
-            color: #111827;
-        }
-        .page-hero h1 span {
-            color: #dc2626;
-        }
-        .page-hero p {
-            color: #4b5563;
-            max-width: 500px;
-            margin: 10px auto 0;
-            font-size: 1rem;
-        }
-
-        /* ───────── SUPPORT CARDS ───────── */
-        .support-section {
-            padding: 40px 28px 50px;
-        }
-        .support-inner {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-        }
-        .support-card {
-            background: #f8fafc;
-            border: 1px solid #e5e7eb;
-            border-radius: 20px;
-            padding: 35px 22px;
-            text-align: center;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: #111827;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-        }
-        .support-card:hover {
-            transform: translateY(-8px);
-            border-color: #dc2626;
-            box-shadow: 0 16px 40px rgba(220, 38, 38, 0.06);
-        }
-        .support-card .support-card-icon {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-        }
-        .support-card-icon.whatsapp-bg {
-            background: rgba(37, 211, 102, 0.1);
-            color: #25d366;
-        }
-        .support-card-icon.phone-bg {
-            background: rgba(220, 38, 38, 0.08);
-            color: #dc2626;
-        }
-        .support-card-icon.email-bg {
-            background: rgba(59, 130, 246, 0.1);
-            color: #3b82f6;
-        }
-        .support-card h3 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: #111827;
-        }
-        .support-card p {
-            color: #4b5563;
-            font-size: 0.85rem;
-            line-height: 1.5;
-        }
-        .support-card .support-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 0.85rem;
-            padding: 10px 24px;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-            margin-top: 4px;
-        }
-        .support-cta.whatsapp-cta {
-            background: #25d366;
-            color: #fff;
-        }
-        .support-cta.phone-cta {
-            background: #dc2626;
-            color: #fff;
-        }
-        .support-cta.email-cta {
-            background: #3b82f6;
-            color: #fff;
-        }
-        .support-card:hover .support-cta {
-            transform: scale(1.05);
-        }
-
-        /* ───────── FAQ ───────── */
-        .faq-section {
-            padding: 50px 28px 60px;
-            background: #f8fafc;
-        }
-        .faq-inner {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .section-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        .section-header .section-subtitle {
-            color: #dc2626;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 0.8rem;
-            letter-spacing: 3px;
-            margin-bottom: 8px;
-        }
-        .section-header h2 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 900;
-            font-size: 2rem;
-            color: #111827;
-        }
-        .faq-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .faq-item {
-            background: #ffffff;
-            border: 1px solid #e5e7eb;
-            border-radius: 14px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        .faq-item:hover {
-            border-color: #dc2626;
-        }
-        .faq-question {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 18px 22px;
-            cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: #111827;
-            transition: color 0.3s ease;
-        }
-        .faq-question:hover {
-            color: #dc2626;
-        }
-        .faq-question i {
-            color: #dc2626;
-            transition: transform 0.3s ease;
-            font-size: 0.8rem;
-        }
-        .faq-item.active .faq-question i {
-            transform: rotate(180deg);
-        }
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease, padding 0.4s ease;
-            padding: 0 22px;
-        }
-        .faq-item.active .faq-answer {
-            max-height: 200px;
-            padding: 0 22px 18px;
-        }
-        .faq-answer p {
-            color: #4b5563;
-            font-size: 0.85rem;
-            line-height: 1.6;
-        }
-
-        /* ───────── HELP SECTION ───────── */
-        .help-section {
-            padding: 50px 28px 60px;
-            text-align: center;
-        }
-        .help-section h3 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            font-size: 1.6rem;
-            color: #111827;
-            margin-bottom: 12px;
-        }
-        .help-section p {
-            color: #4b5563;
-            margin-bottom: 24px;
-            font-size: 0.95rem;
-        }
-        .help-buttons {
-            display: flex;
-            gap: 14px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .btn {
-            padding: 14px 30px;
-            border-radius: 50px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 0.9rem;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            border: none;
-        }
-        .btn-whatsapp {
-            background: #25d366;
-            color: #fff;
-            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
-        }
-        .btn-whatsapp:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4);
-        }
-        .btn-contact {
-            background: #dc2626;
-            color: #fff;
-            box-shadow: 0 4px 20px rgba(220, 38, 38, 0.2);
-        }
-        .btn-contact:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(220, 38, 38, 0.3);
-        }
-
-        /* ───────── FOOTER ───────── */
-        footer {
-            background: #0f172a;
-            padding: 50px 28px 25px;
-            border-top: 1px solid #1e293b;
-        }
-        .footer-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 35px;
-        }
-        .footer-brand img {
-            height: 42px;
-            margin-bottom: 12px;
-        }
-        .footer-brand p {
-            color: #94a3b8;
-            font-size: 0.85rem;
-            line-height: 1.6;
-        }
-        .footer-col h4 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 16px;
-            font-size: 1rem;
-        }
-        .footer-col a {
-            color: #94a3b8;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 8px;
-            font-size: 0.85rem;
-            transition: all 0.3s ease;
-        }
-        .footer-col a:hover {
-            color: #dc2626;
-            transform: translateX(4px);
-        }
-        .footer-col p {
-            color: #94a3b8;
-            font-size: 0.85rem;
-            margin-bottom: 4px;
-        }
-        .footer-bottom {
-            max-width: 1200px;
-            margin: 35px auto 0;
-            padding-top: 20px;
-            border-top: 1px solid #1e293b;
-            text-align: center;
-            color: #64748b;
-            font-size: 0.8rem;
-        }
-
-        .floating-whatsapp {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background: #25d366;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 99;
-            animation: pulse 2s infinite;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
-        }
-        .floating-whatsapp:hover {
-            transform: scale(1.1);
-        }
-        .floating-whatsapp i {
-            color: #fff;
-            font-size: 1.8rem;
-        }
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4);
-            }
-            70% {
-                box-shadow: 0 0 0 16px rgba(37, 211, 102, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
-            }
-        }
-
-        @media (max-width: 900px) {
-            .nav-links {
-                display: none;
-            }
-            .hamburger {
-                display: flex;
-            }
-            .support-inner {
-                grid-template-columns: 1fr 1fr;
-            }
-            .footer-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-        @media (max-width: 640px) {
-            .header-inner {
-                padding: 10px 16px;
-            }
-            .logo-img {
-                height: 34px;
-            }
-            .company-name-header {
-                font-size: 0.75rem;
-            }
-            .page-hero {
-                padding: 110px 16px 30px;
-            }
-            .support-inner {
-                grid-template-columns: 1fr;
-            }
-            .footer-grid {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            .floating-whatsapp {
-                width: 48px;
-                height: 48px;
-                bottom: 18px;
-                right: 18px;
-            }
-            .floating-whatsapp i {
-                font-size: 1.4rem;
-            }
-            .mobile-menu {
-                width: 260px;
-            }
-        }
-            .nav-links a.nav-login {
-            background: #dc2626; color: #fff !important; padding: 8px 20px; border-radius: 50px;
-            box-shadow: 0 4px 14px rgba(220,38,38,.25); transition: all .3s ease;
-        }
-        .nav-links a.nav-login::after { display: none; }
-        .nav-links a.nav-login:hover { background: #b91c1c; color: #fff; transform: translateY(-1px); }
-</style>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "ProfessionalService",
-      "name": "Seedwel Investment LTD",
-      "url": "https://seedwel.ltd/",
-      "logo": "https://i.ibb.co/svxj52ny/seedwel.png",
-      "image": "https://i.ibb.co/svxj52ny/seedwel.png",
-      "description": "Premium digital agency offering web development, SEO, branding, graphic design and business registration services.",
-      "email": "seedwelinvestltd@gmail.com",
-      "telephone": "+260973028342",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Kabwe",
-        "addressCountry": "ZM"
-      },
-      "areaServed": ["ZM", "Global"],
-      "sameAs": [
-        "https://wa.me/260973028342"
-      ]
-    }
-    </script>
-    <link rel="stylesheet" href="assets/css/local-ai.css" />
+        .support-channel .icon {
+            display: grid; place-items: center; width: 52px; height: 52px;
+            border-radius: 13px; background: var(--brand-soft); color: var(--brand);
+            font-size: 1.25rem; margin-bottom: 12px;
+        }
+        .support-channel h2 { font-size: 1.05rem; font-weight: 700; }
+        .support-channel p { color: var(--muted); font-size: 0.88rem; flex: 1; }
+        .support-channel .text-link { margin-top: 12px; }
+        @media (max-width: 900px) { .support-channels { grid-template-columns: 1fr; } }
+    </style>
 </head>
 
-<body>
+<body data-page="support">
 
     <!-- ========== HEADER ========== -->
     <header class="header" id="header">
-        <div class="header-inner">
-            <a href="index.html" class="logo-container">
-                <img src="https://i.ibb.co/svxj52ny/seedwel.png" class="logo-img" alt="Seedwel Investment LTD" />
+        <div class="container header-inner">
+            <a href="index.html" class="logo-container" aria-label="Seedwel Investment LTD — Home">
+                <img src="https://i.ibb.co/svxj52ny/seedwel.png" class="logo-img" alt="Seedwel Investment LTD logo" />
                 <span class="company-name-header">Seedwel <span>Investment</span> LTD</span>
             </a>
-            <div class="nav-links">
+            <nav class="nav-links" aria-label="Main navigation">
                 <a href="index.html">Home</a>
-                <a href="about.html">About Us</a>
+                <a href="about.html">About</a>
                 <a href="services.html">Services</a>
                 <a href="projects.html">Projects</a>
                 <a href="apply.html">Careers</a>
                 <a href="contact.html">Contact</a>
-                <a href="support.html" class="active">Support</a>
-                <a href="login.html" class="nav-login">Login</a>
-            </div>
-            <div class="hamburger" id="hamburger" aria-label="Menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+                <a href="support.html" class="active" aria-current="page">Support</a>
+                <a href="login.html" class="btn btn-ghost nav-login">Login</a>
+                <a href="request.html" class="btn btn-primary nav-cta">Request a Service</a>
+            </nav>
+            <button class="hamburger" id="hamburger" type="button" aria-label="Open menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </header>
 
-    <!-- ========== MOBILE MENU ========== -->
     <div class="menu-overlay" id="menuOverlay"></div>
-    <nav class="mobile-menu" id="mobileMenu">
-        <a href="index.html"><i class="fas fa-home"></i> Home</a>
-        <a href="apply.html"><i class="fas fa-pen"></i> Job Apply</a>
-        <a href="about.html"><i class="fas fa-info-circle"></i> About Us</a>
-        <a href="services.html"><i class="fas fa-cogs"></i> Services</a>
-        <a href="projects.html"><i class="fas fa-folder-open"></i> Projects</a>
-        <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
-        <a href="support.html"><i class="fas fa-headset"></i> Support</a>
-        <a href="login.html"><i class="fas fa-right-to-bracket"></i> Login</a>
+    <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+        <a href="index.html"><i class="fa-solid fa-house" aria-hidden="true"></i> Home</a>
+        <a href="about.html"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> About</a>
+        <a href="services.html"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Services</a>
+        <a href="projects.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i> Projects</a>
+        <a href="apply.html"><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Careers</a>
+        <a href="contact.html"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Contact</a>
+        <a href="support.html" class="active"><i class="fa-solid fa-headset" aria-hidden="true"></i> Support</a>
+        <a href="login.html"><i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i> Login</a>
+        <div class="menu-divider"></div>
+        <a href="request.html" class="menu-request"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Request a Service</a>
     </nav>
 
-    <!-- ========== PAGE HERO ========== -->
-    <section class="page-hero">
-        <p class="section-subtitle animate-fade-up">We're Here to Help</p>
-        <h1 class="animate-fade-up delay-1">Support <span>Center</span></h1>
-        <p class="animate-fade-up delay-2">24/7 availability — reach us anytime, we respond fast</p>
-    </section>
+    <main>
 
-    <!-- ========== SUPPORT CARDS ========== -->
-    <section class="support-section">
-        <div class="support-inner">
-            <a href="https://wa.me/260973028342" target="_blank" class="support-card animate-fade-up delay-1">
-                <div class="support-card-icon whatsapp-bg"><i class="fab fa-whatsapp"></i></div>
-                <h3>WhatsApp</h3>
-                <p>Fastest way to reach us. Chat with our team directly for quick responses.</p>
-                <span class="support-cta whatsapp-cta"><i class="fab fa-whatsapp"></i> Chat Now</span>
-            </a>
-            <a href="tel:+260973028342" class="support-card animate-fade-up delay-2">
-                <div class="support-card-icon phone-bg"><i class="fas fa-phone-alt"></i></div>
-                <h3>Call Us</h3>
-                <p>Speak directly with our team. Available 24/7 for urgent inquiries.</p>
-                <span class="support-cta phone-cta"><i class="fas fa-phone-alt"></i> Call Now</span>
-            </a>
-            <a href="mailto:seedwelinvestltd@gmail.com" class="support-card animate-fade-up delay-3">
-                <div class="support-card-icon email-bg"><i class="fas fa-envelope"></i></div>
-                <h3>Email</h3>
-                <p>Send us detailed inquiries. We'll respond within 24 hours.</p>
-                <span class="support-cta email-cta"><i class="fas fa-envelope"></i> Email Us</span>
-            </a>
-        </div>
-    </section>
-
-    <!-- ========== FAQ ========== -->
-    <section class="faq-section">
-        <div class="faq-inner">
-            <div class="section-header animate-fade-up">
-                <p class="section-subtitle">Quick Answers</p>
-                <h2>Frequently Asked Questions</h2>
+        <!-- ========== PAGE HERO ========== -->
+        <section class="page-hero">
+            <div class="container">
+                <p class="eyebrow">Support</p>
+                <h1>How can we <span>help?</span></h1>
+                <p>Reach us on WhatsApp, phone or email — we usually respond within one business day.</p>
             </div>
-            <div class="faq-list">
-                <div class="faq-item animate-fade-up delay-1">
-                    <div class="faq-question">How quickly can you build my website? <i class="fas fa-chevron-down"></i></div>
-                    <div class="faq-answer"><p>Most websites are delivered within 7-14 business days, depending on complexity. We'll give you a precise timeline after understanding your requirements.</p></div>
-                </div>
-                <div class="faq-item animate-fade-up delay-2">
-                    <div class="faq-question">What do I need for business registration? <i class="fas fa-chevron-down"></i></div>
-                    <div class="faq-answer"><p>Requirements vary by service (PACRA, ZRA, Workers Compensation). Contact us and we'll guide you through the exact documents needed for your specific registration.</p></div>
-                </div>
-                <div class="faq-item animate-fade-up delay-3">
-                    <div class="faq-question">Do you offer support after project delivery? <i class="fas fa-chevron-down"></i></div>
-                    <div class="faq-answer"><p>Absolutely! We provide ongoing support and maintenance. Our team is available 24/7 via WhatsApp, phone, or email for any post-delivery needs.</p></div>
-                </div>
-                <div class="faq-item animate-fade-up delay-1">
-                    <div class="faq-question">What are your payment terms? <i class="fas fa-chevron-down"></i></div>
-                    <div class="faq-answer"><p>We typically require a 50% deposit to start and the remaining 50% upon delivery. For larger projects, we can arrange milestone-based payments.</p></div>
-                </div>
-                <div class="faq-item animate-fade-up delay-2">
-                    <div class="faq-question">Can I see examples of your previous work? <i class="fas fa-chevron-down"></i></div>
-                    <div class="faq-answer"><p>Yes! Visit our Projects page to view our portfolio. We've delivered 150+ projects across web development, graphic design, and business registration.</p></div>
+        </section>
+
+        <!-- ========== CHANNELS ========== -->
+        <section class="section" style="padding-top:48px;">
+            <div class="container">
+                <div class="support-channels">
+                    <a href="https://wa.me/260973028342" target="_blank" rel="noopener" class="card support-channel reveal">
+                        <div class="icon" style="background:#e8faf0;color:#16a34a;"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></div>
+                        <h2>WhatsApp</h2>
+                        <p>The quickest way to reach the team. Message us about a service, a request in progress or a general question.</p>
+                        <span class="text-link">Chat now <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+                    </a>
+                    <a href="mailto:seedwelinvestltd@gmail.com" class="card support-channel reveal d1">
+                        <div class="icon"><i class="fa-solid fa-envelope" aria-hidden="true"></i></div>
+                        <h2>Email</h2>
+                        <p>Best for detailed enquiries and documents. Write to seedwelinvestltd@gmail.com and we will reply.</p>
+                        <span class="text-link">Email us <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+                    </a>
+                    <a href="tel:+260973028342" class="card support-channel reveal d2">
+                        <div class="icon"><i class="fa-solid fa-phone" aria-hidden="true"></i></div>
+                        <h2>Call</h2>
+                        <p>Prefer to talk? Call +260 973 028 342 during business hours, Zambia time.</p>
+                        <span class="text-link">Call now <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+                    </a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- ========== HELP SECTION ========== -->
-    <section class="help-section">
-        <h3 class="animate-fade-up">Still Need Help?</h3>
-        <p class="animate-fade-up delay-1">Our team is standing by. Reach out and we'll get back to you in minutes.</p>
-        <div class="help-buttons animate-fade-up delay-2">
-            <a href="https://wa.me/260973028342" target="_blank" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp Us</a>
-            <a href="contact.html" class="btn btn-contact"><i class="fas fa-envelope"></i> Contact Form</a>
-        </div>
-    </section>
-
-    <!-- ========== FOOTER ========== -->
-    <footer>
-        <div class="footer-grid">
-            <div class="footer-brand">
-                <img src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel Investment LTD" />
-                <p>Premium digital agency delivering excellence worldwide. We build digital experiences that drive growth for modern businesses.</p>
+        <!-- ========== FAQ ========== -->
+        <section class="section section-alt" aria-labelledby="faqTitle">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="eyebrow">Quick Answers</p>
+                    <h2 class="section-title" id="faqTitle">Frequently asked questions</h2>
+                </div>
+                <div class="faq-list">
+                    <details class="faq-item reveal">
+                        <summary>How do I request a service? <i class="fa-solid fa-plus" aria-hidden="true"></i></summary>
+                        <div class="faq-body">Use the <a href="request.html">Request a Service</a> form. Your request goes straight into our work queue with the status flow New → Reviewing → Assigned → In Progress → Completed, and we contact you to confirm the scope and timeline.</div>
+                    </details>
+                    <details class="faq-item reveal">
+                        <summary>Is Seedwel part of ZRA, NAPSA or PACRA? <i class="fa-solid fa-plus" aria-hidden="true"></i></summary>
+                        <div class="faq-body">No. Seedwel Investment LTD is a private company, not a government agency. We provide private assistance with ZRA, NAPSA and PACRA processes — official registrations and certificates are issued by those institutions.</div>
+                    </details>
+                    <details class="faq-item reveal">
+                        <summary>What do I need for business registration assistance? <i class="fa-solid fa-plus" aria-hidden="true"></i></summary>
+                        <div class="faq-body">Requirements depend on the registration (company, business name, tax, pension). When you submit a request we confirm the exact documents needed for your situation before any work begins.</div>
+                    </details>
+                    <details class="faq-item reveal">
+                        <summary>How long does a website take? <i class="fa-solid fa-plus" aria-hidden="true"></i></summary>
+                        <div class="faq-body">It depends on the size of the site and how quickly content is available. After a short discovery conversation we give you a clear timeline and keep you updated while the site is built.</div>
+                    </details>
+                    <details class="faq-item reveal">
+                        <summary>How are cookies used on this website? <i class="fa-solid fa-plus" aria-hidden="true"></i></summary>
+                        <div class="faq-body">We use strictly necessary storage to run the site and remember your privacy choices. Optional analytics cookies only load if you allow them in the consent banner. See our <a href="cookie-policy.html">Cookie Policy</a> for details, or use "Cookie settings" in the footer to change your choice at any time.</div>
+                    </details>
+                    <details class="faq-item reveal">
+                        <summary>How is my CV or personal information handled? <i class="fa-solid fa-plus" aria-hidden="true"></i></summary>
+                        <div class="faq-body">Applications and CVs are stored securely and can only be accessed by the Seedwel administrator. We explain exactly what we collect and how long we keep it in our <a href="privacy.html">Privacy Policy</a>.</div>
+                    </details>
+                    <details class="faq-item reveal">
+                        <summary>I applied for a job — what happens next? <i class="fa-solid fa-plus" aria-hidden="true"></i></summary>
+                        <div class="faq-body">Your application is reviewed by our hiring team. If your profile matches an opening we contact you for the next steps. Applying does not guarantee employment; approved workers receive an official Seedwel Worker ID.</div>
+                    </details>
+                </div>
             </div>
-            <div class="footer-col">
-                <h4>Quick Links</h4>
-                <a href="index.html">Home</a>
-                <a href="about.html">About Us</a>
-                <a href="services.html">Services</a>
-                <a href="projects.html">Projects</a>
+        </section>
+
+        <!-- ========== CTA ========== -->
+        <section class="cta-band">
+            <div class="container reveal">
+                <div>
+                    <h2>Still need help?</h2>
+                    <p>Reach out and the team will get you an answer.</p>
+                </div>
+                <div style="display:flex;gap:14px;flex-wrap:wrap;">
+                    <a href="https://wa.me/260973028342" class="btn btn-whatsapp" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp Us</a>
+                    <a href="contact.html" class="btn btn-light">Contact page</a>
+                </div>
             </div>
-            <div class="footer-col">
-                <h4>Support</h4>
-                <a href="contact.html">Contact</a>
-                <a href="support.html">Help Center</a>
-                <a href="privacy.html">Privacy</a>
-                <a href="terms.html">Terms</a>
-                <a href="tel:+260973028342"><i class="fas fa-phone" style="color:#dc2626; width:18px;"></i> +260 973 028 342</a>
-                <a href="mailto:seedwelinvestltd@gmail.com"><i class="fas fa-envelope" style="color:#dc2626; width:18px;"></i> seedwelinvestltd@gmail.com</a>
-            </div>
-            <div class="footer-col">
-                <h4>Locations</h4>
-                <p><i class="fas fa-location-dot" style="color:#dc2626; width:18px;"></i> Kabwe, Zambia</p>
-                <p><i class="fas fa-location-dot" style="color:#dc2626; width:18px;"></i> Chama, Zambia</p>
-                <p>🌍 Global Remote</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Seedwel Investment LTD. All rights reserved.</p>
-        </div>
-    </footer>
+        </section>
 
-    <!-- ========== FLOATING WHATSAPP ========== -->
-    <a href="https://wa.me/260973028342" class="floating-whatsapp" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
-        <i class="fab fa-whatsapp"></i>
-    </a>
+    </main>
 
-    <script>
-        const hamburger = document.getElementById('hamburger');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const menuOverlay = document.getElementById('menuOverlay');
-
-        function toggleMenu() {
-            hamburger.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-            menuOverlay.classList.toggle('active');
-            document.body.style.overflow = hamburger.classList.contains('active') ? 'hidden' : '';
-        }
-        hamburger.addEventListener('click', toggleMenu);
-        menuOverlay.addEventListener('click', toggleMenu);
-        document.querySelectorAll('.mobile-menu a').forEach(l => l.addEventListener('click', toggleMenu));
-
-        const header = document.getElementById('header');
-        window.addEventListener('scroll', () => {
-            header.classList.toggle('scrolled', window.scrollY > 40);
-        });
-
-        // FAQ Accordion
-        document.querySelectorAll('.faq-question').forEach(q => {
-            q.addEventListener('click', () => {
-                const item = q.parentElement;
-                const isActive = item.classList.contains('active');
-                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
-                if (!isActive) item.classList.add('active');
-            });
-        });
-
-        window.scrollTo(0, 0);
-        window.addEventListener('load', () => window.scrollTo(0, 0));
-        window.addEventListener('pageshow', (e) => { if (e.persisted) window.scrollTo(0, 0); });
-    </script>
-    <script src="assets/js/service-strip.js" defer></script>
-    <script src="assets/js/local-ai.js" defer></script>
+    <script src="assets/js/site.js" defer></script>
 </body>
 </html>

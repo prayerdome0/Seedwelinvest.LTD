@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#dc2626" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="site.webmanifest" />
+    <title>Request a Service | Seedwel Investment LTD</title>
+    <meta name="description" content="Request a service from Seedwel Investment LTD — ZRA, NAPSA and PACRA assistance, website development, AI automation, digital marketing and more." />
+
+    <link rel="canonical" href="https://seedwel.ltd/request.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Seedwel Investment LTD" />
+    <meta property="og:title" content="Request a Service | Seedwel Investment LTD" />
+    <meta property="og:description" content="Tell us what you need and the Seedwel team will get back to you about the next steps." />
+    <meta property="og:url" content="https://seedwel.ltd/request.html" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="assets/css/site.css" />
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js" defer></script>
+
+    <style>
+        .request-layout { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 40px; align-items: start; }
+        .request-aside .card { padding: 28px; }
+        .request-aside h2 { font-size: 1.05rem; font-weight: 700; margin-bottom: 16px; }
+        .pipeline { list-style: none; display: grid; gap: 0; margin: 0; }
+        .pipeline li { display: flex; gap: 14px; }
+        .pipeline .pipe-rail { display: flex; flex-direction: column; align-items: center; }
+        .pipeline .pipe-dot {
+            display: grid; place-items: center;
+            width: 30px; height: 30px; flex: 0 0 auto;
+            border-radius: 50%;
+            background: var(--brand-soft);
+            color: var(--brand);
+            font-family: var(--font-head);
+            font-size: 0.72rem; font-weight: 800;
+        }
+        .pipeline .pipe-line { width: 2px; flex: 1; min-height: 18px; background: var(--line); }
+        .pipeline li:last-child .pipe-line { display: none; }
+        .pipeline .pipe-copy { padding-bottom: 18px; }
+        .pipeline .pipe-copy strong { display: block; font-family: var(--font-head); font-size: 0.88rem; }
+        .pipeline .pipe-copy span { display: block; color: var(--muted); font-size: 0.8rem; }
+        .form-success { text-align: center; padding: 30px 10px; }
+        .form-success .success-icon {
+            display: grid; place-items: center;
+            width: 72px; height: 72px; margin: 0 auto 20px;
+            border-radius: 50%;
+            background: #f0fdf4; color: var(--green); font-size: 1.8rem;
+        }
+        .form-success h2 { font-size: 1.4rem; margin-bottom: 10px; }
+        .form-success p { color: var(--muted); font-size: 0.92rem; max-width: 480px; margin: 0 auto 8px; }
+        @media (max-width: 900px) { .request-layout { grid-template-columns: 1fr; } }
+    </style>
+</head>
+
+<body data-page="request">
+
+    <!-- ========== HEADER ========== -->
+    <header class="header" id="header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo-container" aria-label="Seedwel Investment LTD — Home">
+                <img src="https://i.ibb.co/svxj52ny/seedwel.png" class="logo-img" alt="Seedwel Investment LTD logo" />
+                <span class="company-name-header">Seedwel <span>Investment</span> LTD</span>
+            </a>
+            <nav class="nav-links" aria-label="Main navigation">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="services.html">Services</a>
+                <a href="projects.html">Projects</a>
+                <a href="apply.html">Careers</a>
+                <a href="contact.html">Contact</a>
+                <a href="support.html">Support</a>
+                <a href="login.html" class="btn btn-ghost nav-login">Login</a>
+                <a href="request.html" class="btn btn-primary nav-cta" aria-current="page">Request a Service</a>
+            </nav>
+            <button class="hamburger" id="hamburger" type="button" aria-label="Open menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+        <a href="index.html"><i class="fa-solid fa-house" aria-hidden="true"></i> Home</a>
+        <a href="about.html"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> About</a>
+        <a href="services.html"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Services</a>
+        <a href="projects.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i> Projects</a>
+        <a href="apply.html"><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Careers</a>
+        <a href="contact.html"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Contact</a>
+        <a href="support.html"><i class="fa-solid fa-headset" aria-hidden="true"></i> Support</a>
+        <a href="login.html"><i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i> Login</a>
+        <div class="menu-divider"></div>
+        <a href="request.html" class="menu-request"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Request a Service</a>
+    </nav>
+
+    <main>
+
+        <!-- ========== PAGE HERO ========== -->
+        <section class="page-hero">
+            <div class="container">
+                <p class="eyebrow">Request a Service</p>
+                <h1>Tell us what you <span>need</span></h1>
+                <p>Fill in this short form and the Seedwel team will review your request and get back to you — usually within one business day.</p>
+            </div>
+        </section>
+
+        <!-- ========== REQUEST FORM ========== -->
+        <section class="section" style="padding-top:44px;">
+            <div class="container request-layout">
+
+                <div class="form-card reveal" id="requestFormCard">
+                    <div id="formContent">
+                        <h2 style="font-size:1.3rem;margin-bottom:6px;">Service request form</h2>
+                        <p class="muted small" style="margin-bottom:24px;">Fields marked <span style="color:var(--brand);">*</span> are required.</p>
+
+                        <form id="serviceRequestForm" novalidate>
+                            <div class="form-grid">
+                                <div class="field">
+                                    <label for="reqName">Full Name <span class="req">*</span></label>
+                                    <input type="text" id="reqName" name="fullName" placeholder="Your full name" maxlength="120" required autocomplete="name" />
+                                </div>
+                                <div class="field">
+                                    <label for="reqEmail">Email Address <span class="req">*</span></label>
+                                    <input type="email" id="reqEmail" name="email" placeholder="you@example.com" maxlength="160" required autocomplete="email" />
+                                </div>
+                                <div class="field">
+                                    <label for="reqPhone">Phone / WhatsApp <span class="req">*</span></label>
+                                    <input type="tel" id="reqPhone" name="phone" placeholder="+260 XXX XXX XXX" maxlength="40" required autocomplete="tel" />
+                                </div>
+                                <div class="field">
+                                    <label for="reqBusiness">Business Name <span class="muted">(optional)</span></label>
+                                    <input type="text" id="reqBusiness" name="businessName" placeholder="Your business name" maxlength="120" autocomplete="organization" />
+                                </div>
+                                <div class="field full">
+                                    <label for="reqService">Which service do you need? <span class="req">*</span></label>
+                                    <select id="reqService" name="service" required>
+                                        <option value="">Select a service…</option>
+                                        <option value="zra">ZRA Tax Services (registration assistance)</option>
+                                        <option value="napsa">NAPSA Services (employer registration assistance)</option>
+                                        <option value="pacra">PACRA Registration (company / business name)</option>
+                                        <option value="workers-comp">Workers' Compensation Registration</option>
+                                        <option value="web-development">Website Development</option>
+                                        <option value="ai-automation">AI Automation</option>
+                                        <option value="digital-marketing">Digital Marketing</option>
+                                        <option value="graphic-design">Graphic Design</option>
+                                        <option value="virtual-assistant">Virtual Assistant</option>
+                                        <option value="typing">Typing &amp; Transcription</option>
+                                        <option value="it-consulting">IT Consulting</option>
+                                        <option value="other">Something else / not sure</option>
+                                    </select>
+                                </div>
+                                <div class="field full">
+                                    <label for="reqDetails">Details <span class="req">*</span></label>
+                                    <textarea id="reqDetails" name="details" rows="5" placeholder="Briefly describe what you need. For registration assistance, tell us where you are in the process (e.g. &quot;new business, not yet registered&quot;)." maxlength="3000" required></textarea>
+                                </div>
+                                <div class="field full">
+                                    <div class="consent-row">
+                                        <input type="checkbox" id="reqConsent" required />
+                                        <label for="reqConsent">I agree to the <a href="privacy.html">Privacy Policy</a> and consent to Seedwel contacting me about this request. <span style="color:var(--brand);">*</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="form-status" id="reqStatus" role="status" aria-live="polite" hidden></p>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary" id="reqSubmit"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Submit Request</button>
+                                <a href="https://wa.me/260973028342" class="btn btn-whatsapp" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Prefer WhatsApp?</a>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="form-success" id="formSuccess" hidden>
+                        <div class="success-icon"><i class="fa-solid fa-check" aria-hidden="true"></i></div>
+                        <h2>Request received</h2>
+                        <p>Thank you. Your service request is now in the Seedwel team's workflow. We will review it and contact you — usually within one business day.</p>
+                        <p class="small">You can track progress with us by email or WhatsApp at any time.</p>
+                        <div class="form-actions" style="justify-content:center;">
+                            <button type="button" class="btn btn-outline" id="reqAnother"><i class="fa-solid fa-plus" aria-hidden="true"></i> Submit another request</button>
+                            <a href="index.html" class="btn btn-ghost">Back to home</a>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="request-aside">
+                    <div class="card reveal d1">
+                        <h2>What happens after you submit?</h2>
+                        <ul class="pipeline">
+                            <li>
+                                <div class="pipe-rail"><span class="pipe-dot">1</span><span class="pipe-line"></span></div>
+                                <div class="pipe-copy"><strong>New</strong><span>We receive your request and confirm we have everything needed.</span></div>
+                            </li>
+                            <li>
+                                <div class="pipe-rail"><span class="pipe-dot">2</span><span class="pipe-line"></span></div>
+                                <div class="pipe-copy"><strong>Reviewing</strong><span>We review the requirements and clarify details with you.</span></div>
+                            </li>
+                            <li>
+                                <div class="pipe-rail"><span class="pipe-dot">3</span><span class="pipe-line"></span></div>
+                                <div class="pipe-copy"><strong>Assigned</strong><span>A team member is assigned to your request.</span></div>
+                            </li>
+                            <li>
+                                <div class="pipe-rail"><span class="pipe-dot">4</span><span class="pipe-line"></span></div>
+                                <div class="pipe-copy"><strong>In Progress</strong><span>We carry out the work and keep you updated.</span></div>
+                            </li>
+                            <li>
+                                <div class="pipe-rail"><span class="pipe-dot">5</span><span class="pipe-line"></span></div>
+                                <div class="pipe-copy"><strong>Completed</strong><span>Everything is delivered, with support afterwards.</span></div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="card reveal d2" style="margin-top:22px;">
+                        <h2>Good to know</h2>
+                        <p class="muted small">Seedwel Investment LTD is a private company. For ZRA, NAPSA and PACRA services, we provide assistance with the relevant processes — the government institutions issue official registrations.</p>
+                        <p class="muted small" style="margin-top:10px;">Prefer to talk first? Call or WhatsApp <a href="https://wa.me/260973028342">+260 973 028 342</a>.</p>
+                    </div>
+                </aside>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ========== SCRIPTS ========== -->
+    <script>
+        window.addEventListener('DOMContentLoaded', function () {
+            var firebaseConfig = {
+                apiKey: 'AIzaSyA-BpRy-RVc2rqIG6uiRu_XrGEu1ZGnQwU',
+                authDomain: 'seedwel-investment-limited.firebaseapp.com',
+                databaseURL: 'https://seedwel-investment-limited-default-rtdb.firebaseio.com',
+                projectId: 'seedwel-investment-limited',
+                storageBucket: 'seedwel-investment-limited.firebasestorage.app',
+                messagingSenderId: '197778268619',
+                appId: '1:197778268619:web:92f29d88fa5a22dbfa964e'
+            };
+            if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+            var db = firebase.database();
+
+            var form = document.getElementById('serviceRequestForm');
+            var serviceSelect = document.getElementById('reqService');
+            var status = document.getElementById('reqStatus');
+            var submitBtn = document.getElementById('reqSubmit');
+            var formContent = document.getElementById('formContent');
+            var formSuccess = document.getElementById('formSuccess');
+
+            var SERVICE_LABELS = {};
+            Array.prototype.forEach.call(serviceSelect.options, function (option) {
+                if (option.value) SERVICE_LABELS[option.value] = option.textContent;
+            });
+
+            // Preselect a service from ?service=…
+            try {
+                var requested = new URLSearchParams(window.location.search).get('service');
+                if (requested && SERVICE_LABELS[requested]) serviceSelect.value = requested;
+            } catch (_) { /* older browsers simply keep the placeholder */ }
+
+            function setStatus(message, type) {
+                status.hidden = !message;
+                status.textContent = message || '';
+                status.className = 'form-status' + (type === 'error' ? ' error' : ' success');
+            }
+
+            form.addEventListener('submit', async function (event) {
+                event.preventDefault();
+
+                var fullName = document.getElementById('reqName').value.trim();
+                var email = document.getElementById('reqEmail').value.trim();
+                var phone = document.getElementById('reqPhone').value.trim();
+                var businessName = document.getElementById('reqBusiness').value.trim();
+                var service = serviceSelect.value;
+                var details = document.getElementById('reqDetails').value.trim();
+                var consent = document.getElementById('reqConsent').checked;
+
+                if (fullName.length < 2) { setStatus('Please enter your full name.', 'error'); return; }
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setStatus('Please enter a valid email address.', 'error'); return; }
+                if (phone.length < 5) { setStatus('Please enter a phone or WhatsApp number.', 'error'); return; }
+                if (!service) { setStatus('Please select the service you need.', 'error'); return; }
+                if (details.length < 10) { setStatus('Please describe what you need (at least 10 characters).', 'error'); return; }
+                if (!consent) { setStatus('Please accept the Privacy Policy to continue.', 'error'); return; }
+
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> Submitting…';
+                setStatus('', '');
+
+                try {
+                    await db.ref('serviceRequests').push({
+                        fullName: fullName.slice(0, 120),
+                        email: email.slice(0, 160),
+                        phone: phone.slice(0, 40),
+                        businessName: businessName.slice(0, 120),
+                        service: service.slice(0, 80),
+                        serviceLabel: (SERVICE_LABELS[service] || service).slice(0, 120),
+                        details: details.slice(0, 3000),
+                        consent: true,
+                        status: 'new',
+                        source: 'request.html',
+                        submittedAt: firebase.database.ServerValue.TIMESTAMP
+                    });
+                    formContent.hidden = true;
+                    formSuccess.hidden = false;
+                    if (typeof formSuccess.scrollIntoView === 'function') {
+                        formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                } catch (err) {
+                    console.error('Service request error:', err);
+                    setStatus('Could not submit right now. Please try again, or reach us on WhatsApp: +260 973 028 342.', 'error');
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Submit Request';
+                }
+            });
+
+            document.getElementById('reqAnother').addEventListener('click', function () {
+                form.reset();
+                setStatus('', '');
+                formSuccess.hidden = true;
+                formContent.hidden = false;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+    </script>
+    <script src="assets/js/site.js" defer></script>
+</body>
+</html>

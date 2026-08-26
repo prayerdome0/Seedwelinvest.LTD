@@ -4,134 +4,145 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Terms of Service | Seedwel Investment LTD</title>
-    <meta name="description" content="Terms of Service for Seedwel Investment LTD digital agency services and website use." />
+    <meta name="description" content="The terms that apply when you use the Seedwel Investment LTD website, submit a request, or apply to join the team." />
     <meta name="theme-color" content="#dc2626" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <link rel="canonical" href="https://seedwel.ltd/terms.html" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Seedwel Investment LTD" />
     <meta property="og:title" content="Terms of Service | Seedwel Investment LTD" />
-    <meta property="og:description" content="Terms governing use of the Seedwel Investment LTD website and services." />
+    <meta property="og:description" content="The terms that apply to this website and the services offered through it." />
     <meta property="og:url" content="https://seedwel.ltd/terms.html" />
-    <meta property="og:image" content="https://i.ibb.co/svxj52ny/seedwel.png" />
     <meta name="twitter:card" content="summary" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="manifest" href="site.webmanifest" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #fff; color: #111827; line-height: 1.7; }
-        .header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,.96); border-bottom: 1px solid #e5e7eb; backdrop-filter: blur(10px); }
-        .header-inner { max-width: 960px; margin: 0 auto; padding: 14px 22px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-        .logo-container { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #111827; font-family: 'Montserrat', sans-serif; font-weight: 800; }
-        .logo-img { width: 36px; height: 36px; object-fit: contain; }
-        .nav-links a { color: #4b5563; text-decoration: none; margin-left: 16px; font-size: .9rem; font-weight: 600; }
-        .nav-links a:hover { color: #dc2626; }
-        .page-hero { background: linear-gradient(135deg, #0f172a, #7f1d1d); color: #fff; padding: 72px 22px 56px; text-align: center; }
-        .page-hero h1 { font-family: 'Montserrat', sans-serif; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 800; margin-bottom: 10px; }
-        .page-hero p { color: rgba(255,255,255,.78); max-width: 560px; margin: 0 auto; }
-        .content { max-width: 800px; margin: 0 auto; padding: 48px 22px 80px; }
-        .content h2 { font-family: 'Montserrat', sans-serif; font-size: 1.2rem; margin: 32px 0 10px; color: #111827; }
-        .content p, .content li { color: #374151; margin-bottom: 12px; }
-        .content ul { padding-left: 22px; margin-bottom: 16px; }
-        .content a { color: #dc2626; }
-        .updated { display: inline-block; margin-bottom: 20px; padding: 6px 12px; border-radius: 999px; background: #fef2f2; color: #b91c1c; font-size: .78rem; font-weight: 700; }
-        footer { background: #0f172a; color: #94a3b8; padding: 28px 22px; text-align: center; font-size: .85rem; }
-        footer a { color: #fca5a5; text-decoration: none; margin: 0 8px; }
-    </style>
-    <link rel="stylesheet" href="assets/css/local-ai.css" />
+    <link rel="stylesheet" href="assets/css/site.css" />
 </head>
-<body>
-    <header class="header">
-        <div class="header-inner">
-            <a href="index.html" class="logo-container">
-                <img class="logo-img" src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel Investment LTD" />
-                Seedwel
+
+<body data-page="terms">
+
+    <header class="header" id="header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo-container" aria-label="Seedwel Investment LTD — Home">
+                <img src="https://i.ibb.co/svxj52ny/seedwel.png" class="logo-img" alt="Seedwel Investment LTD logo" />
+                <span class="company-name-header">Seedwel <span>Investment</span> LTD</span>
             </a>
-            <nav class="nav-links" aria-label="Main">
+            <nav class="nav-links" aria-label="Main navigation">
                 <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="services.html">Services</a>
+                <a href="projects.html">Projects</a>
+                <a href="apply.html">Careers</a>
                 <a href="contact.html">Contact</a>
-                <a href="privacy.html">Privacy</a>
+                <a href="support.html">Support</a>
+                <a href="login.html" class="btn btn-ghost nav-login">Login</a>
+                <a href="request.html" class="btn btn-primary nav-cta">Request a Service</a>
             </nav>
+            <button class="hamburger" id="hamburger" type="button" aria-label="Open menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </header>
 
-    <section class="page-hero">
-        <h1>Terms of Service</h1>
-        <p>Terms that govern use of our website and engagement for digital services.</p>
-    </section>
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+        <a href="index.html"><i class="fa-solid fa-house" aria-hidden="true"></i> Home</a>
+        <a href="about.html"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> About</a>
+        <a href="services.html"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Services</a>
+        <a href="projects.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i> Projects</a>
+        <a href="apply.html"><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Careers</a>
+        <a href="contact.html"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Contact</a>
+        <a href="support.html"><i class="fa-solid fa-headset" aria-hidden="true"></i> Support</a>
+        <a href="login.html"><i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i> Login</a>
+        <div class="menu-divider"></div>
+        <a href="request.html" class="menu-request"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Request a Service</a>
+    </nav>
 
-    <main class="content">
-        <span class="updated">Last updated: 25 August 2026</span>
-        <p>These Terms of Service (“Terms”) govern your access to <strong>seedwel.ltd</strong> and related services offered by Seedwel Investment LTD (“Seedwel”, “we”, “us”). By using the site or engaging our services, you agree to these Terms.</p>
+    <main>
+        <section class="page-hero">
+            <div class="container">
+                <p class="eyebrow">Legal</p>
+                <h1>Terms of <span>Service</span></h1>
+                <p>The terms that apply when you use this website and the services offered through it.</p>
+            </div>
+        </section>
 
-        <h2>1. Who we are</h2>
-        <p>Seedwel Investment LTD provides digital agency services including web development, design, SEO and marketing, business registration support, virtual assistance and related professional services to clients in Zambia and internationally.</p>
+        <div class="container">
+            <div class="legal-content">
+                <span class="updated-pill">Last updated: 1 September 2026</span>
 
-        <h2>2. Website use</h2>
-        <ul>
-            <li>You may browse public pages for lawful purposes only.</li>
-            <li>You must not attempt to disrupt, scrape abusively, or gain unauthorised access to admin areas, databases or storage.</li>
-            <li>Portfolio content, branding and site code remain our intellectual property unless a separate written agreement says otherwise.</li>
-        </ul>
+                <h2>1. Who we are</h2>
+                <p>These terms apply to the website at seedwel.ltd (the "website"), operated by Seedwel Investment LTD ("Seedwel", "we", "us"), a private company registered in Zambia with offices in Kabwe. By using the website you agree to these terms. If you do not agree, please do not use the website.</p>
 
-        <h2>3. Enquiries and proposals</h2>
-        <p>Submitting a contact form or message does not create a binding contract. Project scope, timelines, deliverables and fees are confirmed in a written quotation, invoice or service agreement accepted by both parties.</p>
+                <h2>2. Website use</h2>
+                <ul>
+                    <li>Use the website lawfully and do not attempt to disrupt, overload or gain unauthorised access to any part of it.</li>
+                    <li>Do not submit false, misleading or abusive content through our forms.</li>
+                    <li>Do not use our forms to send spam or unsolicited commercial messages.</li>
+                    <li>We may update, change or withdraw any part of the website at any time.</li>
+                </ul>
 
-        <h2>4. Careers and applications</h2>
-        <p>Job listings describe opportunities that may be commission-based, project-based or otherwise flexible. Submitting an application does not guarantee employment or engagement. We may retain application materials as described in our <a href="privacy.html">Privacy Policy</a>.</p>
+                <h2>3. Government services — important clarification</h2>
+                <p>Seedwel Investment LTD is a private company. We are <strong>not</strong> the Zambia Revenue Authority (ZRA), the National Pension Scheme Authority (NAPSA), the Patents and Companies Registration Agency (PACRA) or any other government body, and we are not affiliated with any of them. Where we offer "ZRA Services", "NAPSA Services" or "PACRA Registration", these are <strong>private assistance services</strong> that help you prepare for and complete the relevant process. Official registrations, certificates, rulings and records are issued only by the responsible government institutions. We do not guarantee any particular outcome of a government process, as decisions rest with those institutions.</p>
 
-        <h2>5. Client services</h2>
-        <ul>
-            <li><strong>Scope</strong> — Work is limited to the agreed statement of work.</li>
-            <li><strong>Client materials</strong> — You warrant you have rights to content, logos and data you provide.</li>
-            <li><strong>Revisions</strong> — Reasonable revision rounds may be included; additional changes may be billed.</li>
-            <li><strong>Third-party services</strong> — Domains, hosting, ads accounts and licences may be billed by third parties under their terms.</li>
-            <li><strong>Business registration</strong> — We assist with process and documentation; final approvals rest with PACRA, ZRA and other authorities.</li>
-        </ul>
+                <h2>4. Service requests and quotations</h2>
+                <ul>
+                    <li>Submitting a service request does not create a contract or any payment obligation.</li>
+                    <li>Work begins only after we confirm the scope, timeline and fees with you, and any agreed deposit is paid.</li>
+                    <li>Information you provide must be accurate and complete; you are responsible for information you ask us to submit on your behalf.</li>
+                </ul>
 
-        <h2>6. Payments</h2>
-        <p>Fees, deposits and payment schedules are stated on invoices or proposals. Work may pause if invoices remain unpaid. Commission roles are paid according to the written commission structure for that engagement.</p>
+                <h2>5. Careers and applications</h2>
+                <ul>
+                    <li>Submitting an application or creating an account does not guarantee employment or a job award.</li>
+                    <li>Every application is reviewed and must be officially approved by Seedwel Investment LTD before an applicant becomes an approved worker with an official Worker ID.</li>
+                    <li>You confirm that the information and CV you submit are your own and are accurate.</li>
+                    <li>Recruitment data is handled as described in our <a href="privacy.html">Privacy Policy</a>.</li>
+                </ul>
 
-        <h2>7. Intellectual property</h2>
-        <p>Unless otherwise agreed in writing, final deliverables transfer to the client after full payment. We may display non-confidential work in our portfolio unless you request otherwise in writing before publication.</p>
+                <h2>6. Accounts and security</h2>
+                <p>Team member and administrator accounts are for personal use only. Keep your credentials confidential and tell us promptly if you believe your account has been accessed without permission. We may suspend accounts that breach these terms or compromise the security of the platform.</p>
 
-        <h2>8. Local AI assistant</h2>
-        <p>The optional Seedwel Local AI assistant generates responses on your device. Its answers are automated, may be incomplete or incorrect, and are provided for general website guidance only. They do not create a quotation, contract, job offer, approval or professional advice. Confirm pricing, timelines, application decisions and other important information directly with the Seedwel team.</p>
+                <h2>7. Payments</h2>
+                <p>Fees, deposits and payment schedules are agreed with you in writing (email or WhatsApp confirmation) before work starts. Commission arrangements for team members are confirmed at onboarding and may be revised by agreement.</p>
 
-        <h2>9. Warranties and liability</h2>
-        <p>The website is provided “as is”. To the fullest extent permitted by law, Seedwel is not liable for indirect, incidental or consequential damages arising from site use. For paid client work, liability is limited to the fees paid for the specific service giving rise to the claim, except where liability cannot be limited by law.</p>
+                <h2>8. Intellectual property</h2>
+                <ul>
+                    <li>The website, its design, text and brand assets belong to Seedwel Investment LTD or are used with permission.</li>
+                    <li>On final payment for client work, the agreed deliverables become yours as set out in your project confirmation; we may show non-confidential work in our portfolio unless you ask us in writing not to.</li>
+                    <li>You retain rights to information and materials you provide to us; we use them only to deliver your service.</li>
+                </ul>
 
-        <h2>10. Confidentiality</h2>
-        <p>Both parties should keep non-public business information confidential, except where disclosure is required by law or already public through no fault of the receiving party.</p>
+                <h2>9. Cookies and privacy</h2>
+                <p>Our use of cookies is described in the <a href="cookie-policy.html">Cookie Policy</a>, and how we handle your personal information in the <a href="privacy.html">Privacy Policy</a>. By using the website you acknowledge that you have been given a genuine choice about non-essential cookies through our consent banner.</p>
 
-        <h2>11. Termination</h2>
-        <p>Either party may end an engagement as set out in the applicable service agreement. You may stop using the website at any time. Provisions that by nature should survive (IP, payment, liability limits) continue after termination.</p>
+                <h2>10. Warranties and liability</h2>
+                <p>The website is provided "as is". We work with professional care, but to the fullest extent permitted by law: (a) we do not warrant that the website will always be available or error-free; and (b) our liability for any claim relating to the website or a service is limited to the fees you paid for that service. Nothing in these terms excludes liability that cannot be excluded by law.</p>
 
-        <h2>12. Governing law</h2>
-        <p>These Terms are governed by the laws of Zambia, without prejudice to mandatory consumer protections that may apply in your place of residence. Disputes should first be addressed in good faith; failing that, courts of competent jurisdiction in Zambia may hear the matter.</p>
+                <h2>11. Confidentiality</h2>
+                <p>We treat your business information, documents and application materials as confidential and use them only to deliver the service you requested, except where disclosure is required by law.</p>
 
-        <h2>13. Changes</h2>
-        <p>We may update these Terms periodically. The “Last updated” date will change when we do. Material changes to active client contracts require mutual written agreement.</p>
+                <h2>12. Termination</h2>
+                <p>We may suspend or end access to the website or services if these terms are breached. Client engagements end as agreed in your project confirmation; team member engagements end per the terms agreed at onboarding.</p>
 
-        <h2>14. Contact</h2>
-        <p>
-            Seedwel Investment LTD<br />
-            Email: <a href="mailto:seedwelinvestltd@gmail.com">seedwelinvestltd@gmail.com</a><br />
-            Phone: <a href="tel:+260973028342">+260 973 028 342</a><br />
-            WhatsApp: <a href="https://wa.me/260973028342" target="_blank" rel="noopener">+260 973 028 342</a>
-        </p>
+                <h2>13. Governing law</h2>
+                <p>These terms are governed by the laws of the Republic of Zambia, and the courts of Zambia have jurisdiction over any dispute arising from them.</p>
+
+                <h2>14. Changes</h2>
+                <p>We may update these terms from time to time. The "Last updated" date above shows the current version, and continued use of the website after changes means you accept the updated terms.</p>
+
+                <h2>15. Contact</h2>
+                <ul>
+                    <li>Email: <a href="mailto:seedwelinvestltd@gmail.com">seedwelinvestltd@gmail.com</a></li>
+                    <li>WhatsApp / Phone: <a href="tel:+260973028342">+260 973 028 342</a></li>
+                    <li>Location: Kabwe, Zambia</li>
+                </ul>
+            </div>
+        </div>
     </main>
 
-    <footer>
-        <p>&copy; 2026 Seedwel Investment LTD.
-            <a href="index.html">Home</a>
-            <a href="privacy.html">Privacy</a>
-            <a href="contact.html">Contact</a>
-        </p>
-    </footer>
-    <script src="assets/js/service-strip.js" defer></script>
-    <script src="assets/js/local-ai.js" defer></script>
+    <script src="assets/js/site.js" defer></script>
 </body>
 </html>
