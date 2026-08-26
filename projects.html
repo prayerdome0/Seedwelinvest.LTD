@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore the live Seedwel Investment LTD portfolio — websites, branding, graphics and creative work.">
-    <link rel="canonical" href="https://seedwel.ltd/projects.html" />
+    <meta name="description" content="Explore the Seedwel Investment LTD project showcase — websites, branding, graphics and digital service examples.">
+    <link rel="canonical" href="https://seedwel.ltd/projects" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Seedwel Investment LTD" />
     <meta property="og:title" content="Projects &amp; Portfolio | Seedwel Investment LTD" />
-    <meta property="og:description" content="Live portfolio of work delivered by Seedwel Investment LTD." />
-    <meta property="og:url" content="https://seedwel.ltd/projects.html" />
+    <meta property="og:description" content="Portfolio and digital project showcase by Seedwel Investment LTD." />
+    <meta property="og:url" content="https://seedwel.ltd/projects" />
     <meta name="twitter:card" content="summary" />
     <meta name="theme-color" content="#dc2626">
     <meta name="referrer" content="strict-origin-when-cross-origin">
@@ -33,6 +33,9 @@
             content: ''; width: 8px; height: 8px; border-radius: 50%;
             background: #22c55e; box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.15);
         }
+        .project-search { max-width: 760px; margin: 0 auto 18px; }
+        .project-search input { width: 100%; min-height: 48px; padding: 0 18px; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--ink); font: inherit; box-shadow: var(--shadow-soft); }
+        .project-search input:focus { outline: 3px solid rgba(220, 38, 38, 0.12); border-color: var(--brand); }
         .filter-bar { display: flex; flex-wrap: wrap; gap: 9px; justify-content: center; margin-bottom: 36px; }
         .filter {
             padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px;
@@ -135,20 +138,20 @@
 
     <header class="header" id="header">
         <div class="container header-inner">
-            <a href="index.html" class="logo-container" aria-label="Seedwel Investment LTD — Home">
+            <a href="/" class="logo-container" aria-label="Seedwel Investment LTD — Home">
                 <img src="https://i.ibb.co/svxj52ny/seedwel.png" class="logo-img" alt="Seedwel Investment LTD logo" />
                 <span class="company-name-header">Seedwel <span>Investment</span> LTD</span>
             </a>
             <nav class="nav-links" aria-label="Main navigation">
-                <a href="index.html">Home</a>
-                <a href="about.html">About</a>
-                <a href="services.html">Services</a>
-                <a href="education.html">Education</a>
-                <a href="projects.html" class="active" aria-current="page">Projects</a>
-                <a href="apply.html">Careers</a>
-                <a href="contact.html">Contact</a>
-                <a href="login.html" class="btn btn-ghost nav-login">Login</a>
-                <a href="request.html" class="btn btn-primary nav-cta">Request a Service</a>
+                <a href="/">Home</a>
+                <a href="/about">About</a>
+                <a href="/services">Services</a>
+                <a href="/education">Education</a>
+                <a href="/projects" class="active" aria-current="page">Projects</a>
+                <a href="/apply">Careers</a>
+                <a href="/contact">Contact</a>
+                <a href="/login" class="btn btn-ghost nav-login">Login</a>
+                <a href="/request" class="btn btn-primary nav-cta">Request a Service</a>
             </nav>
             <button class="hamburger" id="hamburger" type="button" aria-label="Open menu" aria-expanded="false">
                 <span></span><span></span><span></span>
@@ -158,16 +161,16 @@
 
     <div class="menu-overlay" id="menuOverlay"></div>
     <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
-        <a href="index.html"><i class="fa-solid fa-house" aria-hidden="true"></i> Home</a>
-        <a href="about.html"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> About</a>
-        <a href="services.html"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Services</a>
-        <a href="projects.html" class="active"><i class="fa-solid fa-folder-open" aria-hidden="true"></i> Projects</a>
-        <a href="apply.html"><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Careers</a>
-        <a href="contact.html"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Contact</a>
-        <a href="support.html"><i class="fa-solid fa-headset" aria-hidden="true"></i> Support</a>
-        <a href="login.html"><i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i> Login</a>
+        <a href="/"><i class="fa-solid fa-house" aria-hidden="true"></i> Home</a>
+        <a href="/about"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> About</a>
+        <a href="/services"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Services</a>
+        <a href="/projects" class="active"><i class="fa-solid fa-folder-open" aria-hidden="true"></i> Projects</a>
+        <a href="/apply"><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Careers</a>
+        <a href="/contact"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Contact</a>
+        <a href="/support"><i class="fa-solid fa-headset" aria-hidden="true"></i> Support</a>
+        <a href="/login"><i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i> Login</a>
         <div class="menu-divider"></div>
-        <a href="request.html" class="menu-request"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Request a Service</a>
+        <a href="/request" class="menu-request"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Request a Service</a>
     </nav>
 
     <main>
@@ -175,9 +178,9 @@
             <div class="container">
                 <p class="eyebrow">Our Work</p>
                 <h1>Projects &amp; <span>Portfolio</span></h1>
-                <p>A live collection of work delivered by Seedwel Investment LTD — managed directly by our team and updated as new projects are completed.</p>
+                <p>Explore 200+ website and digital project showcase entries across business websites, e-commerce, real estate, education, healthcare, logistics and more.</p>
                 <div class="share-row reveal d1">
-                    <span class="live-status" id="portfolioStatus">Loading live portfolio</span>
+                    <span class="live-status" id="portfolioStatus">Loading project showcase</span>
                     <button class="btn btn-outline" id="copyPortfolio" type="button" style="min-height:38px;padding:7px 16px;font-size:0.78rem;"><i class="fa-solid fa-link" aria-hidden="true"></i> Copy link</button>
                     <a class="btn btn-whatsapp" id="shareWhatsApp" target="_blank" rel="noopener" style="min-height:38px;padding:7px 16px;font-size:0.78rem;"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Share</a>
                 </div>
@@ -187,8 +190,12 @@
         <section class="section" style="padding-top:52px;" aria-labelledby="workTitle">
             <div class="container">
                 <div class="section-head reveal">
-                    <h2 class="section-title" id="workTitle">Selected work</h2>
-                    <p class="section-intro">Every entry below is a real project published by the Seedwel team from our secure admin workspace.</p>
+                    <h2 class="section-title" id="workTitle">200+ Website &amp; Digital Project Showcase</h2>
+                    <p class="section-intro">Browse professional showcase examples and published portfolio entries by category. Showcase examples demonstrate capability without claiming private client relationships.</p>
+                </div>
+
+                <div class="project-search reveal">
+                    <input id="projectSearch" type="search" placeholder="Search by project name, category, services or market…" autocomplete="off" />
                 </div>
 
                 <div class="filter-bar reveal" id="filterBar" role="group" aria-label="Filter projects">
@@ -200,7 +207,8 @@
                 </div>
 
                 <div class="share-row reveal">
-                    <a href="request.html" class="btn btn-primary"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Start a project with us</a>
+                    <button class="btn btn-outline" id="loadMoreProjects" type="button" hidden><i class="fa-solid fa-plus" aria-hidden="true"></i> Load more projects</button>
+                    <a href="/request" class="btn btn-primary"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Start a project with us</a>
                 </div>
             </div>
         </section>
@@ -227,6 +235,7 @@
         </div>
     </dialog>
 
+    <script src="assets/js/showcase-projects.js"></script>
     <script>
         window.addEventListener('DOMContentLoaded', function () {
             'use strict';
@@ -245,6 +254,8 @@
 
             var allProjects = [];
             var activeFilter = 'All';
+            var visibleCount = 24;
+            var searchTerm = '';
             var selectedProject = null;
             var selectedImages = [];
             var selectedImageIndex = 0;
@@ -268,7 +279,7 @@
                 });
                 return unique.length ? unique : ['favicon.svg'];
             }
-            function portfolioLink() { return new URL('projects.html', window.location.href).href; }
+            function portfolioLink() { return new URL('/projects', window.location.href).href; }
 
             function showToast(message) {
                 var node = document.querySelector('.toast');
@@ -292,7 +303,8 @@
                     button.type = 'button';
                     button.className = 'filter' + (category === activeFilter ? ' active' : '');
                     button.dataset.filter = category;
-                    button.textContent = category === 'All' ? 'All work' : category;
+                    var count = category === 'All' ? allProjects.length : allProjects.filter(function (project) { return safeText(project.category, 60) === category; }).length;
+                    button.textContent = (category === 'All' ? 'All work' : category) + ' (' + count + ')';
                     bar.appendChild(button);
                 });
             }
@@ -301,20 +313,24 @@
                 var grid = $('projectsGrid');
                 grid.textContent = '';
                 var matches = allProjects.filter(function (project) {
-                    return activeFilter === 'All' || safeText(project.category, 60) === activeFilter;
+                    var categoryOk = activeFilter === 'All' || safeText(project.category, 60) === activeFilter;
+                    var haystack = [project.name, project.category, project.client, project.description, project.results]
+                        .map(function (value) { return safeText(value, 1200).toLowerCase(); }).join(' ');
+                    var searchOk = !searchTerm || haystack.indexOf(searchTerm) !== -1;
+                    return categoryOk && searchOk;
                 });
                 if (!matches.length) {
                     var empty = document.createElement('div');
                     empty.className = 'empty-projects';
                     empty.innerHTML = '<i class="fa-solid fa-folder-open" aria-hidden="true"></i>' +
                         (allProjects.length
-                            ? 'No published projects match this filter yet.'
-                            : 'Our live portfolio is being updated with recent work. If you would like to see examples of what we deliver, <a href="request.html">request a service</a> or <a href="contact.html">contact us</a>.');
+                            ? 'No projects match this filter/search yet.'
+                            : 'Our live portfolio is being updated with recent work. If you would like to see examples of what we deliver, <a href="/request">request a service</a> or <a href="/contact">contact us</a>.');
                     grid.appendChild(empty);
                     if (window.SeedwelRefreshReveals) window.SeedwelRefreshReveals();
                     return;
                 }
-                matches.forEach(function (project) {
+                matches.slice(0, visibleCount).forEach(function (project) {
                     var article = document.createElement('article');
                     article.className = 'card service-card project-card reveal';
                     var media = document.createElement('div');
@@ -337,7 +353,7 @@
                     body.className = 'project-body';
                     var client = document.createElement('p');
                     client.className = 'project-client';
-                    client.textContent = safeText(project.client, 120) || 'Seedwel client';
+                    client.textContent = safeText(project.client, 120) || (project.showcase ? 'Showcase project example' : 'Seedwel portfolio entry');
                     var title = document.createElement('h3');
                     title.textContent = safeText(project.name, 120) || 'Untitled project';
                     var description = document.createElement('p');
@@ -368,12 +384,18 @@
                     article.append(media, body);
                     grid.appendChild(article);
                 });
+                var more = $('loadMoreProjects');
+                if (more) {
+                    more.hidden = matches.length <= visibleCount;
+                    more.innerHTML = '<i class="fa-solid fa-plus" aria-hidden="true"></i> Load more projects (' + Math.max(0, matches.length - visibleCount) + ' remaining)';
+                }
                 if (window.SeedwelRefreshReveals) window.SeedwelRefreshReveals();
             }
 
-            function updateStatus(count, fallback) {
+            function updateStatus(count, mode) {
                 var status = $('portfolioStatus');
-                status.textContent = fallback ? 'Showcase unavailable' : (count ? count + ' live project' + (count === 1 ? '' : 's') : 'Live portfolio ready');
+                if (mode === 'live') status.textContent = count + ' published portfolio entr' + (count === 1 ? 'y' : 'ies');
+                else status.textContent = count + '+ showcase projects';
             }
 
             function renderGallery() {
@@ -440,9 +462,21 @@
                 var button = event.target.closest('button[data-filter]');
                 if (!button) return;
                 activeFilter = button.dataset.filter;
+                visibleCount = 24;
                 document.querySelectorAll('.filter').forEach(function (filter) {
                     filter.classList.toggle('active', filter === button);
                 });
+                renderProjects();
+            });
+
+            if ($('projectSearch')) $('projectSearch').addEventListener('input', function () {
+                searchTerm = safeText(this.value, 160).toLowerCase();
+                visibleCount = 24;
+                renderProjects();
+            });
+
+            if ($('loadMoreProjects')) $('loadMoreProjects').addEventListener('click', function () {
+                visibleCount += 24;
                 renderProjects();
             });
 
@@ -482,18 +516,19 @@
             });
 
             db.ref('publicProjects').on('value', function (snapshot) {
-                allProjects = Object.entries(snapshot.val() || {})
+                var liveProjects = Object.entries(snapshot.val() || {})
                     .map(function (entry) { return entry[1]; })
                     .filter(function (project) { return project && project.published !== false; })
                     .sort(function (a, b) { return Number(b.updatedAt || b.createdAt || 0) - Number(a.updatedAt || a.createdAt || 0); });
+                allProjects = liveProjects.length ? liveProjects : (window.SeedwelShowcaseProjects || []);
                 buildFilters();
                 renderProjects();
-                updateStatus(allProjects.length, false);
+                updateStatus(allProjects.length, liveProjects.length ? 'live' : 'showcase');
             }, function () {
-                allProjects = [];
+                allProjects = window.SeedwelShowcaseProjects || [];
                 buildFilters();
                 renderProjects();
-                updateStatus(0, true);
+                updateStatus(allProjects.length, 'showcase');
             });
 
             updateShareLink();

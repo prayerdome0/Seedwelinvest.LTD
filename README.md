@@ -17,25 +17,25 @@ The public website for **Seedwel Investment LTD** — a growing organisation wor
 
 | Page | Purpose |
 |------|---------|
-| `index.html` | Home — hero, What We Do (4 areas), the website + graphics package, How We Build It (5 steps), education, live portfolio, story teaser |
-| `about.html` | Our Story and What We're Building (today / growing / education initiative) |
-| `services.html` | Digital & business services with the package concept |
-| `education.html` | Seedwel Education Initiative — Early Learning (ages 3–5, free) and Tuition (Mathematics, Computer Studies) |
-| `projects.html` | Live public portfolio (managed from the admin dashboard) |
-| `apply.html` | Careers — **Virtual Assistant** and **Cold Caller** only, with responsibilities, compensation summary and the honest application→dashboard process |
-| `contact.html` | Contact form (saved to Firebase) |
-| `request.html` | **Request a Service** form — creates a service request in the admin workflow |
-| `support.html` | Help centre and FAQ |
-| `privacy.html` / `cookie-policy.html` / `terms.html` | Legal |
-| `login.html` | Member login page for approved/registered accounts |
-| `register.html` | One-time invitation registration page with applicant details pre-filled |
-| `dashboard.html` | Private member dashboard (member ID, **My Documents**, tasks, notifications, profile, security) |
-| `admin/dashboard.html` | Modular admin: overview metrics and activity |
-| `admin/applications.html` (+ `application.html`) | Recruitment inbox and application detail |
-| `admin/members.html` (+ `member.html`) | Approved members and registration state |
-| `admin/documents.html` | **Worker document library** — upload → select role → publish |
-| `admin.html` | Legacy all-in-one operations workspace (requests, jobs, tasks, portfolio/media, messages, verification, reports, audit, settings) |
-| `verify.html` | Public Seedwel worker verification page (opened by scanning a worker's QR code) |
+| `/` | Home — hero, What We Do (4 areas), the website + graphics package, How We Build It (5 steps), education, live portfolio, story teaser |
+| `/about` | Our Story and What We're Building (today / growing / education initiative) |
+| `/services` | Digital & business services with the package concept |
+| `/education` | Seedwel Education Initiative — Early Learning (ages 3–5, free) and Tuition (Mathematics, Computer Studies) |
+| `/projects` | Live public portfolio (managed from the admin dashboard) |
+| `/apply` | Careers — **Virtual Assistant** and **Cold Caller** only, with responsibilities, compensation summary and the honest application→dashboard process |
+| `/contact` | Contact form (saved to Firebase) |
+| `/request` | **Request a Service** form — creates a service request in the admin workflow |
+| `/support` | Help centre and FAQ |
+| `/privacy` / `/cookie-policy` / `/terms` | Legal |
+| `/login` | Member login page for approved/registered accounts |
+| `/register` | One-time invitation registration page with applicant details pre-filled |
+| `/dashboard` | Private member dashboard (member ID, **My Documents**, tasks, notifications, profile, security) |
+| `/admin/dashboard` | Modular admin: overview metrics and activity |
+| `/admin/applications` (+ `application.html`) | Recruitment inbox and application detail |
+| `/admin/members` (+ `member.html`) | Approved members and registration state |
+| `/admin/documents` | **Worker document library** — upload → select role → publish |
+| `/admin` | Legacy all-in-one operations workspace (requests, jobs, tasks, portfolio/media, messages, verification, reports, audit, settings) |
+| `/verify` | Public Seedwel worker verification page (opened by scanning a worker's QR code) |
 
 ## Design system
 
@@ -48,16 +48,16 @@ The public website for **Seedwel Investment LTD** — a growing organisation wor
 
 - A bottom consent banner appears on a visitor's first visit with a genuine choice: **Accept All**, **Manage Preferences** (per-category toggles) or **Reject Non-Essential**. Rejecting keeps the site fully functional.
 - The choice is stored locally (`seedwel.consent.v1`), can be changed at any time via **Cookie settings** in the footer, and is exposed to scripts as `window.SeedwelConsent`.
-- `privacy.html` explains in plain language what is collected (service requests, contact forms, job applications and CVs), why, which third parties are involved (Firebase, Cloudinary, Vercel), retention and user rights. `cookie-policy.html` lists the exact storage items used.
+- `/privacy` explains in plain language what is collected (service requests, contact forms, job applications and CVs), why, which third parties are involved (Firebase, Cloudinary, Vercel), retention and user rights. `/cookie-policy` lists the exact storage items used.
 
 ## Service requests (public → admin workflow)
 
-- Visitors submit the **Request a Service** form (`request.html`, pre-selectable via `?service=website-package`, `?service=web-development`, etc.). Requests are pushed to `serviceRequests` in the Firebase Realtime Database; Database Rules allow public *creation only* (with status `new`) and administrator-only reads/updates.
-- The legacy admin workspace (`admin.html` → **Requests**) manages each request through the pipeline **New → Reviewing → Assigned → In Progress → Completed** (plus Cancelled), with assignee names, optional notes, search, status filters, email reply and an audit-log entry for every status change.
+- Visitors submit the **Request a Service** form (`/request`, pre-selectable via `?service=website-package`, `?service=web-development`, etc.). Requests are pushed to `serviceRequests` in the Firebase Realtime Database; Database Rules allow public *creation only* (with status `new`) and administrator-only reads/updates.
+- The legacy admin workspace (`/admin` → **Requests**) manages each request through the pipeline **New → Reviewing → Assigned → In Progress → Completed** (plus Cancelled), with assignee names, optional notes, search, status filters, email reply and an audit-log entry for every status change.
 
 ## Hiring portal (two roles, one honest process)
 
-- **One login entry point** (`login.html`): the account role is stored in Firebase (server-side rules), never chosen in the browser. After sign-in, admins are routed to the admin dashboard, approved workers to their dashboard, and applicants to their status screen.
+- **One login entry point** (`/login`): the account role is stored in Firebase (server-side rules), never chosen in the browser. After sign-in, admins are routed to the admin dashboard, approved workers to their dashboard, and applicants to their status screen.
 - **Only two positions are advertised**: Virtual Assistant and Cold Caller. Compensation is presented as **$600/month + 10% commission on eligible sales**, with a note that the exact terms (including which sales are eligible) are defined in the job description and work agreement. Additional openings may still be posted from the admin **Jobs** view and then appear on the careers page.
 - **Application workflow**: Application → Review → Shortlisted → Approved → **Registration Invitation** → Registration → Dashboard. No password is ever generated for a worker; after approval the applicant receives a secure one-time registration link and creates their own password. Every admin status change is added to the audit trail with its actor and timestamp.
 - **Automatic Worker IDs** (`SWL-YYYY-000001`): issued transactionally on approval from a monotonic counter; unique, permanent, never reused, and impossible for applicants to set themselves (blocked by Database Rules).
@@ -76,8 +76,8 @@ Access control is enforced twice: the Database Rules only let a worker read `doc
 
 ## Team portal
 
-- Applicants submit public applications via `apply.html` (with private CV upload to Cloudinary). After admin approval, the system creates a one-time registration invitation; the applicant then creates their own password and activates their member account.
-- `dashboard.html` is protected by Firebase Authentication. Pending accounts see an "Application under review" screen; only **active** workers see the dashboard (role, commission rate, stats, My Documents, and assigned tasks). Workers can move tasks **Pending → In Progress → Completed** and leave progress notes, and submit daily reports.
+- Applicants submit public applications via `/apply` (with private CV upload to Cloudinary). After admin approval, the system creates a one-time registration invitation; the applicant then creates their own password and activates their member account.
+- `/dashboard` is protected by Firebase Authentication. Pending accounts see an "Application under review" screen; only **active** workers see the dashboard (role, commission rate, stats, My Documents, and assigned tasks). Workers can move tasks **Pending → In Progress → Completed** and leave progress notes, and submit daily reports.
 - The legacy admin workspace has a **Workers** panel: approve, reject, suspend, or activate workers, plus an **Assign a task** form that writes to `/tasks/{workerUid}/{taskId}`.
 
 ## Media

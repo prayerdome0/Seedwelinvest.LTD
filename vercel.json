@@ -1,5 +1,5 @@
 {
-  "cleanUrls": false,
+  "cleanUrls": true,
   "trailingSlash": false,
   "headers": [
     {
@@ -12,7 +12,7 @@
       ]
     },
     {
-      "source": "/(admin|login|dashboard|verify|register).html",
+      "source": "/(admin|login|dashboard|verify|register)",
       "headers": [
         { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" },
         { "key": "Cache-Control", "value": "no-store" }
@@ -39,17 +39,61 @@
       ]
     }
   ],
+  "redirects": [
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/about.html", "destination": "/about", "permanent": true },
+    { "source": "/services.html", "destination": "/services", "permanent": true },
+    { "source": "/education.html", "destination": "/education", "permanent": true },
+    { "source": "/projects.html", "destination": "/projects", "permanent": true },
+    { "source": "/apply.html", "destination": "/apply", "permanent": true },
+    { "source": "/contact.html", "destination": "/contact", "permanent": true },
+    { "source": "/request.html", "destination": "/request", "permanent": true },
+    { "source": "/support.html", "destination": "/support", "permanent": true },
+    { "source": "/privacy.html", "destination": "/privacy", "permanent": true },
+    { "source": "/cookie-policy.html", "destination": "/cookie-policy", "permanent": true },
+    { "source": "/terms.html", "destination": "/terms", "permanent": true },
+    { "source": "/login.html", "destination": "/login", "permanent": true },
+    { "source": "/register.html", "destination": "/register", "permanent": true },
+    { "source": "/dashboard.html", "destination": "/dashboard", "permanent": true },
+    { "source": "/verify.html", "destination": "/verify", "permanent": true },
+    { "source": "/admin.html", "destination": "/admin", "permanent": true },
+    { "source": "/admin/login.html", "destination": "/admin/login", "permanent": true },
+    { "source": "/admin/dashboard.html", "destination": "/admin/dashboard", "permanent": true },
+    { "source": "/admin/applications.html", "destination": "/admin/applications", "permanent": true },
+    { "source": "/admin/application.html", "destination": "/admin/application", "permanent": true },
+    { "source": "/admin/members.html", "destination": "/admin/members", "permanent": true },
+    { "source": "/admin/member.html", "destination": "/admin/member", "permanent": true },
+    { "source": "/admin/documents.html", "destination": "/admin/documents", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/", "destination": "/index.html" },
+    { "source": "/about", "destination": "/about.html" },
+    { "source": "/services", "destination": "/services.html" },
+    { "source": "/education", "destination": "/education.html" },
+    { "source": "/projects", "destination": "/projects.html" },
+    { "source": "/apply", "destination": "/apply.html" },
+    { "source": "/contact", "destination": "/contact.html" },
+    { "source": "/request", "destination": "/request.html" },
+    { "source": "/support", "destination": "/support.html" },
+    { "source": "/privacy", "destination": "/privacy.html" },
+    { "source": "/cookie-policy", "destination": "/cookie-policy.html" },
+    { "source": "/terms", "destination": "/terms.html" },
+    { "source": "/login", "destination": "/login.html" },
+    { "source": "/register", "destination": "/register.html" },
+    { "source": "/dashboard", "destination": "/dashboard.html" },
+    { "source": "/profile", "destination": "/dashboard.html" },
+    { "source": "/verify", "destination": "/verify.html" },
+    { "source": "/admin", "destination": "/admin.html" },
     { "source": "/admin/login", "destination": "/admin/login.html" },
     { "source": "/admin/dashboard", "destination": "/admin/dashboard.html" },
     { "source": "/admin/applications", "destination": "/admin/applications.html" },
     { "source": "/admin/applications/:id", "destination": "/admin/application.html?id=:id" },
+    { "source": "/admin/application", "destination": "/admin/application.html" },
     { "source": "/admin/members", "destination": "/admin/members.html" },
-    { "source": "/admin/member", "destination": "/admin/member.html" },
     { "source": "/admin/members/:id", "destination": "/admin/member.html?id=:id" },
+    { "source": "/admin/member", "destination": "/admin/member.html" },
     { "source": "/admin/documents", "destination": "/admin/documents.html" },
-    { "source": "/member/dashboard", "destination": "/dashboard.html" },
-    { "source": "/register", "destination": "/register.html" }
+    { "source": "/admin/settings", "destination": "/admin.html" },
+    { "source": "/member/dashboard", "destination": "/dashboard.html" }
   ]
 }

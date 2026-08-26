@@ -95,7 +95,7 @@
         if (invitation) {
             var inviteStatus = String(invitation.status || '').toLowerCase();
             if (inviteStatus === 'registered' || inviteStatus === 'used') return 'registered';
-            if (inviteStatus === 'pending') return 'registration_sent';
+            if (inviteStatus === 'pending') return raw === 'approved' ? 'approved' : 'registration_sent';
         }
         return raw;
     }

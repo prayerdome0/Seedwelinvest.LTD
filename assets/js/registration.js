@@ -133,7 +133,7 @@
     });
 
     document.getElementById('goToDashboardBtn').addEventListener('click', function () {
-        window.location.href = '/member/dashboard';
+        window.location.href = '/dashboard';
     });
 
     auth.onAuthStateChanged(function (user) {

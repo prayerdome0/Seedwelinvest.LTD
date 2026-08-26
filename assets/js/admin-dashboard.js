@@ -41,7 +41,7 @@
             if (state === 'pending' || state === 'under_review') counts.pendingReviews += 1;
             if (state === 'shortlisted') counts.shortlisted += 1;
             if (state === 'approved' || state === 'registration_sent' || state === 'registered' || state === 'active') counts.approved += 1;
-            if (state === 'registration_sent') counts.pendingRegistrations += 1;
+            if ((invitation && invitation.value && String(invitation.value.status || '').toLowerCase() === 'pending') && state !== 'active') counts.pendingRegistrations += 1;
         });
         return counts;
     }
@@ -102,7 +102,7 @@
             var invitation = utils.findInvitationForApplication(invitations, appId);
             var worker = utils.findWorkerForApplication(workers, app, invitation);
             var state = utils.deriveApplicationStatus(app, invitation && invitation.value, worker && worker.value);
-            if (state === 'pending' || state === 'under_review' || state === 'registration_sent') {
+            if (state === 'pending' || state === 'under_review' || (invitation && invitation.value && String(invitation.value.status || '').toLowerCase() === 'pending')) {
                 items.push({ id: appId, app: app, state: state });
             }
         });
@@ -115,9 +115,11 @@
             return;
         }
         items.slice(0, 6).forEach(function (entry) {
-            var copy = entry.state === 'registration_sent'
-                ? 'Invitation pending registration.'
-                : 'Needs review by the administrator.';
+            var copy = entry.state === 'approved'
+                ? 'Approved — registration link pending.'
+                : entry.state === 'registration_sent'
+                    ? 'Invitation pending registration.'
+                    : 'Needs review by the administrator.';
             var item = document.createElement('div');
             item.className = 'list-item';
             item.innerHTML = '<strong>' + utils.escapeHtml(entry.app.fullName || 'Applicant') + '</strong>'
