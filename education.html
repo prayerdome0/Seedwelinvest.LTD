@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#dc2626" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png" />
     <link rel="manifest" href="site.webmanifest" />
     <title>Seedwel Education Initiative | Early Learning &amp; Tuition</title>
     <meta name="description" content="Seedwel Early Learning — a free early-learning initiative for children aged 3–5 — and Seedwel Tuition in Mathematics and Computer Studies." />
@@ -34,9 +35,31 @@
       "address": { "@type": "PostalAddress", "addressLocality": "Kabwe", "addressCountry": "ZM" }
     }
     </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://seedwel.ltd/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Education",
+          "item": "https://seedwel.ltd/education"
+        }
+      ]
+    }
+    </script>
 </head>
 
 <body data-page="education">
+
+    <a href="#main" class="skip-link">Skip to main content</a>
 
     <!-- ========== HEADER ========== -->
     <header class="header" id="header">
@@ -77,7 +100,7 @@
         <a href="/request" class="menu-request"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Request a Service</a>
     </nav>
 
-    <main>
+    <main id="main">
 
         <!-- ========== PAGE HERO ========== -->
         <section class="page-hero">
@@ -109,7 +132,10 @@
                     </div>
                 </div>
                 <div class="edu-media reveal d2">
-                    <img src="assets/images/education-early-learning.jpg" alt="Warm illustration of a teacher helping young children build colourful blocks in an early-learning classroom" width="1536" height="1024" loading="lazy" decoding="async" />
+                    <picture>
+                        <source type="image/webp" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/images/education-early-learning-768.webp 768w, assets/images/education-early-learning.webp 1280w" />
+                        <img src="assets/images/education-early-learning.jpg" alt="Warm illustration of a teacher helping young children build colourful blocks in an early-learning classroom" loading="lazy" decoding="async" width="1376" height="768" />
+                    </picture>
                 </div>
             </div>
         </section>
@@ -125,7 +151,10 @@
                 <div class="grid-2" style="gap:30px;">
                     <article class="card service-card reveal">
                         <div class="service-media">
-                            <img src="assets/images/education-mathematics.jpg" alt="Student solving mathematics equations in a notebook during a tutoring session" width="1536" height="1024" loading="lazy" decoding="async" />
+                            <picture>
+                                <source type="image/webp" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/images/education-mathematics-768.webp 768w, assets/images/education-mathematics.webp 1280w" />
+                                <img src="assets/images/education-mathematics.jpg" alt="Student solving mathematics equations in a notebook during a tutoring session" loading="lazy" decoding="async" width="1376" height="768" />
+                            </picture>
                         </div>
                         <div class="service-body">
                             <span class="service-tag">Seedwel Tuition</span>
@@ -142,7 +171,10 @@
                     </article>
                     <article class="card service-card reveal d1">
                         <div class="service-media">
-                            <img src="assets/images/education-computer-studies.jpg" alt="Student learning computer studies at a desktop computer with a teacher's guidance" width="1536" height="1024" loading="lazy" decoding="async" />
+                            <picture>
+                                <source type="image/webp" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/images/education-computer-studies-768.webp 768w, assets/images/education-computer-studies.webp 1280w" />
+                                <img src="assets/images/education-computer-studies.jpg" alt="Student learning computer studies at a desktop computer with a teacher's guidance" loading="lazy" decoding="async" width="1376" height="768" />
+                            </picture>
                         </div>
                         <div class="service-body">
                             <span class="service-tag">Seedwel Tuition</span>

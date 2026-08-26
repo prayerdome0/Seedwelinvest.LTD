@@ -21,8 +21,11 @@
     <meta name="theme-color" content="#dc2626" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png" />
     <link rel="manifest" href="site.webmanifest" />
-    <link rel="preload" as="image" href="assets/images/hero-home.jpg" fetchpriority="high" />
+    <link rel="preload" as="image" href="assets/images/hero-home.webp" fetchpriority="high"
+          imagesrcset="assets/images/hero-home-768.webp 768w, assets/images/hero-home.webp 1280w"
+          imagesizes="(max-width: 768px) 100vw, 50vw" />
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
@@ -33,7 +36,8 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Organization",
+      "@type": ["Organization", "LocalBusiness", "ProfessionalService"],
+      "@id": "https://seedwel.ltd/#organization",
       "name": "Seedwel Investment LTD",
       "url": "https://seedwel.ltd/",
       "logo": "https://i.ibb.co/svxj52ny/seedwel.png",
@@ -47,12 +51,54 @@
         "addressCountry": "ZM"
       },
       "areaServed": ["ZM", "Global"],
-      "sameAs": ["https://wa.me/260973028342"]
+      "sameAs": ["https://wa.me/260973028342"],
+      "contactPoint": [{
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "telephone": "+260973028342",
+        "email": "seedwelinvestltd@gmail.com",
+        "areaServed": ["ZM", "Global"],
+        "availableLanguage": ["en"]
+      }],
+      "knowsAbout": [
+        "Website development",
+        "Logo and brand design",
+        "Business cards and printed business materials",
+        "Graphics and social media design",
+        "Early childhood education",
+        "Mathematics tuition",
+        "Computer studies tuition"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Seedwel digital and business services",
+        "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website + Branding Package", "description": "Website, logo, business cards and graphics built as one consistent solution.", "url": "https://seedwel.ltd/request?service=website-package" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website Development", "description": "Responsive business websites.", "url": "https://seedwel.ltd/request?service=web-development" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Logo & Brand Design", "description": "Logo and visual brand identity design.", "url": "https://seedwel.ltd/request?service=logo-branding" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Business Cards & Business Materials", "description": "Business cards, flyers, letterheads and printed materials.", "url": "https://seedwel.ltd/request?service=business-materials" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Graphics & Social Media Design", "description": "Social media graphics and marketing visuals.", "url": "https://seedwel.ltd/request?service=graphics-social" } }
+        ]
+      }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://seedwel.ltd/#website",
+      "url": "https://seedwel.ltd/",
+      "name": "Seedwel Investment LTD",
+      "publisher": { "@id": "https://seedwel.ltd/#organization" },
+      "inLanguage": "en"
     }
     </script>
 </head>
 
 <body data-page="home">
+
+    <a href="#main" class="skip-link">Skip to main content</a>
 
     <!-- ========== HEADER ========== -->
     <header class="header" id="header">
@@ -93,7 +139,7 @@
         <a href="/request" class="menu-request"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Request a Service</a>
     </nav>
 
-    <main>
+    <main id="main">
 
         <!-- ========== HERO ========== -->
         <section class="hero">
@@ -117,7 +163,10 @@
                     </ul>
                 </div>
                 <div class="hero-image">
-                    <img src="assets/images/hero-home.jpg" alt="Seedwel team reviewing a newly designed business website with a client" width="1536" height="1024" fetchpriority="high" decoding="async" />
+                    <picture>
+                        <source type="image/webp" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/images/hero-home-768.webp 768w, assets/images/hero-home.webp 1280w" />
+                        <img src="assets/images/hero-home.jpg" alt="Seedwel team reviewing a newly designed business website with a client" fetchpriority="high" decoding="async" width="1376" height="768" />
+                    </picture>
                 </div>
             </div>
         </section>
@@ -133,7 +182,10 @@
                 <div class="area-grid">
                     <article class="card area-card reveal">
                         <div class="area-media">
-                            <img src="assets/images/what-we-do-digital.jpg" alt="Designer sketching a logo beside a laptop showing a website design" width="1536" height="1152" loading="lazy" decoding="async" />
+                            <picture>
+                                <source type="image/webp" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/images/what-we-do-digital-768.webp 768w, assets/images/what-we-do-digital.webp 1280w" />
+                                <img src="assets/images/what-we-do-digital.jpg" alt="Designer sketching a logo beside a laptop showing a website design" loading="lazy" decoding="async" width="1376" height="768" />
+                            </picture>
                             <span class="area-icon"><i class="fa-solid fa-laptop-code" aria-hidden="true"></i></span>
                         </div>
                         <div class="area-body">
@@ -144,7 +196,10 @@
                     </article>
                     <article class="card area-card reveal d1">
                         <div class="area-media">
-                            <img src="assets/images/what-we-do-online-work.jpg" alt="Remote team member working from a bright home office with a headset" width="1536" height="1024" loading="lazy" decoding="async" />
+                            <picture>
+                                <source type="image/webp" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/images/what-we-do-online-work-768.webp 768w, assets/images/what-we-do-online-work.webp 1280w" />
+                                <img src="assets/images/what-we-do-online-work.jpg" alt="Remote team member working from a bright home office with a headset" loading="lazy" decoding="async" width="1376" height="768" />
+                            </picture>
                             <span class="area-icon"><i class="fa-solid fa-headset" aria-hidden="true"></i></span>
                         </div>
                         <div class="area-body">
@@ -155,7 +210,10 @@
                     </article>
                     <article class="card area-card reveal d2">
                         <div class="area-media">
-                            <img src="assets/images/what-we-do-education.jpg" alt="Illustration of a joyful early-learning classroom with a teacher and young children" width="1536" height="1152" loading="lazy" decoding="async" />
+                            <picture>
+                                <source type="image/webp" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/images/what-we-do-education-768.webp 768w, assets/images/what-we-do-education.webp 1280w" />
+                                <img src="assets/images/what-we-do-education.jpg" alt="Illustration of a joyful early-learning classroom with a teacher and young children" loading="lazy" decoding="async" width="1376" height="768" />
+                            </picture>
                             <span class="area-icon"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i></span>
                         </div>
                         <div class="area-body">
@@ -166,7 +224,10 @@
                     </article>
                     <article class="card area-card reveal d3">
                         <div class="area-media">
-                            <img src="assets/images/what-we-do-support.jpg" alt="Consultant explaining a business plan to a shop owner across a table" width="1536" height="1024" loading="lazy" decoding="async" />
+                            <picture>
+                                <source type="image/webp" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/images/what-we-do-support-768.webp 768w, assets/images/what-we-do-support.webp 1280w" />
+                                <img src="assets/images/what-we-do-support.jpg" alt="Consultant explaining a business plan to a shop owner across a table" loading="lazy" decoding="async" width="1376" height="768" />
+                            </picture>
                             <span class="area-icon"><i class="fa-solid fa-handshake" aria-hidden="true"></i></span>
                         </div>
                         <div class="area-body">
@@ -203,7 +264,10 @@
                     </div>
                 </div>
                 <figure class="package-visual reveal d2">
-                    <img src="assets/images/package-mockup.jpg" alt="A complete business branding package: website on a laptop, logo card, business cards, flyer, social media graphic and letterhead" width="1536" height="1024" loading="lazy" decoding="async" />
+                    <picture>
+                        <source type="image/webp" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/images/package-mockup-768.webp 768w, assets/images/package-mockup.webp 1280w" />
+                        <img src="assets/images/package-mockup.jpg" alt="A complete business branding package: website on a laptop, logo card, business cards, flyer, social media graphic and letterhead" loading="lazy" decoding="async" width="1376" height="768" />
+                    </picture>
                     <figcaption>Website · Logo · Business cards · Social media graphics · Flyer</figcaption>
                 </figure>
             </div>
@@ -269,7 +333,10 @@
                         </div>
                     </div>
                     <div class="edu-media reveal d2">
-                        <img src="assets/images/education-early-learning.jpg" alt="Warm illustration of a teacher helping young children build colourful blocks in an early-learning classroom" width="1536" height="1024" loading="lazy" decoding="async" />
+                        <picture>
+                            <source type="image/webp" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/images/education-early-learning-768.webp 768w, assets/images/education-early-learning.webp 1280w" />
+                            <img src="assets/images/education-early-learning.jpg" alt="Warm illustration of a teacher helping young children build colourful blocks in an early-learning classroom" loading="lazy" decoding="async" width="1376" height="768" />
+                        </picture>
                     </div>
                 </div>
             </div>
@@ -313,7 +380,10 @@
                     <a href="/about" class="btn btn-outline">Read our story <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
                 </div>
                 <div class="story-media reveal d2">
-                    <img src="assets/images/about-team.jpg" alt="The Seedwel team planning together around a table" width="1536" height="1024" loading="lazy" decoding="async" />
+                    <picture>
+                        <source type="image/webp" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/images/about-team-768.webp 768w, assets/images/about-team.webp 1280w" />
+                        <img src="assets/images/about-team.jpg" alt="The Seedwel team planning together around a table" loading="lazy" decoding="async" width="1536" height="1024" />
+                    </picture>
                 </div>
             </div>
         </section>

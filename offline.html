@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#dc2626" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png" />
+    <title>You're offline | Seedwel Investment LTD</title>
+
+    <!-- Self-contained: this page must render with no network at all. -->
+    <style>
+        :root { --brand: #dc2626; --ink: #0f172a; --muted: #64748b; --line: #e2e8f0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: var(--ink);
+            background: #fff;
+            line-height: 1.65;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 32px 24px;
+            -webkit-font-smoothing: antialiased;
+        }
+        .wrap { width: min(560px, 100%); text-align: center; }
+        .mark {
+            display: grid; place-items: center;
+            width: 72px; height: 72px; margin: 0 auto 24px;
+            border-radius: 18px; background: #fef2f2; color: var(--brand);
+        }
+        .mark svg { width: 34px; height: 34px; }
+        h1 { font-size: clamp(1.4rem, 4vw, 1.9rem); letter-spacing: -0.02em; margin-bottom: 12px; }
+        p { color: var(--muted); margin-bottom: 12px; }
+        .actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 26px; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 12px 22px; border-radius: 10px; border: 1px solid transparent;
+            font-weight: 600; font-size: 0.95rem; text-decoration: none; cursor: pointer;
+        }
+        .btn-primary { background: var(--brand); color: #fff; }
+        .btn-outline { background: transparent; color: var(--brand); border-color: rgba(220, 38, 38, 0.45); }
+        .contact {
+            margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--line);
+            font-size: 0.9rem; color: var(--muted);
+        }
+        .contact a { color: var(--brand); }
+        .status { margin-top: 18px; font-size: 0.87rem; color: var(--muted); }
+    </style>
+</head>
+<body>
+    <main class="wrap">
+        <div class="mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M1 1l22 22" />
+                <path d="M16.72 11.06A10.94 10.94 0 0119 12.55" />
+                <path d="M5 12.55a10.94 10.94 0 015.17-2.39" />
+                <path d="M10.71 5.05A16 16 0 0122.58 9" />
+                <path d="M1.42 9a15.91 15.91 0 014.7-2.88" />
+                <path d="M8.53 16.11a6 6 0 016.95 0" />
+                <path d="M12 20h.01" />
+            </svg>
+        </div>
+
+        <h1>You're offline</h1>
+        <p>
+            This page needs an internet connection and your device is not connected right now.
+            Nothing is wrong with the Seedwel website.
+        </p>
+        <p>Pages you have already visited may still open while you are offline.</p>
+
+        <div class="actions">
+            <button type="button" class="btn btn-primary" id="retry">Try again</button>
+            <a href="/" class="btn btn-outline">Go to homepage</a>
+        </div>
+
+        <p class="status" id="status" role="status" aria-live="polite"></p>
+
+        <div class="contact">
+            Need us urgently? WhatsApp or call <a href="tel:+260973028342">+260 973 028 342</a><br />
+            or email <a href="mailto:seedwelinvestltd@gmail.com">seedwelinvestltd@gmail.com</a>
+        </div>
+    </main>
+
+    <script>
+        (function () {
+            var status = document.getElementById('status');
+
+            document.getElementById('retry').addEventListener('click', function () {
+                status.textContent = navigator.onLine ? 'Reconnecting…' : 'Still offline — check your connection and try again.';
+                if (navigator.onLine) window.location.reload();
+            });
+
+            // Reload automatically the moment the connection returns.
+            window.addEventListener('online', function () {
+                status.textContent = 'Back online — reloading…';
+                window.location.reload();
+            });
+
+            if (!navigator.onLine) status.textContent = 'No connection detected.';
+        })();
+    </script>
+</body>
+</html>

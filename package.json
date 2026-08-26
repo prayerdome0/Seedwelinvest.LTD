@@ -5,7 +5,9 @@
   "description": "Seedwel Investment LTD website and secure team portal",
   "license": "UNLICENSED",
   "scripts": {
-    "test": "node --test tests/*.test.js"
+    "test": "node --test tests/*.test.js && npm run validate",
+    "validate": "node tools/check-structured-data.js && node tools/check-links.js",
+    "build:images": "bash tools/build-images.sh"
   },
   "dependencies": {
     "cloudinary": "^2.10.0"

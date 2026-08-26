@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#dc2626" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png" />
     <link rel="manifest" href="site.webmanifest" />
     <title>Request a Service | Seedwel Investment LTD</title>
     <meta name="description" content="Request a service from Seedwel Investment LTD — a website, logo, business cards, graphics, a complete digital package, or an education enquiry." />
@@ -15,7 +16,10 @@
     <meta property="og:title" content="Request a Service | Seedwel Investment LTD" />
     <meta property="og:description" content="Tell us what you need and the Seedwel team will get back to you about the next steps." />
     <meta property="og:url" content="https://seedwel.ltd/request" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="https://seedwel.ltd/assets/images/package-mockup.jpg" />
+    <meta property="og:image:alt" content="A complete business branding package: website, logo, business cards and graphics" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://seedwel.ltd/assets/images/package-mockup.jpg" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -23,6 +27,7 @@
     <link rel="stylesheet" href="assets/css/site.css" />
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js" defer></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js" defer></script>
+    <script src="assets/js/form-guard.js"></script>
 
     <style>
         .request-layout { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 40px; align-items: start; }
@@ -56,9 +61,31 @@
         .form-success p { color: var(--muted); font-size: 0.92rem; max-width: 480px; margin: 0 auto 8px; }
         @media (max-width: 900px) { .request-layout { grid-template-columns: 1fr; } }
     </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://seedwel.ltd/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Request a Service",
+          "item": "https://seedwel.ltd/request"
+        }
+      ]
+    }
+    </script>
 </head>
 
 <body data-page="request">
+
+    <a href="#main" class="skip-link">Skip to main content</a>
 
     <!-- ========== HEADER ========== -->
     <header class="header" id="header">
@@ -100,7 +127,7 @@
         <a href="/request" class="menu-request"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Request a Service</a>
     </nav>
 
-    <main>
+    <main id="main">
 
         <!-- ========== PAGE HERO ========== -->
         <section class="page-hero">
@@ -243,6 +270,7 @@
             var submitBtn = document.getElementById('reqSubmit');
             var formContent = document.getElementById('formContent');
             var formSuccess = document.getElementById('formSuccess');
+            var guard = window.SeedwelFormGuard.protect(form, { key: 'request' });
 
             var SERVICE_LABELS = {};
             Array.prototype.forEach.call(serviceSelect.options, function (option) {
@@ -279,6 +307,12 @@
                 if (details.length < 10) { setStatus('Please describe what you need (at least 10 characters).', 'error'); return; }
                 if (!consent) { setStatus('Please accept the Privacy Policy to continue.', 'error'); return; }
 
+                var verdict = guard.check({ message: details });
+                if (!verdict.ok) {
+                    setStatus(verdict.reason, 'error');
+                    return;
+                }
+
                 submitBtn.disabled = true;
                 submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> Submitting…';
                 setStatus('', '');
@@ -297,6 +331,7 @@
                         source: '/request',
                         submittedAt: firebase.database.ServerValue.TIMESTAMP
                     });
+                    guard.recordSubmission();
                     formContent.hidden = true;
                     formSuccess.hidden = false;
                     if (typeof formSuccess.scrollIntoView === 'function') {

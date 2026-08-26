@@ -12,5 +12,8 @@ Disallow: /generate_portfolio.py
 Disallow: /database.rules.json
 Disallow: /storage.rules
 Disallow: /firebase.json
+Disallow: /offline.html
+Disallow: /404.html
+Disallow: /tools/
 
 Sitemap: https://seedwel.ltd/sitemap.xml

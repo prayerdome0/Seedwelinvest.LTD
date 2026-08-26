@@ -10,7 +10,10 @@
     <meta property="og:title" content="Projects &amp; Portfolio | Seedwel Investment LTD" />
     <meta property="og:description" content="Portfolio and digital project showcase by Seedwel Investment LTD." />
     <meta property="og:url" content="https://seedwel.ltd/projects" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="https://seedwel.ltd/assets/images/service-web-development.jpg" />
+    <meta property="og:image:alt" content="A responsive business website built by Seedwel" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://seedwel.ltd/assets/images/service-web-development.jpg" />
     <meta name="theme-color" content="#dc2626">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>Projects &amp; Portfolio | Seedwel Investment LTD</title>
@@ -132,9 +135,31 @@
         }
         .toast.show { opacity: 1; transform: translateY(0); }
     </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://seedwel.ltd/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Projects",
+          "item": "https://seedwel.ltd/projects"
+        }
+      ]
+    }
+    </script>
 </head>
 
 <body data-page="projects">
+
+    <a href="#main" class="skip-link">Skip to main content</a>
 
     <header class="header" id="header">
         <div class="container header-inner">
@@ -173,7 +198,7 @@
         <a href="/request" class="menu-request"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Request a Service</a>
     </nav>
 
-    <main>
+    <main id="main">
         <section class="page-hero">
             <div class="container">
                 <p class="eyebrow">Our Work</p>
