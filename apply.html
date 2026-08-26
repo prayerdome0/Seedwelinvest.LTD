@@ -740,8 +740,20 @@
                     });
                 }
 
-                await db.ref('applications').push().set(application);
+                var appRef = db.ref('applications').push();
+                await appRef.set(application);
                 applicationSaved = true;
+                try {
+                    await db.ref('adminNotifications').push({
+                        title: 'New job application received',
+                        body: (application.fullName || 'Applicant').slice(0, 120) + ' applied for position: ' + (application.position || 'Unspecified').slice(0, 120),
+                        type: 'application',
+                        read: false,
+                        link: 'applications',
+                        targetId: appRef.key || '',
+                        createdAt: firebase.database.ServerValue.TIMESTAMP
+                    });
+                } catch (_) { /* Best-effort notification push */ }
                 guard.recordSubmission();
                 uploadProgressBar.style.width = '100%';
 
