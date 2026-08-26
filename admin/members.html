@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#dc2626" />
+    <title>Members | Seedwel Admin</title>
+    <meta name="description" content="View approved and active Seedwel members." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/private-portal.css" />
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="/assets/js/firebase-config.js"></script>
+    <script src="/assets/js/recruitment-utils.js"></script>
+    <script src="/assets/js/admin-shared.js"></script>
+</head>
+<body class="portal-body" data-page="members">
+    <div class="portal-shell">
+        <aside class="portal-sidebar">
+            <a class="portal-brand" href="/admin/dashboard">
+                <img src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel Investment LTD" />
+                <strong>Seedwel <span>Admin</span></strong>
+            </a>
+            <div class="sidebar-copy">Approved people move here as member records. Once registered, you can assign work and track activity.</div>
+            <nav class="sidebar-nav" aria-label="Admin navigation">
+                <a data-page="dashboard" href="/admin/dashboard"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+                <a data-page="applications" href="/admin/applications"><i class="fa-solid fa-user-check"></i> Applications</a>
+                <a data-page="members" href="/admin/members"><i class="fa-solid fa-users"></i> Members</a>
+            </nav>
+            <div class="sidebar-foot">Tasks are assigned from each member profile, not from a crowded all-in-one admin page.</div>
+        </aside>
+        <main class="portal-main">
+            <header class="page-header">
+                <div>
+                    <p class="auth-eyebrow">Member records</p>
+                    <h1>Members</h1>
+                    <p>View approved candidates, pending registrations and active team members in one clean place.</p>
+                </div>
+                <div class="header-meta">
+                    <div class="header-chip" id="signedInEmail">Checking session…</div>
+                    <button class="btn btn-secondary" id="logoutBtn" type="button"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+                </div>
+            </header>
+
+            <div id="pageMessage" class="msg"></div>
+
+            <section class="panel">
+                <div class="panel-head">
+                    <div>
+                        <h2>Member list</h2>
+                        <p>Search by person, position or member ID, and filter by lifecycle status.</p>
+                    </div>
+                    <button class="btn btn-secondary" id="refreshMembers" type="button"><i class="fa-solid fa-rotate"></i> Refresh</button>
+                </div>
+                <div class="filters">
+                    <input id="memberSearch" type="search" placeholder="Search member, email, position or ID…" autocomplete="off" />
+                    <select id="memberFilter" aria-label="Filter members by status">
+                        <option value="all">All statuses</option>
+                        <option value="approved">Approved</option>
+                        <option value="registration_sent">Registration Sent</option>
+                        <option value="registered">Registered</option>
+                        <option value="active">Active</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
+                <div class="table-wrap">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Member</th>
+                                <th>Position</th>
+                                <th>Member ID</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="membersTableBody">
+                            <tr><td colspan="5"><div class="empty-state">Loading members…</div></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="/assets/js/admin-members.js"></script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#dc2626" />
+    <title>Admin Dashboard | Seedwel Investment LTD</title>
+    <meta name="description" content="Recruitment and member operations dashboard for Seedwel Investment LTD." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/private-portal.css" />
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="/assets/js/firebase-config.js"></script>
+    <script src="/assets/js/recruitment-utils.js"></script>
+    <script src="/assets/js/admin-shared.js"></script>
+</head>
+<body class="portal-body" data-page="dashboard">
+    <div class="portal-shell">
+        <aside class="portal-sidebar">
+            <a class="portal-brand" href="/admin/dashboard">
+                <img src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel Investment LTD" />
+                <strong>Seedwel <span>Admin</span></strong>
+            </a>
+            <div class="sidebar-copy">A focused recruitment workflow: applications, approvals, registration invitations, members and task assignments.</div>
+            <nav class="sidebar-nav" aria-label="Admin navigation">
+                <a data-page="dashboard" href="/admin/dashboard"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+                <a data-page="applications" href="/admin/applications"><i class="fa-solid fa-user-check"></i> Applications</a>
+                <a data-page="members" href="/admin/members"><i class="fa-solid fa-users"></i> Members</a>
+            </nav>
+            <div class="sidebar-foot">Legacy portfolio, services, documents and site settings remain available in <a class="portal-link" href="/admin.html">the existing admin workspace</a> while the new modular admin is phased in.</div>
+        </aside>
+        <main class="portal-main">
+            <header class="page-header">
+                <div>
+                    <p class="auth-eyebrow">Overview</p>
+                    <h1>Admin Dashboard</h1>
+                    <p>Keep the admin focused on what matters: recent applications, pending reviews, pending registrations, active members and open task work.</p>
+                </div>
+                <div class="header-meta">
+                    <div class="header-chip" id="signedInEmail">Checking session…</div>
+                    <button class="btn btn-secondary" id="logoutBtn" type="button"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+                </div>
+            </header>
+
+            <div id="pageMessage" class="msg"></div>
+
+            <section class="metric-grid" aria-label="Overview metrics">
+                <article class="metric-card"><strong id="metricApplications">0</strong><span>Applications</span></article>
+                <article class="metric-card"><strong id="metricPending">0</strong><span>Pending Reviews</span></article>
+                <article class="metric-card"><strong id="metricShortlisted">0</strong><span>Shortlisted</span></article>
+                <article class="metric-card"><strong id="metricApproved">0</strong><span>Approved</span></article>
+                <article class="metric-card"><strong id="metricRegistrations">0</strong><span>Pending Registrations</span></article>
+                <article class="metric-card"><strong id="metricMembers">0</strong><span>Active Members</span></article>
+                <article class="metric-card"><strong id="metricTasks">0</strong><span>Open Tasks</span></article>
+            </section>
+
+            <section class="content-grid">
+                <article class="panel">
+                    <div class="panel-head">
+                        <div>
+                            <h2>Recent Applications</h2>
+                            <p>Latest recruitment submissions across the public application form.</p>
+                        </div>
+                        <a class="btn btn-secondary" href="/admin/applications">Open Applications</a>
+                    </div>
+                    <div class="list-stack" id="recentApplications"><div class="empty-state">Loading applications…</div></div>
+                </article>
+                <article class="panel">
+                    <div class="panel-head">
+                        <div>
+                            <h2>Pending Actions</h2>
+                            <p>Reviews and invitation follow-up that still need attention.</p>
+                        </div>
+                    </div>
+                    <div class="list-stack" id="pendingActions"><div class="empty-state">Loading actions…</div></div>
+                </article>
+                <article class="panel full">
+                    <div class="panel-head">
+                        <div>
+                            <h2>Recent Member Activity</h2>
+                            <p>Approved members, registrations and legacy active accounts.</p>
+                        </div>
+                        <a class="btn btn-secondary" href="/admin/members">Open Members</a>
+                    </div>
+                    <div class="list-stack" id="recentMemberActivity"><div class="empty-state">Loading member activity…</div></div>
+                </article>
+            </section>
+        </main>
+    </div>
+
+    <script src="/assets/js/admin-dashboard.js"></script>
+</body>
+</html>

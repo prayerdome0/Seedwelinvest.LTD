@@ -15,9 +15,11 @@ Static public website and a Firebase-backed Seedwel Operations & Workforce Manag
 | `request.html` | **Request a Service** form — creates a service request in the admin workflow |
 | `support.html` | Help centre and FAQ |
 | `privacy.html` / `cookie-policy.html` / `terms.html` | Legal |
-| `login.html` | Single login / create-account page with automatic server-checked role routing |
-| `dashboard.html` | Private worker dashboard (Worker ID, QR verification, tasks, notifications, profile, security) |
-| `admin.html` | Secure admin (service requests, portfolio, messages, applications, workers, jobs, audit log) |
+| `login.html` | Member login page for approved/registered accounts |
+| `register.html` | One-time invitation registration page with applicant details pre-filled |
+| `dashboard.html` | Private member dashboard (member ID, tasks, notifications, profile, security) |
+| `admin/*.html` | New modular admin pages for login, dashboard, applications and members |
+| `admin.html` | Legacy all-in-one admin workspace kept during the transition |
 | `verify.html` | Public Seedwel worker verification page (opened by scanning a worker's QR code) |
 
 ## Design system
@@ -53,7 +55,7 @@ ZRA, NAPSA, PACRA and Workers' Compensation services are presented as **private 
 
 ## Team portal (Phase 2 + Phase 3)
 
-- Workers create an account and a **pending** worker record at `/workers/{uid}` via `login.html` → "Join Seedwel team".
+- Applicants submit public applications via `apply.html`. After admin approval, the system creates a one-time registration invitation; the applicant then creates their own password and activates their member account.
 - `dashboard.html` is protected by Firebase Authentication. Pending accounts see an "Application under review" screen; only **active** workers see the dashboard (role, commission rate, stats, and assigned tasks). Workers can move tasks **Pending → In Progress → Completed** and leave progress notes.
 - `admin.html` has a **Team workers** panel: approve, reject, suspend, or activate workers (sets `/workers/{uid}/status`), plus an **Assign a task** form that writes to `/tasks/{workerUid}/{taskId}`.
 - Task records live under `/tasks/{workerUid}/{taskId}`; a worker can read and update **only their own** tasks, while the administrator manages all workers and tasks.

@@ -12,7 +12,21 @@
       ]
     },
     {
-      "source": "/(admin|login|dashboard|verify).html",
+      "source": "/(admin|login|dashboard|verify|register).html",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" },
+        { "key": "Cache-Control", "value": "no-store" }
+      ]
+    },
+    {
+      "source": "/admin/(.*)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" },
+        { "key": "Cache-Control", "value": "no-store" }
+      ]
+    },
+    {
+      "source": "/member/(.*)",
       "headers": [
         { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" },
         { "key": "Cache-Control", "value": "no-store" }
@@ -26,6 +40,15 @@
     }
   ],
   "rewrites": [
-    { "source": "/", "destination": "/index.html" }
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/admin/login", "destination": "/admin/login.html" },
+    { "source": "/admin/dashboard", "destination": "/admin/dashboard.html" },
+    { "source": "/admin/applications", "destination": "/admin/applications.html" },
+    { "source": "/admin/applications/:id", "destination": "/admin/application.html?id=:id" },
+    { "source": "/admin/members", "destination": "/admin/members.html" },
+    { "source": "/admin/member", "destination": "/admin/member.html" },
+    { "source": "/admin/members/:id", "destination": "/admin/member.html?id=:id" },
+    { "source": "/member/dashboard", "destination": "/dashboard.html" },
+    { "source": "/register", "destination": "/register.html" }
   ]
 }
