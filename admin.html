@@ -735,7 +735,7 @@
             <div class="login-error" id="loginError" role="alert" aria-live="polite"></div>
 
             <div class="login-actions" id="loginActions" hidden>
-                <a class="btn btn-primary btn-login" id="btnGoToLogin" href="login.html"><i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i> <span>Go to secure login</span></a>
+                <a class="btn btn-primary btn-login" id="btnGoToLogin" href="/login"><i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i> <span>Go to secure login</span></a>
                 <button class="btn btn-secondary btn-login" id="btnSwitchAccount" type="button" hidden><i class="fa-solid fa-arrow-right-arrow-left" aria-hidden="true"></i> <span>Use a different account</span></button>
             </div>
 
@@ -752,7 +752,7 @@
             <label class="global-search" for="globalAdminSearch"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><span class="sr-only">Global search</span><input id="globalAdminSearch" type="search" placeholder="Search applicants, workers, Worker IDs, jobs…" autocomplete="off"></label>
             <div class="header-actions">
                 <span class="secure-badge"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Secure session</span>
-                <a class="btn btn-secondary" href="projects.html" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i><span>View live site</span></a>
+                <a class="btn btn-secondary" href="/projects" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i><span>View live site</span></a>
                 <button class="btn btn-danger" id="btnLogout" type="button"><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i><span>Logout</span></button>
             </div>
         </header>
@@ -1160,7 +1160,7 @@
                     </section>
 
                     <section class="panel" data-admin-view="verification" aria-labelledby="verificationTitle">
-                        <div class="panel-head"><div><h2 id="verificationTitle">Worker verification</h2><p>Public QR records expose only approved identity and verification fields—never email, phone, CV or private documents.</p></div><a class="btn btn-secondary" href="verify.html" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open verifier</a></div>
+                        <div class="panel-head"><div><h2 id="verificationTitle">Worker verification</h2><p>Public QR records expose only approved identity and verification fields—never email, phone, CV or private documents.</p></div><a class="btn btn-secondary" href="/verify" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open verifier</a></div>
                         <div class="panel-body"><div class="security-list">
                             <div class="security-item"><i class="fa-solid fa-circle-check"></i><div><strong id="verifiedWorkersCount">0 active verification records</strong><p>Generated automatically when an applicant is approved and assigned a permanent Worker ID.</p></div></div>
                             <div class="security-item"><i class="fa-solid fa-eye-slash"></i><div><strong>Privacy-safe public result</strong><p>Shows Worker ID, name, role, status, verification date and secure reference only.</p></div></div>
@@ -1467,7 +1467,7 @@
         }
 
         function getPortfolioLink() {
-            return new URL('projects.html', window.location.href).href;
+            return new URL('/projects', window.location.href).href;
         }
 
         function buildShareText() {
@@ -1584,7 +1584,7 @@
         btnSwitchAccount.addEventListener('click', async () => {
             btnSwitchAccount.disabled = true;
             try { await auth.signOut(); } catch (_) { /* the redirect below still applies */ }
-            window.location.href = 'login.html';
+            window.location.href = '/login';
         });
 
         btnLogout.addEventListener('click', async () => {
@@ -2323,7 +2323,7 @@
                     if (worker.verifyToken) {
                         const verifyBtn = document.createElement('a');
                         verifyBtn.className = 'btn btn-secondary';
-                        verifyBtn.href = new URL('verify.html', window.location.href).href + '?t=' + encodeURIComponent(worker.verifyToken);
+                        verifyBtn.href = new URL('/verify', window.location.href).href + '?t=' + encodeURIComponent(worker.verifyToken);
                         verifyBtn.target = '_blank';
                         verifyBtn.rel = 'noopener';
                         verifyBtn.innerHTML = '<i class="fa-solid fa-qrcode" aria-hidden="true"></i> Verification';

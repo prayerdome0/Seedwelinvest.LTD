@@ -35,14 +35,14 @@
             </nav>
             <div class="sidebar-copy" style="font-size:0.76rem;color:#94a3b8;">Operations workspace</div>
             <nav class="sidebar-nav" aria-label="Operations workspace">
-                <a href="/admin.html#requests"><i class="fa-solid fa-inbox"></i> Service Requests</a>
-                <a href="/admin.html#jobs"><i class="fa-solid fa-briefcase"></i> Recruitment Jobs</a>
-                <a href="/admin.html#tasks"><i class="fa-solid fa-list-check"></i> Tasks</a>
-                <a href="/admin.html#portfolio"><i class="fa-solid fa-layer-group"></i> Projects &amp; Media</a>
-                <a href="/admin.html#messages"><i class="fa-solid fa-envelope"></i> Messages</a>
-                <a href="/admin.html#verification"><i class="fa-solid fa-shield-halved"></i> Verification</a>
-                <a href="/admin.html#audit"><i class="fa-solid fa-clock-rotate-left"></i> Audit Logs</a>
-                <a href="/admin.html#settings"><i class="fa-solid fa-gear"></i> Settings</a>
+                <a href="/admin#requests"><i class="fa-solid fa-inbox"></i> Service Requests</a>
+                <a href="/admin#jobs"><i class="fa-solid fa-briefcase"></i> Recruitment Jobs</a>
+                <a href="/admin#tasks"><i class="fa-solid fa-list-check"></i> Tasks</a>
+                <a href="/admin#portfolio"><i class="fa-solid fa-layer-group"></i> Projects &amp; Media</a>
+                <a href="/admin#messages"><i class="fa-solid fa-envelope"></i> Messages</a>
+                <a href="/admin#verification"><i class="fa-solid fa-shield-halved"></i> Verification</a>
+                <a href="/admin#audit"><i class="fa-solid fa-clock-rotate-left"></i> Audit Logs</a>
+                <a href="/admin#settings"><i class="fa-solid fa-gear"></i> Settings</a>
             </nav>
             <div class="sidebar-foot"><a class="portal-link" href="/admin/applications">&larr; Back to applications</a></div>
         </aside>
@@ -90,6 +90,8 @@
                         </div>
                     </div>
                     <div class="inline-actions">
+                        <button class="btn btn-secondary" id="pendingBtn" type="button"><i class="fa-solid fa-clock"></i> Pending</button>
+                        <button class="btn btn-secondary" id="reviewBtn" type="button"><i class="fa-solid fa-magnifying-glass"></i> Under Review</button>
                         <button class="btn btn-secondary" id="shortlistBtn" type="button"><i class="fa-solid fa-star"></i> Shortlist</button>
                         <button class="btn btn-primary" id="approveBtn" type="button"><i class="fa-solid fa-circle-check"></i> Approve Application</button>
                         <button class="btn btn-danger" id="rejectBtn" type="button"><i class="fa-solid fa-ban"></i> Reject</button>
@@ -116,8 +118,8 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="banner info" style="margin-top:14px;">Confirm the approval, create the member record, generate the one-time invitation link and let the applicant create their own password.</div>
-                        <button class="btn btn-primary" id="createInvitationBtn" type="button"><i class="fa-solid fa-link"></i> Approve &amp; Create Registration Invitation</button>
+                        <div class="banner info" style="margin-top:14px;">Confirm the approval. The status changes to Approved immediately, a member record is created, and a one-time registration link is generated so the applicant can create their own password.</div>
+                        <button class="btn btn-primary" id="createInvitationBtn" type="button"><i class="fa-solid fa-link"></i> Approve &amp; Create Login Link</button>
                     </div>
                     <div class="field" style="margin-top:16px;">
                         <label for="adminNotes">Admin notes</label>

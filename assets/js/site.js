@@ -128,28 +128,28 @@
                 '</div>' +
                 '<div class="footer-col">' +
                   '<h4>Quick Links</h4>' +
-                  '<a href="index.html">Home</a>' +
-                  '<a href="about.html">About</a>' +
-                  '<a href="services.html">Services</a>' +
-                  '<a href="education.html">Education</a>' +
-                  '<a href="projects.html">Projects</a>' +
-                  '<a href="apply.html">Careers</a>' +
-                  '<a href="contact.html">Contact</a>' +
+                  '<a href="/">Home</a>' +
+                  '<a href="/about">About</a>' +
+                  '<a href="/services">Services</a>' +
+                  '<a href="/education">Education</a>' +
+                  '<a href="/projects">Projects</a>' +
+                  '<a href="/apply">Careers</a>' +
+                  '<a href="/contact">Contact</a>' +
                 '</div>' +
                 '<div class="footer-col">' +
                   '<h4>Services</h4>' +
-                  '<a href="services.html#web-development">Website Development</a>' +
-                  '<a href="services.html#logo-branding">Logo &amp; Brand Design</a>' +
-                  '<a href="services.html#business-materials">Business Cards &amp; Materials</a>' +
-                  '<a href="services.html#graphics-social">Graphics &amp; Social Media</a>' +
-                  '<a href="services.html#custom-solutions">Customized Digital Solutions</a>' +
+                  '<a href="/services#web-development">Website Development</a>' +
+                  '<a href="/services#logo-branding">Logo &amp; Brand Design</a>' +
+                  '<a href="/services#business-materials">Business Cards &amp; Materials</a>' +
+                  '<a href="/services#graphics-social">Graphics &amp; Social Media</a>' +
+                  '<a href="/services#custom-solutions">Customized Digital Solutions</a>' +
                 '</div>' +
                 '<div class="footer-col">' +
                   '<h4>Company</h4>' +
-                  '<a href="privacy.html">Privacy Policy</a>' +
-                  '<a href="cookie-policy.html">Cookie Policy</a>' +
-                  '<a href="terms.html">Terms of Service</a>' +
-                  '<a href="apply.html">Careers</a>' +
+                  '<a href="/privacy">Privacy Policy</a>' +
+                  '<a href="/cookie-policy">Cookie Policy</a>' +
+                  '<a href="/terms">Terms of Service</a>' +
+                  '<a href="/apply">Careers</a>' +
                 '</div>' +
                 '<div class="footer-col">' +
                   '<h4>Contact</h4>' +
@@ -161,7 +161,7 @@
               '</div>' +
               '<div class="footer-bottom">' +
                 '<p>&copy; ' + year + ' Seedwel Investment LTD. All rights reserved.' +
-                  ' <a href="support.html">Support</a> ·' +
+                  ' <a href="/support">Support</a> ·' +
                   ' <button type="button" class="link-like" data-cookie-settings style="color:inherit;background:none;border:0;padding:0;font:inherit;cursor:pointer;text-decoration:underline;">Cookie settings</button>' +
                 '</p>' +
               '</div>' +
@@ -215,7 +215,7 @@
               '<div>' +
                 '<h2><i class="fa-solid fa-lock" aria-hidden="true"></i> Your Privacy Matters</h2>' +
                 '<p>We use cookies and similar technologies to improve your experience, analyse website traffic, and keep our services secure. You can accept all cookies or manage your preferences. ' +
-                  '<a href="privacy.html">Privacy Policy</a> &nbsp;|&nbsp; <a href="cookie-policy.html">Cookie Policy</a> &nbsp;|&nbsp; <a href="terms.html">Terms of Service</a></p>' +
+                  '<a href="/privacy">Privacy Policy</a> &nbsp;|&nbsp; <a href="/cookie-policy">Cookie Policy</a> &nbsp;|&nbsp; <a href="/terms">Terms of Service</a></p>' +
               '</div>' +
               '<div class="cookie-actions">' +
                 '<button type="button" class="btn btn-ghost" data-cookie-manage>Manage Preferences</button>' +

@@ -8,12 +8,13 @@
 
     function deriveMemberStatus(member, invitation, worker) {
         if (worker && String(worker.status || '').toLowerCase() === 'active') return 'active';
+        var raw = utils.mapLegacyStatus(member && member.status ? member.status : 'approved');
         if (invitation) {
             var expired = Number(invitation.expiresAt || 0) <= Date.now();
             if (String(invitation.status || '').toLowerCase() === 'registered') return 'registered';
-            if (String(invitation.status || '').toLowerCase() === 'pending' && !expired) return 'registration_sent';
+            if (String(invitation.status || '').toLowerCase() === 'pending' && !expired) return raw === 'approved' ? 'approved' : 'registration_sent';
         }
-        return utils.mapLegacyStatus(member && member.status ? member.status : 'approved');
+        return raw;
     }
 
     function buildMemberEntries(data) {

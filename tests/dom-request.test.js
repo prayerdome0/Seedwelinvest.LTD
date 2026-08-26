@@ -18,7 +18,7 @@ function check(label, condition) {
     const html = fs.readFileSync(path.join(root, 'request.html'), 'utf8');
     const dom = new JSDOM(html, {
         runScripts: 'outside-only',
-        url: 'https://seedwel.ltd/request.html?service=website-package',
+        url: 'https://seedwel.ltd/request?service=website-package',
         pretendToBeVisual: true
     });
     const w = dom.window;

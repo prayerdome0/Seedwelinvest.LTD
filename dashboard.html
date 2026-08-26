@@ -958,7 +958,7 @@
             const qrHolder = $('qrCode');
             qrHolder.innerHTML = '';
             if (worker.verifyToken) {
-                const url = new URL('verify.html', window.location.href);
+                const url = new URL('/verify', window.location.href);
                 url.searchParams.set('t', worker.verifyToken);
                 try {
                     new QRCode(qrHolder, { text: url.href, width: 148, height: 148, correctLevel: QRCode.CorrectLevel.M });
@@ -1095,7 +1095,7 @@
         });
         $('secSignOutBtn').addEventListener('click', async () => {
             await auth.signOut();
-            window.location.href = 'login.html';
+            window.location.href = '/login';
         });
 
         // ─── Status screens ───
@@ -1174,13 +1174,13 @@
 
         let liveListeners = false;
         auth.onAuthStateChanged(async (user) => {
-            if (!user) { window.location.href = 'login.html'; return; }
+            if (!user) { window.location.href = '/login'; return; }
             if (user.email && user.email.toLowerCase() === ADMIN_EMAIL) { window.location.href = '/admin/dashboard'; return; }
 
             db.ref('workers/' + user.uid).on('value', (snap) => {
                 const worker = snap.val();
                 if (!worker) {
-                    auth.signOut().then(() => { window.location.href = 'login.html'; });
+                    auth.signOut().then(() => { window.location.href = '/login'; });
                     return;
                 }
                 renderDashboard(user, worker);
@@ -1201,13 +1201,13 @@
 
         $('signOutBtn').addEventListener('click', async () => {
             await auth.signOut();
-            window.location.href = 'login.html';
+            window.location.href = '/login';
         });
     </script>
 </body>
 </html>
 
- 'login.html';
+ '/login';
         });
     </script>
 </body>

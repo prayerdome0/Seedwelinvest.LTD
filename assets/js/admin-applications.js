@@ -162,7 +162,7 @@
             updates['registrationInvitations/' + invitation.key + '/replacedAt'] = window.firebase.database.ServerValue.TIMESTAMP;
         }
 
-        updates['applications/' + applicationId + '/status'] = 'registration_sent';
+        updates['applications/' + applicationId + '/status'] = 'approved';
         updates['applications/' + applicationId + '/updatedAt'] = window.firebase.database.ServerValue.TIMESTAMP;
         updates['applications/' + applicationId + '/reviewedAt'] = window.firebase.database.ServerValue.TIMESTAMP;
         updates['applications/' + applicationId + '/linkedMemberId'] = memberKey;
@@ -179,7 +179,7 @@
             roleType: roleType,
             memberCode: memberCode,
             invitationToken: token,
-            status: 'pending_registration',
+            status: 'approved',
             createdAt: existingMember && existingMember.createdAt ? existingMember.createdAt : window.firebase.database.ServerValue.TIMESTAMP,
             updatedAt: window.firebase.database.ServerValue.TIMESTAMP
         };
@@ -201,7 +201,7 @@
         };
 
         await ctx.db.ref().update(updates);
-        await utils.recordAudit(ctx.db, 'Registration invitation created', application.fullName || applicationId, memberCode + ' · ' + department);
+        await utils.recordAudit(ctx.db, 'Application approved', application.fullName || applicationId, memberCode + ' · ' + department + ' · registration invitation ready');
         return { token: token, memberKey: memberKey, memberCode: memberCode, expiresAt: expiresAt };
     }
 
@@ -280,10 +280,30 @@
                 shared.setMessage('pageMessage', error && error.message ? error.message : 'Could not save the note.', 'error');
             });
         };
+
+        if ($('pendingBtn')) $('pendingBtn').onclick = function () {
+            changeApplicationStatus(ctx, data, applicationId, 'pending').then(function () {
+                data.applications[applicationId] = Object.assign({}, data.applications[applicationId] || {}, { status: 'pending', updatedAt: Date.now() });
+                renderDetail(ctx, data, applicationId);
+                shared.setMessage('pageMessage', 'Application marked as pending.', 'success');
+            }).catch(function (error) {
+                shared.setMessage('pageMessage', error && error.message ? error.message : 'Could not mark the application as pending.', 'error');
+            });
+        };
+        if ($('reviewBtn')) $('reviewBtn').onclick = function () {
+            changeApplicationStatus(ctx, data, applicationId, 'under_review').then(function () {
+                data.applications[applicationId] = Object.assign({}, data.applications[applicationId] || {}, { status: 'under_review', updatedAt: Date.now() });
+                renderDetail(ctx, data, applicationId);
+                shared.setMessage('pageMessage', 'Application marked as under review.', 'success');
+            }).catch(function (error) {
+                shared.setMessage('pageMessage', error && error.message ? error.message : 'Could not mark the application as under review.', 'error');
+            });
+        };
         if ($('shortlistBtn')) $('shortlistBtn').onclick = function () {
             changeApplicationStatus(ctx, data, applicationId, 'shortlisted').then(function () {
+                data.applications[applicationId] = Object.assign({}, data.applications[applicationId] || {}, { status: 'shortlisted', updatedAt: Date.now() });
+                renderDetail(ctx, data, applicationId);
                 shared.setMessage('pageMessage', 'Application shortlisted.', 'success');
-                window.location.reload();
             }).catch(function (error) {
                 shared.setMessage('pageMessage', error && error.message ? error.message : 'Could not shortlist the application.', 'error');
             });
@@ -291,8 +311,9 @@
         if ($('rejectBtn')) $('rejectBtn').onclick = function () {
             if (!window.confirm('Reject this application?')) return;
             changeApplicationStatus(ctx, data, applicationId, 'rejected').then(function () {
+                data.applications[applicationId] = Object.assign({}, data.applications[applicationId] || {}, { status: 'rejected', updatedAt: Date.now() });
+                renderDetail(ctx, data, applicationId);
                 shared.setMessage('pageMessage', 'Application rejected.', 'success');
-                window.location.reload();
             }).catch(function (error) {
                 shared.setMessage('pageMessage', error && error.message ? error.message : 'Could not reject the application.', 'error');
             });
@@ -307,8 +328,11 @@
                 if ($('invitationLink')) $('invitationLink').value = invitationLink(result.token);
                 if ($('invitationDetails')) $('invitationDetails').classList.remove('hide');
                 if ($('invitationState')) $('invitationState').innerHTML = '<div class="banner success">Invitation created for ' + utils.escapeHtml(application.fullName || 'the applicant') + '. It expires on ' + utils.escapeHtml(utils.formatDateTime(result.expiresAt)) + '.</div>';
-                shared.setMessage('pageMessage', 'Application approved and registration invitation created.', 'success');
-                window.setTimeout(function () { window.location.reload(); }, 800);
+                shared.setMessage('pageMessage', 'Application approved. Member record created and registration link is ready to send.', 'success');
+                data.applications[applicationId] = Object.assign({}, data.applications[applicationId] || {}, { status: 'approved', linkedMemberId: result.memberKey, invitationToken: result.token, updatedAt: Date.now() });
+                data.members[result.memberKey] = Object.assign({}, data.members[result.memberKey] || {}, { status: 'approved', invitationToken: result.token, memberCode: result.memberCode, updatedAt: Date.now() });
+                data.invitations[result.token] = { status: 'pending', applicationId: applicationId, memberId: result.memberKey, memberCode: result.memberCode, expiresAt: result.expiresAt, createdAt: Date.now() };
+                renderDetail(ctx, data, applicationId);
             }).catch(function (error) {
                 shared.setMessage('pageMessage', error && error.message ? error.message : 'Could not create the invitation.', 'error');
             }).finally(function () {

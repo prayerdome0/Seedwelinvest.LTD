@@ -28,7 +28,7 @@
             show('No active member account is linked to this email yet. Apply first, then wait for an approved registration invitation.', 'error');
             return;
         }
-        window.location.href = '/member/dashboard';
+        window.location.href = '/dashboard';
     }
 
     auth.setPersistence(window.firebase.auth.Auth.Persistence.LOCAL)

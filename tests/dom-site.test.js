@@ -41,9 +41,9 @@ async function loadPage(file) {
     check('footer injected', Boolean(doc.querySelector('.site-footer')));
     check('footer has all five columns', doc.querySelectorAll('.site-footer .footer-col').length === 4 && Boolean(doc.querySelector('.site-footer .footer-brand')));
     check('footer copyright present', doc.querySelector('.site-footer .footer-bottom').textContent.includes('Seedwel Investment LTD. All rights reserved.'));
-    check('footer links: privacy, cookie policy, terms', ['privacy.html', 'cookie-policy.html', 'terms.html'].every((href) => doc.querySelector(`.site-footer a[href="${href}"]`)));
-    check('footer services column lists the digital services', ['services.html#web-development', 'services.html#logo-branding', 'services.html#business-materials', 'services.html#graphics-social'].every((href) => doc.querySelector(`.site-footer a[href="${href}"]`)));
-    check('footer quick links include education page', Boolean(doc.querySelector('.site-footer a[href="education.html"]')));
+    check('footer links: privacy, cookie policy, terms', ['/privacy', '/cookie-policy', '/terms'].every((href) => doc.querySelector(`.site-footer a[href="${href}"]`)));
+    check('footer services column lists the digital services', ['/services#web-development', '/services#logo-branding', '/services#business-materials', '/services#graphics-social'].every((href) => doc.querySelector(`.site-footer a[href="${href}"]`)));
+    check('footer quick links include education page', Boolean(doc.querySelector('.site-footer a[href="/education"]')));
     check('floating WhatsApp injected', Boolean(doc.querySelector('.floating-whatsapp')));
     check('cookie banner injected', Boolean(doc.getElementById('cookieBanner')));
 
@@ -52,7 +52,7 @@ async function loadPage(file) {
     check('banner has Accept All', Boolean(banner.querySelector('[data-cookie-accept]')));
     check('banner has Reject Non-Essential', Boolean(banner.querySelector('[data-cookie-reject]')));
     check('banner has Manage Preferences', Boolean(banner.querySelector('[data-cookie-manage]')));
-    check('banner links privacy | cookie | terms', ['privacy.html', 'cookie-policy.html', 'terms.html'].every((href) => banner.querySelector(`a[href="${href}"]`)));
+    check('banner links privacy | cookie | terms', ['/privacy', '/cookie-policy', '/terms'].every((href) => banner.querySelector(`a[href="${href}"]`)));
 
     // Genuine reject choice
     banner.querySelector('[data-cookie-reject]').click();
