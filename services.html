@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#dc2626" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png" />
     <link rel="manifest" href="site.webmanifest" />
     <title>Our Services | Seedwel Investment LTD</title>
     <meta name="description" content="Seedwel Investment LTD services: website development, logo and brand design, business cards and business materials, social media graphics and customized digital solutions." />
@@ -41,9 +42,31 @@
             .service-detail .service-media { min-height: 210px; position: relative; aspect-ratio: 16 / 9; }
         }
     </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://seedwel.ltd/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Services",
+          "item": "https://seedwel.ltd/services"
+        }
+      ]
+    }
+    </script>
 </head>
 
 <body data-page="services">
+
+    <a href="#main" class="skip-link">Skip to main content</a>
 
     <!-- ========== HEADER ========== -->
     <header class="header" id="header">
@@ -84,7 +107,7 @@
         <a href="/request" class="menu-request"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Request a Service</a>
     </nav>
 
-    <main>
+    <main id="main">
 
         <!-- ========== PAGE HERO ========== -->
         <section class="page-hero">
@@ -123,7 +146,10 @@
                     <!-- Website Development -->
                     <article class="card service-detail reveal" id="web-development">
                         <div class="service-media">
-                            <img src="assets/images/service-web-development.jpg" alt="Web developer building a responsive business website" width="1536" height="1024" loading="lazy" decoding="async" />
+                            <picture>
+                                <source type="image/webp" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/images/service-web-development-768.webp 768w, assets/images/service-web-development.webp 1280w" />
+                                <img src="assets/images/service-web-development.jpg" alt="Web developer building a responsive business website" loading="lazy" decoding="async" width="1536" height="1024" />
+                            </picture>
                         </div>
                         <div class="service-body">
                             <span class="service-tag">Digital Solutions</span>
@@ -144,7 +170,10 @@
                     <!-- Logo & Brand Design -->
                     <article class="card service-detail reveal d1" id="logo-branding">
                         <div class="service-media">
-                            <img src="assets/images/service-graphic-design.jpg" alt="Designer creating a logo and brand identity for a business" width="1536" height="1024" loading="lazy" decoding="async" />
+                            <picture>
+                                <source type="image/webp" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/images/service-graphic-design-768.webp 768w, assets/images/service-graphic-design.webp 1280w" />
+                                <img src="assets/images/service-graphic-design.jpg" alt="Designer creating a logo and brand identity for a business" loading="lazy" decoding="async" width="1536" height="1024" />
+                            </picture>
                         </div>
                         <div class="service-body">
                             <span class="service-tag">Digital Solutions</span>
@@ -165,7 +194,10 @@
                     <!-- Business Cards & Materials -->
                     <article class="card service-detail reveal" id="business-materials">
                         <div class="service-media">
-                            <img src="assets/images/what-we-do-digital.jpg" alt="Business cards, flyers and printed materials arranged on a designer's desk" width="1536" height="1024" loading="lazy" decoding="async" />
+                            <picture>
+                                <source type="image/webp" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/images/what-we-do-digital-768.webp 768w, assets/images/what-we-do-digital.webp 1280w" />
+                                <img src="assets/images/what-we-do-digital.jpg" alt="Business cards, flyers and printed materials arranged on a designer's desk" loading="lazy" decoding="async" width="1376" height="768" />
+                            </picture>
                         </div>
                         <div class="service-body">
                             <span class="service-tag">Digital Solutions</span>
@@ -186,7 +218,10 @@
                     <!-- Graphics & Social Media -->
                     <article class="card service-detail reveal d1" id="graphics-social">
                         <div class="service-media">
-                            <img src="assets/images/service-digital-marketing.jpg" alt="Designer preparing social media graphics for a business campaign" width="1536" height="1024" loading="lazy" decoding="async" />
+                            <picture>
+                                <source type="image/webp" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/images/service-digital-marketing-768.webp 768w, assets/images/service-digital-marketing.webp 1280w" />
+                                <img src="assets/images/service-digital-marketing.jpg" alt="Designer preparing social media graphics for a business campaign" loading="lazy" decoding="async" width="1536" height="1024" />
+                            </picture>
                         </div>
                         <div class="service-body">
                             <span class="service-tag">Digital Solutions</span>

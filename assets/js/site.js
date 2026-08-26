@@ -312,9 +312,27 @@
         open: function () { if (window.SeedwelReopenConsent) window.SeedwelReopenConsent(); }
     };
 
+    /* ─────────── Offline support ─────────── */
+
+    function registerServiceWorker() {
+        if (!('serviceWorker' in navigator)) return;
+        // The private portal is excluded from the worker's scope logic, but we
+        // also avoid registering it from those pages at all.
+        var path = window.location.pathname;
+        var isPrivate = /^\/(admin|dashboard|login|register|verify|member)(\/|$)/.test(path);
+        if (isPrivate) return;
+
+        window.addEventListener('load', function () {
+            navigator.serviceWorker.register('/sw.js').catch(function () {
+                /* Offline support is a progressive enhancement — ignore failures. */
+            });
+        });
+    }
+
     /* ─────────── Boot ─────────── */
 
     function boot() {
+        registerServiceWorker();
         initNav();
         initHeaderScroll();
         initReveal();

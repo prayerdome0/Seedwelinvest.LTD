@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#dc2626" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png" />
     <link rel="manifest" href="site.webmanifest" />
     <title>Support Center | Seedwel Investment LTD</title>
     <meta name="description" content="Get help from Seedwel Investment LTD — WhatsApp, phone and email support, plus answers to common questions about our services, requests and privacy." />
@@ -15,7 +16,10 @@
     <meta property="og:title" content="Support Center | Seedwel Investment LTD" />
     <meta property="og:description" content="WhatsApp, phone and email support, plus answers to common questions." />
     <meta property="og:url" content="https://seedwel.ltd/support" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="https://seedwel.ltd/assets/images/service-professional-support.jpg" />
+    <meta property="og:image:alt" content="Seedwel support team assisting a business owner" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://seedwel.ltd/assets/images/service-professional-support.jpg" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -38,9 +42,103 @@
         .support-channel .text-link { margin-top: 12px; }
         @media (max-width: 900px) { .support-channels { grid-template-columns: 1fr; } }
     </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I request a service?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use the Request a Service form. Your request goes straight into our work queue with the status flow New → Reviewing → Assigned → In Progress → Completed, and we contact you to confirm the scope and timeline."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I get a website, logo and business cards together?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes — that is exactly how we like to work. Request the Website + Branding Package and we will plan the website, logo, business cards, graphics and any other digital materials as one consistent solution."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the early-learning programme really free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Seedwel Early Learning is being developed as a free education initiative for children aged 3–5. See the Education page and contact us for the current details."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which roles are you hiring for?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Right now we are recruiting for two remote roles: Virtual Assistant and Cold Caller. We do not advertise positions we are not actually hiring for."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does a website take?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on the size of the site and how quickly content is available. After a short discovery conversation we give you a clear timeline and keep you updated while the site is built."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How are cookies used on this website?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We use strictly necessary storage to run the site and remember your privacy choices. Optional analytics cookies only load if you allow them in the consent banner. See our Cookie Policy for details, or use \"Cookie settings\" in the footer to change your choice at any time."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is my CV or personal information handled?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Applications and CVs are stored securely and can only be accessed by the Seedwel administrator. We explain exactly what we collect and how long we keep it in our Privacy Policy."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "I applied for a job — what happens next?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Your application is reviewed by our hiring team. If your profile matches an opening we contact you for the next steps. Applying does not guarantee employment; approved applicants receive a secure registration invitation and official Seedwel dashboard access."
+          }
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://seedwel.ltd/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Support",
+          "item": "https://seedwel.ltd/support"
+        }
+      ]
+    }
+    </script>
 </head>
 
 <body data-page="support">
+
+    <a href="#main" class="skip-link">Skip to main content</a>
 
     <!-- ========== HEADER ========== -->
     <header class="header" id="header">
@@ -81,7 +179,7 @@
         <a href="/request" class="menu-request"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Request a Service</a>
     </nav>
 
-    <main>
+    <main id="main">
 
         <!-- ========== PAGE HERO ========== -->
         <section class="page-hero">

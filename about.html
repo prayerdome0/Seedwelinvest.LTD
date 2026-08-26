@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#dc2626" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png" />
     <link rel="manifest" href="site.webmanifest" />
     <title>About Us | Seedwel Investment LTD</title>
     <meta name="description" content="Why Seedwel Investment LTD exists: practical digital services, honest online work opportunities and a free education initiative — built one step at a time." />
@@ -22,9 +23,31 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link rel="stylesheet" href="assets/css/site.css" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://seedwel.ltd/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "About",
+          "item": "https://seedwel.ltd/about"
+        }
+      ]
+    }
+    </script>
 </head>
 
 <body data-page="about">
+
+    <a href="#main" class="skip-link">Skip to main content</a>
 
     <!-- ========== HEADER ========== -->
     <header class="header" id="header">
@@ -65,7 +88,7 @@
         <a href="/request" class="menu-request"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Request a Service</a>
     </nav>
 
-    <main>
+    <main id="main">
 
         <!-- ========== PAGE HERO ========== -->
         <section class="page-hero">
@@ -104,7 +127,10 @@
                     </div>
                 </div>
                 <div class="story-media reveal d2">
-                    <img src="assets/images/about-team.jpg" alt="The Seedwel team planning together around a table" width="1536" height="1024" loading="eager" decoding="async" />
+                    <picture>
+                        <source type="image/webp" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/images/about-team-768.webp 768w, assets/images/about-team.webp 1280w" />
+                        <img src="assets/images/about-team.jpg" alt="The Seedwel team planning together around a table" loading="eager" decoding="async" width="1536" height="1024" />
+                    </picture>
                 </div>
             </div>
         </section>

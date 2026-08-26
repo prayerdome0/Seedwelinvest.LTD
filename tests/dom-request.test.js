@@ -46,6 +46,7 @@ function check(label, condition) {
     w.firebase.database.ServerValue = { TIMESTAMP: TIMESTAMP };
 
     w.eval(fs.readFileSync(path.join(root, 'assets/js/site.js'), 'utf8'));
+    w.eval(fs.readFileSync(path.join(root, 'assets/js/form-guard.js'), 'utf8'));
 
     // Run the page's inline script (it waits for DOMContentLoaded).
     const inline = [...html.matchAll(/<script(?![^>]*\bsrc\b)[^>]*>([\s\S]*?)<\/script>/g)].map((m) => m[1]);
@@ -64,8 +65,27 @@ function check(label, condition) {
     doc.getElementById('reqDetails').value = 'I need help with TPIN registration for my new shop.';
     doc.getElementById('reqConsent').checked = true;
 
+    // The spam guard rejects submissions made faster than a human could fill
+    // the form in, so an instant robotic submit must be refused.
+    doc.getElementById('serviceRequestForm').dispatchEvent(new w.Event('submit', { bubbles: true, cancelable: true }));
+    await new Promise((r) => setTimeout(r, 60));
+    check('spam guard blocks an instant submission', pushes.length === 0);
+
+    // A tripped honeypot must also be refused.
+    const honeypot = doc.querySelector('[data-guard-honeypot] input');
+    check('honeypot field injected into the form', Boolean(honeypot));
+    honeypot.value = 'http://spam.example.com';
+    const realNow = w.Date.now;
+    w.Date.now = () => realNow() + 30000; // pretend 30s of human form-filling
+    doc.getElementById('serviceRequestForm').dispatchEvent(new w.Event('submit', { bubbles: true, cancelable: true }));
+    await new Promise((r) => setTimeout(r, 60));
+    check('spam guard blocks a tripped honeypot', pushes.length === 0);
+    honeypot.value = '';
+
+    // Now a genuine, unhurried submission should go through.
     doc.getElementById('serviceRequestForm').dispatchEvent(new w.Event('submit', { bubbles: true, cancelable: true }));
     await new Promise((r) => setTimeout(r, 100));
+    w.Date.now = realNow;
 
     check('exactly one request pushed', pushes.length === 1);
     const req = pushes[0] || {};
