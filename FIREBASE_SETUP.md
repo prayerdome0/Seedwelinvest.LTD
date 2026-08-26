@@ -3,8 +3,9 @@
 Seedwel uses **Firebase Authentication** and **Firebase Realtime Database** for accounts and records. Every new file upload uses the Cloudinary product environment already connected to the Vercel project:
 
 - portfolio images;
-- private job-application CVs; and
-- worker profile photos shown on Worker IDs and QR verification records.
+- private job-application CVs;
+- worker profile photos shown on Worker IDs and QR verification records; and
+- admin-uploaded worker documents (role-based library in the member dashboard).
 
 No Cloudinary API secret, Firebase password or unsigned upload preset is stored in this repository. Browser uploads first request a short-lived signature from the serverless routes in `api/`. The Cloudinary API secret remains server-side.
 
@@ -30,6 +31,7 @@ The upload workflow places every managed asset in the Cloudinary Media Library f
 - `portfolio/projects/...`
 - `portfolio/job-applications/...`
 - `portfolio/profile-pictures/...`
+- `seedwel/worker-documents/<role>/...` (new: role-scoped worker documents)
 
 The signed upload includes `asset_folder=portfolio` for modern dynamic-folder product environments. The `portfolio/...` public-ID prefix provides the equivalent folder placement for legacy fixed-folder environments. Do not replace this with an unsigned upload preset.
 
@@ -79,6 +81,27 @@ Existing Firebase Storage files remain readable and deletable for migration, but
 Public visitors may create records under `/contactMessages`, `/serviceRequests` and `/applications`. Only the administrator can read, update or delete them. Service requests from `request.html` are created with status `new` and managed in the admin dashboard through New → Reviewing → Assigned → In Progress → Completed (plus Cancelled). The careers form always attempts the private CV upload first; if that service is unavailable, it still submits the application to the admin inbox with a **CV follow-up required** flag and gives the applicant direct email and WhatsApp options.
 
 The admin inbox supports application search, status/CV filtering, secure CV requests, and CSV export. When an administrator deletes a Cloudinary-backed application, the dashboard also requests deletion of its authenticated CV. Legacy Firebase CVs continue to receive best-effort cleanup.
+
+## Role-based worker documents
+
+The admin page **`/admin/documents`** manages the "My Documents" library each worker sees:
+
+1. **Upload** — the administrator signs the file server-side (`kind: "document"`, administrator-only) and it is stored in Cloudinary as a `raw` asset with `authenticated` delivery under `seedwel/worker-documents/<role>/…`. It is never reachable on a public URL.
+2. **Select role** — each document carries a `roles` map (for example `{"Virtual Assistant": true}`).
+3. **Publish** — publishing sets `status: "published"` and writes a small metadata entry under `documentsByRole/<role>/<docId>` so workers can list their library with a single read.
+
+Two Database Rules nodes enforce visibility:
+
+- `documents/$docId` — readable by the administrator, or by any signed-in worker **whose `workers/{uid}/role` is listed on a published document**. The same rule is what the download API re-checks.
+- `documentsByRole/$role` — readable only by the administrator or by workers whose role matches the key.
+
+Downloads never expose Cloudinary URLs directly. The member dashboard calls `POST /api/cloudinary-document` with the signed-in user's Firebase ID token; the endpoint re-reads `documents/{id}` **with that user's own token** through the Realtime Database REST API. If the rules deny the read, the download is denied. Only then is a five-minute signed Cloudinary download URL issued.
+
+Deploy the updated rules after pulling this change:
+
+```bash
+firebase deploy --project seedwel-investment-limited --only database
+```
 
 ## Worker accounts, IDs and profile photos
 

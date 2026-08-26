@@ -25,11 +25,23 @@
                 <img src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel Investment LTD" />
                 <strong>Seedwel <span>Admin</span></strong>
             </a>
-            <div class="sidebar-copy">A focused recruitment workflow: applications, approvals, registration invitations, members and task assignments.</div>
+            <div class="sidebar-copy">Applications, approvals, registration invitations, members, task assignments and role-based worker documents.</div>
             <nav class="sidebar-nav" aria-label="Admin navigation">
                 <a data-page="dashboard" href="/admin/dashboard"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
                 <a data-page="applications" href="/admin/applications"><i class="fa-solid fa-user-check"></i> Applications</a>
                 <a data-page="members" href="/admin/members"><i class="fa-solid fa-users"></i> Members</a>
+                <a data-page="documents" href="/admin/documents"><i class="fa-solid fa-folder-open"></i> Documents</a>
+            </nav>
+            <div class="sidebar-copy" style="font-size:0.76rem;color:#94a3b8;">Operations workspace</div>
+            <nav class="sidebar-nav" aria-label="Operations workspace">
+                <a href="/admin.html#requests"><i class="fa-solid fa-inbox"></i> Service Requests</a>
+                <a href="/admin.html#jobs"><i class="fa-solid fa-briefcase"></i> Recruitment Jobs</a>
+                <a href="/admin.html#tasks"><i class="fa-solid fa-list-check"></i> Tasks</a>
+                <a href="/admin.html#portfolio"><i class="fa-solid fa-layer-group"></i> Projects &amp; Media</a>
+                <a href="/admin.html#messages"><i class="fa-solid fa-envelope"></i> Messages</a>
+                <a href="/admin.html#verification"><i class="fa-solid fa-shield-halved"></i> Verification</a>
+                <a href="/admin.html#audit"><i class="fa-solid fa-clock-rotate-left"></i> Audit Logs</a>
+                <a href="/admin.html#settings"><i class="fa-solid fa-gear"></i> Settings</a>
             </nav>
             <div class="sidebar-foot">Legacy portfolio, services, documents and site settings remain available in <a class="portal-link" href="/admin.html">the existing admin workspace</a> while the new modular admin is phased in.</div>
         </aside>
@@ -38,7 +50,7 @@
                 <div>
                     <p class="auth-eyebrow">Overview</p>
                     <h1>Admin Dashboard</h1>
-                    <p>Keep the admin focused on what matters: recent applications, pending reviews, pending registrations, active members and open task work.</p>
+                    <p>Keep the admin focused on what matters: recent applications, pending reviews, pending registrations, active members, open task work and published role documents.</p>
                 </div>
                 <div class="header-meta">
                     <div class="header-chip" id="signedInEmail">Checking session…</div>
@@ -56,6 +68,7 @@
                 <article class="metric-card"><strong id="metricRegistrations">0</strong><span>Pending Registrations</span></article>
                 <article class="metric-card"><strong id="metricMembers">0</strong><span>Active Members</span></article>
                 <article class="metric-card"><strong id="metricTasks">0</strong><span>Open Tasks</span></article>
+                <article class="metric-card"><strong id="metricDocuments">0</strong><span>Published Documents</span></article>
             </section>
 
             <section class="content-grid">

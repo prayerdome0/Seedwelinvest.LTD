@@ -48,6 +48,7 @@
     { "source": "/admin/members", "destination": "/admin/members.html" },
     { "source": "/admin/member", "destination": "/admin/member.html" },
     { "source": "/admin/members/:id", "destination": "/admin/member.html?id=:id" },
+    { "source": "/admin/documents", "destination": "/admin/documents.html" },
     { "source": "/member/dashboard", "destination": "/dashboard.html" },
     { "source": "/register", "destination": "/register.html" }
   ]

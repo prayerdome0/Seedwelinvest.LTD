@@ -772,10 +772,17 @@
                     <button type="button" data-view="portfolio"><i class="fa-solid fa-layer-group"></i>Portfolio</button>
                     <button type="button" data-view="messages"><i class="fa-solid fa-envelope"></i>Messages</button>
                     <button type="button" data-view="verification"><i class="fa-solid fa-shield-halved"></i>Verification</button>
-                    <button type="button" data-view="documents"><i class="fa-solid fa-folder-closed"></i>Documents</button>
+                    <button type="button" data-view="documents"><i class="fa-solid fa-folder-closed"></i>Applicant Files</button>
                     <button type="button" data-view="reports"><i class="fa-solid fa-chart-pie"></i>Reports</button>
                     <button type="button" data-view="audit"><i class="fa-solid fa-clock-rotate-left"></i>Audit Log</button>
                     <button type="button" data-view="settings"><i class="fa-solid fa-gear"></i>Settings</button>
+                </nav>
+                <p class="admin-sidebar-label">New modular admin</p>
+                <nav class="admin-nav" aria-label="Modular admin pages">
+                    <a href="/admin/dashboard" style="display:flex;align-items:center;gap:11px;width:100%;min-height:42px;padding:10px 12px;color:var(--muted);border:1px solid transparent;border-radius:11px;font-size:.77rem;font-weight:700;text-decoration:none;"><i class="fa-solid fa-chart-line" style="width:17px;color:#8290a6;text-align:center;"></i>Dashboard</a>
+                    <a href="/admin/applications" style="display:flex;align-items:center;gap:11px;width:100%;min-height:42px;padding:10px 12px;color:var(--muted);border:1px solid transparent;border-radius:11px;font-size:.77rem;font-weight:700;text-decoration:none;"><i class="fa-solid fa-user-check" style="width:17px;color:#8290a6;text-align:center;"></i>Applications</a>
+                    <a href="/admin/members" style="display:flex;align-items:center;gap:11px;width:100%;min-height:42px;padding:10px 12px;color:var(--muted);border:1px solid transparent;border-radius:11px;font-size:.77rem;font-weight:700;text-decoration:none;"><i class="fa-solid fa-users" style="width:17px;color:#8290a6;text-align:center;"></i>Members</a>
+                    <a href="/admin/documents" style="display:flex;align-items:center;gap:11px;width:100%;min-height:42px;padding:10px 12px;color:var(--muted);border:1px solid transparent;border-radius:11px;font-size:.77rem;font-weight:700;text-decoration:none;"><i class="fa-solid fa-folder-open" style="width:17px;color:#8290a6;text-align:center;"></i>Worker Documents</a>
                 </nav>
                 <p class="admin-sidebar-foot"><i class="fa-solid fa-lock"></i> Private workforce data is protected by authenticated database rules.</p>
             </aside>
@@ -1161,7 +1168,7 @@
                     </section>
 
                     <section class="panel" data-admin-view="documents" aria-labelledby="documentsTitle">
-                        <div class="panel-head"><div><h2 id="documentsTitle">Secure documents</h2><p>Applicant and worker files remain behind authenticated access controls.</p></div></div>
+                        <div class="panel-head"><div><h2 id="documentsTitle">Applicant files</h2><p>Applicant CVs and attachments remain behind authenticated access controls. Role-based worker documents are managed in <a href="/admin/documents" style="color:var(--brand);font-weight:700;">Documents</a>.</p></div></div>
                         <div class="panel-body"><div class="security-list">
                             <div class="security-item"><i class="fa-solid fa-file-shield"></i><div><strong>Private CVs</strong><p id="documentCvSummary">Loading document totals…</p></div></div>
                             <div class="security-item"><i class="fa-solid fa-id-card"></i><div><strong>Identification documents</strong><p>Reserved for authenticated worker profiles; never included in QR verification payloads.</p></div></div>
@@ -1321,7 +1328,7 @@
             portfolio: ['Portfolio', 'Create, publish and share Seedwel project work.'],
             messages: ['Messages', 'Manage enquiries from the public website.'],
             verification: ['Verification', 'Monitor privacy-safe Worker ID and QR verification records.'],
-            documents: ['Documents', 'Secure applicant and worker document controls.'],
+            documents: ['Applicant Files', 'Secure applicant CV and attachment controls. Role-based worker documents live in the new Documents section.'],
             reports: ['Reports', 'Database-driven workforce and recruitment totals.'],
             audit: ['Audit Log', 'Administrator actions and status changes with actor and timestamp.'],
             settings: ['Settings', 'Public portfolio and platform configuration.']
@@ -1916,10 +1923,16 @@
         });
         const REQUEST_LABELS = Object.freeze({ new: 'New', reviewing: 'Reviewing', assigned: 'Assigned', in_progress: 'In Progress', completed: 'Completed', cancelled: 'Cancelled' });
         const REQUEST_SERVICE_LABELS = Object.freeze({
+            // Current services
+            'website-package': 'Website + Branding Package', 'web-development': 'Website Development',
+            'logo-branding': 'Logo & Brand Design', 'business-materials': 'Business Cards & Business Materials',
+            'graphics-social': 'Graphics & Social Media Design', 'custom-digital': 'Customized Digital Solution',
+            'education-enquiry': 'Education Enquiry', other: 'Other',
+            // Legacy request values (kept so historical records still display nicely)
             zra: 'ZRA Tax Services', napsa: 'NAPSA Services', pacra: 'PACRA Registration', 'workers-comp': "Workers' Compensation",
-            'web-development': 'Website Development', 'ai-automation': 'AI Automation', 'digital-marketing': 'Digital Marketing',
+            'ai-automation': 'AI Automation', 'digital-marketing': 'Digital Marketing',
             'graphic-design': 'Graphic Design', 'virtual-assistant': 'Virtual Assistant', typing: 'Typing & Transcription',
-            'it-consulting': 'IT Consulting', other: 'Other'
+            'it-consulting': 'IT Consulting'
         });
 
         function filteredRequestEntries() {

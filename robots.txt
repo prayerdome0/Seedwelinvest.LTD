@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /admin.html
+Disallow: /admin/
 Disallow: /login.html
 Disallow: /dashboard.html
 Disallow: /verify.html

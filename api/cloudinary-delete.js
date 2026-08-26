@@ -14,7 +14,8 @@ const {
 const policies = {
     portfolio: { resourceType: 'image', deliveryType: 'upload', adminOnly: true },
     profile: { resourceType: 'image', deliveryType: 'upload', adminOnly: false },
-    cv: { resourceType: 'raw', deliveryType: 'authenticated', adminOnly: true }
+    cv: { resourceType: 'raw', deliveryType: 'authenticated', adminOnly: true },
+    document: { resourceType: 'raw', deliveryType: 'authenticated', adminOnly: true }
 };
 
 module.exports = async function handler(req, res) {

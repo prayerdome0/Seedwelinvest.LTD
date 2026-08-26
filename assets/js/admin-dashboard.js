@@ -16,7 +16,7 @@
         return total;
     }
 
-    function deriveMetrics(applications, invitations, workers, tasks) {
+    function deriveMetrics(applications, invitations, workers, tasks, documents) {
         var applicationEntries = Object.entries(applications || {});
         var counts = {
             applications: applicationEntries.length,
@@ -25,7 +25,8 @@
             approved: 0,
             pendingRegistrations: 0,
             activeMembers: 0,
-            openTasks: countOpenTasks(tasks)
+            openTasks: countOpenTasks(tasks),
+            publishedDocuments: Object.values(documents || {}).filter(function (doc) { return doc && String(doc.status || '') === 'published'; }).length
         };
 
         var workerEntries = Object.values(workers || {});
@@ -53,7 +54,8 @@
             metricApproved: counts.approved,
             metricRegistrations: counts.pendingRegistrations,
             metricMembers: counts.activeMembers,
-            metricTasks: counts.openTasks
+            metricTasks: counts.openTasks,
+            metricDocuments: counts.publishedDocuments
         };
         Object.keys(ids).forEach(function (id) {
             var el = document.getElementById(id);
@@ -184,14 +186,16 @@
             utils.getSnapshotMap(ctx.db.ref('registrationInvitations')),
             utils.getSnapshotMap(ctx.db.ref('workers')),
             utils.getSnapshotMap(ctx.db.ref('tasks')),
-            utils.getSnapshotMap(ctx.db.ref('members'))
+            utils.getSnapshotMap(ctx.db.ref('members')),
+            utils.getSnapshotMap(ctx.db.ref('documents'))
         ]);
         var applications = maps[0];
         var invitations = maps[1];
         var workers = maps[2];
         var tasks = maps[3];
         var members = maps[4];
-        var counts = deriveMetrics(applications, invitations, workers, tasks);
+        var documents = maps[5];
+        var counts = deriveMetrics(applications, invitations, workers, tasks, documents);
         renderMetrics(counts);
         renderRecentApplications(applications, invitations, workers);
         renderPendingActions(applications, invitations, workers);

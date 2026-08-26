@@ -123,26 +123,26 @@
               '<div class="footer-grid">' +
                 '<div class="footer-brand">' +
                   '<img src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel Investment LTD" width="168" height="42" loading="lazy" />' +
-                  '<p class="footer-tag">Business Solutions&nbsp;|&nbsp;Technology&nbsp;|&nbsp;Marketing&nbsp;|&nbsp;Professional Services</p>' +
-                  '<p>Seedwel Investment LTD helps Zambian businesses register, comply, build their online presence and grow — with clear communication and modern digital tools.</p>' +
+                  '<p class="footer-tag">Digital&nbsp;Solutions&nbsp;|&nbsp;Online&nbsp;Work&nbsp;|&nbsp;Education&nbsp;|&nbsp;Business&nbsp;Support</p>' +
+                  '<p>Seedwel Investment LTD is a growing organisation working across digital solutions, online opportunities, business support and education initiatives.</p>' +
                 '</div>' +
                 '<div class="footer-col">' +
                   '<h4>Quick Links</h4>' +
                   '<a href="index.html">Home</a>' +
                   '<a href="about.html">About</a>' +
                   '<a href="services.html">Services</a>' +
+                  '<a href="education.html">Education</a>' +
                   '<a href="projects.html">Projects</a>' +
                   '<a href="apply.html">Careers</a>' +
                   '<a href="contact.html">Contact</a>' +
                 '</div>' +
                 '<div class="footer-col">' +
                   '<h4>Services</h4>' +
-                  '<a href="services.html#zra">ZRA Services</a>' +
-                  '<a href="services.html#napsa">NAPSA Services</a>' +
-                  '<a href="services.html#pacra">PACRA Registration</a>' +
                   '<a href="services.html#web-development">Website Development</a>' +
-                  '<a href="services.html#ai-automation">AI Automation</a>' +
-                  '<a href="services.html#digital-marketing">Digital Marketing</a>' +
+                  '<a href="services.html#logo-branding">Logo &amp; Brand Design</a>' +
+                  '<a href="services.html#business-materials">Business Cards &amp; Materials</a>' +
+                  '<a href="services.html#graphics-social">Graphics &amp; Social Media</a>' +
+                  '<a href="services.html#custom-solutions">Customized Digital Solutions</a>' +
                 '</div>' +
                 '<div class="footer-col">' +
                   '<h4>Company</h4>' +

@@ -493,6 +493,61 @@
           }
         }
       }
+    },
+    "documents": {
+      ".read": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com'",
+      "$docId": {
+        ".read": "auth != null && data.child('status').val() == 'published' && data.child('roles').child(root.child('workers').child(auth.uid).child('role').val()).val() == true",
+        ".write": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com'",
+        ".validate": "!newData.exists() || (newData.hasChildren(['title', 'fileName', 'cloudinaryPublicId', 'format', 'roles', 'status', 'createdAt']) && newData.child('title').isString() && newData.child('title').val().length >= 2 && newData.child('title').val().length <= 200 && newData.child('fileName').isString() && newData.child('fileName').val().length <= 200 && newData.child('cloudinaryPublicId').isString() && newData.child('cloudinaryPublicId').val().length >= 10 && newData.child('cloudinaryPublicId').val().length <= 512 && newData.child('cloudinaryPublicId').val().matches(/^seedwel\\/worker-documents\\//) && newData.child('format').isString() && newData.child('format').val().matches(/^(pdf|doc|docx)$/) && newData.child('fileSize').isNumber() && newData.child('fileSize').val() >= 0 && newData.child('fileSize').val() <= 10485760 && newData.child('status').isString() && newData.child('status').val().matches(/^(draft|published)$/) && (newData.child('status').val() == 'draft' || newData.child('roles').hasChildren()) && newData.child('roles').numChildren() <= 8 && newData.child('createdAt').isNumber())",
+        "description": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 1000)"
+        },
+        "category": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 40)"
+        },
+        "fileSize": {
+          ".validate": "!newData.exists() || (newData.isNumber() && newData.val() >= 0 && newData.val() <= 10485760)"
+        },
+        "uploadedBy": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 160)"
+        },
+        "roles": {
+          "$roleName": {
+            ".validate": "newData.isBoolean()"
+          }
+        },
+        "publishedAt": {
+          ".validate": "!newData.exists() || newData.isNumber()"
+        },
+        "updatedAt": {
+          ".validate": "!newData.exists() || newData.isNumber()"
+        }
+      }
+    },
+    "documentsByRole": {
+      "$role": {
+        ".read": "auth != null && (auth != null && auth.token.email == 'zacheussimbaya@gmail.com' || root.child('workers').child(auth.uid).child('role').val() == $role)",
+        ".write": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com'",
+        "$docId": {
+          ".validate": "newData.hasChildren(['title', 'fileName', 'format', 'status', 'updatedAt']) && newData.child('title').isString() && newData.child('title').val().length >= 2 && newData.child('title').val().length <= 200 && newData.child('fileName').isString() && newData.child('fileName').val().length <= 200 && newData.child('format').isString() && newData.child('format').val().matches(/^(pdf|doc|docx)$/) && newData.child('status').isString() && newData.child('status').val() == 'published' && newData.child('fileSize').isNumber() && newData.child('fileSize').val() >= 0 && newData.child('fileSize').val() <= 10485760 && newData.child('updatedAt').isNumber())",
+          "description": {
+            ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 1000)"
+          },
+          "category": {
+            ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 40)"
+          },
+          "fileSize": {
+            ".validate": "!newData.exists() || (newData.isNumber() && newData.val() >= 0 && newData.val() <= 10485760)"
+          },
+          "status": {
+            ".validate": "newData.isString() && newData.val() == 'published'"
+          },
+          "updatedAt": {
+            ".validate": "!newData.exists() || newData.isNumber()"
+          }
+        }
+      }
     }
   }
 }
