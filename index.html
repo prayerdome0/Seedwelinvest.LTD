@@ -406,6 +406,7 @@
     </main>
 
     <!-- ========== SCRIPTS ========== -->
+    <script src="assets/js/showcase-projects.js"></script>
     <script>
         window.addEventListener('DOMContentLoaded', function () {
             // Firebase configuration is public by design; deployed Database Rules control access.
@@ -450,44 +451,57 @@
                 body.className = 'service-body';
                 var tag = document.createElement('span');
                 tag.className = 'service-tag';
-                tag.textContent = safeText(project.category, 60) || 'Project';
+                var isWebsite = project.type === 'website' || Boolean(safeImage(project.liveUrl));
+                tag.textContent = safeText(project.category, 60) || (isWebsite ? 'Website' : 'Design');
                 var title = document.createElement('h3');
                 title.textContent = safeText(project.name, 120) || 'Untitled project';
                 var summary = document.createElement('p');
                 summary.textContent = safeText(project.description, 200) || 'Explore this project in our live portfolio.';
                 var actions = document.createElement('div');
                 actions.className = 'service-actions';
-                var link = document.createElement('a');
-                link.className = 'text-link';
-                link.href = '/projects';
-                link.innerHTML = 'View project <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>';
-                actions.appendChild(link);
+                
+                var liveUrl = safeImage(project.liveUrl);
+                if (isWebsite && liveUrl) {
+                    var visitBtn = document.createElement('a');
+                    visitBtn.className = 'btn btn-primary btn-sm';
+                    visitBtn.style.fontSize = '0.78rem';
+                    visitBtn.style.padding = '6px 14px';
+                    visitBtn.href = liveUrl;
+                    visitBtn.target = '_blank';
+                    visitBtn.rel = 'noopener noreferrer';
+                    visitBtn.innerHTML = 'Visit Website <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>';
+                    actions.appendChild(visitBtn);
+                } else {
+                    var link = document.createElement('a');
+                    link.className = 'text-link';
+                    link.href = '/projects';
+                    link.innerHTML = 'View gallery <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>';
+                    actions.appendChild(link);
+                }
+
                 body.append(tag, title, summary, actions);
                 card.append(media, body);
                 return card;
             }
 
-            firebase.database().ref('publicProjects').limitToLast(3).on('value', function (snapshot) {
+            firebase.database().ref('publicProjects').on('value', function (snapshot) {
                 var entries = Object.values(snapshot.val() || {}).filter(function (p) { return p && p.published !== false; });
-                entries.sort(function (a, b) { return Number(b.updatedAt || b.createdAt || 0) - Number(a.updatedAt || a.createdAt || 0); });
-                grid.replaceChildren();
                 if (!entries.length) {
-                    var empty = document.createElement('p');
-                    empty.className = 'muted text-center';
-                    empty.style.gridColumn = '1 / -1';
-                    empty.textContent = 'New portfolio work is being prepared. Check back soon.';
-                    grid.appendChild(empty);
-                    return;
+                    entries = (window.SeedwelInitialProjects || []).filter(function(p) { return p.featured; });
                 }
-                entries.slice(0, 3).forEach(function (project) { grid.appendChild(renderProject(project)); });
+                entries.sort(function (a, b) { 
+                    var orderA = Number(a.order || a.sortOrder || 9999);
+                    var orderB = Number(b.order || b.sortOrder || 9999);
+                    if (orderA !== orderB) return orderA - orderB;
+                    return Number(b.updatedAt || b.createdAt || 0) - Number(a.updatedAt || a.createdAt || 0); 
+                });
+                grid.replaceChildren();
+                entries.slice(0, 6).forEach(function (project) { grid.appendChild(renderProject(project)); });
                 if (window.__seedwelSiteJs && window.SeedwelRefreshReveals) window.SeedwelRefreshReveals();
             }, function () {
+                var entries = (window.SeedwelInitialProjects || []).slice(0, 6);
                 grid.replaceChildren();
-                var note = document.createElement('p');
-                note.className = 'muted text-center';
-                note.style.gridColumn = '1 / -1';
-                note.textContent = 'Our live portfolio is temporarily unavailable. Please visit the projects page.';
-                grid.appendChild(note);
+                entries.forEach(function (project) { grid.appendChild(renderProject(project)); });
             });
         });
     </script>

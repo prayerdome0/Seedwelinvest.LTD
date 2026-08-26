@@ -318,7 +318,7 @@
                 setStatus('', '');
 
                 try {
-                    await db.ref('serviceRequests').push({
+                    var ref = await db.ref('serviceRequests').push({
                         fullName: fullName.slice(0, 120),
                         email: email.slice(0, 160),
                         phone: phone.slice(0, 40),
@@ -331,6 +331,17 @@
                         source: '/request',
                         submittedAt: firebase.database.ServerValue.TIMESTAMP
                     });
+                    try {
+                        await db.ref('adminNotifications').push({
+                            title: 'New service request received',
+                            body: fullName.slice(0, 120) + ' requested: ' + ((SERVICE_LABELS[service] || service)).slice(0, 120),
+                            type: 'request',
+                            read: false,
+                            link: 'requests',
+                            targetId: ref.key || '',
+                            createdAt: firebase.database.ServerValue.TIMESTAMP
+                        });
+                    } catch (_) { /* Best-effort notification push */ }
                     guard.recordSubmission();
                     formContent.hidden = true;
                     formSuccess.hidden = false;

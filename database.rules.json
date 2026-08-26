@@ -31,14 +31,32 @@
         "uploadProvider": {
           ".validate": "!newData.exists() || (newData.isString() && newData.val().matches(/^(|cloudinary)$/))"
         },
+        "type": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().matches(/^(website|design)$/))"
+        },
+        "slug": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 120)"
+        },
+        "featured": {
+          ".validate": "!newData.exists() || newData.isBoolean()"
+        },
+        "technologies": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 500)"
+        },
+        "order": {
+          ".validate": "!newData.exists() || newData.isNumber()"
+        },
+        "sortOrder": {
+          ".validate": "!newData.exists() || newData.isNumber()"
+        },
         "gallery": {
-          ".validate": "!newData.exists() || newData.numChildren() <= 6",
+          ".validate": "!newData.exists() || newData.numChildren() <= 200",
           "$index": {
             ".validate": "newData.isString() && newData.val().length <= 2048 && newData.val().matches(/^https?:\\/\\//)"
           }
         },
         "galleryAssets": {
-          ".validate": "!newData.exists() || newData.numChildren() <= 6",
+          ".validate": "!newData.exists() || newData.numChildren() <= 200",
           "$index": {
             ".validate": "newData.hasChildren(['url', 'publicId', 'resourceType', 'uploadProvider', 'fileSize'])",
             "url": {
@@ -74,8 +92,26 @@
         "results": {
           ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 500)"
         },
+        "type": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().matches(/^(website|design)$/))"
+        },
+        "slug": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 120)"
+        },
+        "featured": {
+          ".validate": "!newData.exists() || newData.isBoolean()"
+        },
+        "technologies": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 500)"
+        },
+        "order": {
+          ".validate": "!newData.exists() || newData.isNumber()"
+        },
+        "sortOrder": {
+          ".validate": "!newData.exists() || newData.isNumber()"
+        },
         "gallery": {
-          ".validate": "!newData.exists() || newData.numChildren() <= 6",
+          ".validate": "!newData.exists() || newData.numChildren() <= 200",
           "$index": {
             ".validate": "newData.isString() && newData.val().length <= 2048 && newData.val().matches(/^https?:\\/\\//)"
           }
@@ -380,6 +416,32 @@
           }
         }
       }
+    },
+    "adminNotifications": {
+      ".read": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com'",
+      "$noteId": {
+        ".write": "(!data.exists() && newData.exists()) || (auth != null && auth.token.email == 'zacheussimbaya@gmail.com')",
+        ".validate": "!newData.exists() || (newData.hasChildren(['title', 'createdAt']) && newData.child('title').isString() && newData.child('title').val().length >= 2 && newData.child('title').val().length <= 200 && newData.child('createdAt').isNumber())",
+        "body": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 1000)"
+        },
+        "type": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 60)"
+        },
+        "read": {
+          ".validate": "!newData.exists() || newData.isBoolean()"
+        },
+        "link": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 100)"
+        },
+        "targetId": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 100)"
+        }
+      }
+    },
+    "categories": {
+      ".read": true,
+      ".write": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com'"
     },
     "jobs": {
       ".read": true,

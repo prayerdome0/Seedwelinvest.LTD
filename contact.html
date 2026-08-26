@@ -259,7 +259,7 @@
                 setStatus('', '');
 
                 try {
-                    await db.ref('contactMessages').push({
+                    var ref = await db.ref('contactMessages').push({
                         fullName: fullName.slice(0, 120),
                         email: email.slice(0, 160),
                         phone: phone.slice(0, 40),
@@ -271,6 +271,17 @@
                         userAgent: (navigator.userAgent || '').slice(0, 300),
                         submittedAt: firebase.database.ServerValue.TIMESTAMP
                     });
+                    try {
+                        await db.ref('adminNotifications').push({
+                            title: 'New contact message received',
+                            body: fullName.slice(0, 120) + ' sent a message regarding ' + ((service || 'general inquiry')).slice(0, 80) + '.',
+                            type: 'contact',
+                            read: false,
+                            link: 'messages',
+                            targetId: ref.key || '',
+                            createdAt: firebase.database.ServerValue.TIMESTAMP
+                        });
+                    } catch (_) { /* Best-effort notification push */ }
                     guard.recordSubmission();
                     btn.innerHTML = '<i class="fas fa-check" aria-hidden="true"></i> Message Sent';
                     setStatus('Thank you — your message was delivered. We typically reply within one business day.', 'success');

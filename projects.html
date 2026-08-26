@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore the Seedwel Investment LTD project showcase — websites, branding, graphics and digital service examples.">
+    <meta name="description" content="Explore the Seedwel Investment LTD portfolio — live website projects, branding, graphic designs, and digital services.">
     <link rel="canonical" href="https://seedwel.ltd/projects" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Seedwel Investment LTD" />
     <meta property="og:title" content="Projects &amp; Portfolio | Seedwel Investment LTD" />
-    <meta property="og:description" content="Portfolio and digital project showcase by Seedwel Investment LTD." />
+    <meta property="og:description" content="Website projects and creative design portfolio by Seedwel Investment LTD." />
     <meta property="og:url" content="https://seedwel.ltd/projects" />
-    <meta property="og:image" content="https://seedwel.ltd/assets/images/service-web-development.jpg" />
-    <meta property="og:image:alt" content="A responsive business website built by Seedwel" />
+    <meta property="og:image" content="https://seedwel.ltd/seedwel.png" />
+    <meta property="og:image:alt" content="Seedwel Investment LTD Projects &amp; Portfolio" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="https://seedwel.ltd/assets/images/service-web-development.jpg" />
+    <meta name="twitter:image" content="https://seedwel.ltd/seedwel.png" />
     <meta name="theme-color" content="#dc2626">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>Projects &amp; Portfolio | Seedwel Investment LTD</title>
@@ -39,40 +39,82 @@
         .project-search { max-width: 760px; margin: 0 auto 18px; }
         .project-search input { width: 100%; min-height: 48px; padding: 0 18px; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--ink); font: inherit; box-shadow: var(--shadow-soft); }
         .project-search input:focus { outline: 3px solid rgba(220, 38, 38, 0.12); border-color: var(--brand); }
-        .filter-bar { display: flex; flex-wrap: wrap; gap: 9px; justify-content: center; margin-bottom: 36px; }
+        
+        .type-toggle-bar { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .type-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 20px; border: 1px solid var(--line); border-radius: 999px;
+            background: #fff; color: var(--ink); font-family: var(--font-head);
+            font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+        }
+        .type-btn:hover { border-color: var(--brand); color: var(--brand); }
+        .type-btn.active { background: var(--brand); border-color: var(--brand); color: #fff; box-shadow: 0 4px 12px rgba(220,38,38,0.25); }
+
+        .filter-bar { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 32px; }
         .filter {
-            padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px;
+            padding: 7px 14px; border: 1px solid var(--line); border-radius: 999px;
             background: var(--white); color: var(--muted);
-            font-family: var(--font-head); font-size: 0.76rem; font-weight: 600;
+            font-family: var(--font-head); font-size: 0.74rem; font-weight: 600;
             cursor: pointer; transition: all 0.2s ease;
         }
         .filter:hover { border-color: var(--brand); color: var(--brand); }
-        .filter.active { background: var(--brand); border-color: var(--brand); color: #fff; }
+        .filter.active { background: var(--brand-dark); border-color: var(--brand-dark); color: #fff; }
 
-        .project-media { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: var(--soft); }
+        .project-card { display: flex; flex-direction: column; overflow: hidden; height: 100%; border-radius: var(--radius); background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow-card); transition: transform 0.25s ease, box-shadow 0.25s ease; }
+        .project-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+
+        .project-media { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: #0f172a; }
         .project-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.45s ease; }
-        .project-card:hover .project-media img { transform: scale(1.04); }
-        .project-category {
-            position: absolute; top: 12px; left: 12px; z-index: 1;
-            padding: 4px 11px; border-radius: 999px;
-            background: rgba(255, 255, 255, 0.94);
-            color: var(--brand-dark);
-            font-family: var(--font-head); font-size: 0.64rem; font-weight: 700;
-            letter-spacing: 0.06em; text-transform: uppercase;
+        .project-card:hover .project-media img { transform: scale(1.05); }
+        
+        .badge-container { position: absolute; top: 12px; left: 12px; display: flex; flex-wrap: wrap; gap: 6px; z-index: 2; }
+        .project-badge {
+            padding: 4px 10px; border-radius: 999px;
+            font-family: var(--font-head); font-size: 0.62rem; font-weight: 800;
+            letter-spacing: 0.05em; text-transform: uppercase;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
         }
+        .badge-category { background: rgba(255, 255, 255, 0.95); color: var(--brand-dark); }
+        .badge-type-website { background: #0284c7; color: #fff; }
+        .badge-type-design { background: #8b5cf6; color: #fff; }
+
         .project-photo-count {
-            position: absolute; right: 12px; bottom: 10px; z-index: 1;
+            position: absolute; right: 12px; bottom: 10px; z-index: 2;
             display: inline-flex; align-items: center; gap: 6px;
             padding: 4px 10px; border-radius: 999px;
-            background: rgba(15, 23, 42, 0.66); color: #fff;
-            font-size: 0.66rem; font-weight: 700;
+            background: rgba(15, 23, 42, 0.75); color: #fff;
+            font-size: 0.66rem; font-weight: 700; backdrop-filter: blur(4px);
         }
-        .project-body { display: flex; flex-direction: column; flex: 1; padding: 22px; }
-        .project-client { margin-bottom: 4px; color: var(--muted-2); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
-        .project-body h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
-        .project-desc { color: var(--muted); font-size: 0.88rem; flex: 1; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-        .project-results { margin-top: 12px; color: var(--brand-dark); font-size: 0.76rem; font-weight: 600; }
-        .project-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; }
+
+        .project-body { display: flex; flex-direction: column; flex: 1; padding: 20px; }
+        .project-client { margin-bottom: 4px; color: var(--muted-2); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+        .project-body h3 { font-size: 1.08rem; font-weight: 800; margin-bottom: 8px; color: var(--ink); line-height: 1.3; }
+        .project-desc { color: var(--muted); font-size: 0.86rem; flex: 1; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.5; }
+        
+        .tech-pills { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 12px; }
+        .tech-pill { padding: 3px 8px; border-radius: 6px; background: var(--soft); color: var(--brand-dark); font-size: 0.68rem; font-weight: 600; }
+
+        .project-actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(0,0,0,0.06); }
+        
+        .btn-visit {
+            display: inline-flex; align-items: center; gap: 7px;
+            padding: 8px 15px; border-radius: 8px;
+            background: var(--brand); color: #fff;
+            font-family: var(--font-head); font-size: 0.78rem; font-weight: 700;
+            text-decoration: none; transition: background 0.2s ease;
+        }
+        .btn-visit:hover { background: var(--brand-dark); color: #fff; }
+
+        .btn-gallery {
+            display: inline-flex; align-items: center; gap: 7px;
+            padding: 8px 15px; border-radius: 8px;
+            background: #6d28d9; color: #fff;
+            font-family: var(--font-head); font-size: 0.78rem; font-weight: 700;
+            border: 0; cursor: pointer; transition: background 0.2s ease;
+        }
+        .btn-gallery:hover { background: #5b21b6; }
+
         .empty-projects {
             grid-column: 1 / -1; padding: 56px 24px;
             border: 1px dashed #cbd5e1; border-radius: var(--radius);
@@ -83,46 +125,45 @@
         .share-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 20px; }
 
         dialog {
-            width: min(720px, calc(100% - 32px)); max-height: min(720px, calc(100vh - 32px));
+            width: min(840px, calc(100% - 32px)); max-height: min(840px, calc(100vh - 32px));
             padding: 0; overflow: auto; color: var(--ink);
             border: 0; border-radius: var(--radius);
-            box-shadow: 0 26px 78px rgba(15, 23, 42, 0.35);
+            box-shadow: 0 26px 78px rgba(15, 23, 42, 0.4);
         }
-        dialog::backdrop { background: rgba(15, 23, 42, 0.6); }
-        .modal-media { position: relative; height: min(320px, 42vh); background: var(--soft); }
-        .modal-media img { width: 100%; height: 100%; object-fit: cover; }
+        dialog::backdrop { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(3px); }
+        .modal-media { position: relative; height: min(440px, 50vh); background: #0f172a; display: flex; align-items: center; justify-content: center; }
+        .modal-media img { width: 100%; height: 100%; object-fit: contain; }
         .modal-nav {
             position: absolute; top: 50%; display: grid; place-items: center;
-            width: 40px; height: 40px; border: 1px solid rgba(255,255,255,.4); border-radius: 50%;
-            background: rgba(15, 23, 42, 0.6); color: #fff; cursor: pointer;
-            transform: translateY(-50%);
+            width: 44px; height: 44px; border: 1px solid rgba(255,255,255,.3); border-radius: 50%;
+            background: rgba(15, 23, 42, 0.75); color: #fff; cursor: pointer;
+            transform: translateY(-50%); transition: background 0.2s ease;
         }
         .modal-nav:hover { background: var(--brand); }
-        .modal-nav.prev { left: 13px; }
-        .modal-nav.next { right: 13px; }
+        .modal-nav.prev { left: 14px; }
+        .modal-nav.next { right: 14px; }
         .modal-photo-position {
-            position: absolute; right: 14px; bottom: 12px;
-            padding: 4px 10px; border-radius: 999px;
-            background: rgba(15, 23, 42, 0.7); color: #fff; font-size: 0.68rem; font-weight: 700;
+            position: absolute; right: 14px; bottom: 14px;
+            padding: 4px 12px; border-radius: 999px;
+            background: rgba(15, 23, 42, 0.8); color: #fff; font-size: 0.72rem; font-weight: 700;
         }
-        .modal-thumbnails { display: flex; gap: 8px; padding: 10px 12px; overflow-x: auto; border-bottom: 1px solid var(--line); background: #fff; }
+        .modal-thumbnails { display: flex; gap: 8px; padding: 12px; overflow-x: auto; border-bottom: 1px solid var(--line); background: #f8fafc; }
         .modal-thumbnails[hidden] { display: none; }
-        .modal-thumbnail { flex: 0 0 68px; width: 68px; height: 48px; padding: 0; overflow: hidden; border: 2px solid transparent; border-radius: 8px; background: var(--soft); cursor: pointer; }
+        .modal-thumbnail { flex: 0 0 72px; width: 72px; height: 52px; padding: 0; overflow: hidden; border: 2px solid transparent; border-radius: 8px; background: #000; cursor: pointer; }
         .modal-thumbnail.active { border-color: var(--brand); }
         .modal-thumbnail img { width: 100%; height: 100%; object-fit: cover; }
         .modal-body { position: relative; padding: clamp(22px, 4vw, 34px); }
         .dialog-close {
-            position: absolute; top: 13px; right: 13px;
-            display: grid; place-items: center; width: 36px; height: 36px;
+            position: absolute; top: 16px; right: 16px;
+            display: grid; place-items: center; width: 38px; height: 38px;
             border: 1px solid var(--line); border-radius: 50%;
             background: #fff; color: var(--muted); cursor: pointer;
         }
         .dialog-close:hover { color: var(--brand); border-color: rgba(220, 38, 38, 0.4); }
-        .modal-kicker { margin-bottom: 6px; color: var(--brand); font-size: 0.7rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
-        .modal-body h2 { font-size: clamp(1.3rem, 3vw, 1.8rem); }
-        .modal-body > p { margin-top: 12px; color: var(--muted); font-size: 0.9rem; white-space: pre-line; }
-        .modal-result { margin-top: 15px; padding: 11px 14px; border-radius: 10px; background: var(--brand-soft); color: var(--brand-dark) !important; font-size: 0.8rem !important; font-weight: 600; }
-        .modal-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+        .modal-kicker { margin-bottom: 6px; color: var(--brand); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+        .modal-body h2 { font-size: clamp(1.3rem, 3vw, 1.8rem); font-weight: 800; }
+        .modal-body > p { margin-top: 12px; color: var(--muted); font-size: 0.92rem; white-space: pre-line; line-height: 1.6; }
+        .modal-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--line); }
 
         .toast {
             position: fixed; right: 20px; bottom: 90px; z-index: 960;
@@ -201,38 +242,40 @@
     <main id="main">
         <section class="page-hero">
             <div class="container">
-                <p class="eyebrow">Our Work</p>
-                <h1>Projects &amp; <span>Portfolio</span></h1>
-                <p>Explore 200+ website and digital project showcase entries across business websites, e-commerce, real estate, education, healthcare, logistics and more.</p>
+                <p class="eyebrow">Our Work &amp; Portfolio</p>
+                <h1>Projects &amp; <span>Design Portfolio</span></h1>
+                <p>Explore live website projects and creative design portfolios delivered by Seedwel Investment LTD. Every project is fully manageable from our central admin system.</p>
                 <div class="share-row reveal d1">
-                    <span class="live-status" id="portfolioStatus">Loading project showcase</span>
+                    <span class="live-status" id="portfolioStatus">Loading portfolio…</span>
                     <button class="btn btn-outline" id="copyPortfolio" type="button" style="min-height:38px;padding:7px 16px;font-size:0.78rem;"><i class="fa-solid fa-link" aria-hidden="true"></i> Copy link</button>
                     <a class="btn btn-whatsapp" id="shareWhatsApp" target="_blank" rel="noopener" style="min-height:38px;padding:7px 16px;font-size:0.78rem;"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Share</a>
                 </div>
             </div>
         </section>
 
-        <section class="section" style="padding-top:52px;" aria-labelledby="workTitle">
+        <section class="section" style="padding-top:40px;" aria-labelledby="workTitle">
             <div class="container">
-                <div class="section-head reveal">
-                    <h2 class="section-title" id="workTitle">200+ Website &amp; Digital Project Showcase</h2>
-                    <p class="section-intro">Browse professional showcase examples and published portfolio entries by category. Showcase examples demonstrate capability without claiming private client relationships.</p>
+                
+                <div class="type-toggle-bar reveal" id="typeToggleBar">
+                    <button class="type-btn active" type="button" data-type="all"><i class="fa-solid fa-layer-group"></i> All Portfolio Work</button>
+                    <button class="type-btn" type="button" data-type="website"><i class="fa-solid fa-globe"></i> Website Projects</button>
+                    <button class="type-btn" type="button" data-type="design"><i class="fa-solid fa-palette"></i> Design Portfolio</button>
                 </div>
 
                 <div class="project-search reveal">
-                    <input id="projectSearch" type="search" placeholder="Search by project name, category, services or market…" autocomplete="off" />
+                    <input id="projectSearch" type="search" placeholder="Search by project name, category, or description…" autocomplete="off" />
                 </div>
 
-                <div class="filter-bar reveal" id="filterBar" role="group" aria-label="Filter projects">
-                    <button class="filter active" type="button" data-filter="All">All work</button>
+                <div class="filter-bar reveal" id="filterBar" role="group" aria-label="Filter projects by category">
+                    <button class="filter active" type="button" data-filter="All">All Categories</button>
                 </div>
 
                 <div class="grid-3" id="projectsGrid" aria-live="polite">
-                    <div class="empty-projects"><i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>Loading the live portfolio…</div>
+                    <div class="empty-projects"><i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> Loading portfolio items…</div>
                 </div>
 
-                <div class="share-row reveal">
-                    <button class="btn btn-outline" id="loadMoreProjects" type="button" hidden><i class="fa-solid fa-plus" aria-hidden="true"></i> Load more projects</button>
+                <div class="share-row reveal" style="margin-top:36px;">
+                    <button class="btn btn-outline" id="loadMoreProjects" type="button" hidden><i class="fa-solid fa-plus" aria-hidden="true"></i> Load more items</button>
                     <a href="/request" class="btn btn-primary"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Start a project with us</a>
                 </div>
             </div>
@@ -242,8 +285,8 @@
     <dialog id="projectDialog" aria-labelledby="modalTitle">
         <div class="modal-media">
             <img id="modalImage" alt="">
-            <button class="modal-nav prev" id="modalPrev" type="button" aria-label="Previous project photo"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
-            <button class="modal-nav next" id="modalNext" type="button" aria-label="Next project photo"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+            <button class="modal-nav prev" id="modalPrev" type="button" aria-label="Previous photo"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+            <button class="modal-nav next" id="modalNext" type="button" aria-label="Next photo"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
             <span class="modal-photo-position" id="modalPhotoPosition"></span>
         </div>
         <div class="modal-thumbnails" id="modalThumbnails" aria-label="Project photo gallery"></div>
@@ -252,9 +295,8 @@
             <p class="modal-kicker" id="modalKicker"></p>
             <h2 id="modalTitle"></h2>
             <p id="modalDescription"></p>
-            <p class="modal-result" id="modalResults" hidden></p>
             <div class="modal-actions">
-                <a class="btn btn-primary" id="modalLink" target="_blank" rel="noopener" hidden><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> Visit project</a>
+                <a class="btn btn-primary" id="modalLink" target="_blank" rel="noopener" hidden><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> Visit Website</a>
                 <button class="btn btn-outline" id="modalShare" type="button"><i class="fa-solid fa-share-nodes" aria-hidden="true"></i> Share project</button>
             </div>
         </div>
@@ -278,6 +320,7 @@
             var $ = function (id) { return document.getElementById(id); };
 
             var allProjects = [];
+            var activeType = 'all';
             var activeFilter = 'All';
             var visibleCount = 24;
             var searchTerm = '';
@@ -294,16 +337,18 @@
                 } catch (_) { return ''; }
             }
             function safeImage(value) { return safeHttpUrl(value) || 'favicon.svg'; }
+            
             function projectImages(project) {
                 var raw = project && project.gallery;
                 var gallery = Array.isArray(raw) ? raw : (raw && typeof raw === 'object' ? Object.values(raw) : []);
                 var unique = [];
                 [project && project.image].concat(gallery).forEach(function (value) {
                     var url = safeHttpUrl(value);
-                    if (url && unique.indexOf(url) === -1 && unique.length < 6) unique.push(url);
+                    if (url && unique.indexOf(url) === -1) unique.push(url);
                 });
                 return unique.length ? unique : ['favicon.svg'];
             }
+            
             function portfolioLink() { return new URL('/projects', window.location.href).href; }
 
             function showToast(message) {
@@ -315,21 +360,31 @@
                 toastTimer = window.setTimeout(function () { node.classList.remove('show'); }, 3200);
             }
 
-            function buildFilters() {
+            function buildCategoryFilters() {
                 var bar = $('filterBar');
                 var categories = ['All'];
-                allProjects.forEach(function (project) {
+                
+                var filteredForType = allProjects.filter(function(p) {
+                    if (activeType === 'website') return (p.type === 'website' || Boolean(safeHttpUrl(p.liveUrl)));
+                    if (activeType === 'design') return (p.type === 'design' || !safeHttpUrl(p.liveUrl));
+                    return true;
+                });
+
+                filteredForType.forEach(function (project) {
                     var category = safeText(project.category, 60);
                     if (category && categories.indexOf(category) === -1) categories.push(category);
                 });
+
                 bar.textContent = '';
                 categories.forEach(function (category) {
                     var button = document.createElement('button');
                     button.type = 'button';
                     button.className = 'filter' + (category === activeFilter ? ' active' : '');
                     button.dataset.filter = category;
-                    var count = category === 'All' ? allProjects.length : allProjects.filter(function (project) { return safeText(project.category, 60) === category; }).length;
-                    button.textContent = (category === 'All' ? 'All work' : category) + ' (' + count + ')';
+                    var count = category === 'All' 
+                        ? filteredForType.length 
+                        : filteredForType.filter(function (p) { return safeText(p.category, 60) === category; }).length;
+                    button.textContent = (category === 'All' ? 'All Categories' : category) + ' (' + count + ')';
                     bar.appendChild(button);
                 });
             }
@@ -337,90 +392,143 @@
             function renderProjects() {
                 var grid = $('projectsGrid');
                 grid.textContent = '';
+                
                 var matches = allProjects.filter(function (project) {
+                    var isWebsite = project.type === 'website' || Boolean(safeHttpUrl(project.liveUrl));
+                    var isDesign = project.type === 'design' || (!safeHttpUrl(project.liveUrl) && project.type !== 'website');
+                    
+                    if (activeType === 'website' && !isWebsite) return false;
+                    if (activeType === 'design' && !isDesign) return false;
+
                     var categoryOk = activeFilter === 'All' || safeText(project.category, 60) === activeFilter;
-                    var haystack = [project.name, project.category, project.client, project.description, project.results]
+                    var haystack = [project.name, project.category, project.client, project.description, project.technologies, project.results]
                         .map(function (value) { return safeText(value, 1200).toLowerCase(); }).join(' ');
                     var searchOk = !searchTerm || haystack.indexOf(searchTerm) !== -1;
                     return categoryOk && searchOk;
                 });
+
                 if (!matches.length) {
                     var empty = document.createElement('div');
                     empty.className = 'empty-projects';
                     empty.innerHTML = '<i class="fa-solid fa-folder-open" aria-hidden="true"></i>' +
-                        (allProjects.length
-                            ? 'No projects match this filter/search yet.'
-                            : 'Our live portfolio is being updated with recent work. If you would like to see examples of what we deliver, <a href="/request">request a service</a> or <a href="/contact">contact us</a>.');
+                        'No projects found matching this filter or search term. <a href="/request">Request a project with us</a>.';
                     grid.appendChild(empty);
                     if (window.SeedwelRefreshReveals) window.SeedwelRefreshReveals();
                     return;
                 }
+
                 matches.slice(0, visibleCount).forEach(function (project) {
+                    var isWebsite = project.type === 'website' || Boolean(safeHttpUrl(project.liveUrl));
                     var article = document.createElement('article');
-                    article.className = 'card service-card project-card reveal';
+                    article.className = 'project-card reveal';
+                    
                     var media = document.createElement('div');
                     media.className = 'project-media';
+                    
                     var image = document.createElement('img');
                     image.src = safeImage(project.image);
-                    image.alt = safeText(project.name, 120) || 'Seedwel portfolio project';
+                    image.alt = safeText(project.name, 120) || 'Portfolio project';
                     image.loading = 'lazy';
                     image.decoding = 'async';
                     image.addEventListener('error', function () { image.src = 'favicon.svg'; });
-                    var category = document.createElement('span');
-                    category.className = 'project-category';
-                    category.textContent = safeText(project.category, 60) || 'Project';
+                    
+                    var badgeBox = document.createElement('div');
+                    badgeBox.className = 'badge-container';
+                    
+                    var catBadge = document.createElement('span');
+                    catBadge.className = 'project-badge badge-category';
+                    catBadge.textContent = safeText(project.category, 60) || 'Project';
+                    badgeBox.appendChild(catBadge);
+
+                    var typeBadge = document.createElement('span');
+                    typeBadge.className = 'project-badge ' + (isWebsite ? 'badge-type-website' : 'badge-type-design');
+                    typeBadge.innerHTML = isWebsite ? '<i class="fa-solid fa-globe"></i> Website' : '<i class="fa-solid fa-palette"></i> Design';
+                    badgeBox.appendChild(typeBadge);
+
                     var photos = projectImages(project);
                     var photoCount = document.createElement('span');
                     photoCount.className = 'project-photo-count';
-                    photoCount.innerHTML = '<i class="fa-solid fa-images" aria-hidden="true"></i> ' + photos.length;
-                    media.append(image, category, photoCount);
+                    photoCount.innerHTML = '<i class="fa-solid fa-images" aria-hidden="true"></i> ' + photos.length + ' image' + (photos.length === 1 ? '' : 's');
+                    
+                    media.append(image, badgeBox, photoCount);
+                    
                     var body = document.createElement('div');
                     body.className = 'project-body';
+                    
                     var client = document.createElement('p');
                     client.className = 'project-client';
-                    client.textContent = safeText(project.client, 120) || (project.showcase ? 'Showcase project example' : 'Seedwel portfolio entry');
+                    client.textContent = safeText(project.client, 120) || (isWebsite ? 'Live Website Project' : 'Graphic Design Portfolio');
+                    
                     var title = document.createElement('h3');
                     title.textContent = safeText(project.name, 120) || 'Untitled project';
+                    
                     var description = document.createElement('p');
                     description.className = 'project-desc';
                     description.textContent = safeText(project.description, 1200);
-                    var results = document.createElement('p');
-                    results.className = 'project-results';
-                    results.textContent = safeText(project.results, 500);
+                    
+                    body.append(client, title, description);
+
+                    if (project.technologies) {
+                        var techContainer = document.createElement('div');
+                        techContainer.className = 'tech-pills';
+                        String(project.technologies).split(',').forEach(function(t) {
+                            var tag = safeText(t, 40);
+                            if (tag) {
+                                var pill = document.createElement('span');
+                                pill.className = 'tech-pill';
+                                pill.textContent = tag;
+                                techContainer.appendChild(pill);
+                            }
+                        });
+                        if (techContainer.children.length) body.appendChild(techContainer);
+                    }
+
                     var actions = document.createElement('div');
                     actions.className = 'project-actions';
-                    var details = document.createElement('button');
-                    details.type = 'button';
-                    details.className = 'text-link';
-                    details.textContent = 'View details';
-                    details.addEventListener('click', function () { openProject(project); });
-                    actions.appendChild(details);
-                    var link = safeHttpUrl(project.liveUrl);
-                    if (link) {
-                        var live = document.createElement('a');
-                        live.className = 'text-link';
-                        live.href = link;
-                        live.target = '_blank';
-                        live.rel = 'noopener';
-                        live.innerHTML = 'Visit <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>';
-                        actions.appendChild(live);
+                    
+                    var detailsBtn = document.createElement('button');
+                    detailsBtn.type = 'button';
+                    detailsBtn.className = 'btn btn-outline btn-sm';
+                    detailsBtn.style.padding = '6px 12px';
+                    detailsBtn.style.fontSize = '0.76rem';
+                    detailsBtn.textContent = 'View details';
+                    detailsBtn.addEventListener('click', function () { openProject(project); });
+                    actions.appendChild(detailsBtn);
+
+                    var liveUrl = safeHttpUrl(project.liveUrl);
+                    if (isWebsite && liveUrl) {
+                        var visitBtn = document.createElement('a');
+                        visitBtn.className = 'btn-visit';
+                        visitBtn.href = liveUrl;
+                        visitBtn.target = '_blank';
+                        visitBtn.rel = 'noopener noreferrer';
+                        visitBtn.innerHTML = 'Visit Website <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>';
+                        actions.appendChild(visitBtn);
+                    } else {
+                        var galleryBtn = document.createElement('button');
+                        galleryBtn.type = 'button';
+                        galleryBtn.className = 'btn-gallery';
+                        galleryBtn.innerHTML = '<i class="fa-solid fa-images" aria-hidden="true"></i> View Gallery';
+                        galleryBtn.addEventListener('click', function () { openProject(project); });
+                        actions.appendChild(galleryBtn);
                     }
-                    body.append(client, title, description, results, actions);
+
+                    body.appendChild(actions);
                     article.append(media, body);
                     grid.appendChild(article);
                 });
+
                 var more = $('loadMoreProjects');
                 if (more) {
                     more.hidden = matches.length <= visibleCount;
-                    more.innerHTML = '<i class="fa-solid fa-plus" aria-hidden="true"></i> Load more projects (' + Math.max(0, matches.length - visibleCount) + ' remaining)';
+                    more.innerHTML = '<i class="fa-solid fa-plus" aria-hidden="true"></i> Load more items (' + Math.max(0, matches.length - visibleCount) + ' remaining)';
                 }
                 if (window.SeedwelRefreshReveals) window.SeedwelRefreshReveals();
             }
 
-            function updateStatus(count, mode) {
+            function updateStatus(count) {
                 var status = $('portfolioStatus');
-                if (mode === 'live') status.textContent = count + ' published portfolio entr' + (count === 1 ? 'y' : 'ies');
-                else status.textContent = count + '+ showcase projects';
+                status.textContent = count + ' published project' + (count === 1 ? '' : 's');
             }
 
             function renderGallery() {
@@ -439,7 +547,7 @@
                     var button = document.createElement('button');
                     button.type = 'button';
                     button.className = 'modal-thumbnail' + (index === selectedImageIndex ? ' active' : '');
-                    button.setAttribute('aria-label', 'View project photo ' + (index + 1));
+                    button.setAttribute('aria-label', 'View photo ' + (index + 1));
                     var thumb = document.createElement('img');
                     thumb.src = url;
                     thumb.alt = '';
@@ -460,15 +568,19 @@
                 selectedImages = projectImages(project);
                 selectedImageIndex = 0;
                 renderGallery();
-                $('modalKicker').textContent = [safeText(project.category, 60), safeText(project.client, 120)].filter(Boolean).join(' · ');
-                $('modalTitle').textContent = safeText(project.name, 120) || 'Portfolio project';
+                $('modalKicker').textContent = [
+                    (project.type === 'website' || safeHttpUrl(project.liveUrl)) ? 'WEBSITE PROJECT' : 'DESIGN PORTFOLIO',
+                    safeText(project.category, 60), 
+                    safeText(project.client, 120)
+                ].filter(Boolean).join(' · ');
+                $('modalTitle').textContent = safeText(project.name, 120) || 'Portfolio item';
                 $('modalDescription').textContent = safeText(project.description, 1200);
-                var result = safeText(project.results, 500);
-                $('modalResults').textContent = result;
-                $('modalResults').hidden = !result;
+                
                 var link = safeHttpUrl(project.liveUrl);
-                $('modalLink').hidden = !link;
-                if (link) $('modalLink').href = link;
+                var isWebsite = project.type === 'website' || Boolean(link);
+                $('modalLink').hidden = !(isWebsite && link);
+                if (isWebsite && link) $('modalLink').href = link;
+                
                 var dialog = $('projectDialog');
                 if (typeof dialog.showModal === 'function') dialog.showModal(); else dialog.setAttribute('open', '');
             }
@@ -479,10 +591,25 @@
             }
 
             function updateShareLink() {
-                var message = 'Explore the Seedwel Investment LTD portfolio: ' + portfolioLink();
+                var message = 'Explore the Seedwel Investment LTD website and design portfolio: ' + portfolioLink();
                 $('shareWhatsApp').href = 'https://wa.me/?text=' + encodeURIComponent(message);
             }
 
+            // Type toggle buttons
+            $('typeToggleBar').addEventListener('click', function (event) {
+                var button = event.target.closest('button[data-type]');
+                if (!button) return;
+                activeType = button.dataset.type;
+                activeFilter = 'All';
+                visibleCount = 24;
+                document.querySelectorAll('.type-btn').forEach(function (btn) {
+                    btn.classList.toggle('active', btn === button);
+                });
+                buildCategoryFilters();
+                renderProjects();
+            });
+
+            // Category filter buttons
             $('filterBar').addEventListener('click', function (event) {
                 var button = event.target.closest('button[data-filter]');
                 if (!button) return;
@@ -516,17 +643,17 @@
                         document.execCommand('copy');
                         area.remove();
                     }
-                    showToast('Portfolio link copied.');
-                } catch (_) { showToast('Could not copy the link automatically.'); }
+                    showToast('Portfolio link copied to clipboard.');
+                } catch (_) { showToast('Could not copy link automatically.'); }
             });
 
             $('dialogClose').addEventListener('click', closeDialog);
             $('modalShare').addEventListener('click', async function () {
                 if (!selectedProject) return;
                 var url = safeHttpUrl(selectedProject.liveUrl) || portfolioLink();
-                var text = 'Explore "' + (safeText(selectedProject.name, 120) || 'this Seedwel project') + '" by Seedwel Investment LTD.';
+                var text = 'Explore "' + (safeText(selectedProject.name, 120) || 'this project') + '" by Seedwel Investment LTD.';
                 if (!navigator.share) {
-                    try { await navigator.clipboard.writeText(text + ' ' + url); showToast('Project link copied.'); }
+                    try { await navigator.clipboard.writeText(text + ' ' + url); showToast('Project details copied.'); }
                     catch (_) { showToast('Use the portfolio share link to send this project.'); }
                     return;
                 }
@@ -542,18 +669,28 @@
 
             db.ref('publicProjects').on('value', function (snapshot) {
                 var liveProjects = Object.entries(snapshot.val() || {})
-                    .map(function (entry) { return entry[1]; })
+                    .map(function (entry) {
+                        var item = entry[1];
+                        if (item && !item.projectId) item.projectId = entry[0];
+                        return item;
+                    })
                     .filter(function (project) { return project && project.published !== false; })
-                    .sort(function (a, b) { return Number(b.updatedAt || b.createdAt || 0) - Number(a.updatedAt || a.createdAt || 0); });
-                allProjects = liveProjects.length ? liveProjects : (window.SeedwelShowcaseProjects || []);
-                buildFilters();
+                    .sort(function (a, b) { 
+                        var orderA = Number(a.order || a.sortOrder || 9999);
+                        var orderB = Number(b.order || b.sortOrder || 9999);
+                        if (orderA !== orderB) return orderA - orderB;
+                        return Number(b.updatedAt || b.createdAt || 0) - Number(a.updatedAt || a.createdAt || 0); 
+                    });
+
+                allProjects = liveProjects.length ? liveProjects : (window.SeedwelInitialProjects || []);
+                buildCategoryFilters();
                 renderProjects();
-                updateStatus(allProjects.length, liveProjects.length ? 'live' : 'showcase');
+                updateStatus(allProjects.length);
             }, function () {
-                allProjects = window.SeedwelShowcaseProjects || [];
-                buildFilters();
+                allProjects = window.SeedwelInitialProjects || [];
+                buildCategoryFilters();
                 renderProjects();
-                updateStatus(allProjects.length, 'showcase');
+                updateStatus(allProjects.length);
             });
 
             updateShareLink();
