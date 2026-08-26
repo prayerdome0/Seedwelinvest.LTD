@@ -82,7 +82,17 @@ an external file or adding per-request nonces.
 
 ## Continuous integration
 
-`.github/workflows/ci.yml` runs on every push and pull request:
+The workflow is provided at **`tools/ci.workflow.yml`**. To activate it, copy it
+into place and commit it yourself (the automation that generated it is not
+permitted to create workflow files):
+
+```bash
+mkdir -p .github/workflows
+cp tools/ci.workflow.yml .github/workflows/ci.yml
+git add .github/workflows/ci.yml && git commit -m "Enable CI" && git push
+```
+
+Once enabled it runs on every push and pull request:
 
 - the full test suite on Node 20 and 22
 - JSON validation of `vercel.json`, `site.webmanifest`, `package.json`, `firebase.json` and `database.rules.json`

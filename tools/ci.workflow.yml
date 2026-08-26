@@ -1,3 +1,6 @@
+# Seedwel CI — copy this file to .github/workflows/ci.yml to enable it.
+# See the "Continuous integration" section of README.md.
+
 name: CI
 
 on:
