@@ -7,960 +7,202 @@
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="manifest" href="site.webmanifest" />
     <title>About Us | Seedwel Investment LTD</title>
-    <meta name="description" content="Learn about Seedwel Investment LTD - Premium Digital Agency. Our mission, values, and team." />
+    <meta name="description" content="Seedwel Investment LTD is a private Zambian company providing business solutions, technology and marketing services from Kabwe, Zambia." />
 
-    
     <link rel="canonical" href="https://seedwel.ltd/about.html" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Seedwel Investment LTD" />
     <meta property="og:title" content="About Us | Seedwel Investment LTD" />
-    <meta property="og:description" content="Learn about Seedwel Investment LTD — our mission, values and team delivering premium digital services in Zambia and worldwide." />
+    <meta property="og:description" content="A private Zambian company helping businesses register, comply, build their online presence and grow." />
     <meta property="og:url" content="https://seedwel.ltd/about.html" />
-    <meta property="og:image" content="https://seedwel.ltd/assets/images/seedwel-strategy-session.jpg" />
-    <meta property="og:image:alt" content="Seedwel Investment LTD specialists in a strategy session" />
+    <meta property="og:image" content="https://seedwel.ltd/assets/images/about-team.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="About Us | Seedwel Investment LTD" />
-    <meta name="twitter:description" content="Learn about Seedwel Investment LTD — our mission, values and team delivering premium digital services in Zambia and worldwide." />
-    <meta name="twitter:image" content="https://seedwel.ltd/assets/images/seedwel-strategy-session.jpg" />
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <link rel="stylesheet" href="assets/css/media-showcase.css" />
+    <link rel="stylesheet" href="assets/css/site.css" />
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #ffffff;
-            color: #111827;
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #dc2626;
-            border-radius: 10px;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        @keyframes fadeInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        @keyframes fadeInRight {
-            from {
-                opacity: 0;
-                transform: translateX(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        @keyframes float {
-            0%,
-            100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        .animate-fade-up {
-            animation: fadeInUp 0.8s ease forwards;
-        }
-        .animate-fade-left {
-            animation: fadeInLeft 0.8s ease forwards;
-        }
-        .animate-fade-right {
-            animation: fadeInRight 0.8s ease forwards;
-        }
-        .delay-1 {
-            animation-delay: 0.1s;
-            opacity: 0;
-        }
-        .delay-2 {
-            animation-delay: 0.2s;
-            opacity: 0;
-        }
-        .delay-3 {
-            animation-delay: 0.3s;
-            opacity: 0;
-        }
-        .delay-4 {
-            animation-delay: 0.4s;
-            opacity: 0;
-        }
-
-        /* ───────── HEADER ───────── */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.97);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(220, 38, 38, 0.12);
-            transition: all 0.3s ease;
-        }
-        .header.scrolled {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-        }
-        .header-inner {
-            max-width: 1300px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 28px;
-        }
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-        .logo-img {
-            height: 42px;
-            width: auto;
-        }
-        .company-name-header {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            font-size: 0.95rem;
-            color: #111827;
-            letter-spacing: -0.5px;
-        }
-        .company-name-header span {
-            color: #dc2626;
-        }
-        .nav-links {
-            display: flex;
-            gap: 28px;
-            align-items: center;
-        }
-        .nav-links a {
-            text-decoration: none;
-            color: #111827;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: color 0.3s;
-            cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
-            position: relative;
-        }
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: #dc2626;
-            transition: width 0.3s ease;
-        }
-        .nav-links a:hover::after,
-        .nav-links a.active::after {
-            width: 100%;
-        }
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: #dc2626;
-        }
-
-        .hamburger {
-            display: none;
-            width: 40px;
-            height: 40px;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 5px;
-            cursor: pointer;
-            background: rgba(220, 38, 38, 0.06);
-            border-radius: 50%;
-            border: 1px solid rgba(220, 38, 38, 0.12);
-            transition: all 0.3s ease;
-        }
-        .hamburger:hover {
-            background: rgba(220, 38, 38, 0.12);
-        }
-        .hamburger span {
-            width: 20px;
-            height: 2.5px;
-            background: #111827;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(6px, -6px);
-        }
-
-        /* ───────── MOBILE MENU ───────── */
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            right: -320px;
-            width: 280px;
-            height: 100vh;
-            background: #ffffff;
-            z-index: 999;
-            padding: 100px 25px 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            transition: right 0.35s cubic-bezier(0.65, 0, 0.35, 1);
-            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.08);
-        }
-        .mobile-menu.active {
-            right: 0;
-        }
-        .mobile-menu a {
-            color: #111827;
-            text-decoration: none;
-            font-size: 1rem;
-            font-weight: 600;
-            padding: 12px 18px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            font-family: 'Montserrat', sans-serif;
-            transition: all 0.3s ease;
-        }
-        .mobile-menu a i {
-            color: #dc2626;
-            width: 24px;
-        }
-        .mobile-menu a:hover {
-            background: rgba(220, 38, 38, 0.06);
-            color: #dc2626;
-        }
-        .menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.35);
-            z-index: 998;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        .menu-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        /* ───────── PAGE HERO ───────── */
-        .page-hero {
-            padding: 130px 28px 50px;
-            text-align: center;
-            background: linear-gradient(180deg, #fef2f2 0%, #ffffff 50%);
-        }
-        .page-hero .section-subtitle {
-            color: #dc2626;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 0.8rem;
-            letter-spacing: 3px;
-            margin-bottom: 10px;
-        }
-        .page-hero h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 900;
-            font-size: clamp(2rem, 4vw, 3rem);
-            color: #111827;
-        }
-        .page-hero h1 span {
-            color: #dc2626;
-        }
-        .page-hero p {
-            color: #4b5563;
-            max-width: 550px;
-            margin: 12px auto 0;
-            font-size: 1rem;
-        }
-
-        /* ───────── ABOUT CONTENT ───────── */
-        .about-section {
-            padding: 40px 28px 60px;
-        }
-        .about-inner {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-        }
-        .about-text h2 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            font-size: 1.8rem;
-            color: #111827;
-            margin-bottom: 16px;
-        }
-        .about-text h2 span {
-            color: #dc2626;
-        }
-        .about-text p {
-            color: #4b5563;
-            font-size: 0.95rem;
-            line-height: 1.7;
-            margin-bottom: 14px;
-        }
-        .about-image img {
-            width: 100%;
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
-        }
-
-        /* ───────── MISSION & VALUES ───────── */
-        .mission-section {
-            padding: 60px 28px;
-            background: #f8fafc;
-        }
-        .mission-inner {
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-        .section-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        .section-header .section-subtitle {
-            color: #dc2626;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 0.8rem;
-            letter-spacing: 3px;
-            margin-bottom: 8px;
-        }
-        .section-header h2 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 900;
-            font-size: 2rem;
-            color: #111827;
-        }
-        .mission-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-        }
-        .mission-card {
-            background: #ffffff;
-            border: 1px solid #e5e7eb;
-            border-radius: 20px;
-            padding: 30px 24px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-        .mission-card:hover {
-            transform: translateY(-6px);
-            border-color: #dc2626;
-            box-shadow: 0 12px 30px rgba(220, 38, 38, 0.06);
-        }
-        .mission-card .mission-icon {
-            font-size: 2.5rem;
-            color: #dc2626;
-            margin-bottom: 14px;
-            display: block;
-        }
-        .mission-card h3 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: #111827;
-            margin-bottom: 8px;
-        }
-        .mission-card p {
-            color: #4b5563;
-            font-size: 0.85rem;
-            line-height: 1.6;
-        }
-
-        /* ───────── WHY CHOOSE US ───────── */
-        .why-section {
-            padding: 60px 28px;
-        }
-        .why-inner {
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-        .why-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-        .why-item {
-            display: flex;
-            gap: 16px;
-            align-items: flex-start;
-            background: #f8fafc;
-            border: 1px solid #e5e7eb;
-            border-radius: 16px;
-            padding: 22px 20px;
-            transition: all 0.3s ease;
-        }
-        .why-item:hover {
-            border-color: #dc2626;
-            background: #ffffff;
-            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.04);
-        }
-        .why-item .why-icon {
-            font-size: 1.5rem;
-            color: #dc2626;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-        .why-item h4 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: #111827;
-            margin-bottom: 4px;
-        }
-        .why-item p {
-            color: #4b5563;
-            font-size: 0.82rem;
-            line-height: 1.5;
-        }
-
-        /* ───────── CTA ───────── */
-        .cta-section {
-            padding: 60px 28px;
-            text-align: center;
-            background: #111827;
-        }
-        .cta-section h3 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            font-size: 1.8rem;
-            color: #ffffff;
-            margin-bottom: 12px;
-        }
-        .cta-section p {
-            color: #9ca3af;
-            margin-bottom: 20px;
-        }
-        .btn-white {
-            background: #ffffff;
-            color: #dc2626;
-            padding: 14px 35px;
-            border-radius: 50px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-        }
-        .btn-white:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(255, 255, 255, 0.15);
-        }
-
-        /* ───────── FOOTER ───────── */
-        footer {
-            background: #0f172a;
-            padding: 50px 28px 25px;
-            border-top: 1px solid #1e293b;
-        }
-        .footer-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 35px;
-        }
-        .footer-brand img {
-            height: 42px;
-            margin-bottom: 12px;
-        }
-        .footer-brand p {
-            color: #94a3b8;
-            font-size: 0.85rem;
-            line-height: 1.6;
-        }
-        .footer-col h4 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 16px;
-            font-size: 1rem;
-        }
-        .footer-col a {
-            color: #94a3b8;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 8px;
-            font-size: 0.85rem;
-            transition: all 0.3s ease;
-        }
-        .footer-col a:hover {
-            color: #dc2626;
-            transform: translateX(4px);
-        }
-        .footer-col p {
-            color: #94a3b8;
-            font-size: 0.85rem;
-            margin-bottom: 4px;
-        }
-        .footer-bottom {
-            max-width: 1200px;
-            margin: 35px auto 0;
-            padding-top: 20px;
-            border-top: 1px solid #1e293b;
-            text-align: center;
-            color: #64748b;
-            font-size: 0.8rem;
-        }
-
-        /* ───────── FLOATING WHATSAPP ───────── */
-        .floating-whatsapp {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background: #25d366;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 99;
-            animation: pulse 2s infinite;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
-        }
-        .floating-whatsapp:hover {
-            transform: scale(1.1);
-        }
-        .floating-whatsapp i {
-            color: #fff;
-            font-size: 1.8rem;
-        }
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4);
-            }
-            70% {
-                box-shadow: 0 0 0 16px rgba(37, 211, 102, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
-            }
-        }
-
-        @media (max-width: 900px) {
-            .nav-links {
-                display: none;
-            }
-            .hamburger {
-                display: flex;
-            }
-            .about-inner {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-            .mission-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .why-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .footer-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-        @media (max-width: 640px) {
-            .header-inner {
-                padding: 10px 16px;
-            }
-            .logo-img {
-                height: 34px;
-            }
-            .company-name-header {
-                font-size: 0.75rem;
-            }
-            .page-hero {
-                padding: 110px 16px 30px;
-            }
-            .mission-grid {
-                grid-template-columns: 1fr;
-            }
-            .why-grid {
-                grid-template-columns: 1fr;
-            }
-            .footer-grid {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            .floating-whatsapp {
-                width: 48px;
-                height: 48px;
-                bottom: 18px;
-                right: 18px;
-            }
-            .floating-whatsapp i {
-                font-size: 1.4rem;
-            }
-            .mobile-menu {
-                width: 260px;
-            }
-        }
-            .nav-links a.nav-login {
-            background: #dc2626; color: #fff !important; padding: 8px 20px; border-radius: 50px;
-            box-shadow: 0 4px 14px rgba(220,38,38,.25); transition: all .3s ease;
-        }
-        .nav-links a.nav-login::after { display: none; }
-        .nav-links a.nav-login:hover { background: #b91c1c; color: #fff; transform: translateY(-1px); }
-</style>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "ProfessionalService",
-      "name": "Seedwel Investment LTD",
-      "url": "https://seedwel.ltd/",
-      "logo": "https://i.ibb.co/svxj52ny/seedwel.png",
-      "image": "https://i.ibb.co/svxj52ny/seedwel.png",
-      "description": "Premium digital agency offering web development, SEO, branding, graphic design and business registration services.",
-      "email": "seedwelinvestltd@gmail.com",
-      "telephone": "+260973028342",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Kabwe",
-        "addressCountry": "ZM"
-      },
-      "areaServed": ["ZM", "Global"],
-      "sameAs": [
-        "https://wa.me/260973028342"
-      ]
-    }
-    </script>
-    <link rel="stylesheet" href="assets/css/local-ai.css" />
+        .about-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(32px, 5vw, 64px); align-items: center; }
+        .about-grid h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; margin-bottom: 16px; }
+        .about-grid h2 span { color: var(--brand); }
+        .about-grid p { color: var(--muted); font-size: 0.96rem; margin-bottom: 14px; }
+        .about-grid .about-media { position: relative; }
+        .about-grid .about-media img { border-radius: var(--radius); box-shadow: var(--shadow-lg); }
+        .about-list { list-style: none; margin: 20px 0 28px; display: grid; gap: 11px; }
+        .about-list li { display: flex; gap: 11px; align-items: flex-start; font-size: 0.92rem; color: var(--ink); }
+        .about-list i { color: var(--green); margin-top: 4px; font-size: 0.82rem; }
+        @media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; } }
+    </style>
 </head>
 
-<body>
+<body data-page="about">
 
     <!-- ========== HEADER ========== -->
     <header class="header" id="header">
-        <div class="header-inner">
-            <a href="index.html" class="logo-container">
-                <img src="https://i.ibb.co/svxj52ny/seedwel.png" class="logo-img" alt="Seedwel Investment LTD" />
+        <div class="container header-inner">
+            <a href="index.html" class="logo-container" aria-label="Seedwel Investment LTD — Home">
+                <img src="https://i.ibb.co/svxj52ny/seedwel.png" class="logo-img" alt="Seedwel Investment LTD logo" />
                 <span class="company-name-header">Seedwel <span>Investment</span> LTD</span>
             </a>
-            <div class="nav-links">
+            <nav class="nav-links" aria-label="Main navigation">
                 <a href="index.html">Home</a>
-                <a href="about.html" class="active">About Us</a>
+                <a href="about.html" class="active" aria-current="page">About</a>
                 <a href="services.html">Services</a>
                 <a href="projects.html">Projects</a>
                 <a href="apply.html">Careers</a>
                 <a href="contact.html">Contact</a>
                 <a href="support.html">Support</a>
-                <a href="login.html" class="nav-login">Login</a>
-            </div>
-            <div class="hamburger" id="hamburger" aria-label="Menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+                <a href="login.html" class="btn btn-ghost nav-login">Login</a>
+                <a href="request.html" class="btn btn-primary nav-cta">Request a Service</a>
+            </nav>
+            <button class="hamburger" id="hamburger" type="button" aria-label="Open menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </header>
 
-    <!-- ========== MOBILE MENU ========== -->
     <div class="menu-overlay" id="menuOverlay"></div>
-    <nav class="mobile-menu" id="mobileMenu">
-        <a href="index.html"><i class="fas fa-home"></i> Home</a>
-        <a href="apply.html"><i class="fas fa-pen"></i> Job Apply</a>
-        <a href="about.html"><i class="fas fa-info-circle"></i> About Us</a>
-        <a href="services.html"><i class="fas fa-cogs"></i> Services</a>
-        <a href="projects.html"><i class="fas fa-folder-open"></i> Projects</a>
-        <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
-        <a href="support.html"><i class="fas fa-headset"></i> Support</a>
-        <a href="login.html"><i class="fas fa-right-to-bracket"></i> Login</a>
+    <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+        <a href="index.html"><i class="fa-solid fa-house" aria-hidden="true"></i> Home</a>
+        <a href="about.html" class="active"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> About</a>
+        <a href="services.html"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Services</a>
+        <a href="projects.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i> Projects</a>
+        <a href="apply.html"><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Careers</a>
+        <a href="contact.html"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Contact</a>
+        <a href="support.html"><i class="fa-solid fa-headset" aria-hidden="true"></i> Support</a>
+        <a href="login.html"><i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i> Login</a>
+        <div class="menu-divider"></div>
+        <a href="request.html" class="menu-request"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Request a Service</a>
     </nav>
 
-    <!-- ========== PAGE HERO ========== -->
-    <section class="page-hero">
-        <p class="section-subtitle animate-fade-up">Who We Are</p>
-        <h1 class="animate-fade-up delay-1">About <span>Seedwel Investment</span> LTD</h1>
-        <p class="animate-fade-up delay-2">A premium digital agency dedicated to building experiences that drive growth</p>
-    </section>
+    <main>
 
-    <!-- ========== ABOUT CONTENT ========== -->
-    <section class="about-section">
-        <div class="about-inner">
-            <div class="about-text animate-fade-left">
-                <h2>We Are a <span>Premium Digital Agency</span> Built on Excellence</h2>
-                <p>Seedwel Investment LTD was founded with a clear mission: to deliver agency-level execution across web development, SEO, branding, and business registration services. We serve clients across Zambia and globally, bringing modern digital solutions to businesses of all sizes.</p>
-                <p>With over 6 years of industry experience, we've delivered 150+ projects and maintained a 98.9% client satisfaction rate. Our team is available 24/7 because we believe great support never sleeps.</p>
-                <p>Whether you need a stunning website, professional graphic design, or help registering your business with PACRA and ZRA — we handle it all with precision and care.</p>
+        <!-- ========== PAGE HERO ========== -->
+        <section class="page-hero">
+            <div class="container">
+                <p class="eyebrow">Who We Are</p>
+                <h1>About <span>Seedwel Investment</span> LTD</h1>
+                <p>A private Zambian company helping businesses register, comply, build their online presence and grow.</p>
             </div>
-            <div class="about-image seedwel-about-image animate-fade-right">
-                <img src="assets/images/seedwel-strategy-session.jpg" alt="Seedwel specialists shaping a client strategy together" width="1376" height="768" loading="eager" decoding="async" />
-                <div class="seedwel-image-note"><i class="fas fa-compass" aria-hidden="true"></i><span>Local understanding. Global digital standards.</span></div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- ========== HOW WE WORK FILM ========== -->
-    <section class="seedwel-media-section seedwel-about-film" aria-labelledby="seedwelProcessTitle">
-        <div class="seedwel-media-container">
-            <header class="seedwel-media-heading seedwel-media-reveal">
+        <!-- ========== WHO WE ARE ========== -->
+        <section class="section">
+            <div class="container about-grid">
+                <div class="reveal">
+                    <p class="eyebrow">Our Story</p>
+                    <h2>Practical business support, <span>delivered properly</span></h2>
+                    <p>
+                        Seedwel Investment LTD was founded with a simple mission: give Zambian businesses access to
+                        professional, well-organised services — from company registration and compliance assistance
+                        through to websites, marketing and automation.
+                    </p>
+                    <p>
+                        We work with entrepreneurs, small businesses and growing organisations across Zambia and
+                        beyond. Every engagement is handled with clear documentation, transparent communication
+                        and secure handling of client information.
+                    </p>
+                    <ul class="about-list">
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i> Clear scope, timeline and fees agreed before work starts</li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i> Regular updates while your request is in progress</li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i> Modern digital tools for secure, organised delivery</li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i> Support after handover — we don't disappear</li>
+                    </ul>
+                    <div style="display:flex;gap:14px;flex-wrap:wrap;">
+                        <a href="request.html" class="btn btn-primary"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Request a Service</a>
+                        <a href="services.html" class="btn btn-outline">Our Services</a>
+                    </div>
+                </div>
+                <div class="about-media reveal d2">
+                    <img src="assets/images/about-team.jpg" alt="Seedwel Investment LTD team in a modern office" width="1536" height="1024" loading="eager" decoding="async" />
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== MISSION / VISION / VALUES ========== -->
+        <section class="section section-alt" aria-labelledby="valuesTitle">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="eyebrow">What Guides Us</p>
+                    <h2 class="section-title" id="valuesTitle">Mission, vision and values</h2>
+                </div>
+                <div class="grid-3">
+                    <article class="card icon-card reveal">
+                        <div class="icon"><i class="fa-solid fa-bullseye" aria-hidden="true"></i></div>
+                        <h3>Our Mission</h3>
+                        <p>To give every business we serve clear, professional support that removes administrative stress and supports real growth.</p>
+                    </article>
+                    <article class="card icon-card reveal d1">
+                        <div class="icon"><i class="fa-solid fa-eye" aria-hidden="true"></i></div>
+                        <h3>Our Vision</h3>
+                        <p>To become a trusted long-term partner for Zambian businesses — known for honesty, quality of work and dependable delivery.</p>
+                    </article>
+                    <article class="card icon-card reveal d2">
+                        <div class="icon"><i class="fa-solid fa-heart" aria-hidden="true"></i></div>
+                        <h3>Our Promise</h3>
+                        <p>We treat every request with care: agreed scope, honest timelines, secure information and communication throughout.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== WHAT WE'RE NOT ========== -->
+        <section class="section-tight" style="padding-bottom:0;">
+            <div class="container">
+                <div class="notice reveal">
+                    <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+                    <div>
+                        <strong>A clear note on government services:</strong> Seedwel Investment LTD is an independent private company.
+                        We are not ZRA, NAPSA or PACRA and are not affiliated with any government agency. When you request
+                        ZRA, NAPSA, PACRA or Workers' Compensation support, Seedwel provides <strong>private assistance with the relevant
+                        processes</strong> — official registrations and certificates are always issued by the responsible government institutions.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== WORK WITH US ========== -->
+        <section class="section" aria-labelledby="teamTitle">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="eyebrow">Work With Us</p>
+                    <h2 class="section-title" id="teamTitle">Two ways to get started</h2>
+                </div>
+                <div class="grid-2">
+                    <article class="card icon-card reveal">
+                        <div class="icon"><i class="fa-solid fa-briefcase" aria-hidden="true"></i></div>
+                        <h3>For clients</h3>
+                        <p>Need registration assistance, a website or marketing support? Submit a service request and our team will take it from there.</p>
+                        <p class="mt-2"><a href="request.html" class="btn btn-primary">Request a Service</a></p>
+                    </article>
+                    <article class="card icon-card reveal d1">
+                        <div class="icon"><i class="fa-solid fa-user-plus" aria-hidden="true"></i></div>
+                        <h3>For team members</h3>
+                        <p>Interested in commission-based remote roles with Seedwel? Visit our careers page to see current openings and apply online.</p>
+                        <p class="mt-2"><a href="apply.html" class="btn btn-outline">View Careers</a></p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== CTA ========== -->
+        <section class="cta-band">
+            <div class="container reveal">
                 <div>
-                    <p class="seedwel-media-eyebrow">How we work</p>
-                    <h2 id="seedwelProcessTitle">A clear process, brought <span>to life.</span></h2>
-                    <p>Our best work starts with listening. From there, we design, build and keep improving — with practical communication at every stage.</p>
+                    <h2>Let's get your request moving</h2>
+                    <p>Send a service request today and experience organised, professional support.</p>
                 </div>
-                <span class="seedwel-original-mark"><i class="fas fa-film" aria-hidden="true"></i> Original process film</span>
-            </header>
-
-            <div class="seedwel-showcase-grid seedwel-showcase-grid--reverse">
-                <aside class="seedwel-showcase-copy seedwel-media-reveal" data-reveal="left">
-                    <p class="seedwel-card-kicker">Discover · Create · Deliver</p>
-                    <h3>Professional execution without the mystery.</h3>
-                    <p>Every engagement is organised around useful outcomes, transparent next steps and a standard of work we are proud to put our name behind.</p>
-                    <div class="seedwel-story-points">
-                        <div class="seedwel-story-point"><i class="fas fa-comments" aria-hidden="true"></i><span>Understand the goal and audience</span></div>
-                        <div class="seedwel-story-point"><i class="fas fa-pen-ruler" aria-hidden="true"></i><span>Design, build and test carefully</span></div>
-                        <div class="seedwel-story-point"><i class="fas fa-rocket" aria-hidden="true"></i><span>Launch confidently and support growth</span></div>
-                    </div>
-                    <a class="seedwel-media-link" href="contact.html">Start a conversation <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-                </aside>
-
-                <div class="seedwel-video-shell seedwel-media-reveal" data-reveal="right">
-                    <video data-seedwel-video autoplay muted loop playsinline preload="metadata" poster="assets/images/seedwel-process-poster.jpg" aria-label="Seedwel discover, design and launch process film">
-                        <source src="assets/videos/seedwel-process-film.mp4" type="video/mp4" />
-                        Your browser does not support embedded video. <a href="assets/videos/seedwel-process-film.mp4">Open the Seedwel process film</a>.
-                    </video>
-                    <span class="seedwel-video-badge">Our process in 12 seconds</span>
-                    <button class="seedwel-video-toggle" type="button" data-video-toggle aria-label="Pause company film">
-                        <i class="fas fa-pause" aria-hidden="true"></i><span>Pause film</span>
-                    </button>
+                <div style="display:flex;gap:14px;flex-wrap:wrap;">
+                    <a href="request.html" class="btn btn-light"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Request a Service</a>
+                    <a href="contact.html" class="btn btn-outline" style="color:#fff;">Contact Us</a>
                 </div>
             </div>
+        </section>
 
-            <div class="seedwel-photo-grid" aria-label="Seedwel company story">
-                <figure class="seedwel-photo-card seedwel-media-reveal">
-                    <img src="assets/images/seedwel-business-advisory.jpg" alt="Business advisor helping an entrepreneur move forward" width="1376" height="768" loading="lazy" decoding="async" />
-                    <figcaption><span>Business support</span><strong>Advice made practical</strong></figcaption>
-                </figure>
-                <figure class="seedwel-photo-card seedwel-media-reveal">
-                    <img src="assets/images/seedwel-digital-craft.jpg" alt="Digital specialists designing and developing a client product" width="1376" height="768" loading="lazy" decoding="async" />
-                    <figcaption><span>Digital craft</span><strong>Quality in every detail</strong></figcaption>
-                </figure>
-                <figure class="seedwel-photo-card seedwel-media-reveal">
-                    <img src="assets/images/seedwel-launch-moment.jpg" alt="Digital team reviewing a successful project launch" width="1376" height="768" loading="lazy" decoding="async" />
-                    <figcaption><span>Delivery</span><strong>Momentum beyond launch</strong></figcaption>
-                </figure>
-                <figure class="seedwel-photo-card seedwel-media-reveal">
-                    <img src="assets/images/seedwel-code-collaboration.jpg" alt="Seedwel developers pair programming on a responsive website build" width="1376" height="768" loading="lazy" decoding="async" />
-                    <figcaption><span>Engineering</span><strong>Clean, reliable builds</strong></figcaption>
-                </figure>
-                <figure class="seedwel-photo-card seedwel-media-reveal">
-                    <img src="assets/images/seedwel-brand-workshop.jpg" alt="Seedwel designers reviewing brand moodboards and colour palettes" width="1376" height="768" loading="lazy" decoding="async" />
-                    <figcaption><span>Branding</span><strong>Identity with intention</strong></figcaption>
-                </figure>
-                <figure class="seedwel-photo-card seedwel-media-reveal">
-                    <img src="assets/images/seedwel-content-studio.jpg" alt="Seedwel content specialist photographing products in a studio" width="1376" height="768" loading="lazy" decoding="async" />
-                    <figcaption><span>Content</span><strong>Stories told well</strong></figcaption>
-                </figure>
-            </div>
-        </div>
-    </section>
+    </main>
 
-    <!-- ========== MISSION & VALUES ========== -->
-    <section class="mission-section">
-        <div class="mission-inner">
-            <div class="section-header animate-fade-up">
-                <p class="section-subtitle">Our Core Values</p>
-                <h2>What Drives Us</h2>
-            </div>
-            <div class="mission-grid">
-                <div class="mission-card animate-fade-up delay-1">
-                    <span class="mission-icon"><i class="fas fa-bullseye"></i></span>
-                    <h3>Our Mission</h3>
-                    <p>To empower businesses with world-class digital solutions that drive real growth and transformation.</p>
-                </div>
-                <div class="mission-card animate-fade-up delay-2">
-                    <span class="mission-icon"><i class="fas fa-eye"></i></span>
-                    <h3>Our Vision</h3>
-                    <p>To become Africa's most trusted digital agency, known for quality, innovation, and client success.</p>
-                </div>
-                <div class="mission-card animate-fade-up delay-3">
-                    <span class="mission-icon"><i class="fas fa-heart"></i></span>
-                    <h3>Our Promise</h3>
-                    <p>We treat every project as our own. Quality delivery, on time, every time — that's our commitment.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========== WHY CHOOSE US ========== -->
-    <section class="why-section">
-        <div class="why-inner">
-            <div class="section-header animate-fade-up">
-                <p class="section-subtitle">The Seedwel Difference</p>
-                <h2>Why Choose Us</h2>
-            </div>
-            <div class="why-grid">
-                <div class="why-item animate-fade-up delay-1">
-                    <span class="why-icon"><i class="fas fa-check-circle"></i></span>
-                    <div>
-                        <h4>150+ Projects Delivered</h4>
-                        <p>Proven track record with businesses across Zambia and beyond.</p>
-                    </div>
-                </div>
-                <div class="why-item animate-fade-up delay-2">
-                    <span class="why-icon"><i class="fas fa-star"></i></span>
-                    <div>
-                        <h4>98.9% Client Satisfaction</h4>
-                        <p>Our clients love working with us — and it shows in the results.</p>
-                    </div>
-                </div>
-                <div class="why-item animate-fade-up delay-3">
-                    <span class="why-icon"><i class="fas fa-clock"></i></span>
-                    <div>
-                        <h4>24/7 Availability</h4>
-                        <p>Round-the-clock support because your business never stops.</p>
-                    </div>
-                </div>
-                <div class="why-item animate-fade-up delay-4">
-                    <span class="why-icon"><i class="fas fa-globe"></i></span>
-                    <div>
-                        <h4>Global Reach, Local Expertise</h4>
-                        <p>Based in Zambia, serving clients worldwide with personalized care.</p>
-                    </div>
-                </div>
-                <div class="why-item animate-fade-up delay-1">
-                    <span class="why-icon"><i class="fas fa-shield-alt"></i></span>
-                    <div>
-                        <h4>Trusted & Reliable</h4>
-                        <p>Registered and compliant — PACRA, ZRA, and Workers Compensation certified.</p>
-                    </div>
-                </div>
-                <div class="why-item animate-fade-up delay-2">
-                    <span class="why-icon"><i class="fas fa-rocket"></i></span>
-                    <div>
-                        <h4>Fast Turnaround</h4>
-                        <p>We respect your time. Quick delivery without compromising quality.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========== CTA ========== -->
-    <section class="cta-section">
-        <h3 class="animate-fade-up">Ready to Work With Us?</h3>
-        <p class="animate-fade-up delay-1">Let's create something amazing together.</p>
-        <a href="contact.html" class="btn-white animate-fade-up delay-2"><i class="fas fa-paper-plane"></i> Get In Touch</a>
-    </section>
-
-    <!-- ========== FOOTER ========== -->
-    <footer>
-        <div class="footer-grid">
-            <div class="footer-brand">
-                <img src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel Investment LTD" />
-                <p>Premium digital agency delivering excellence worldwide. We build digital experiences that drive growth for modern businesses.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Quick Links</h4>
-                <a href="index.html">Home</a>
-                <a href="about.html">About Us</a>
-                <a href="services.html">Services</a>
-                <a href="projects.html">Projects</a>
-            </div>
-            <div class="footer-col">
-                <h4>Support</h4>
-                <a href="contact.html">Contact</a>
-                <a href="support.html">Help Center</a>
-                <a href="privacy.html">Privacy</a>
-                <a href="terms.html">Terms</a>
-                <a href="tel:+260973028342"><i class="fas fa-phone" style="color:#dc2626; width:18px;"></i> +260 973 028 342</a>
-                <a href="mailto:seedwelinvestltd@gmail.com"><i class="fas fa-envelope" style="color:#dc2626; width:18px;"></i> seedwelinvestltd@gmail.com</a>
-            </div>
-            <div class="footer-col">
-                <h4>Locations</h4>
-                <p><i class="fas fa-location-dot" style="color:#dc2626; width:18px;"></i> Kabwe, Zambia</p>
-                <p><i class="fas fa-location-dot" style="color:#dc2626; width:18px;"></i> Chama, Zambia</p>
-                <p>🌍 Global Remote</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Seedwel Investment LTD. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- ========== FLOATING WHATSAPP ========== -->
-    <a href="https://wa.me/260973028342" class="floating-whatsapp" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-
-    <script>
-        // ─── Mobile Menu ───
-        const hamburger = document.getElementById('hamburger');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const menuOverlay = document.getElementById('menuOverlay');
-
-        function toggleMenu() {
-            hamburger.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-            menuOverlay.classList.toggle('active');
-            document.body.style.overflow = hamburger.classList.contains('active') ? 'hidden' : '';
-        }
-        hamburger.addEventListener('click', toggleMenu);
-        menuOverlay.addEventListener('click', toggleMenu);
-        document.querySelectorAll('.mobile-menu a').forEach(l => l.addEventListener('click', toggleMenu));
-
-        // ─── Header Scroll Effect ───
-        const header = document.getElementById('header');
-        window.addEventListener('scroll', () => {
-            header.classList.toggle('scrolled', window.scrollY > 40);
-        });
-
-        // ─── Scroll to Top ───
-        window.scrollTo(0, 0);
-        window.addEventListener('load', () => window.scrollTo(0, 0));
-        window.addEventListener('pageshow', (e) => { if (e.persisted) window.scrollTo(0, 0); });
-    </script>
-    <script src="assets/js/media-showcase.js" defer></script>
-    <script src="assets/js/service-strip.js" defer></script>
-    <script src="assets/js/local-ai.js" defer></script>
+    <script src="assets/js/site.js" defer></script>
 </body>
 </html>

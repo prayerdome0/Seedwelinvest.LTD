@@ -6,1018 +6,356 @@
     <meta name="theme-color" content="#dc2626" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="manifest" href="site.webmanifest" />
-    <title>Careers | Seedwel Investment LTD</title>
-    <meta name="description" content="Join the Seedwel Investment LTD team. Apply for Web Developer, Graphic Designer, Cold Caller, Virtual Assistant and more positions." />
+    <title>Careers — Join Our Team | Seedwel Investment LTD</title>
+    <meta name="description" content="Apply for commission-based remote roles with Seedwel Investment LTD — cold callers, virtual assistants, developers, designers and more. Submit your application online." />
 
-    
     <link rel="canonical" href="https://seedwel.ltd/apply.html" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Seedwel Investment LTD" />
-    <meta property="og:title" content="Careers | Seedwel Investment LTD" />
-    <meta property="og:description" content="Join Seedwel Investment LTD. Apply for web developer, graphic designer, cold caller, virtual assistant and commission-based roles." />
+    <meta property="og:title" content="Careers at Seedwel Investment LTD" />
+    <meta property="og:description" content="Commission-based remote roles and live openings — apply online." />
     <meta property="og:url" content="https://seedwel.ltd/apply.html" />
-    <meta property="og:image" content="https://i.ibb.co/svxj52ny/seedwel.png" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Careers | Seedwel Investment LTD" />
-    <meta name="twitter:description" content="Join Seedwel Investment LTD. Apply for web developer, graphic designer, cold caller, virtual assistant and commission-based roles." />
-    <meta name="twitter:image" content="https://i.ibb.co/svxj52ny/seedwel.png" />
-<!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
 
-    <!-- Firebase -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="assets/css/site.css" />
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
     <script src="cloudinary-upload.js"></script>
 
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #ffffff;
-            color: #111827;
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: #dc2626; border-radius: 10px; }
+        .job-card { display: flex; flex-direction: column; padding: 26px; }
+        .job-card h3 { font-size: 1.08rem; font-weight: 700; margin-bottom: 8px; }
+        .job-card .job-meta { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 12px; }
+        .job-card .job-meta span { display: inline-flex; align-items: center; gap: 7px; color: var(--muted-2); font-size: 0.78rem; font-weight: 500; }
+        .job-card .job-meta i { color: var(--brand); font-size: 0.75rem; }
+        .job-card p { color: var(--muted); font-size: 0.88rem; flex: 1; }
+        .job-card .btn { margin-top: 18px; align-self: flex-start; min-height: 42px; padding: 9px 18px; font-size: 0.8rem; }
 
-        /* ───────── ANIMATIONS ───────── */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
+        .file-upload {
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
+            padding: 26px 18px; text-align: center;
+            border: 2px dashed #d1d5db; border-radius: 12px;
+            background: var(--soft); cursor: pointer;
+            transition: border-color 0.2s ease, background 0.2s ease;
         }
-        @keyframes fadeInLeft {
-            from { opacity: 0; transform: translateX(-40px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes fadeInRight {
-            from { opacity: 0; transform: translateX(40px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
-        @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(220, 38, 38, 0.1); }
-            50% { box-shadow: 0 0 40px rgba(220, 38, 38, 0.25); }
-        }
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        @keyframes scaleIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        @keyframes slideInRotate {
-            from { opacity: 0; transform: translateY(30px) rotate(-2deg); }
-            to { opacity: 1; transform: translateY(0) rotate(0); }
-        }
-        @keyframes bounceIn {
-            0% { opacity: 0; transform: scale(0.3); }
-            50% { opacity: 1; transform: scale(1.05); }
-            70% { transform: scale(0.9); }
-            100% { transform: scale(1); }
-        }
-        @keyframes ripple {
-            0% { transform: scale(1); opacity: 1; }
-            100% { transform: scale(1.5); opacity: 0; }
-        }
-        @keyframes tilt {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(1deg); }
-            75% { transform: rotate(-1deg); }
-        }
-        @keyframes particleFloat {
-            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
-        }
+        .file-upload:hover, .file-upload:focus-visible, .file-upload.is-dragging { border-color: var(--brand); background: var(--brand-soft); }
+        .file-upload i { color: var(--brand); font-size: 1.5rem; }
+        .file-upload p { color: var(--muted); font-size: 0.82rem; margin: 0; }
+        .file-upload .file-name { display: none; font-weight: 600; color: var(--ink); font-size: 0.82rem; }
+        .file-upload.has-file { border-color: var(--green); background: #f0fdf4; }
+        .file-upload.has-file .file-name { display: block; }
+        .file-upload.is-invalid { border-color: var(--brand); background: var(--brand-soft); }
+        .file-upload-note { display: flex; gap: 9px; margin-top: 10px; color: var(--muted-2); font-size: 0.76rem; line-height: 1.55; }
+        .file-upload-note i { color: var(--green); margin-top: 2px; }
+        .file-upload-progress { height: 6px; margin-top: 12px; overflow: hidden; border-radius: 999px; background: var(--line); display: none; }
+        .file-upload-progress[aria-hidden="false"] { display: block; }
+        .file-upload-progress-bar { width: 0; height: 100%; border-radius: 999px; background: var(--brand); transition: width 0.25s ease; }
+        .file-upload-status { margin: 8px 0 0; font-size: 0.8rem; font-weight: 600; color: var(--muted); }
+        .file-upload-status.is-error { color: var(--brand-dark); }
+        .file-upload-status.is-success { color: var(--green); }
 
-        .animate-fade-up { animation: fadeInUp 0.8s ease forwards; }
-        .animate-fade-left { animation: fadeInLeft 0.8s ease forwards; }
-        .animate-fade-right { animation: fadeInRight 0.8s ease forwards; }
-        .animate-float { animation: float 3s ease-in-out infinite; }
-        .animate-scale-in { animation: scaleIn 0.6s ease forwards; }
-        .animate-bounce-in { animation: bounceIn 0.8s ease forwards; }
-        .animate-slide-rotate { animation: slideInRotate 0.7s ease forwards; }
-        .delay-1 { animation-delay: 0.1s; opacity: 0; }
-        .delay-2 { animation-delay: 0.2s; opacity: 0; }
-        .delay-3 { animation-delay: 0.3s; opacity: 0; }
-        .delay-4 { animation-delay: 0.4s; opacity: 0; }
-        .delay-5 { animation-delay: 0.5s; opacity: 0; }
-        .delay-6 { animation-delay: 0.6s; opacity: 0; }
-        .delay-7 { animation-delay: 0.7s; opacity: 0; }
-        .delay-8 { animation-delay: 0.8s; opacity: 0; }
-
-        /* Scroll reveal */
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s cubic-bezier(0.25, 0.8, 0.25, 1); }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-        .reveal-left { opacity: 0; transform: translateX(-40px); transition: all 0.7s cubic-bezier(0.25, 0.8, 0.25, 1); }
-        .reveal-left.visible { opacity: 1; transform: translateX(0); }
-        .reveal-right { opacity: 0; transform: translateX(40px); transition: all 0.7s cubic-bezier(0.25, 0.8, 0.25, 1); }
-        .reveal-right.visible { opacity: 1; transform: translateX(0); }
-        .reveal-scale { opacity: 0; transform: scale(0.85); transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1); }
-        .reveal-scale.visible { opacity: 1; transform: scale(1); }
-
-        /* ───────── HEADER ───────── */
-        .header {
-            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
-            background: rgba(255, 255, 255, 0.97); backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(220, 38, 38, 0.12); transition: all 0.3s ease;
-        }
-        .header.scrolled { box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06); }
-        .header-inner {
-            max-width: 1300px; margin: 0 auto; display: flex;
-            justify-content: space-between; align-items: center; padding: 12px 28px;
-        }
-        .logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-        .logo-img { height: 42px; width: auto; }
-        .company-name-header {
-            font-family: 'Montserrat', sans-serif; font-weight: 800;
-            font-size: 0.95rem; color: #111827; letter-spacing: -0.5px;
-        }
-        .company-name-header span { color: #dc2626; }
-        .nav-links { display: flex; gap: 28px; align-items: center; }
-        .nav-links a {
-            text-decoration: none; color: #111827; font-weight: 600; font-size: 0.9rem;
-            transition: color 0.3s; cursor: pointer; font-family: 'Montserrat', sans-serif; position: relative;
-        }
-        .nav-links a::after {
-            content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px;
-            background: #dc2626; transition: width 0.3s ease;
-        }
-        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
-        .nav-links a:hover, .nav-links a.active { color: #dc2626; }
-
-        .hamburger {
-            display: none; width: 40px; height: 40px; flex-direction: column;
-            justify-content: center; align-items: center; gap: 5px; cursor: pointer;
-            background: rgba(220, 38, 38, 0.06); border-radius: 50%;
-            border: 1px solid rgba(220, 38, 38, 0.12); transition: all 0.3s ease;
-        }
-        .hamburger:hover { background: rgba(220, 38, 38, 0.12); }
-        .hamburger span { width: 20px; height: 2.5px; background: #111827; border-radius: 4px; transition: all 0.3s ease; }
-        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
-        .hamburger.active span:nth-child(2) { opacity: 0; }
-        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
-
-        /* ───────── MOBILE MENU ───────── */
-        .mobile-menu {
-            position: fixed; top: 0; right: -320px; width: 280px; height: 100vh;
-            background: #ffffff; z-index: 999; padding: 100px 25px 30px;
-            display: flex; flex-direction: column; gap: 8px;
-            transition: right 0.35s cubic-bezier(0.65, 0, 0.35, 1);
-            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.08);
-        }
-        .mobile-menu.active { right: 0; }
-        .mobile-menu a {
-            color: #111827; text-decoration: none; font-size: 1rem; font-weight: 600;
-            padding: 12px 18px; border-radius: 12px; display: flex; align-items: center;
-            gap: 14px; font-family: 'Montserrat', sans-serif; transition: all 0.3s ease;
-        }
-        .mobile-menu a i { color: #dc2626; width: 24px; }
-        .mobile-menu a:hover { background: rgba(220, 38, 38, 0.06); color: #dc2626; }
-        .menu-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.35); z-index: 998; opacity: 0;
-            pointer-events: none; transition: opacity 0.3s ease;
-        }
-        .menu-overlay.active { opacity: 1; pointer-events: all; }
-
-        /* ───────── HERO ───────── */
-        .hero-apply {
-            padding: 140px 28px 60px; text-align: center;
-            background: linear-gradient(180deg, #fef2f2 0%, #ffffff 50%);
-            position: relative; overflow: hidden;
-        }
-        .hero-apply::before {
-            content: ''; position: absolute; top: -50%; right: -20%;
-            width: 500px; height: 500px;
-            background: radial-gradient(circle, rgba(220, 38, 38, 0.04) 0%, transparent 70%);
-            border-radius: 50%; animation: float 8s ease-in-out infinite;
-        }
-        .hero-apply::after {
-            content: ''; position: absolute; bottom: -30%; left: -15%;
-            width: 400px; height: 400px;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.03) 0%, transparent 70%);
-            border-radius: 50%; animation: float 10s ease-in-out infinite reverse;
-        }
-        /* Floating particles */
-        .hero-particles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
-        .hero-particle {
-            position: absolute; width: 6px; height: 6px; border-radius: 50%;
-            background: rgba(220, 38, 38, 0.15);
-            animation: particleFloat 8s linear infinite;
-        }
-        .hero-particle:nth-child(2) { left: 20%; animation-delay: 2s; animation-duration: 10s; background: rgba(59, 130, 246, 0.12); width: 8px; height: 8px; }
-        .hero-particle:nth-child(3) { left: 40%; animation-delay: 4s; animation-duration: 12s; }
-        .hero-particle:nth-child(4) { left: 60%; animation-delay: 1s; animation-duration: 9s; background: rgba(245, 158, 11, 0.15); width: 5px; height: 5px; }
-        .hero-particle:nth-child(5) { left: 80%; animation-delay: 3s; animation-duration: 11s; background: rgba(16, 185, 129, 0.12); width: 7px; height: 7px; }
-
-        .hero-apply h1 {
-            font-family: 'Montserrat', sans-serif; font-weight: 900;
-            font-size: clamp(2rem, 4.5vw, 3.5rem); color: #111827;
-            margin-bottom: 12px; letter-spacing: -1px; position: relative; z-index: 1;
-        }
-        .hero-apply h1 span { color: #dc2626; position: relative; }
-        .hero-apply h1 span::after {
-            content: ''; position: absolute; bottom: 4px; left: 0; width: 100%;
-            height: 6px; background: rgba(220, 38, 38, 0.15); border-radius: 4px;
-        }
-        .hero-apply p {
-            color: #4b5563; max-width: 600px; margin: 0 auto;
-            font-size: 1.05rem; position: relative; z-index: 1;
-        }
-        .hero-stats-row {
-            display: flex; justify-content: center; gap: 40px; margin-top: 30px;
-            position: relative; z-index: 1; flex-wrap: wrap;
-        }
-        .hero-stat {
-            text-align: center;
-        }
-        .hero-stat strong {
-            display: block; font-family: 'Montserrat', sans-serif; font-weight: 900;
-            font-size: 2rem; color: #dc2626;
-        }
-        .hero-stat span { color: #6b7280; font-size: 0.85rem; font-weight: 600; }
-
-        /* ───────── COMMISSION BANNER ───────── */
-        .commission-banner {
-            padding: 25px 28px;
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-            text-align: center; border-top: 3px solid #f59e0b; border-bottom: 3px solid #f59e0b;
-            position: relative; overflow: hidden;
-        }
-        .commission-banner::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 200%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.05), transparent);
-            animation: shimmer 5s infinite;
-        }
-        .commission-banner h3 {
-            font-family: 'Montserrat', sans-serif; font-weight: 800;
-            font-size: 1.5rem; color: #f59e0b; position: relative;
-        }
-        .commission-banner p { color: #94a3b8; font-size: 1rem; position: relative; }
-        .highlight-commission {
-            background: rgba(245, 158, 11, 0.15); padding: 2px 14px;
-            border-radius: 20px; font-weight: 700; color: #f59e0b;
-        }
-
-        /* ───────── TEAM GALLERY ───────── */
-        .team-gallery {
-            padding: 60px 28px; background: #ffffff;
-        }
-        .team-gallery .section-header {
-            text-align: center; max-width: 700px; margin: 0 auto 40px;
-        }
-        .team-gallery .section-subtitle {
-            color: #dc2626; font-family: 'Montserrat', sans-serif; font-weight: 700;
-            font-size: 0.8rem; letter-spacing: 3px; margin-bottom: 10px;
-        }
-        .team-gallery .section-title {
-            font-family: 'Montserrat', sans-serif; font-weight: 900;
-            font-size: clamp(1.8rem, 3vw, 2.5rem); color: #111827;
-        }
-        .gallery-grid {
-            max-width: 1200px; margin: 0 auto;
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
-        }
-        .gallery-item {
-            position: relative; border-radius: 16px; overflow: hidden;
-            aspect-ratio: 1; cursor: pointer; transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-        .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; }
-        .gallery-item img {
-            width: 100%; height: 100%; object-fit: cover;
-            transition: all 0.5s ease;
-        }
-        .gallery-item:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(220, 38, 38, 0.12); }
-        .gallery-item:hover img { transform: scale(1.08); }
-        .gallery-overlay {
-            position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.7));
-            display: flex; flex-direction: column; justify-content: flex-end; padding: 16px;
-            opacity: 0; transition: opacity 0.3s ease;
-        }
-        .gallery-item:hover .gallery-overlay { opacity: 1; }
-        .gallery-overlay h4 { color: #fff; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.9rem; }
-        .gallery-overlay p { color: rgba(255,255,255,0.8); font-size: 0.75rem; }
-
-        /* ───────── JOB LISTINGS ───────── */
-        .jobs-section { padding: 50px 28px 60px; background: #f8fafc; }
-        .jobs-container { max-width: 1100px; margin: 0 auto; }
-        .section-header { text-align: center; max-width: 700px; margin: 0 auto 40px; }
-        .section-subtitle {
-            color: #dc2626; font-family: 'Montserrat', sans-serif; font-weight: 700;
-            font-size: 0.8rem; letter-spacing: 3px; margin-bottom: 10px;
-        }
-        .section-title {
-            font-family: 'Montserrat', sans-serif; font-weight: 900;
-            font-size: clamp(1.8rem, 3vw, 2.5rem); color: #111827;
-        }
-
-        /* Category filter tabs */
-        .job-filter-tabs {
-            display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin-bottom: 35px;
-        }
-        .job-filter-tab {
-            padding: 8px 20px; border-radius: 50px; font-family: 'Montserrat', sans-serif;
-            font-weight: 700; font-size: 0.8rem; cursor: pointer; border: 2px solid #e5e7eb;
-            background: #fff; color: #4b5563; transition: all 0.3s ease;
-        }
-        .job-filter-tab:hover { border-color: #dc2626; color: #dc2626; }
-        .job-filter-tab.active { background: #dc2626; border-color: #dc2626; color: #fff; }
-
-        .jobs-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px;
-        }
-        .job-card {
-            background: #ffffff; border-radius: 24px; padding: 28px;
-            border: 2px solid #e5e7eb; transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02); position: relative; text-align: center;
-            overflow: hidden;
-        }
-        .job-card::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
-            background: linear-gradient(90deg, #dc2626, #f59e0b); transform: scaleX(0);
-            transition: transform 0.4s ease; transform-origin: left;
-        }
-        .job-card:hover::before { transform: scaleX(1); }
-        .job-card:hover {
-            transform: translateY(-8px); border-color: rgba(220, 38, 38, 0.3);
-            box-shadow: 0 16px 40px rgba(220, 38, 38, 0.1);
-        }
-        .job-card .job-icon { font-size: 3rem; margin-bottom: 14px; display: block; transition: transform 0.4s ease; }
-        .job-card:hover .job-icon { transform: scale(1.15) rotate(5deg); }
-        .job-badge {
-            display: inline-block; padding: 5px 14px; border-radius: 50px;
-            font-size: 0.75rem; font-weight: 700; font-family: 'Montserrat', sans-serif;
-            margin-bottom: 12px; background: rgba(245, 158, 11, 0.12); color: #b45309;
-            border: 1px solid rgba(245, 158, 11, 0.2);
-        }
-        .job-badge i { margin-right: 5px; }
-        .job-card h3 {
-            font-family: 'Montserrat', sans-serif; font-weight: 800;
-            font-size: 1.2rem; color: #111827; margin-bottom: 8px;
-        }
-        .job-card .job-meta {
-            display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;
-            margin-bottom: 12px; font-size: 0.8rem; color: #6b7280;
-        }
-        .job-card .job-meta i { color: #dc2626; width: 14px; }
-        .job-card p { color: #4b5563; font-size: 0.85rem; margin-bottom: 16px; line-height: 1.6; }
-        .job-card .commission-rate {
-            display: inline-block; font-family: 'Montserrat', sans-serif; font-weight: 800;
-            font-size: 1.6rem; color: #f59e0b; margin-bottom: 14px;
-        }
-        .job-card .commission-rate small { font-size: 0.85rem; font-weight: 600; color: #6b7280; }
-        .btn-apply {
-            background: #dc2626; color: #ffffff; padding: 12px 32px; border-radius: 50px;
-            font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.9rem;
-            text-decoration: none; transition: all 0.3s ease; display: inline-flex;
-            align-items: center; gap: 8px; border: none; cursor: pointer;
-            box-shadow: 0 4px 16px rgba(220, 38, 38, 0.2); position: relative; overflow: hidden;
-        }
-        .btn-apply::after {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transform: rotate(45deg); transition: all 0.5s ease;
-        }
-        .btn-apply:hover::after { left: 100%; }
-        .btn-apply:hover {
-            background: #b91c1c; transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(220, 38, 38, 0.3);
-        }
-
-        /* ───────── APPLICATION FORM ───────── */
-        .apply-form-section { padding: 60px 28px 80px; background: #ffffff; }
-        .form-container {
-            max-width: 750px; margin: 0 auto; background: #ffffff; border-radius: 24px;
-            padding: 40px; border: 1px solid #e5e7eb; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-        }
-        .form-container h2 {
-            font-family: 'Montserrat', sans-serif; font-weight: 800;
-            font-size: 1.6rem; color: #111827; margin-bottom: 6px;
-        }
-        .form-container .form-desc { color: #4b5563; margin-bottom: 28px; font-size: 0.95rem; }
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; font-weight: 600; font-size: 0.9rem; color: #111827; margin-bottom: 6px; }
-        .form-group label .required { color: #dc2626; }
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%; padding: 13px 16px; background: #f9fafb;
-            border: 1px solid #e5e7eb; border-radius: 12px; color: #111827;
-            font-family: 'Inter', sans-serif; font-size: 0.9rem; transition: all 0.3s ease;
-        }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-            border-color: #dc2626; outline: none;
-            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.06); background: #ffffff;
-        }
-        .form-group textarea { resize: vertical; min-height: 100px; }
-        .form-group .file-upload {
-            border: 2px dashed #e5e7eb; border-radius: 12px; padding: 30px;
-            text-align: center; transition: all 0.3s ease; cursor: pointer; background: #f9fafb;
-        }
-        .form-group .file-upload:hover,
-        .form-group .file-upload.is-dragging,
-        .form-group .file-upload.has-file { border-color: #dc2626; background: rgba(220, 38, 38, 0.02); }
-        .form-group .file-upload.is-invalid { border-color: #b91c1c; background: #fff7f7; }
-        .form-group .file-upload i { font-size: 2rem; color: #dc2626; margin-bottom: 8px; display: block; }
-        .form-group .file-upload p { color: #6b7280; font-size: 0.85rem; }
-        .form-group .file-upload .file-name { color: #dc2626; font-weight: 600; margin-top: 8px; display: none; overflow-wrap: anywhere; }
-        .file-upload-note {
-            display: flex; align-items: flex-start; gap: 8px; margin-top: 10px; color: #64748b;
-            font-size: 0.75rem; line-height: 1.5;
-        }
-        .file-upload-note i { color: #15803d; margin-top: 2px; }
-        .file-upload-status {
-            min-height: 20px; margin-top: 8px; color: #475569; font-size: 0.77rem; font-weight: 600;
-        }
-        .file-upload-status.is-error { color: #b91c1c; }
-        .file-upload-status.is-success { color: #15803d; }
-        .file-upload-progress {
-            display: none; margin-top: 10px; height: 6px; border-radius: 3px; background: #e5e7eb; overflow: hidden;
-        }
-        .file-upload-progress-bar {
-            height: 100%; width: 0; background: linear-gradient(90deg, #dc2626, #f59e0b);
-            border-radius: 3px; transition: width 0.3s ease;
-        }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-        .btn-submit {
-            width: 100%; padding: 16px; background: #dc2626; color: #ffffff; border: none;
-            border-radius: 50px; font-family: 'Montserrat', sans-serif; font-weight: 700;
-            font-size: 1rem; cursor: pointer; transition: all 0.3s ease;
-            box-shadow: 0 4px 16px rgba(220, 38, 38, 0.2); margin-top: 8px;
-            position: relative; overflow: hidden;
-        }
-        .btn-submit::after {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transform: rotate(45deg); transition: all 0.5s ease;
-        }
-        .btn-submit:hover::after { left: 100%; }
-        .btn-submit:hover {
-            background: #b91c1c; transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(220, 38, 38, 0.3);
-        }
-        .btn-submit:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
-
-        .form-success { display: none; text-align: center; padding: 40px 20px; }
-        .form-success i { font-size: 4rem; color: #22c55e; margin-bottom: 16px; display: block; }
-        .form-success h3 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.5rem; color: #111827; }
-        .form-success p { color: #4b5563; }
-
-        /* ───────── WHY JOIN ───────── */
-        .why-join { padding: 60px 28px; background: #f8fafc; border-top: 1px solid #e5e7eb; }
-        .why-join .container {
-            max-width: 1100px; margin: 0 auto;
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; text-align: center;
-        }
-        .why-item {
-            padding: 24px 16px; border-radius: 16px; background: #fff; border: 1px solid #e5e7eb;
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-        .why-item:hover {
-            transform: translateY(-6px); border-color: rgba(220, 38, 38, 0.3);
-            box-shadow: 0 12px 30px rgba(220, 38, 38, 0.06);
-        }
-        .why-item i { font-size: 2.5rem; color: #f59e0b; margin-bottom: 12px; display: block; transition: transform 0.4s ease; }
-        .why-item:hover i { transform: scale(1.15) rotate(5deg); }
-        .why-item h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; color: #111827; margin-bottom: 6px; }
-        .why-item p { color: #4b5563; font-size: 0.85rem; }
-
-        /* ───────── FOOTER ───────── */
-        footer { background: #0f172a; padding: 50px 28px 25px; border-top: 1px solid #1e293b; }
-        .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 35px; }
-        .footer-brand img { height: 42px; margin-bottom: 12px; }
-        .footer-brand p { color: #94a3b8; font-size: 0.85rem; line-height: 1.6; }
-        .footer-col h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; color: #ffffff; margin-bottom: 16px; font-size: 1rem; }
-        .footer-col a { color: #94a3b8; text-decoration: none; display: block; margin-bottom: 8px; font-size: 0.85rem; transition: all 0.3s ease; }
-        .footer-col a:hover { color: #dc2626; transform: translateX(4px); }
-        .footer-col p { color: #94a3b8; font-size: 0.85rem; margin-bottom: 4px; }
-        .footer-bottom {
-            max-width: 1200px; margin: 35px auto 0; padding-top: 20px;
-            border-top: 1px solid #1e293b; text-align: center; color: #64748b; font-size: 0.8rem;
-        }
-
-        /* ───────── FLOATING WHATSAPP ───────── */
-        .floating-whatsapp {
-            position: fixed; bottom: 25px; right: 25px; background: #25d366;
-            width: 56px; height: 56px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; z-index: 99;
-            animation: pulse 2s infinite; transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3); text-decoration: none;
-        }
-        .floating-whatsapp:hover { transform: scale(1.1); }
-        .floating-whatsapp i { color: #fff; font-size: 1.8rem; }
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
-            70% { box-shadow: 0 0 0 16px rgba(37, 211, 102, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
-        }
-
-        /* ───────── RESPONSIVE ───────── */
-        @media (max-width: 900px) {
-            .nav-links { display: none; }
-            .hamburger { display: flex; }
-            .footer-grid { grid-template-columns: 1fr 1fr; }
-            .jobs-grid { grid-template-columns: 1fr 1fr; }
-            .why-join .container { grid-template-columns: 1fr 1fr; gap: 16px; }
-            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-            .gallery-item:nth-child(1) { grid-column: span 2; }
-        }
-        @media (max-width: 640px) {
-            .header-inner { padding: 10px 16px; }
-            .logo-img { height: 34px; }
-            .company-name-header { font-size: 0.75rem; }
-            .hero-apply { padding: 110px 16px 30px; }
-            .hero-apply h1 { font-size: 1.8rem; }
-            .form-row { grid-template-columns: 1fr; }
-            .form-container { padding: 24px 16px; }
-            .footer-grid { grid-template-columns: 1fr; text-align: center; }
-            .commission-banner h3 { font-size: 1.1rem; }
-            .floating-whatsapp { width: 48px; height: 48px; bottom: 18px; right: 18px; }
-            .floating-whatsapp i { font-size: 1.4rem; }
-            .mobile-menu { width: 260px; }
-            .job-card .commission-rate { font-size: 1.3rem; }
-            .jobs-grid { grid-template-columns: 1fr; }
-            .why-join .container { grid-template-columns: 1fr; }
-            .gallery-grid { grid-template-columns: 1fr 1fr; }
-            .gallery-item:nth-child(1) { grid-column: span 2; }
-            .hero-stats-row { gap: 20px; }
-            .hero-stat strong { font-size: 1.5rem; }
-        }
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
-            .nav-links a.nav-login {
-            background: #dc2626; color: #fff !important; padding: 8px 20px; border-radius: 50px;
-            box-shadow: 0 4px 14px rgba(220,38,38,.25); transition: all .3s ease;
-        }
-        .nav-links a.nav-login::after { display: none; }
-        .nav-links a.nav-login:hover { background: #b91c1c; color: #fff; transform: translateY(-1px); }
-</style>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "ProfessionalService",
-      "name": "Seedwel Investment LTD",
-      "url": "https://seedwel.ltd/",
-      "logo": "https://i.ibb.co/svxj52ny/seedwel.png",
-      "image": "https://i.ibb.co/svxj52ny/seedwel.png",
-      "description": "Premium digital agency offering web development, SEO, branding, graphic design and business registration services.",
-      "email": "seedwelinvestltd@gmail.com",
-      "telephone": "+260973028342",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Kabwe",
-        "addressCountry": "ZM"
-      },
-      "areaServed": ["ZM", "Global"],
-      "sameAs": [
-        "https://wa.me/260973028342"
-      ]
-    }
-    </script>
-    <link rel="stylesheet" href="assets/css/local-ai.css" />
+        .form-success-card { text-align: center; padding: 30px 10px; }
+        .form-success-card .success-icon {
+            display: grid; place-items: center; width: 72px; height: 72px;
+            margin: 0 auto 20px; border-radius: 50%;
+            background: #f0fdf4; color: var(--green); font-size: 1.8rem;
+        }
+        .form-success-card h2 { font-size: 1.4rem; margin-bottom: 10px; }
+        .form-success-card p { color: var(--muted); font-size: 0.92rem; max-width: 520px; margin: 0 auto 8px; }
+        .cv-followup {
+            margin: 18px auto 0; max-width: 560px; padding: 15px 18px;
+            border: 1px solid #fde68a; border-radius: 12px;
+            background: #fffbeb; color: #854d0e; font-size: 0.84rem; text-align: left;
+        }
+        .jobs-notice { max-width: 760px; margin: 0 auto 40px; }
+    </style>
 </head>
 
-<body>
+<body data-page="careers">
 
     <!-- ========== HEADER ========== -->
     <header class="header" id="header">
-        <div class="header-inner">
-            <a href="index.html" class="logo-container">
-                <img src="https://i.ibb.co/svxj52ny/seedwel.png" class="logo-img" alt="Seedwel Investment LTD" />
+        <div class="container header-inner">
+            <a href="index.html" class="logo-container" aria-label="Seedwel Investment LTD — Home">
+                <img src="https://i.ibb.co/svxj52ny/seedwel.png" class="logo-img" alt="Seedwel Investment LTD logo" />
                 <span class="company-name-header">Seedwel <span>Investment</span> LTD</span>
             </a>
-            <div class="nav-links">
+            <nav class="nav-links" aria-label="Main navigation">
                 <a href="index.html">Home</a>
-                <a href="about.html">About Us</a>
+                <a href="about.html">About</a>
                 <a href="services.html">Services</a>
                 <a href="projects.html">Projects</a>
-                <a href="apply.html" class="active">Careers</a>
+                <a href="apply.html" class="active" aria-current="page">Careers</a>
                 <a href="contact.html">Contact</a>
                 <a href="support.html">Support</a>
-                <a href="login.html" class="nav-login">Login</a>
-            </div>
-            <div class="hamburger" id="hamburger" aria-label="Menu">
+                <a href="login.html" class="btn btn-ghost nav-login">Login</a>
+                <a href="request.html" class="btn btn-primary nav-cta">Request a Service</a>
+            </nav>
+            <button class="hamburger" id="hamburger" type="button" aria-label="Open menu" aria-expanded="false">
                 <span></span><span></span><span></span>
-            </div>
+            </button>
         </div>
     </header>
 
-    <!-- ========== MOBILE MENU ========== -->
     <div class="menu-overlay" id="menuOverlay"></div>
-    <nav class="mobile-menu" id="mobileMenu">
-        <a href="index.html"><i class="fas fa-home"></i> Home</a>
-        <a href="apply.html"><i class="fas fa-pen"></i> Careers</a>
-        <a href="about.html"><i class="fas fa-info-circle"></i> About Us</a>
-        <a href="services.html"><i class="fas fa-cogs"></i> Services</a>
-        <a href="projects.html"><i class="fas fa-folder-open"></i> Projects</a>
-        <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
-        <a href="support.html"><i class="fas fa-headset"></i> Support</a>
-        <a href="login.html"><i class="fas fa-right-to-bracket"></i> Login</a>
+    <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+        <a href="index.html"><i class="fa-solid fa-house" aria-hidden="true"></i> Home</a>
+        <a href="about.html"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> About</a>
+        <a href="services.html"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Services</a>
+        <a href="projects.html"><i class="fa-solid fa-folder-open" aria-hidden="true"></i> Projects</a>
+        <a href="apply.html" class="active"><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Careers</a>
+        <a href="contact.html"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Contact</a>
+        <a href="support.html"><i class="fa-solid fa-headset" aria-hidden="true"></i> Support</a>
+        <a href="login.html"><i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i> Login</a>
+        <div class="menu-divider"></div>
+        <a href="request.html" class="menu-request"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Request a Service</a>
     </nav>
 
-    <!-- ========== HERO ========== -->
-    <section class="hero-apply">
-        <div class="hero-particles">
-            <div class="hero-particle" style="left:10%;"></div>
-            <div class="hero-particle"></div>
-            <div class="hero-particle"></div>
-            <div class="hero-particle"></div>
-            <div class="hero-particle"></div>
-        </div>
-        <h1 class="animate-fade-up">Join Our <span>Growing Team</span></h1>
-        <p class="animate-fade-up delay-1">Build your career with Seedwel Investment LTD. We offer flexible remote work, competitive commissions, and real growth opportunities across multiple departments.</p>
-        <div class="hero-stats-row animate-fade-up delay-2">
-            <div class="hero-stat"><strong>8+</strong><span>Open Positions</span></div>
-            <div class="hero-stat"><strong>10%</strong><span>Commission Rate</span></div>
-            <div class="hero-stat"><strong>100%</strong><span>Remote Work</span></div>
-            <div class="hero-stat"><strong>48h</strong><span>Response Time</span></div>
-        </div>
-    </section>
+    <main>
 
-    <!-- ========== COMMISSION BANNER ========== -->
-    <section class="commission-banner reveal">
-        <h3>Earn <span class="highlight-commission">10% Commission</span> on Every Sale</h3>
-        <p>Unlimited earning potential — the more you sell, the more you earn!</p>
-    </section>
-
-    <!-- ========== TEAM GALLERY ========== -->
-    <section class="team-gallery">
-        <div class="section-header reveal">
-            <p class="section-subtitle">Life at Seedwel</p>
-            <h2 class="section-title">Our Team & Culture</h2>
-        </div>
-        <div class="gallery-grid">
-            <div class="gallery-item reveal-scale delay-1">
-                <img src="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Team collaboration" loading="lazy" />
-                <div class="gallery-overlay"><h4>Team Collaboration</h4><p>Working together across time zones</p></div>
+        <!-- ========== PAGE HERO ========== -->
+        <section class="page-hero">
+            <div class="container">
+                <p class="eyebrow">Careers</p>
+                <h1>Join the <span>Seedwel</span> team</h1>
+                <p>We work with remote, commission-based team members across sales, technology, creative and support roles. Submit an application online — it goes directly to our hiring team.</p>
             </div>
-            <div class="gallery-item reveal-scale delay-2">
-                <img src="https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Remote workspace" loading="lazy" />
-                <div class="gallery-overlay"><h4>Remote First</h4><p>Work from anywhere</p></div>
-            </div>
-            <div class="gallery-item reveal-scale delay-3">
-                <img src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Team meeting" loading="lazy" />
-                <div class="gallery-overlay"><h4>Weekly Standups</h4><p>Stay connected and aligned</p></div>
-            </div>
-            <div class="gallery-item reveal-scale delay-4">
-                <img src="https://images.pexels.com/photos/3184632/pexels-photo-3184632.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Creative workspace" loading="lazy" />
-                <div class="gallery-overlay"><h4>Creative Space</h4><p>Innovation happens here</p></div>
-            </div>
-            <div class="gallery-item reveal-scale delay-5">
-                <img src="https://images.pexels.com/photos/1181519/pexels-photo-1181519.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Team brainstorm" loading="lazy" />
-                <div class="gallery-overlay"><h4>Brainstorming</h4><p>Ideas that drive results</p></div>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- ========== JOB LISTINGS ========== -->
-    <section class="jobs-section">
-        <div class="jobs-container">
-            <div class="section-header reveal">
-                <p class="section-subtitle">Open Positions</p>
-                <h2 class="section-title">Find Your Role</h2>
-            </div>
-
-            <div class="job-filter-tabs reveal">
-                <button class="job-filter-tab active" data-filter="all">All Roles</button>
-                <button class="job-filter-tab" data-filter="sales">Sales</button>
-                <button class="job-filter-tab" data-filter="tech">Technology</button>
-                <button class="job-filter-tab" data-filter="creative">Creative</button>
-                <button class="job-filter-tab" data-filter="support">Support</button>
-            </div>
-
-            <div class="jobs-grid" id="jobsGrid">
-
-                <!-- Cold Caller -->
-                <div class="job-card reveal delay-1" data-category="sales">
-                    <span class="job-icon">📞</span>
-                    <span class="job-badge"><i class="fas fa-percent"></i> 10% Commission</span>
-                    <h3>Cold Caller</h3>
-                    <div class="job-meta">
-                        <span><i class="fas fa-briefcase"></i> Commission</span>
-                        <span><i class="fas fa-map-marker-alt"></i> Remote</span>
-                        <span><i class="fas fa-clock"></i> Flexible</span>
+        <!-- ========== HONEST NOTE ========== -->
+        <section class="section-tight" style="padding-bottom:0;">
+            <div class="container">
+                <div class="notice reveal">
+                    <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+                    <div>
+                        <strong>Important:</strong> submitting an application or creating an account does <strong>not</strong> guarantee employment or a job award.
+                        Every application is reviewed and must be officially approved by Seedwel Investment LTD before an applicant becomes an approved worker with an official Worker ID.
                     </div>
-                    <div class="commission-rate">10% <small>commission</small></div>
-                    <p>Make outbound calls to potential clients, introduce our premium digital services, and close sales. Full training provided!</p>
-                    <button class="btn-apply" onclick="openApplication('Cold Caller')">
-                        <i class="fas fa-paper-plane"></i> Apply Now
-                    </button>
-                </div>
-
-                <!-- Virtual Assistant -->
-                <div class="job-card reveal delay-2" data-category="support">
-                    <span class="job-icon">🖥️</span>
-                    <span class="job-badge"><i class="fas fa-percent"></i> 10% Commission</span>
-                    <h3>Virtual Assistant</h3>
-                    <div class="job-meta">
-                        <span><i class="fas fa-briefcase"></i> Commission</span>
-                        <span><i class="fas fa-map-marker-alt"></i> Remote</span>
-                        <span><i class="fas fa-clock"></i> Flexible</span>
-                    </div>
-                    <div class="commission-rate">10% <small>commission</small></div>
-                    <p>Help manage client communications, schedule appointments, and support our team with administrative tasks. Great organizational skills needed.</p>
-                    <button class="btn-apply" onclick="openApplication('Virtual Assistant')">
-                        <i class="fas fa-paper-plane"></i> Apply Now
-                    </button>
-                </div>
-
-                <!-- Web Developer -->
-                <div class="job-card reveal delay-3" data-category="tech">
-                    <span class="job-icon">💻</span>
-                    <span class="job-badge"><i class="fas fa-fire"></i> Hot Role</span>
-                    <h3>Web Developer</h3>
-                    <div class="job-meta">
-                        <span><i class="fas fa-briefcase"></i> Contract</span>
-                        <span><i class="fas fa-map-marker-alt"></i> Remote</span>
-                        <span><i class="fas fa-clock"></i> Full-time</span>
-                    </div>
-                    <div class="commission-rate">10% <small>per project</small></div>
-                    <p>Build modern, responsive websites and web applications using HTML, CSS, JavaScript, and modern frameworks. Portfolio required.</p>
-                    <button class="btn-apply" onclick="openApplication('Web Developer')">
-                        <i class="fas fa-paper-plane"></i> Apply Now
-                    </button>
-                </div>
-
-                <!-- Graphic Designer -->
-                <div class="job-card reveal delay-4" data-category="creative">
-                    <span class="job-icon">🎨</span>
-                    <span class="job-badge"><i class="fas fa-star"></i> Creative</span>
-                    <h3>Graphic Designer</h3>
-                    <div class="job-meta">
-                        <span><i class="fas fa-briefcase"></i> Freelance</span>
-                        <span><i class="fas fa-map-marker-alt"></i> Remote</span>
-                        <span><i class="fas fa-clock"></i> Flexible</span>
-                    </div>
-                    <div class="commission-rate">10% <small>per project</small></div>
-                    <p>Create stunning visual designs including logos, branding, social media graphics, and marketing materials. Adobe Creative Suite proficiency required.</p>
-                    <button class="btn-apply" onclick="openApplication('Graphic Designer')">
-                        <i class="fas fa-paper-plane"></i> Apply Now
-                    </button>
-                </div>
-
-                <!-- Digital Marketer -->
-                <div class="job-card reveal delay-5" data-category="sales">
-                    <span class="job-icon">📊</span>
-                    <span class="job-badge"><i class="fas fa-chart-line"></i> Growth</span>
-                    <h3>Digital Marketer</h3>
-                    <div class="job-meta">
-                        <span><i class="fas fa-briefcase"></i> Commission</span>
-                        <span><i class="fas fa-map-marker-alt"></i> Remote</span>
-                        <span><i class="fas fa-clock"></i> Flexible</span>
-                    </div>
-                    <div class="commission-rate">10% <small>commission</small></div>
-                    <p>Run SEO campaigns, social media marketing, Google Ads, and content strategies to grow client businesses online. Results-driven mindset required.</p>
-                    <button class="btn-apply" onclick="openApplication('Digital Marketer')">
-                        <i class="fas fa-paper-plane"></i> Apply Now
-                    </button>
-                </div>
-
-                <!-- Video Editor -->
-                <div class="job-card reveal delay-6" data-category="creative">
-                    <span class="job-icon">🎬</span>
-                    <span class="job-badge"><i class="fas fa-play"></i> Creative</span>
-                    <h3>Video Editor</h3>
-                    <div class="job-meta">
-                        <span><i class="fas fa-briefcase"></i> Freelance</span>
-                        <span><i class="fas fa-map-marker-alt"></i> Remote</span>
-                        <span><i class="fas fa-clock"></i> Per project</span>
-                    </div>
-                    <div class="commission-rate">10% <small>per project</small></div>
-                    <p>Edit professional videos for clients including promotional content, social media reels, and corporate presentations. Showreel required.</p>
-                    <button class="btn-apply" onclick="openApplication('Video Editor')">
-                        <i class="fas fa-paper-plane"></i> Apply Now
-                    </button>
-                </div>
-
-                <!-- Mobile App Developer -->
-                <div class="job-card reveal delay-7" data-category="tech">
-                    <span class="job-icon">📱</span>
-                    <span class="job-badge"><i class="fas fa-code"></i> Tech</span>
-                    <h3>Mobile App Developer</h3>
-                    <div class="job-meta">
-                        <span><i class="fas fa-briefcase"></i> Contract</span>
-                        <span><i class="fas fa-map-marker-alt"></i> Remote</span>
-                        <span><i class="fas fa-clock"></i> Full-time</span>
-                    </div>
-                    <div class="commission-rate">10% <small>per project</small></div>
-                    <p>Develop cross-platform mobile applications for iOS and Android. Experience with React Native or Flutter preferred. Play Store publishing a plus.</p>
-                    <button class="btn-apply" onclick="openApplication('Mobile App Developer')">
-                        <i class="fas fa-paper-plane"></i> Apply Now
-                    </button>
-                </div>
-
-                <!-- Online Tutor -->
-                <div class="job-card reveal delay-8" data-category="support">
-                    <span class="job-icon">📚</span>
-                    <span class="job-badge"><i class="fas fa-graduation-cap"></i> Education</span>
-                    <h3>Online Tutor</h3>
-                    <div class="job-meta">
-                        <span><i class="fas fa-briefcase"></i> Part-time</span>
-                        <span><i class="fas fa-map-marker-alt"></i> Remote</span>
-                        <span><i class="fas fa-clock"></i> Flexible</span>
-                    </div>
-                    <div class="commission-rate">10% <small>per session</small></div>
-                    <p>Teach Mathematics, Programming, or other subjects online. Passionate educators who can simplify complex topics for students of all levels.</p>
-                    <button class="btn-apply" onclick="openApplication('Online Tutor')">
-                        <i class="fas fa-paper-plane"></i> Apply Now
-                    </button>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- ========== APPLICATION FORM ========== -->
-    <section class="apply-form-section" id="applyFormSection">
-        <div class="form-container reveal">
-            <div id="formContent">
-                <h2>Apply for <span style="color:#dc2626;">this Position</span></h2>
-                <p class="form-desc">Fill in the form below and we'll get back to you within 48 hours. All applications are securely stored and reviewed by our hiring team.</p>
-                <form id="applicationForm">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Full Name <span class="required">*</span></label>
-                            <input type="text" id="fullName" placeholder="Enter your full name" required />
+        <!-- ========== OPENINGS ========== -->
+        <section class="section" aria-labelledby="openingsTitle">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="eyebrow">Openings</p>
+                    <h2 class="section-title" id="openingsTitle">Current opportunities</h2>
+                    <p class="section-intro">Live openings posted by our team appear here first, followed by our ongoing commission-based roles.</p>
+                </div>
+
+                <div class="jobs-notice card mini-card reveal" id="liveJobsNote" hidden>
+                    <i class="fa-solid fa-bolt" aria-hidden="true"></i>
+                    <div><h3>Live openings</h3><p>Positions posted by the Seedwel team are shown at the top of the list below.</p></div>
+                </div>
+
+                <div class="grid-3" id="jobsGrid">
+
+                    <article class="card job-card reveal">
+                        <h3>Cold Caller</h3>
+                        <div class="job-meta">
+                            <span><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Commission based</span>
+                            <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Remote</span>
+                            <span><i class="fa-solid fa-clock" aria-hidden="true"></i> Flexible hours</span>
                         </div>
-                        <div class="form-group">
-                            <label>Email Address <span class="required">*</span></label>
-                            <input type="email" id="email" placeholder="you@example.com" required />
+                        <p>Make outbound calls to potential clients, introduce Seedwel's services and close sales. Training provided. Earn commission on every completed sale.</p>
+                        <button class="btn btn-outline" type="button" onclick="openApplication('Cold Caller')">Apply Now <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+                    </article>
+
+                    <article class="card job-card reveal d1">
+                        <h3>Virtual Assistant</h3>
+                        <div class="job-meta">
+                            <span><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Commission based</span>
+                            <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Remote</span>
+                            <span><i class="fa-solid fa-clock" aria-hidden="true"></i> Flexible hours</span>
                         </div>
+                        <p>Help manage client communications, scheduling and administrative support for the team. Strong organisation and communication skills needed.</p>
+                        <button class="btn btn-outline" type="button" onclick="openApplication('Virtual Assistant')">Apply Now <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+                    </article>
+
+                    <article class="card job-card reveal d2">
+                        <h3>Web Developer</h3>
+                        <div class="job-meta">
+                            <span><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Per project</span>
+                            <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Remote</span>
+                        </div>
+                        <p>Build modern, responsive websites and web applications for Seedwel clients. A portfolio of previous work is required.</p>
+                        <button class="btn btn-outline" type="button" onclick="openApplication('Web Developer')">Apply Now <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+                    </article>
+
+                    <article class="card job-card reveal">
+                        <h3>Graphic Designer</h3>
+                        <div class="job-meta">
+                            <span><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Per project</span>
+                            <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Remote</span>
+                        </div>
+                        <p>Create logos, branding, social media graphics and marketing materials for client projects.</p>
+                        <button class="btn btn-outline" type="button" onclick="openApplication('Graphic Designer')">Apply Now <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+                    </article>
+
+                    <article class="card job-card reveal d1">
+                        <h3>Digital Marketer</h3>
+                        <div class="job-meta">
+                            <span><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Commission based</span>
+                            <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Remote</span>
+                        </div>
+                        <p>Run SEO, social media and paid campaigns for client businesses, with honest reporting on results.</p>
+                        <button class="btn btn-outline" type="button" onclick="openApplication('Digital Marketer')">Apply Now <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+                    </article>
+
+                    <article class="card job-card reveal d2">
+                        <h3>Video Editor</h3>
+                        <div class="job-meta">
+                            <span><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Per project</span>
+                            <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Remote</span>
+                        </div>
+                        <p>Edit promotional videos, social content and client campaigns with a clean, professional finish.</p>
+                        <button class="btn btn-outline" type="button" onclick="openApplication('Video Editor')">Apply Now <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== WHY JOIN ========== -->
+        <section class="section section-alt" aria-labelledby="whyJoinTitle">
+            <div class="container">
+                <div class="section-head reveal">
+                    <p class="eyebrow">Why Join Seedwel</p>
+                    <h2 class="section-title" id="whyJoinTitle">What team members can expect</h2>
+                </div>
+                <div class="grid-4">
+                    <article class="card icon-card reveal">
+                        <div class="icon"><i class="fa-solid fa-globe" aria-hidden="true"></i></div>
+                        <h3>Fully Remote</h3>
+                        <p>Work from anywhere — all you need is a laptop and a reliable internet connection.</p>
+                    </article>
+                    <article class="card icon-card reveal d1">
+                        <div class="icon"><i class="fa-solid fa-money-bill-trend-up" aria-hidden="true"></i></div>
+                        <h3>Commission Earnings</h3>
+                        <p>Earn a share of the work you bring in. Terms are confirmed before you start.</p>
+                    </article>
+                    <article class="card icon-card reveal d2">
+                        <div class="icon"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i></div>
+                        <h3>Guidance &amp; Training</h3>
+                        <p>Onboarding and ongoing support so you can do your best work with the team.</p>
+                    </article>
+                    <article class="card icon-card reveal d3">
+                        <div class="icon"><i class="fa-solid fa-clock" aria-hidden="true"></i></div>
+                        <h3>Flexible Schedule</h3>
+                        <p>Plan your hours around what you deliver, not the clock.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== APPLICATION FORM ========== -->
+        <section class="section" id="applyFormSection" aria-labelledby="applyTitle">
+            <div class="container">
+                <div class="form-card reveal">
+                    <div id="formContent">
+                        <h2 id="applyTitle" style="font-size:1.3rem;margin-bottom:6px;">Apply for a position</h2>
+                        <p class="muted small" style="margin-bottom:24px;">Fill in the form below. Applications are reviewed by our hiring team, who will contact you if your profile matches an opening.</p>
+
+                        <form id="applicationForm" novalidate>
+                            <div class="form-grid">
+                                <div class="field">
+                                    <label for="fullName">Full Name <span class="req">*</span></label>
+                                    <input type="text" id="fullName" placeholder="Enter your full name" maxlength="120" required autocomplete="name" />
+                                </div>
+                                <div class="field">
+                                    <label for="email">Email Address <span class="req">*</span></label>
+                                    <input type="email" id="email" placeholder="you@example.com" maxlength="160" required autocomplete="email" />
+                                </div>
+                                <div class="field">
+                                    <label for="phone">Phone Number <span class="req">*</span></label>
+                                    <input type="tel" id="phone" placeholder="+260 XXX XXX XXX" maxlength="40" required autocomplete="tel" />
+                                </div>
+                                <div class="field">
+                                    <label for="position">Position Applying For <span class="req">*</span></label>
+                                    <select id="position" required>
+                                        <option value="">Select a position…</option>
+                                        <option value="Cold Caller">Cold Caller (commission based)</option>
+                                        <option value="Virtual Assistant">Virtual Assistant (commission based)</option>
+                                        <option value="Web Developer">Web Developer (per project)</option>
+                                        <option value="Graphic Designer">Graphic Designer (per project)</option>
+                                        <option value="Digital Marketer">Digital Marketer (commission based)</option>
+                                        <option value="Video Editor">Video Editor (per project)</option>
+                                        <option value="Mobile App Developer">Mobile App Developer (per project)</option>
+                                        <option value="Online Tutor">Online Tutor (per session)</option>
+                                    </select>
+                                </div>
+                                <div class="field">
+                                    <label for="experience">Years of Experience</label>
+                                    <select id="experience">
+                                        <option value="0-1">Less than 1 year</option>
+                                        <option value="1-3">1–3 years</option>
+                                        <option value="3-5">3–5 years</option>
+                                        <option value="5+">5+ years</option>
+                                    </select>
+                                </div>
+                                <div class="field">
+                                    <label for="portfolioUrl">Portfolio / LinkedIn URL</label>
+                                    <input type="url" id="portfolioUrl" placeholder="https://…" maxlength="2048" />
+                                </div>
+                                <div class="field full">
+                                    <label for="coverLetter">Why are you the right fit? <span class="req">*</span></label>
+                                    <textarea id="coverLetter" rows="5" placeholder="Tell us about your experience, skills, and why you're interested in this role…" maxlength="4000" required></textarea>
+                                </div>
+                                <div class="field full">
+                                    <label>Upload CV / Resume <span class="muted" style="font-weight:400;">(recommended)</span></label>
+                                    <div class="file-upload" id="fileUpload" role="button" tabindex="0" aria-controls="cvFile" aria-describedby="cvUploadNote cvUploadStatus">
+                                        <i class="fas fa-cloud-arrow-up" aria-hidden="true"></i>
+                                        <p>Click or drop your CV here (PDF, DOC, DOCX — max 5 MB)</p>
+                                        <div class="file-name" id="fileName"></div>
+                                        <input type="file" id="cvFile" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden />
+                                    </div>
+                                    <p class="file-upload-note" id="cvUploadNote"><i class="fas fa-shield-halved" aria-hidden="true"></i><span>Your application always reaches the administrator, even if the private CV service is temporarily unavailable. Uploaded CVs are protected; if no CV can be attached you can send it to <strong>seedwelinvestltd@gmail.com</strong> or WhatsApp <strong>+260 973 028 342</strong>.</span></p>
+                                    <div class="file-upload-progress" id="uploadProgress" aria-hidden="true">
+                                        <div class="file-upload-progress-bar" id="uploadProgressBar"></div>
+                                    </div>
+                                    <p class="file-upload-status" id="cvUploadStatus" role="status" aria-live="polite"></p>
+                                </div>
+                                <div class="field full">
+                                    <div class="consent-row">
+                                        <input type="checkbox" id="applyConsent" required />
+                                        <label for="applyConsent">I agree to the <a href="privacy.html">Privacy Policy</a> and consent to Seedwel processing my application data (including my CV) for recruitment. <span style="color:var(--brand);">*</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary" id="submitBtn"><i class="fas fa-paper-plane" aria-hidden="true"></i> Submit Application</button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Phone Number <span class="required">*</span></label>
-                            <input type="tel" id="phone" placeholder="+260 XXX XXX XXX" required />
+
+                    <div class="form-success-card" id="formSuccess" hidden>
+                        <div class="success-icon"><i class="fas fa-check" aria-hidden="true"></i></div>
+                        <h2 id="formSuccessTitle">Application sent</h2>
+                        <p id="formSuccessText">Thank you for applying. Your application is now in the administrator's secure inbox for review.</p>
+                        <div class="cv-followup" id="cvFollowUp" hidden>
+                            <strong style="display:block;margin-bottom:5px;"><i class="fas fa-paperclip" aria-hidden="true" style="margin-right:5px;color:#b45309;"></i> CV follow-up needed</strong>
+                            Your application was received, but the CV was not attached. Send it by <a href="mailto:seedwelinvestltd@gmail.com?subject=CV%20for%20my%20Seedwel%20application">email</a> or <a href="https://wa.me/260973028342?text=Hello%20Seedwel%2C%20I%20have%20submitted%20an%20application%20and%20would%20like%20to%20send%20my%20CV." target="_blank" rel="noopener">WhatsApp</a>.
                         </div>
-                        <div class="form-group">
-                            <label>Position Applying For <span class="required">*</span></label>
-                            <select id="position" required>
-                                <option value="">Select a position...</option>
-                                <option value="Cold Caller">📞 Cold Caller (10% Commission)</option>
-                                <option value="Virtual Assistant">🖥️ Virtual Assistant (10% Commission)</option>
-                                <option value="Web Developer">💻 Web Developer (10% per project)</option>
-                                <option value="Graphic Designer">🎨 Graphic Designer (10% per project)</option>
-                                <option value="Digital Marketer">📊 Digital Marketer (10% Commission)</option>
-                                <option value="Video Editor">🎬 Video Editor (10% per project)</option>
-                                <option value="Mobile App Developer">📱 Mobile App Developer (10% per project)</option>
-                                <option value="Online Tutor">📚 Online Tutor (10% per session)</option>
-                            </select>
+                        <div class="form-actions" style="justify-content:center;">
+                            <button type="button" class="btn btn-outline" onclick="resetForm()"><i class="fas fa-arrow-left" aria-hidden="true"></i> Submit Another Application</button>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Years of Experience</label>
-                            <select id="experience">
-                                <option value="0-1">Less than 1 year</option>
-                                <option value="1-3">1-3 years</option>
-                                <option value="3-5">3-5 years</option>
-                                <option value="5+">5+ years</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Portfolio / LinkedIn URL</label>
-                            <input type="url" id="portfolioUrl" placeholder="https://..." />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Why are you the right fit? <span class="required">*</span></label>
-                        <textarea id="coverLetter" placeholder="Tell us about your experience, skills, and why you're interested in this role..." required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Upload CV / Resume <span style="color:#6b7280;font-weight:500;">(recommended)</span></label>
-                        <div class="file-upload" id="fileUpload" role="button" tabindex="0" aria-required="false" aria-controls="cvFile" aria-describedby="cvUploadNote cvUploadStatus">
-                            <i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
-                            <p>Click or drop your CV here (PDF, DOC, DOCX — max 5 MB)</p>
-                            <div class="file-name" id="fileName"></div>
-                            <input type="file" id="cvFile" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" style="display:none;" />
-                        </div>
-                        <p class="file-upload-note" id="cvUploadNote"><i class="fas fa-shield-halved" aria-hidden="true"></i><span>Your application is always sent to the administrator, even if the private CV service is temporarily unavailable. Uploaded CVs are protected; if no CV can be attached, you can send it to <strong>seedwelinvestltd@gmail.com</strong> or WhatsApp <strong>+260 973 028 342</strong>.</span></p>
-                        <div class="file-upload-progress" id="uploadProgress" aria-hidden="true">
-                            <div class="file-upload-progress-bar" id="uploadProgressBar"></div>
-                        </div>
-                        <p class="file-upload-status" id="cvUploadStatus" role="status" aria-live="polite"></p>
-                    </div>
-                    <div class="form-group" style="display:flex;align-items:flex-start;gap:10px;">
-                        <input type="checkbox" id="applyConsent" required style="margin-top:4px;width:auto;accent-color:#dc2626;" />
-                        <label for="applyConsent" style="font-weight:500;font-size:0.85rem;color:#4b5563;margin:0;">I agree to the <a href="privacy.html" style="color:#dc2626;">Privacy Policy</a> and consent to Seedwel processing my application data for recruitment. <span class="required">*</span></label>
-                    </div>
-                    <div style="margin-bottom:16px;padding:12px 16px;border-radius:12px;background:#fffbeb;border:1px solid #fde68a;color:#92400e;font-size:0.82rem;font-weight:500;display:flex;gap:10px;align-items:flex-start;">
-                        <i class="fas fa-triangle-exclamation" style="margin-top:2px;"></i>
-                        <span><strong>Important:</strong> Submitting an application or creating an account does not guarantee employment or a job award. Every application is reviewed and must be officially approved by Seedwel Investment LTD before an applicant becomes an approved worker with an official Worker ID.</span>
-                    </div>
-                    <button type="submit" class="btn-submit" id="submitBtn">
-                        <i class="fas fa-paper-plane"></i> Submit Application
-                    </button>
-                </form>
-            </div>
-            <div class="form-success" id="formSuccess">
-                <i class="fas fa-check-circle"></i>
-                <h3 id="formSuccessTitle">Application Sent to Admin!</h3>
-                <p id="formSuccessText">Thank you for applying. Your application is now in the administrator's secure inbox for review.</p>
-                <div id="cvFollowUp" hidden style="margin:18px auto 0;max-width:560px;padding:15px;border:1px solid #fde68a;border-radius:14px;background:#fffbeb;color:#854d0e;font-size:.84rem;line-height:1.6;">
-                    <strong style="display:block;margin-bottom:5px;"><i class="fas fa-paperclip" style="font-size:1rem;margin:0 5px 0 0;color:#b45309;"></i> CV follow-up needed</strong>
-                    Your application was received, but the CV was not attached. Send it by <a href="mailto:seedwelinvestltd@gmail.com?subject=CV%20for%20my%20Seedwel%20application" style="color:#b91c1c;font-weight:800;">email</a> or <a href="https://wa.me/260973028342?text=Hello%20Seedwel%2C%20I%20have%20submitted%20an%20application%20and%20would%20like%20to%20send%20my%20CV." target="_blank" rel="noopener" style="color:#15803d;font-weight:800;">WhatsApp</a>.
                 </div>
-                <button onclick="resetForm()" style="margin-top:20px; background:#dc2626; color:#fff; padding:12px 30px; border:none; border-radius:50px; font-weight:700; cursor:pointer; transition:all 0.3s ease; font-family:'Montserrat',sans-serif;">
-                    <i class="fas fa-arrow-left"></i> Submit Another Application
-                </button>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- ========== WHY JOIN ========== -->
-    <section class="why-join">
-        <div class="section-header reveal" style="margin-bottom:40px;">
-            <p class="section-subtitle">Why Choose Us</p>
-            <h2 class="section-title">Benefits of Joining Our Team</h2>
-        </div>
-        <div class="container">
-            <div class="why-item reveal delay-1">
-                <i class="fas fa-globe"></i>
-                <h4>100% Remote</h4>
-                <p>Work from anywhere in the world. All you need is a laptop and internet connection.</p>
-            </div>
-            <div class="why-item reveal delay-2">
-                <i class="fas fa-money-bill-trend-up"></i>
-                <h4>Unlimited Earnings</h4>
-                <p>10% commission on every sale. The more clients you bring, the more you earn.</p>
-            </div>
-            <div class="why-item reveal delay-3">
-                <i class="fas fa-graduation-cap"></i>
-                <h4>Free Training</h4>
-                <p>Comprehensive onboarding and ongoing training to help you succeed in your role.</p>
-            </div>
-            <div class="why-item reveal delay-4">
-                <i class="fas fa-clock"></i>
-                <h4>Flexible Hours</h4>
-                <p>Set your own schedule. Work when you're most productive — mornings, evenings, or weekends.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========== FOOTER ========== -->
-    <footer>
-        <div class="footer-grid">
-            <div class="footer-brand">
-                <img src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel Investment LTD" />
-                <p>Premium digital agency delivering excellence worldwide. We build digital experiences that drive growth for modern businesses.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Quick Links</h4>
-                <a href="index.html">Home</a>
-                <a href="about.html">About Us</a>
-                <a href="services.html">Services</a>
-                <a href="projects.html">Projects</a>
-                <a href="login.html">Login</a>
-            </div>
-            <div class="footer-col">
-                <h4>Support</h4>
-                <a href="contact.html">Contact</a>
-                <a href="support.html">Help Center</a>
-                <a href="privacy.html">Privacy</a>
-                <a href="terms.html">Terms</a>
-                <a href="tel:+260973028342"><i class="fas fa-phone" style="color:#dc2626; width:18px;"></i> +260 973 028 342</a>
-                <a href="mailto:seedwelinvestltd@gmail.com"><i class="fas fa-envelope" style="color:#dc2626; width:18px;"></i> seedwelinvestltd@gmail.com</a>
-            </div>
-            <div class="footer-col">
-                <h4>Locations</h4>
-                <p><i class="fas fa-location-dot" style="color:#dc2626; width:18px;"></i> Kabwe, Zambia</p>
-                <p><i class="fas fa-location-dot" style="color:#dc2626; width:18px;"></i> Chama, Zambia</p>
-                <p>🌍 Global Remote</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Seedwel Investment LTD. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- ========== FLOATING WHATSAPP ========== -->
-    <a href="https://wa.me/260973028342" class="floating-whatsapp" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
-        <i class="fab fa-whatsapp"></i>
-    </a>
+    </main>
 
     <!-- ========== SCRIPTS ========== -->
     <script>
         'use strict';
 
-        // ─── Firebase Setup ───
-        const firebaseConfig = {
+        // ─── Firebase setup ───
+        var firebaseConfig = {
             apiKey: 'AIzaSyA-BpRy-RVc2rqIG6uiRu_XrGEu1ZGnQwU',
             authDomain: 'seedwel-investment-limited.firebaseapp.com',
             databaseURL: 'https://seedwel-investment-limited-default-rtdb.firebaseio.com',
@@ -1027,106 +365,72 @@
             appId: '1:197778268619:web:92f29d88fa5a22dbfa964e'
         };
         firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
+        var db = firebase.database();
 
         // ─── Live job openings from the admin dashboard ───
         (function loadLiveJobs() {
-            const grid = document.getElementById('jobsGrid');
+            var grid = document.getElementById('jobsGrid');
             if (!grid) return;
-            db.ref('jobs').once('value').then((snap) => {
-                const data = snap.val() || {};
-                const openJobs = Object.values(data)
-                    .filter(j => j && j.status === 'open' && j.title)
-                    .sort((a, b) => Number(b.createdAt || 0) - Number(a.createdAt || 0));
-                openJobs.forEach((job) => {
-                    const card = document.createElement('div');
-                    card.className = 'job-card reveal visible';
-                    card.dataset.category = 'all';
-                    const icon = document.createElement('span');
-                    icon.className = 'job-icon';
-                    icon.textContent = '📌';
-                    const badge = document.createElement('span');
-                    badge.className = 'job-badge';
-                    badge.innerHTML = '<i class="fas fa-bolt"></i> New Opening';
-                    const h3 = document.createElement('h3');
-                    h3.textContent = String(job.title).slice(0, 200);
-                    const meta = document.createElement('div');
+            db.ref('jobs').once('value').then(function (snap) {
+                var data = snap.val() || {};
+                var openJobs = Object.values(data)
+                    .filter(function (j) { return j && j.status === 'open' && j.title; })
+                    .sort(function (a, b) { return Number(b.createdAt || 0) - Number(a.createdAt || 0); });
+                if (!openJobs.length) return;
+                var note = document.getElementById('liveJobsNote');
+                if (note) note.hidden = false;
+                openJobs.forEach(function (job) {
+                    var card = document.createElement('article');
+                    card.className = 'card job-card reveal visible';
+                    var title = document.createElement('h3');
+                    title.textContent = String(job.title).slice(0, 200);
+                    var meta = document.createElement('div');
                     meta.className = 'job-meta';
-                    meta.innerHTML = '<span><i class="fas fa-briefcase"></i> ' + (job.type ? String(job.type).slice(0, 60).replace(/[<>]/g, '') : 'Open role') + '</span>';
-                    const p = document.createElement('p');
-                    p.textContent = String(job.description || '').slice(0, 220);
-                    card.append(icon, badge, h3, meta, p);
+                    meta.innerHTML = '<span><i class="fa-solid fa-briefcase" aria-hidden="true"></i> ' +
+                        (job.type ? String(job.type).slice(0, 60).replace(/[<>]/g, '') : 'Open role') + '</span>' +
+                        (job.workMode ? '<span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> ' + String(job.workMode).slice(0, 20).replace(/[<>]/g, '') + '</span>' : '');
+                    var description = document.createElement('p');
+                    description.textContent = String(job.description || '').slice(0, 260);
+                    var apply = document.createElement('button');
+                    apply.type = 'button';
+                    apply.className = 'btn btn-outline';
+                    apply.innerHTML = 'Apply Now <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>';
+                    apply.addEventListener('click', function () { openApplication(String(job.title).slice(0, 120)); });
+                    card.append(title, meta, description, apply);
                     grid.prepend(card);
                 });
-            }).catch(() => { /* public jobs are optional; static roles remain visible */ });
+            }).catch(function () { /* public jobs are optional; standing roles remain visible */ });
         })();
 
-        // ─── Mobile Menu ───
-        const hamburger = document.getElementById('hamburger');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const menuOverlay = document.getElementById('menuOverlay');
-
-        function toggleMenu() {
-            hamburger.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-            menuOverlay.classList.toggle('active');
-            document.body.style.overflow = hamburger.classList.contains('active') ? 'hidden' : '';
-        }
-        hamburger.addEventListener('click', toggleMenu);
-        menuOverlay.addEventListener('click', toggleMenu);
-        document.querySelectorAll('.mobile-menu a').forEach(l => l.addEventListener('click', toggleMenu));
-
-        // ─── Header Scroll Effect ───
-        const header = document.getElementById('header');
-        window.addEventListener('scroll', () => {
-            header.classList.toggle('scrolled', window.scrollY > 40);
-        });
-
-        // ─── Scroll Reveal ───
-        function initRevealObserver() {
-            const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            if (reduced || !('IntersectionObserver' in window)) {
-                document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => el.classList.add('visible'));
-                return;
+        // ─── Open application with pre-filled position ───
+        function openApplication(position) {
+            var section = document.getElementById('applyFormSection');
+            if (section) section.scrollIntoView({ behavior: 'smooth' });
+            var select = document.getElementById('position');
+            var option = document.createElement('option');
+            var found = false;
+            for (var i = 0; i < select.options.length; i++) {
+                if (select.options[i].value === position) { select.value = position; found = true; break; }
             }
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.1 });
-            document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => observer.observe(el));
+            if (!found) {
+                // Live opening that is not one of the standing positions.
+                option.value = position;
+                option.textContent = position;
+                select.prepend(option);
+                select.value = position;
+            }
+            select.focus();
         }
-        initRevealObserver();
 
-        // ─── Job Filter Tabs ───
-        document.querySelectorAll('.job-filter-tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                document.querySelectorAll('.job-filter-tab').forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-                const filter = this.dataset.filter;
-                document.querySelectorAll('.job-card').forEach(card => {
-                    if (filter === 'all' || card.dataset.category === filter) {
-                        card.style.display = '';
-                        card.style.animation = 'scaleIn 0.4s ease forwards';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            });
-        });
-
-        // ─── File Upload ───
-        const fileUpload = document.getElementById('fileUpload');
-        const fileInput = document.getElementById('cvFile');
-        const fileName = document.getElementById('fileName');
-        const uploadProgress = document.getElementById('uploadProgress');
-        const uploadProgressBar = document.getElementById('uploadProgressBar');
-        const cvUploadStatus = document.getElementById('cvUploadStatus');
-        const allowedCvExtensions = new Set(['pdf', 'doc', 'docx']);
-        const allowedCvMimeTypes = new Set([
+        // ─── File upload (private CV via Cloudinary) ───
+        var fileUpload = document.getElementById('fileUpload');
+        var fileInput = document.getElementById('cvFile');
+        var fileName = document.getElementById('fileName');
+        var uploadProgress = document.getElementById('uploadProgress');
+        var uploadProgressBar = document.getElementById('uploadProgressBar');
+        var cvUploadStatus = document.getElementById('cvUploadStatus');
+        var allowedCvExtensions = new Set(['pdf', 'doc', 'docx']);
+        var allowedCvMimeTypes = new Set([
             'application/pdf',
             'application/x-pdf',
             'application/msword',
@@ -1136,7 +440,7 @@
         ]);
 
         function cvExtension(file) {
-            const match = String(file && file.name || '').toLowerCase().match(/\.([a-z0-9]+)$/);
+            var match = String(file && file.name || '').toLowerCase().match(/\.([a-z0-9]+)$/);
             return match ? match[1] : '';
         }
 
@@ -1145,7 +449,7 @@
             if (!file.size) return 'The selected file is empty.';
             if (file.size > 5 * 1024 * 1024) return 'Your CV must be 5 MB or smaller.';
             if (!allowedCvExtensions.has(cvExtension(file))) return 'Choose a PDF, DOC or DOCX file.';
-            const mimeType = String(file.type || '').toLowerCase().split(';')[0].trim();
+            var mimeType = String(file.type || '').toLowerCase().split(';')[0].trim();
             if (mimeType && !allowedCvMimeTypes.has(mimeType)) return 'The selected file type does not match a supported CV format.';
             return '';
         }
@@ -1159,49 +463,47 @@
         function clearSelectedCv(message) {
             fileInput.value = '';
             fileName.textContent = '';
-            fileName.style.display = 'none';
             fileUpload.classList.remove('has-file');
             fileUpload.classList.toggle('is-invalid', Boolean(message));
             setCvUploadStatus(message || '', message ? 'error' : '');
         }
 
         function presentSelectedCv(file) {
-            const error = cvValidationError(file);
+            var error = cvValidationError(file);
             if (error) {
                 clearSelectedCv(error);
                 return false;
             }
-            fileName.textContent = '📄 ' + file.name + ' · ' + (file.size / (1024 * 1024)).toFixed(2) + ' MB';
-            fileName.style.display = 'block';
+            fileName.textContent = file.name + ' · ' + (file.size / (1024 * 1024)).toFixed(2) + ' MB';
             fileUpload.classList.remove('is-invalid');
             fileUpload.classList.add('has-file');
-            setCvUploadStatus('Ready for secure upload to the Cloudinary portfolio folder.', 'success');
+            setCvUploadStatus('Ready for secure upload.', 'success');
             return true;
         }
 
-        fileUpload.addEventListener('click', () => fileInput.click());
-        fileUpload.addEventListener('keydown', (event) => {
+        fileUpload.addEventListener('click', function () { fileInput.click(); });
+        fileUpload.addEventListener('keydown', function (event) {
             if (event.key === 'Enter' || event.key === ' ') {
                 event.preventDefault();
                 fileInput.click();
             }
         });
-        fileUpload.addEventListener('dragover', (event) => {
+        fileUpload.addEventListener('dragover', function (event) {
             event.preventDefault();
             fileUpload.classList.add('is-dragging');
         });
-        fileUpload.addEventListener('dragleave', () => fileUpload.classList.remove('is-dragging'));
-        fileUpload.addEventListener('drop', (event) => {
+        fileUpload.addEventListener('dragleave', function () { fileUpload.classList.remove('is-dragging'); });
+        fileUpload.addEventListener('drop', function (event) {
             event.preventDefault();
             fileUpload.classList.remove('is-dragging');
-            const file = event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0];
-            const validationError = cvValidationError(file);
+            var file = event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0];
+            var validationError = cvValidationError(file);
             if (validationError) {
                 clearSelectedCv(validationError);
                 return;
             }
             try {
-                const transfer = new DataTransfer();
+                var transfer = new DataTransfer();
                 transfer.items.add(file);
                 fileInput.files = transfer.files;
             } catch (_) {
@@ -1213,7 +515,7 @@
             presentSelectedCv(fileInput.files[0]);
         });
 
-        fileInput.addEventListener('change', function() {
+        fileInput.addEventListener('change', function () {
             if (!this.files || !this.files[0]) {
                 clearSelectedCv('');
                 return;
@@ -1221,49 +523,31 @@
             presentSelectedCv(this.files[0]);
         });
 
-        // ─── Open Application with Pre-filled Position ───
-        function openApplication(position) {
-            document.getElementById('applyFormSection').scrollIntoView({ behavior: 'smooth' });
-            const select = document.getElementById('position');
-            for (let option of select.options) {
-                if (option.value === position) {
-                    select.value = option.value;
-                    break;
-                }
-            }
-            select.style.borderColor = '#dc2626';
-            select.style.boxShadow = '0 0 0 3px rgba(220, 38, 38, 0.1)';
-            setTimeout(() => {
-                select.style.borderColor = '';
-                select.style.boxShadow = '';
-            }, 2500);
-        }
+        // ─── Form submission (Firebase + private CV upload) ───
+        var form = document.getElementById('applicationForm');
+        var submitBtn = document.getElementById('submitBtn');
+        var formContent = document.getElementById('formContent');
+        var formSuccess = document.getElementById('formSuccess');
 
-        // ─── Form Submission (Firebase) ───
-        const form = document.getElementById('applicationForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const formContent = document.getElementById('formContent');
-        const formSuccess = document.getElementById('formSuccess');
-
-        form.addEventListener('submit', async function(e) {
+        form.addEventListener('submit', async function (e) {
             e.preventDefault();
 
-            const file = fileInput.files && fileInput.files[0];
-            const fileError = cvValidationError(file);
+            var file = fileInput.files && fileInput.files[0];
+            var fileError = cvValidationError(file);
             if (fileError) {
                 fileUpload.classList.add('is-invalid');
                 setCvUploadStatus(fileError, 'error');
                 fileUpload.focus();
                 return;
             }
-            const fullName = document.getElementById('fullName').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-            const position = document.getElementById('position').value;
-            const experience = document.getElementById('experience').value;
-            const portfolioUrl = document.getElementById('portfolioUrl').value.trim();
-            const coverLetter = document.getElementById('coverLetter').value.trim();
-            const consent = document.getElementById('applyConsent').checked;
+            var fullName = document.getElementById('fullName').value.trim();
+            var email = document.getElementById('email').value.trim();
+            var phone = document.getElementById('phone').value.trim();
+            var position = document.getElementById('position').value;
+            var experience = document.getElementById('experience').value;
+            var portfolioUrl = document.getElementById('portfolioUrl').value.trim();
+            var coverLetter = document.getElementById('coverLetter').value.trim();
+            var consent = document.getElementById('applyConsent').checked;
 
             if (!fullName || !email || !phone || !position || !coverLetter) {
                 alert('Please fill in all required fields.');
@@ -1279,9 +563,9 @@
             }
 
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending to admin...';
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Submitting…';
 
-            const baseApplication = {
+            var baseApplication = {
                 fullName: fullName.slice(0, 120),
                 email: email.slice(0, 160),
                 phone: phone.slice(0, 40),
@@ -1295,12 +579,11 @@
                 submittedAt: firebase.database.ServerValue.TIMESTAMP
             };
 
-            let cvAsset = null;
-            let cvUploadError = null;
-            let applicationSaved = false;
+            var cvAsset = null;
+            var cvUploadError = null;
+            var applicationSaved = false;
             try {
                 if (file) {
-                    uploadProgress.style.display = 'block';
                     uploadProgress.setAttribute('aria-hidden', 'false');
                     uploadProgressBar.style.width = '5%';
                     setCvUploadStatus('Preparing private CV upload…', '');
@@ -1308,24 +591,22 @@
                         cvAsset = await SeedwelCloudinary.upload(file, {
                             kind: 'cv',
                             ownerName: fullName,
-                            onProgress: (progress) => {
+                            onProgress: function (progress) {
                                 uploadProgressBar.style.width = (5 + progress * 0.82) + '%';
                                 setCvUploadStatus('Uploading CV securely… ' + progress + '%', '');
                             }
                         });
                     } catch (error) {
                         // A CV provider outage must never discard the application.
-                        // Save the form to the private admin inbox with a clear
-                        // follow-up flag so the administrator can request the file.
                         cvUploadError = error;
                         cvAsset = null;
                     }
                 }
 
                 uploadProgressBar.style.width = cvAsset ? '93%' : (file ? '55%' : '0');
-                setCvUploadStatus('Delivering your application to the administrator…', '');
+                setCvUploadStatus('Delivering your application…', '');
 
-                const application = { ...baseApplication };
+                var application = Object.assign({}, baseApplication);
                 if (cvAsset) {
                     Object.assign(application, {
                         cvStatus: 'uploaded',
@@ -1340,7 +621,7 @@
                         cvUploadProvider: 'cloudinary'
                     });
                 } else {
-                    const needsCv = Boolean(file);
+                    var needsCv = Boolean(file);
                     Object.assign(application, {
                         cvStatus: needsCv ? 'email_required' : 'not_provided',
                         cvUploadNote: needsCv
@@ -1356,22 +637,22 @@
                 applicationSaved = true;
                 uploadProgressBar.style.width = '100%';
 
-                const cvNeedsFollowUp = !cvAsset;
-                document.getElementById('formSuccessTitle').textContent = 'Application Sent to Admin!';
+                var cvNeedsFollowUp = !cvAsset;
+                document.getElementById('formSuccessTitle').textContent = 'Application sent';
                 document.getElementById('formSuccessText').textContent = cvAsset
-                    ? 'Your application and private CV are now in the administrator\'s secure inbox for review. Our team aims to respond within 48 hours.'
-                    : 'Your application is now in the administrator\'s secure inbox for review. Please send your CV separately using one of the options below.';
+                    ? "Your application and private CV are now in the administrator's secure inbox for review."
+                    : "Your application is now in the administrator's secure inbox for review. Please send your CV using one of the options below.";
                 document.getElementById('cvFollowUp').hidden = !cvNeedsFollowUp;
 
-                window.setTimeout(() => {
-                    formContent.style.display = 'none';
-                    formSuccess.style.display = 'block';
-                    uploadProgress.style.display = 'none';
+                window.setTimeout(function () {
+                    formContent.hidden = true;
+                    formSuccess.hidden = false;
                     uploadProgress.setAttribute('aria-hidden', 'true');
                     uploadProgressBar.style.width = '0';
                     setCvUploadStatus(cvAsset
-                        ? 'Application and CV delivered securely to admin.'
-                        : 'Application delivered to admin; CV follow-up is required.', cvAsset ? 'success' : '');
+                        ? 'Application and CV delivered securely.'
+                        : 'Application delivered; CV follow-up is required.', cvAsset ? 'success' : '');
+                    formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }, 350);
             } catch (error) {
                 console.error('Application submission error:', error);
@@ -1384,39 +665,29 @@
                         });
                     } catch (_) { /* Do not hide the original submission error. */ }
                 }
-                const applicantMessage = 'Your application could not be delivered to the administrator. Please check your connection, then try again or contact us on WhatsApp: +260 973 028 342.';
-                alert(applicantMessage);
-                setCvUploadStatus(applicantMessage, 'error');
+                alert('Your application could not be delivered. Please check your connection, then try again or contact us on WhatsApp: +260 973 028 342.');
+                setCvUploadStatus('Submission failed — please try again.', 'error');
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Application';
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane" aria-hidden="true"></i> Submit Application';
                 if (!applicationSaved) {
-                    uploadProgress.style.display = 'none';
                     uploadProgress.setAttribute('aria-hidden', 'true');
                     uploadProgressBar.style.width = '0';
                 }
             }
         });
 
-        // ─── Reset Form ───
+        // ─── Reset form ───
         function resetForm() {
             form.reset();
             clearSelectedCv('');
-            uploadProgress.style.display = 'none';
             uploadProgress.setAttribute('aria-hidden', 'true');
             uploadProgressBar.style.width = '0';
-            formContent.style.display = 'block';
-            formSuccess.style.display = 'none';
+            formContent.hidden = false;
+            formSuccess.hidden = true;
             document.getElementById('applyFormSection').scrollIntoView({ behavior: 'smooth' });
         }
-
-        // ─── Scroll to Top ───
-        window.scrollTo(0, 0);
-        window.addEventListener('load', () => window.scrollTo(0, 0));
-        window.addEventListener('pageshow', (e) => { if (e.persisted) window.scrollTo(0, 0); });
     </script>
-
-    <script src="assets/js/service-strip.js" defer></script>
-    <script src="assets/js/local-ai.js" defer></script>
+    <script src="assets/js/site.js" defer></script>
 </body>
 </html>

@@ -3,386 +3,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore the Seedwel Investment LTD portfolio of digital products, business services and creative work.">
-    
+    <meta name="description" content="Explore the live Seedwel Investment LTD portfolio — websites, business registration support, marketing and creative work.">
     <link rel="canonical" href="https://seedwel.ltd/projects.html" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Seedwel Investment LTD" />
-    <meta property="og:title" content="Portfolio & Projects | Seedwel Investment LTD" />
-    <meta property="og:description" content="Explore the Seedwel Investment LTD portfolio of digital products, business services and creative work." />
+    <meta property="og:title" content="Projects &amp; Portfolio | Seedwel Investment LTD" />
+    <meta property="og:description" content="Live portfolio of work delivered by Seedwel Investment LTD." />
     <meta property="og:url" content="https://seedwel.ltd/projects.html" />
-    <meta property="og:image" content="https://i.ibb.co/svxj52ny/seedwel.png" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Portfolio & Projects | Seedwel Investment LTD" />
-    <meta name="twitter:description" content="Explore the Seedwel Investment LTD portfolio of digital products, business services and creative work." />
-    <meta name="twitter:image" content="https://i.ibb.co/svxj52ny/seedwel.png" />
-<meta name="theme-color" content="#dc2626">
+    <meta name="twitter:card" content="summary" />
+    <meta name="theme-color" content="#dc2626">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <title>Portfolio &amp; Projects | Seedwel Investment LTD</title>
+    <title>Projects &amp; Portfolio | Seedwel Investment LTD</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="manifest" href="site.webmanifest">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <link rel="stylesheet" href="assets/css/site.css">
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js" defer></script>
+
     <style>
-        :root {
-            --red: #dc2626;
-            --red-dark: #b91c1c;
-            --ink: #111827;
-            --muted: #667085;
-            --line: #e7eaf0;
-            --soft: #fff5f5;
-            --card: #ffffff;
-            --green: #1aa66a;
-            --shadow: 0 18px 50px rgba(30, 41, 59, .10);
+        .live-status {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 7px 14px; border-radius: 999px;
+            background: #f0fdf4; color: #166534;
+            font-size: 0.74rem; font-weight: 700; white-space: nowrap;
         }
-        * { box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body { margin: 0; overflow-x: hidden; color: var(--ink); background: #fff; font-family: 'Inter', sans-serif; line-height: 1.6; }
-        button, input { font: inherit; }
-        button { -webkit-tap-highlight-color: transparent; }
-        button:focus-visible, a:focus-visible { outline: 3px solid rgba(220,38,38,.42); outline-offset: 3px; }
-        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
-        .container { width: min(1200px, calc(100% - 40px)); margin: 0 auto; }
+        .live-status::before {
+            content: ''; width: 8px; height: 8px; border-radius: 50%;
+            background: #22c55e; box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.15);
+        }
+        .filter-bar { display: flex; flex-wrap: wrap; gap: 9px; justify-content: center; margin-bottom: 36px; }
+        .filter {
+            padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px;
+            background: var(--white); color: var(--muted);
+            font-family: var(--font-head); font-size: 0.76rem; font-weight: 600;
+            cursor: pointer; transition: all 0.2s ease;
+        }
+        .filter:hover { border-color: var(--brand); color: var(--brand); }
+        .filter.active { background: var(--brand); border-color: var(--brand); color: #fff; }
 
-        /* Header */
-        .header { position: fixed; inset: 0 0 auto; z-index: 40; border-bottom: 1px solid transparent; background: rgba(255,255,255,.79); backdrop-filter: blur(16px); transition: box-shadow .25s ease, border-color .25s ease; }
-        .header.scrolled { border-color: rgba(220,38,38,.13); box-shadow: 0 5px 20px rgba(15,23,42,.06); }
-        .header-inner { display: flex; align-items: center; justify-content: space-between; min-height: 71px; gap: 18px; }
-        .logo-container { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); font-family: 'Montserrat', sans-serif; font-size: .9rem; font-weight: 900; letter-spacing: -.04em; text-decoration: none; white-space: nowrap; }
-        .logo-img { width: 39px; height: 39px; border-radius: 11px; }
-        .logo-container span span { color: var(--red); }
-        .nav-links { display: flex; align-items: center; gap: clamp(12px, 2.2vw, 27px); }
-        .nav-links a { position: relative; padding: 5px 0; color: #344054; font-family: 'Montserrat', sans-serif; font-size: .78rem; font-weight: 700; text-decoration: none; transition: color .2s ease; }
-        .nav-links a::after { position: absolute; right: 0; bottom: 0; left: 0; height: 2px; content: ''; background: var(--red); transform: scaleX(0); transform-origin: left; transition: transform .24s ease; }
-        .nav-links a:hover, .nav-links a.active { color: var(--red); }
-        .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
-        .hamburger { display: none; width: 42px; height: 42px; padding: 0; color: var(--ink); border: 1px solid rgba(220,38,38,.15); border-radius: 50%; background: #fff; cursor: pointer; }
-        .hamburger span { display: block; width: 19px; height: 2px; margin: 4px auto; border-radius: 4px; background: currentColor; transition: transform .2s ease, opacity .2s ease; }
-        .hamburger.active span:first-child { transform: translateY(6px) rotate(45deg); }
-        .hamburger.active span:nth-child(2) { opacity: 0; }
-        .hamburger.active span:last-child { transform: translateY(-6px) rotate(-45deg); }
-        .mobile-menu { position: fixed; top: 0; right: -310px; z-index: 39; display: grid; width: min(80vw, 295px); height: 100vh; padding: 95px 17px 26px; align-content: start; gap: 5px; background: #fff; box-shadow: -14px 0 36px rgba(15,23,42,.14); transition: right .33s cubic-bezier(.65,0,.35,1); }
-        .mobile-menu.active { right: 0; }
-        .mobile-menu a { display: flex; align-items: center; gap: 13px; padding: 12px 14px; color: #263244; border-radius: 11px; font-family: 'Montserrat', sans-serif; font-size: .86rem; font-weight: 700; text-decoration: none; }
-        .mobile-menu a i { width: 20px; color: var(--red); }
-        .mobile-menu a:hover, .mobile-menu a.active { color: var(--red); background: var(--soft); }
-        .menu-overlay { position: fixed; inset: 0; z-index: 38; visibility: hidden; opacity: 0; background: rgba(15,23,42,.38); transition: opacity .25s ease, visibility .25s ease; }
-        .menu-overlay.active { visibility: visible; opacity: 1; }
+        .project-media { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: var(--soft); }
+        .project-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.45s ease; }
+        .project-card:hover .project-media img { transform: scale(1.04); }
+        .project-category {
+            position: absolute; top: 12px; left: 12px; z-index: 1;
+            padding: 4px 11px; border-radius: 999px;
+            background: rgba(255, 255, 255, 0.94);
+            color: var(--brand-dark);
+            font-family: var(--font-head); font-size: 0.64rem; font-weight: 700;
+            letter-spacing: 0.06em; text-transform: uppercase;
+        }
+        .project-photo-count {
+            position: absolute; right: 12px; bottom: 10px; z-index: 1;
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 4px 10px; border-radius: 999px;
+            background: rgba(15, 23, 42, 0.66); color: #fff;
+            font-size: 0.66rem; font-weight: 700;
+        }
+        .project-body { display: flex; flex-direction: column; flex: 1; padding: 22px; }
+        .project-client { margin-bottom: 4px; color: var(--muted-2); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+        .project-body h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
+        .project-desc { color: var(--muted); font-size: 0.88rem; flex: 1; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .project-results { margin-top: 12px; color: var(--brand-dark); font-size: 0.76rem; font-weight: 600; }
+        .project-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; }
+        .empty-projects {
+            grid-column: 1 / -1; padding: 56px 24px;
+            border: 1px dashed #cbd5e1; border-radius: var(--radius);
+            background: var(--soft); text-align: center; color: var(--muted);
+        }
+        .empty-projects i { display: block; margin-bottom: 12px; color: var(--brand); font-size: 1.7rem; }
 
-        /* Hero */
-        .portfolio-hero { position: relative; padding: 154px 0 76px; overflow: hidden; background: linear-gradient(145deg, #fff5f5 0%, #fff 54%, #f8fbff 100%); isolation: isolate; }
-        .portfolio-hero::before, .portfolio-hero::after { position: absolute; z-index: -1; width: 37rem; height: 37rem; content: ''; border-radius: 50%; filter: blur(4px); pointer-events: none; }
-        .portfolio-hero::before { top: -23rem; left: -14rem; background: radial-gradient(circle, rgba(220,38,38,.14), transparent 67%); animation: drift 12s ease-in-out infinite alternate; }
-        .portfolio-hero::after { right: -21rem; bottom: -30rem; background: radial-gradient(circle, rgba(78,128,255,.13), transparent 68%); animation: drift 15s ease-in-out -7s infinite alternate; }
-        .hero-grid { display: grid; grid-template-columns: minmax(0, 1.14fr) minmax(290px, .86fr); align-items: center; gap: clamp(32px, 7vw, 90px); }
-        .eyebrow { display: inline-flex; align-items: center; gap: 7px; margin: 0 0 16px; color: var(--red); font-family: 'Montserrat', sans-serif; font-size: .72rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
-        .eyebrow i { font-size: .8rem; }
-        .portfolio-hero h1 { max-width: 680px; margin: 0; font-family: 'Montserrat', sans-serif; font-size: clamp(2.4rem, 5.2vw, 4.6rem); font-weight: 900; letter-spacing: -.075em; line-height: 1.04; }
-        .portfolio-hero h1 span { color: var(--red); }
-        .hero-copy { max-width: 650px; margin: 19px 0 0; color: #566173; font-size: clamp(.96rem, 1.7vw, 1.08rem); line-height: 1.75; }
-        .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
-        .button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 45px; padding: 11px 17px; border: 1px solid transparent; border-radius: 999px; font-family: 'Montserrat', sans-serif; font-size: .78rem; font-weight: 800; text-decoration: none; cursor: pointer; transition: transform .22s ease, box-shadow .22s ease, background .22s ease, border-color .22s ease; }
-        .button:hover { transform: translateY(-3px); }
-        .button-primary { color: #fff; background: var(--red); box-shadow: 0 10px 22px rgba(220,38,38,.23); }
-        .button-primary:hover { background: var(--red-dark); box-shadow: 0 13px 26px rgba(220,38,38,.31); }
-        .button-quiet { color: var(--red); border-color: rgba(220,38,38,.25); background: rgba(255,255,255,.68); }
-        .button-quiet:hover { border-color: var(--red); background: #fff5f5; }
-        .hero-orbit { position: relative; min-height: 355px; }
-        .hero-orbit::before { position: absolute; inset: 25px; content: ''; border: 1px dashed rgba(220,38,38,.22); border-radius: 50%; animation: spin 27s linear infinite; }
-        .hero-orbit::after { position: absolute; inset: 73px; content: ''; border: 1px solid rgba(120,169,255,.22); border-radius: 50%; animation: spin 20s linear reverse infinite; }
-        .orbit-card { position: absolute; z-index: 1; top: 50%; left: 50%; display: grid; width: min(260px, 70vw); min-height: 192px; padding: 25px; border: 1px solid rgba(255,255,255,.85); border-radius: 25px; background: rgba(255,255,255,.79); box-shadow: 0 24px 55px rgba(51,65,85,.12); backdrop-filter: blur(12px); transform: translate(-50%, -50%); }
-        .orbit-card > i { display: grid; width: 42px; height: 42px; margin-bottom: 18px; color: var(--red); border-radius: 13px; background: var(--soft); place-items: center; }
-        .orbit-card strong { font-family: 'Montserrat', sans-serif; font-size: 1.35rem; letter-spacing: -.05em; }
-        .orbit-card span { margin-top: 3px; color: #6c7789; font-size: .76rem; }
-        .floating-chip { position: absolute; z-index: 2; display: inline-flex; align-items: center; gap: 7px; padding: 9px 11px; color: #465368; border: 1px solid rgba(255,255,255,.8); border-radius: 999px; background: rgba(255,255,255,.85); box-shadow: 0 11px 25px rgba(15,23,42,.10); font-size: .69rem; font-weight: 800; white-space: nowrap; animation: float 4.3s ease-in-out infinite; }
-        .floating-chip i { color: var(--red); }
-        .chip-one { top: 28px; right: 14px; }
-        .chip-two { bottom: 27px; left: 4px; animation-delay: -1.6s; }
-        .chip-three { right: 5px; bottom: 70px; color: #237a54; animation-delay: -2.8s; }
-        .chip-three i { color: #1aa66a; }
+        .share-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 20px; }
 
-        /* Stats & share */
-        .proof-wrap { position: relative; z-index: 2; margin-top: -28px; }
-        .proof-bar { display: grid; grid-template-columns: repeat(4, 1fr); overflow: hidden; border: 1px solid var(--line); border-radius: 19px; background: #fff; box-shadow: var(--shadow); }
-        .proof-item { display: flex; align-items: center; gap: 11px; min-height: 82px; padding: 16px 20px; border-right: 1px solid var(--line); }
-        .proof-item:last-child { border-right: 0; }
-        .proof-item i { display: grid; width: 34px; height: 34px; flex: 0 0 auto; color: var(--red); border-radius: 10px; background: var(--soft); place-items: center; }
-        .proof-item strong { display: block; font-family: 'Montserrat', sans-serif; font-size: 1rem; letter-spacing: -.04em; }
-        .proof-item span { display: block; margin-top: 1px; color: #7a8495; font-size: .67rem; font-weight: 600; }
-        .share-strip { display: grid; grid-template-columns: 1.13fr .87fr; gap: 18px; margin: 54px 0; padding: clamp(22px, 4vw, 34px); border-radius: 23px; color: white; background: linear-gradient(125deg, #172033, #293956); box-shadow: 0 19px 45px rgba(30,41,59,.16); }
-        .share-strip h2 { margin: 0; font-family: 'Montserrat', sans-serif; font-size: clamp(1.2rem, 2.4vw, 1.65rem); letter-spacing: -.055em; }
-        .share-strip p { max-width: 620px; margin: 8px 0 0; color: #b8c3d5; font-size: .82rem; line-height: 1.65; }
-        .share-controls { display: grid; grid-template-columns: repeat(2, 1fr); align-content: center; gap: 9px; }
-        .share-controls .button { min-height: 42px; padding: 10px; color: #e9effa; border-color: rgba(255,255,255,.15); background: rgba(255,255,255,.08); font-size: .71rem; }
-        .share-controls .button:hover { background: rgba(255,255,255,.16); }
-        .share-controls .whatsapp { color: #b8f5d4; border-color: rgba(79,222,151,.25); }
-
-        /* Project grid */
-        .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 25px; margin-bottom: 25px; }
-        .section-heading h2 { margin: 0; font-family: 'Montserrat', sans-serif; font-size: clamp(1.65rem, 3vw, 2.3rem); letter-spacing: -.065em; }
-        .section-heading p { max-width: 500px; margin: 9px 0 0; color: #667085; font-size: .86rem; line-height: 1.7; }
-        .live-status { display: inline-flex; align-items: center; gap: 7px; padding: 8px 11px; color: #277a55; border-radius: 999px; background: #effbf4; font-size: .68rem; font-weight: 800; white-space: nowrap; }
-        .live-status::before { width: 7px; height: 7px; content: ''; border-radius: 50%; background: #35bf7a; box-shadow: 0 0 0 4px rgba(53,191,122,.13); }
-        .filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 25px; }
-        .filter { padding: 8px 12px; color: #5d6879; border: 1px solid var(--line); border-radius: 999px; background: #fff; font-size: .71rem; font-weight: 750; cursor: pointer; transition: all .2s ease; }
-        .filter:hover, .filter.active { color: #fff; border-color: var(--red); background: var(--red); box-shadow: 0 7px 15px rgba(220,38,38,.16); }
-        .projects-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; padding-bottom: 78px; }
-        .project-card { display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--line); border-radius: 19px; background: var(--card); box-shadow: 0 5px 13px rgba(15,23,42,.025); transition: transform .3s cubic-bezier(.2,.8,.2,1), border-color .3s ease, box-shadow .3s ease; }
-        .project-card:hover { border-color: rgba(220,38,38,.43); box-shadow: 0 20px 42px rgba(30,41,59,.12); transform: translateY(-8px); }
-        .project-media { position: relative; height: 214px; overflow: hidden; background: #f4f6f9; }
-        .project-media::after { position: absolute; inset: 0; content: ''; background: linear-gradient(180deg, transparent 52%, rgba(15,23,42,.21)); pointer-events: none; }
-        .project-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .55s cubic-bezier(.2,.8,.2,1); }
-        .project-card:hover .project-media img { transform: scale(1.065); }
-        .project-category { position: absolute; z-index: 1; top: 13px; left: 13px; padding: 5px 9px; color: #8f1b1b; border: 1px solid rgba(255,255,255,.8); border-radius: 999px; background: rgba(255,255,255,.91); box-shadow: 0 3px 10px rgba(15,23,42,.07); font-size: .63rem; font-weight: 850; }
-        .project-photo-count { position: absolute; z-index: 1; right: 13px; bottom: 12px; display: inline-flex; align-items: center; gap: 5px; padding: 5px 8px; color: #fff; border: 1px solid rgba(255,255,255,.28); border-radius: 999px; background: rgba(15,23,42,.66); backdrop-filter: blur(6px); font-size: .62rem; font-weight: 800; }
-        .project-content { display: flex; flex: 1; flex-direction: column; padding: 19px; }
-        .project-client { min-height: 17px; margin: 0 0 6px; color: #858fa0; font-size: .66rem; font-weight: 700; }
-        .project-card h3 { margin: 0; font-family: 'Montserrat', sans-serif; font-size: 1rem; letter-spacing: -.04em; line-height: 1.32; }
-        .project-description { display: -webkit-box; margin: 8px 0 0; overflow: hidden; color: #667085; font-size: .76rem; line-height: 1.58; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
-        .project-results { min-height: 19px; margin: 13px 0 0; color: #a13a3a; font-size: .67rem; font-weight: 700; line-height: 1.4; }
-        .project-actions { display: flex; align-items: center; gap: 13px; margin-top: auto; padding-top: 17px; }
-        .project-link, .project-details { padding: 0; color: var(--red); border: 0; background: transparent; font-size: .71rem; font-weight: 850; text-decoration: none; cursor: pointer; }
-        .project-link:hover, .project-details:hover { color: var(--red-dark); text-decoration: underline; }
-        .project-link i { margin-left: 3px; font-size: .65rem; }
-        .empty-projects { grid-column: 1 / -1; padding: 50px 20px; color: #687386; border: 1px dashed #d8dee8; border-radius: 18px; background: #fafbfc; text-align: center; }
-        .empty-projects i { display: block; margin-bottom: 10px; color: var(--red); font-size: 1.75rem; }
-
-        /* More information */
-        .capabilities { padding: 76px 0; background: linear-gradient(180deg, #fafbfc, #fff); }
-        .capability-head { max-width: 700px; margin-bottom: 31px; }
-        .capability-head h2 { margin: 0; font-family: 'Montserrat', sans-serif; font-size: clamp(1.65rem, 3vw, 2.3rem); letter-spacing: -.065em; }
-        .capability-head p { margin: 12px 0 0; color: #667085; font-size: .89rem; line-height: 1.7; }
-        .capability-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 17px; }
-        .capability { position: relative; padding: 24px; overflow: hidden; border: 1px solid var(--line); border-radius: 18px; background: #fff; transition: transform .28s ease, box-shadow .28s ease; }
-        .capability:hover { box-shadow: var(--shadow); transform: translateY(-5px); }
-        .capability i { display: grid; width: 43px; height: 43px; margin-bottom: 17px; color: var(--red); border-radius: 13px; background: var(--soft); place-items: center; }
-        .capability:nth-child(2) i { color: #2b6ec9; background: #eff6ff; }
-        .capability:nth-child(3) i { color: #138957; background: #edfff5; }
-        .capability h3 { margin: 0; font-family: 'Montserrat', sans-serif; font-size: .94rem; letter-spacing: -.035em; }
-        .capability p { margin: 8px 0 0; color: #697587; font-size: .77rem; line-height: 1.67; }
-        .capacity-note { display: inline-flex; align-items: center; gap: 6px; margin-top: 13px; color: #2b6ec9; font-size: .68rem; font-weight: 800; }
-        .portfolio-handover { position: relative; padding: 70px 0; overflow: hidden; color: #fff; background: #111827; }
-        .portfolio-handover::before { position: absolute; top: -13rem; right: -8rem; width: 33rem; height: 33rem; content: ''; border-radius: 50%; background: radial-gradient(circle, rgba(220,38,38,.24), transparent 68%); animation: drift 12s ease-in-out infinite alternate; }
-        .handover-inner { position: relative; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 30px; }
-        .handover-inner h2 { max-width: 660px; margin: 0; font-family: 'Montserrat', sans-serif; font-size: clamp(1.65rem, 3vw, 2.45rem); letter-spacing: -.065em; }
-        .handover-inner p { max-width: 650px; margin: 12px 0 0; color: #abb8ca; font-size: .87rem; line-height: 1.7; }
-        .button-white { color: var(--red); background: #fff; }
-        .button-white:hover { box-shadow: 0 12px 28px rgba(255,255,255,.16); }
-
-        /* Footer */
-        footer { padding: 54px 0 23px; color: #aab6c8; background: #0c1424; }
-        .footer-grid { display: grid; grid-template-columns: 1.65fr 1fr 1fr 1.1fr; gap: 32px; }
-        .footer-brand img { width: 42px; height: 42px; margin-bottom: 11px; border-radius: 12px; }
-        .footer-brand p { max-width: 330px; margin: 0; font-size: .77rem; line-height: 1.7; }
-        .footer-col h3 { margin: 0 0 14px; color: #fff; font-family: 'Montserrat', sans-serif; font-size: .84rem; }
-        .footer-col a, .footer-col p { display: block; margin: 0 0 9px; color: #aab6c8; font-size: .76rem; line-height: 1.55; text-decoration: none; }
-        .footer-col a:hover { color: #ff6b6b; }
-        .footer-col i { width: 18px; color: #ff6b6b; }
-        .footer-bottom { margin-top: 37px; padding-top: 19px; border-top: 1px solid rgba(255,255,255,.10); color: #6f7d91; font-size: .7rem; text-align: center; }
-        .floating-whatsapp { position: fixed; right: 23px; bottom: 23px; z-index: 25; display: grid; width: 54px; height: 54px; color: #fff; border-radius: 50%; background: #25d366; box-shadow: 0 10px 25px rgba(37,211,102,.33); font-size: 1.55rem; place-items: center; text-decoration: none; transition: transform .23s ease; animation: soft-pulse 2.3s infinite; }
-        .floating-whatsapp:hover { transform: scale(1.1); }
-
-        /* Dialog */
-        dialog { width: min(760px, calc(100% - 32px)); max-height: min(770px, calc(100vh - 32px)); padding: 0; overflow: auto; color: var(--ink); border: 0; border-radius: 20px; box-shadow: 0 26px 78px rgba(15,23,42,.35); }
-        dialog::backdrop { background: rgba(15,23,42,.67); backdrop-filter: blur(3px); }
-        .modal-media { position: relative; height: min(350px, 43vh); background: #f4f6f9; }
+        dialog {
+            width: min(720px, calc(100% - 32px)); max-height: min(720px, calc(100vh - 32px));
+            padding: 0; overflow: auto; color: var(--ink);
+            border: 0; border-radius: var(--radius);
+            box-shadow: 0 26px 78px rgba(15, 23, 42, 0.35);
+        }
+        dialog::backdrop { background: rgba(15, 23, 42, 0.6); }
+        .modal-media { position: relative; height: min(320px, 42vh); background: var(--soft); }
         .modal-media img { width: 100%; height: 100%; object-fit: cover; }
-        .modal-nav { position: absolute; top: 50%; display: grid; width: 40px; height: 40px; padding: 0; color: #fff; border: 1px solid rgba(255,255,255,.35); border-radius: 50%; background: rgba(15,23,42,.62); backdrop-filter: blur(8px); cursor: pointer; place-items: center; transform: translateY(-50%); }
-        .modal-nav:hover { background: var(--red); }
+        .modal-nav {
+            position: absolute; top: 50%; display: grid; place-items: center;
+            width: 40px; height: 40px; border: 1px solid rgba(255,255,255,.4); border-radius: 50%;
+            background: rgba(15, 23, 42, 0.6); color: #fff; cursor: pointer;
+            transform: translateY(-50%);
+        }
+        .modal-nav:hover { background: var(--brand); }
         .modal-nav.prev { left: 13px; }
         .modal-nav.next { right: 13px; }
-        .modal-photo-position { position: absolute; right: 14px; bottom: 12px; padding: 5px 9px; color: #fff; border-radius: 999px; background: rgba(15,23,42,.68); font-size: .65rem; font-weight: 800; }
+        .modal-photo-position {
+            position: absolute; right: 14px; bottom: 12px;
+            padding: 4px 10px; border-radius: 999px;
+            background: rgba(15, 23, 42, 0.7); color: #fff; font-size: 0.68rem; font-weight: 700;
+        }
         .modal-thumbnails { display: flex; gap: 8px; padding: 10px 12px; overflow-x: auto; border-bottom: 1px solid var(--line); background: #fff; }
         .modal-thumbnails[hidden] { display: none; }
-        .modal-thumbnail { flex: 0 0 68px; width: 68px; height: 49px; padding: 0; overflow: hidden; border: 2px solid transparent; border-radius: 8px; background: #eef1f5; cursor: pointer; }
-        .modal-thumbnail.active { border-color: var(--red); }
+        .modal-thumbnail { flex: 0 0 68px; width: 68px; height: 48px; padding: 0; overflow: hidden; border: 2px solid transparent; border-radius: 8px; background: var(--soft); cursor: pointer; }
+        .modal-thumbnail.active { border-color: var(--brand); }
         .modal-thumbnail img { width: 100%; height: 100%; object-fit: cover; }
-        .modal-body { position: relative; padding: clamp(22px, 4vw, 35px); }
-        .dialog-close { position: absolute; top: 13px; right: 13px; display: grid; width: 35px; height: 35px; color: #3d4b60; border: 1px solid #e2e7ee; border-radius: 50%; background: #fff; cursor: pointer; place-items: center; }
-        .dialog-close:hover { color: var(--red); border-color: rgba(220,38,38,.3); }
-        .modal-kicker { margin: 0 0 7px; color: var(--red); font-size: .69rem; font-weight: 850; letter-spacing: .08em; text-transform: uppercase; }
-        .modal-body h2 { margin: 0; font-family: 'Montserrat', sans-serif; font-size: clamp(1.35rem, 3vw, 2rem); letter-spacing: -.055em; }
-        .modal-body > p { margin: 13px 0 0; color: #596579; font-size: .86rem; line-height: 1.7; white-space: pre-line; }
-        .modal-result { margin-top: 17px !important; padding: 11px 13px; color: #a13a3a !important; border-radius: 10px; background: var(--soft); font-size: .76rem !important; font-weight: 750; }
-        .modal-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 23px; }
+        .modal-body { position: relative; padding: clamp(22px, 4vw, 34px); }
+        .dialog-close {
+            position: absolute; top: 13px; right: 13px;
+            display: grid; place-items: center; width: 36px; height: 36px;
+            border: 1px solid var(--line); border-radius: 50%;
+            background: #fff; color: var(--muted); cursor: pointer;
+        }
+        .dialog-close:hover { color: var(--brand); border-color: rgba(220, 38, 38, 0.4); }
+        .modal-kicker { margin-bottom: 6px; color: var(--brand); font-size: 0.7rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+        .modal-body h2 { font-size: clamp(1.3rem, 3vw, 1.8rem); }
+        .modal-body > p { margin-top: 12px; color: var(--muted); font-size: 0.9rem; white-space: pre-line; }
+        .modal-result { margin-top: 15px; padding: 11px 14px; border-radius: 10px; background: var(--brand-soft); color: var(--brand-dark) !important; font-size: 0.8rem !important; font-weight: 600; }
+        .modal-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
 
-        /* Motion and reveal */
-        .reveal { opacity: 0; transform: translateY(24px); transition: opacity .65s ease, transform .65s cubic-bezier(.2,.75,.3,1); }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-        @keyframes drift { from { transform: translate3d(-12px,-8px,0) scale(1); } to { transform: translate3d(21px,18px,0) scale(1.08); } }
-        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes soft-pulse { 0% { box-shadow: 0 0 0 0 rgba(37,211,102,.36); } 70% { box-shadow: 0 0 0 15px rgba(37,211,102,0); } 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); } }
-        @media (max-width: 970px) {
-            .nav-links { display: none; }
-            .hamburger { display: block; }
-            .hero-grid { grid-template-columns: 1fr; }
-            .hero-orbit { width: min(440px, 100%); min-height: 300px; margin: 0 auto; }
-            .proof-bar { grid-template-columns: repeat(2, 1fr); }
-            .proof-item:nth-child(2) { border-right: 0; }
-            .proof-item:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
-            .projects-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-            .capability-grid { grid-template-columns: 1fr 1fr; }
-            .footer-grid { grid-template-columns: 1.5fr 1fr 1fr; }
-            .footer-brand { grid-column: 1 / -1; }
+        .toast {
+            position: fixed; right: 20px; bottom: 90px; z-index: 960;
+            max-width: calc(100vw - 40px); padding: 11px 16px;
+            border: 1px solid rgba(34, 197, 94, 0.4); border-radius: 10px;
+            background: #052e1c; color: #dcfce7;
+            font-weight: 600; font-size: 0.82rem;
+            opacity: 0; pointer-events: none; transform: translateY(8px);
+            transition: opacity 0.2s ease, transform 0.2s ease;
         }
-        @media (max-width: 650px) {
-            .container { width: min(100% - 30px, 1200px); }
-            .header-inner { min-height: 64px; }
-            .logo-container { font-size: .78rem; }
-            .logo-img { width: 35px; height: 35px; }
-            .portfolio-hero { padding: 112px 0 58px; }
-            .portfolio-hero h1 { font-size: clamp(2.25rem, 12vw, 3.35rem); }
-            .hero-actions .button { width: 100%; }
-            .hero-orbit { min-height: 263px; margin-top: -2px; }
-            .hero-orbit::before { inset: 15px; }
-            .hero-orbit::after { inset: 53px; }
-            .orbit-card { min-height: 162px; padding: 20px; }
-            .chip-one { top: 10px; right: 0; }
-            .chip-two { bottom: 10px; left: 0; }
-            .chip-three { display: none; }
-            .proof-wrap { margin-top: -19px; }
-            .proof-bar { grid-template-columns: 1fr 1fr; border-radius: 15px; }
-            .proof-item { min-height: 74px; padding: 12px; }
-            .proof-item i { width: 30px; height: 30px; font-size: .78rem; }
-            .proof-item strong { font-size: .82rem; }
-            .proof-item span { font-size: .6rem; }
-            .share-strip { grid-template-columns: 1fr; margin: 39px 0; }
-            .share-controls { grid-template-columns: 1fr 1fr; }
-            .section-heading { display: block; }
-            .live-status { margin-top: 15px; }
-            .projects-grid, .capability-grid { grid-template-columns: 1fr; }
-            .project-media { height: 225px; }
-            .capabilities { padding: 55px 0; }
-            .portfolio-handover { padding: 53px 0; }
-            .handover-inner { grid-template-columns: 1fr; }
-            .handover-inner .button { width: 100%; }
-            .footer-grid { grid-template-columns: 1fr 1fr; gap: 25px; }
-            .footer-brand { grid-column: 1 / -1; }
-            .floating-whatsapp { right: 16px; bottom: 16px; width: 48px; height: 48px; font-size: 1.35rem; }
-        }
-        @media (max-width: 400px) { .footer-grid { grid-template-columns: 1fr; } }
-        @media (prefers-reduced-motion: reduce) {
-            html { scroll-behavior: auto; }
-            *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
-            .reveal { opacity: 1; transform: none; }
-        }
-            .nav-links a.nav-login {
-            background: #dc2626; color: #fff !important; padding: 8px 20px; border-radius: 50px;
-            box-shadow: 0 4px 14px rgba(220,38,38,.25); transition: all .3s ease;
-        }
-        .nav-links a.nav-login::after { display: none; }
-        .nav-links a.nav-login:hover { background: #b91c1c; color: #fff; transform: translateY(-1px); }
-</style>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "ProfessionalService",
-      "name": "Seedwel Investment LTD",
-      "url": "https://seedwel.ltd/",
-      "logo": "https://i.ibb.co/svxj52ny/seedwel.png",
-      "image": "https://i.ibb.co/svxj52ny/seedwel.png",
-      "description": "Premium digital agency offering web development, SEO, branding, graphic design and business registration services.",
-      "email": "seedwelinvestltd@gmail.com",
-      "telephone": "+260973028342",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Kabwe",
-        "addressCountry": "ZM"
-      },
-      "areaServed": ["ZM", "Global"],
-      "sameAs": [
-        "https://wa.me/260973028342"
-      ]
-    }
-    </script>
-    <link rel="stylesheet" href="assets/css/local-ai.css" />
+        .toast.show { opacity: 1; transform: translateY(0); }
+    </style>
 </head>
-<body>
+
+<body data-page="projects">
+
     <header class="header" id="header">
         <div class="container header-inner">
-            <a href="index.html" class="logo-container" aria-label="Seedwel Investment LTD home"><img src="favicon.svg" class="logo-img" alt=""><span>Seedwel <span>Investment</span> LTD</span></a>
+            <a href="index.html" class="logo-container" aria-label="Seedwel Investment LTD — Home">
+                <img src="https://i.ibb.co/svxj52ny/seedwel.png" class="logo-img" alt="Seedwel Investment LTD logo" />
+                <span class="company-name-header">Seedwel <span>Investment</span> LTD</span>
+            </a>
             <nav class="nav-links" aria-label="Main navigation">
-                <a href="index.html">Home</a><a href="about.html">About</a><a href="services.html">Services</a><a href="projects.html" class="active" aria-current="page">Portfolio</a><a href="apply.html">Careers</a><a href="contact.html">Contact</a><a href="support.html">Support</a><a href="login.html" class="nav-login">Login</a>
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="services.html">Services</a>
+                <a href="projects.html" class="active" aria-current="page">Projects</a>
+                <a href="apply.html">Careers</a>
+                <a href="contact.html">Contact</a>
+                <a href="support.html">Support</a>
+                <a href="login.html" class="btn btn-ghost nav-login">Login</a>
+                <a href="request.html" class="btn btn-primary nav-cta">Request a Service</a>
             </nav>
-            <button class="hamburger" id="hamburger" type="button" aria-label="Open navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+            <button class="hamburger" id="hamburger" type="button" aria-label="Open menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </header>
+
     <div class="menu-overlay" id="menuOverlay"></div>
     <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
-        <a href="index.html"><i class="fa-solid fa-house" aria-hidden="true"></i>Home</a><a href="about.html"><i class="fa-solid fa-circle-info" aria-hidden="true"></i>About us</a><a href="services.html"><i class="fa-solid fa-grid-2" aria-hidden="true"></i>Services</a><a href="projects.html" class="active"><i class="fa-solid fa-folder-open" aria-hidden="true"></i>Portfolio</a><a href="apply.html"><i class="fa-solid fa-briefcase" aria-hidden="true"></i>Careers</a><a href="contact.html"><i class="fa-solid fa-envelope" aria-hidden="true"></i>Contact</a><a href="support.html"><i class="fa-solid fa-headset" aria-hidden="true"></i>Support</a><a href="login.html"><i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i>Login</a>
+        <a href="index.html"><i class="fa-solid fa-house" aria-hidden="true"></i> Home</a>
+        <a href="about.html"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> About</a>
+        <a href="services.html"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Services</a>
+        <a href="projects.html" class="active"><i class="fa-solid fa-folder-open" aria-hidden="true"></i> Projects</a>
+        <a href="apply.html"><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Careers</a>
+        <a href="contact.html"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Contact</a>
+        <a href="support.html"><i class="fa-solid fa-headset" aria-hidden="true"></i> Support</a>
+        <a href="login.html"><i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i> Login</a>
+        <div class="menu-divider"></div>
+        <a href="request.html" class="menu-request"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Request a Service</a>
     </nav>
 
     <main>
-        <section class="portfolio-hero">
-            <div class="container hero-grid">
-                <div class="reveal">
-                    <p class="eyebrow"><i class="fa-solid fa-sparkles" aria-hidden="true"></i> Selected work</p>
-                    <h1 id="portfolioHeading">Portfolio &amp; <span>Projects</span></h1>
-                    <p class="hero-copy" id="portfolioIntro">A selection of thoughtful digital products, business services and creative work delivered by Seedwel Investment LTD.</p>
-                    <div class="hero-actions"><a class="button button-primary" href="#portfolio"><i class="fa-solid fa-grid-2" aria-hidden="true"></i> Explore the work</a><button class="button button-quiet" id="heroShare" type="button"><i class="fa-solid fa-share-nodes" aria-hidden="true"></i> Share portfolio</button></div>
-                </div>
-                <div class="hero-orbit reveal" aria-label="Portfolio highlights">
-                    <div class="orbit-card"><i class="fa-solid fa-layer-group" aria-hidden="true"></i><strong id="orbitProjectCount">9+</strong><span>Projects ready to explore</span></div>
-                    <span class="floating-chip chip-one"><i class="fa-solid fa-mobile-screen-button" aria-hidden="true"></i> Digital products</span>
-                    <span class="floating-chip chip-two"><i class="fa-solid fa-palette" aria-hidden="true"></i> Brand experiences</span>
-                    <span class="floating-chip chip-three"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Managed media</span>
-                </div>
-            </div>
-        </section>
-
-        <section class="proof-wrap" aria-label="Portfolio highlights">
-            <div class="container proof-bar reveal">
-                <div class="proof-item"><i class="fa-solid fa-check-double" aria-hidden="true"></i><div><strong>150+</strong><span>Projects delivered</span></div></div>
-                <div class="proof-item"><i class="fa-solid fa-star" aria-hidden="true"></i><div><strong>98.9%</strong><span>Client satisfaction</span></div></div>
-                <div class="proof-item"><i class="fa-solid fa-hard-drive" aria-hidden="true"></i><div><strong id="publicStorageTarget">1 TB</strong><span>Media capacity target</span></div></div>
-                <div class="proof-item"><i class="fa-solid fa-share-nodes" aria-hidden="true"></i><div><strong>Share-ready</strong><span>Portfolio links</span></div></div>
-            </div>
-        </section>
-
-        <section class="container share-strip reveal" aria-labelledby="sharePortfolioTitle">
-            <div><h2 id="sharePortfolioTitle">Send our work in one click.</h2><p>Forward the latest live portfolio to a client, colleague or partner. Published projects update here automatically when the administrator makes a change.</p></div>
-            <div class="share-controls"><button class="button" id="copyPortfolio" type="button"><i class="fa-regular fa-copy" aria-hidden="true"></i> Copy link</button><button class="button" id="nativeShare" type="button"><i class="fa-solid fa-arrow-up-from-bracket" aria-hidden="true"></i> Share</button><a class="button whatsapp" id="shareWhatsApp" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp</a><a class="button" id="shareEmail"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Email</a></div>
-        </section>
-
-        <section class="container" id="portfolio" aria-labelledby="workTitle">
-            <div class="section-heading reveal"><div><p class="eyebrow"><i class="fa-solid fa-arrow-trend-up" aria-hidden="true"></i> Live collection</p><h2 id="workTitle">Work built to move business forward.</h2><p>Browse a mix of websites, mobile products, business registration support and brand systems. Each published entry is managed from the secure Seedwel admin dashboard.</p></div><span class="live-status" id="portfolioStatus">Loading live portfolio</span></div>
-            <div class="filter-bar reveal" id="filterBar" role="group" aria-label="Filter portfolio projects">
-                <button class="filter active" type="button" data-filter="All">All work</button><button class="filter" type="button" data-filter="Restaurant">Restaurants</button><button class="filter" type="button" data-filter="Digital marketing">Marketing</button><button class="filter" type="button" data-filter="Website">Websites</button><button class="filter" type="button" data-filter="Mobile app">Mobile apps</button><button class="filter" type="button" data-filter="E-commerce">E-commerce</button><button class="filter" type="button" data-filter="Business registration">Business services</button><button class="filter" type="button" data-filter="Branding">Branding</button>
-            </div>
-            <div class="projects-grid" id="projectsGrid" aria-live="polite"><div class="empty-projects"><i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>Loading the latest portfolio…</div></div>
-        </section>
-
-        <section class="capabilities" aria-labelledby="moreInfoTitle">
+        <section class="page-hero">
             <div class="container">
-                <div class="capability-head reveal"><p class="eyebrow"><i class="fa-solid fa-circle-plus" aria-hidden="true"></i> More than a gallery</p><h2 id="moreInfoTitle">Clearer information at every step.</h2><p>Our portfolio is designed to help clients understand what we do, the value of each project and how to start a conversation with the right team.</p></div>
-                <div class="capability-grid">
-                    <article class="capability reveal"><i class="fa-solid fa-list-check" aria-hidden="true"></i><h3>Context, not just screenshots</h3><p>Each project can include its category, client or industry, a concise summary, results and a live link when it is appropriate to share.</p></article>
-                    <article class="capability reveal"><i class="fa-solid fa-hard-drive" aria-hidden="true"></i><h3>Media library built to grow</h3><p>Portfolio media is managed through a protected upload workflow with a capacity target that can be planned as the work library expands.</p><span class="capacity-note"><i class="fa-solid fa-database" aria-hidden="true"></i><span id="capabilityStorageTarget">1 TB target</span></span></article>
-                    <article class="capability reveal"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i><h3>Portfolio-ready handover</h3><p>Send a single live link by email, WhatsApp or your device share menu. Visitors only see projects that have been intentionally published.</p></article>
+                <p class="eyebrow">Our Work</p>
+                <h1>Projects &amp; <span>Portfolio</span></h1>
+                <p>A live collection of work delivered by Seedwel Investment LTD — managed directly by our team and updated as new projects are completed.</p>
+                <div class="share-row reveal d1">
+                    <span class="live-status" id="portfolioStatus">Loading live portfolio</span>
+                    <button class="btn btn-outline" id="copyPortfolio" type="button" style="min-height:38px;padding:7px 16px;font-size:0.78rem;"><i class="fa-solid fa-link" aria-hidden="true"></i> Copy link</button>
+                    <a class="btn btn-whatsapp" id="shareWhatsApp" target="_blank" rel="noopener" style="min-height:38px;padding:7px 16px;font-size:0.78rem;"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Share</a>
                 </div>
             </div>
         </section>
 
-        <section class="portfolio-handover">
-            <div class="container handover-inner reveal"><div><h2>Have a project in mind?</h2><p>Tell us what you are building, where your business is going and what success looks like. We will help shape the next practical step.</p></div><a class="button button-white" id="contactCta" href="contact.html"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Start a conversation</a></div>
+        <section class="section" style="padding-top:52px;" aria-labelledby="workTitle">
+            <div class="container">
+                <div class="section-head reveal">
+                    <h2 class="section-title" id="workTitle">Selected work</h2>
+                    <p class="section-intro">Every entry below is a real project published by the Seedwel team from our secure admin workspace.</p>
+                </div>
+
+                <div class="filter-bar reveal" id="filterBar" role="group" aria-label="Filter projects">
+                    <button class="filter active" type="button" data-filter="All">All work</button>
+                </div>
+
+                <div class="grid-3" id="projectsGrid" aria-live="polite">
+                    <div class="empty-projects"><i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i>Loading the live portfolio…</div>
+                </div>
+
+                <div class="share-row reveal">
+                    <a href="request.html" class="btn btn-primary"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Start a project with us</a>
+                </div>
+            </div>
         </section>
     </main>
-
-    <footer>
-        <div class="container footer-grid">
-            <div class="footer-brand"><img src="favicon.svg" alt="Seedwel icon"><p>Premium digital services, business support and creative solutions for ambitious teams in Zambia and around the world.</p></div>
-            <div class="footer-col"><h3>Explore</h3><a href="index.html">Home</a><a href="about.html">About us</a><a href="services.html">Services</a><a href="projects.html">Portfolio</a></div>
-            <div class="footer-col"><h3>Support</h3><a href="contact.html">Contact us</a><a href="support.html">Help centre</a><a href="apply.html">Careers</a></div>
-            <div class="footer-col"><h3>Get in touch</h3><a id="footerPhone" href="tel:+260973028342"><i class="fa-solid fa-phone" aria-hidden="true"></i> +260 973 028 342</a><a id="footerEmail" href="mailto:seedwelinvestltd@gmail.com"><i class="fa-solid fa-envelope" aria-hidden="true"></i> seedwelinvestltd@gmail.com</a><p><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Kabwe, Zambia</p><p><i class="fa-solid fa-globe" aria-hidden="true"></i> Global remote</p></div>
-        </div>
-        <div class="container footer-bottom">© 2026 Seedwel Investment LTD. All rights reserved. · <a href="privacy.html" style="color:#fca5a5;text-decoration:none;">Privacy</a> · <a href="terms.html" style="color:#fca5a5;text-decoration:none;">Terms</a></div>
-    </footer>
-    <a class="floating-whatsapp" id="floatingWhatsApp" href="https://wa.me/260973028342" target="_blank" rel="noopener" aria-label="Chat with Seedwel on WhatsApp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
 
     <dialog id="projectDialog" aria-labelledby="modalTitle">
         <div class="modal-media">
@@ -392,316 +214,291 @@
             <span class="modal-photo-position" id="modalPhotoPosition"></span>
         </div>
         <div class="modal-thumbnails" id="modalThumbnails" aria-label="Project photo gallery"></div>
-        <div class="modal-body"><button class="dialog-close" id="dialogClose" type="button" aria-label="Close project details"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button><p class="modal-kicker" id="modalKicker"></p><h2 id="modalTitle"></h2><p id="modalDescription"></p><p class="modal-result" id="modalResults" hidden></p><div class="modal-actions"><a class="button button-primary" id="modalLink" target="_blank" rel="noopener" hidden><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> Visit project</a><button class="button button-quiet" id="modalShare" type="button"><i class="fa-solid fa-share-nodes" aria-hidden="true"></i> Share project</button></div></div>
+        <div class="modal-body">
+            <button class="dialog-close" id="dialogClose" type="button" aria-label="Close project details"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+            <p class="modal-kicker" id="modalKicker"></p>
+            <h2 id="modalTitle"></h2>
+            <p id="modalDescription"></p>
+            <p class="modal-result" id="modalResults" hidden></p>
+            <div class="modal-actions">
+                <a class="btn btn-primary" id="modalLink" target="_blank" rel="noopener" hidden><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> Visit project</a>
+                <button class="btn btn-outline" id="modalShare" type="button"><i class="fa-solid fa-share-nodes" aria-hidden="true"></i> Share project</button>
+            </div>
+        </div>
     </dialog>
 
     <script>
-        'use strict';
-        const firebaseConfig = {
-            apiKey: 'AIzaSyA-BpRy-RVc2rqIG6uiRu_XrGEu1ZGnQwU',
-            authDomain: 'seedwel-investment-limited.firebaseapp.com',
-            databaseURL: 'https://seedwel-investment-limited-default-rtdb.firebaseio.com',
-            projectId: 'seedwel-investment-limited',
-            storageBucket: 'seedwel-investment-limited.firebasestorage.app',
-            messagingSenderId: '197778268619',
-            appId: '1:197778268619:web:92f29d88fa5a22dbfa964e'
-        };
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
-        const $ = (id) => document.getElementById(id);
-        const DEFAULT_SETTINGS = { portfolioTitle: 'Portfolio & Projects', portfolioIntro: 'A selection of thoughtful digital products, business services and creative work delivered by Seedwel Investment LTD.', businessEmail: 'seedwelinvestltd@gmail.com', businessPhone: '+260 973 028 342', storageCapacityTB: 1 };
-        const STATIC_PROJECTS = [
-            { name: 'App Development & Publishing', category: 'Mobile app', client: 'Business technology', image: 'https://i.ibb.co/b50zqq9W/91923a7aeb2120244d50966b9cb69f19.jpg', description: 'Modern, responsive application development and Google Play publishing support for a growing business.', results: 'App development · Play Store publishing · Ongoing support' },
-            { name: 'E-Commerce Platform', category: 'E-commerce', client: 'Retail', image: 'https://i.ibb.co/sdsgbKT1/7ab503270d8ec0cdfd8ab91b9d7513ed.jpg', description: 'A full-featured online store with payment integration, product management and reliable hosting.', results: 'Online sales · Payment integration · Product management' },
-            { name: 'Portfolio Website', category: 'Website', client: 'Creative professional', image: 'https://i.ibb.co/G4xsCdd3/0231d8ff81750c9e0c533f563acf7d14.jpg', description: 'A visual portfolio that puts a professional photographer’s work front and centre across all devices.', results: 'Responsive portfolio · Optimised visuals · Fast loading' },
-            { name: 'Business Landing Page', category: 'Website', client: 'Service business', image: 'https://i.ibb.co/20YyyXCL/2e1921520a41a8019241c94dfdd5b905.jpg', description: 'A conversion-focused landing page designed to create clear next steps and capture qualified leads.', results: 'Lead generation · Mobile ready · Clear calls to action' },
-            { name: 'School Management System', category: 'Website', client: 'Education', image: 'https://i.ibb.co/nqMZdp2R/bfebc06c230536c04c2b0e2a20e20d07.jpg', description: 'A school management platform for student records, fee tracking and a connected parent experience.', results: 'Student records · Fees tracking · Parent portal' },
-            { name: 'Brand Identity Package', category: 'Branding', client: 'Growing business', image: 'https://i.ibb.co/svxj52ny/seedwel.png', description: 'A cohesive identity package with a distinctive logo, supporting collateral and practical brand guidance.', results: 'Logo system · Business cards · Brand guidelines' },
-            { name: 'Company Registration (PACRA)', category: 'Business registration', client: 'Zambian business', image: 'https://i.ibb.co/gMRs5XZ2/images.jpg', description: 'End-to-end PACRA company registration support to establish a business efficiently and compliantly.', results: 'PACRA support · Clear process · Compliance guidance' },
-            { name: 'ZRA VAT, TPIN & TOT Registration', category: 'Business registration', client: 'Zambian business', image: 'https://i.ibb.co/j9ws2d51/1.jpg', description: 'Practical assistance with TPIN, VAT and TOT registration so a business can meet key tax requirements.', results: 'TPIN · VAT · TOT registration' },
-            { name: 'Workers’ Compensation Registration', category: 'Business registration', client: 'Employer', image: 'https://i.ibb.co/67bgY0K3/images-3.jpg', description: 'Registration support for statutory employee protection and Workers’ Compensation compliance.', results: 'Statutory registration · Employer guidance · Compliance' }
-,
-            { name: 'Flavour House Restaurant', category: 'Restaurant', client: 'Fine dining restaurant', image: 'https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'A stunning restaurant website with online reservations, interactive menu showcase, photo galleries, and location mapping. Designed to capture the ambiance and culinary artistry of a premium dining experience.', results: 'Online reservations · Interactive menu · Photo gallery · Google Maps integration' },
-            { name: 'Savanna Grill & Bar', category: 'Restaurant', client: 'Casual dining', image: 'https://images.pexels.com/photos/1581384/pexels-photo-1581384.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Modern restaurant website featuring online ordering, daily specials display, customer reviews, and social media integration. Built with mobile-first approach for on-the-go diners.', results: 'Online ordering · Daily specials · Customer reviews · Mobile-first design' },
-            { name: 'Digital Marketing Campaign', category: 'Digital marketing', client: 'E-commerce business', image: 'https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Comprehensive digital marketing strategy including SEO optimization, Google Ads management, social media campaigns, and content marketing to drive targeted traffic and conversions.', results: 'SEO optimization · Google Ads · Social media growth · Content strategy' },
-            { name: 'Social Media Growth Package', category: 'Digital marketing', client: 'Local business', image: 'https://images.pexels.com/photos/607812/pexels-photo-607812.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Strategic social media management across Facebook, Instagram, and TikTok with content creation, community engagement, and performance analytics to build brand awareness.', results: 'Content creation · Community management · Analytics reporting · Brand growth' }
-        ];
+        window.addEventListener('DOMContentLoaded', function () {
+            'use strict';
+            var firebaseConfig = {
+                apiKey: 'AIzaSyA-BpRy-RVc2rqIG6uiRu_XrGEu1ZGnQwU',
+                authDomain: 'seedwel-investment-limited.firebaseapp.com',
+                databaseURL: 'https://seedwel-investment-limited-default-rtdb.firebaseio.com',
+                projectId: 'seedwel-investment-limited',
+                storageBucket: 'seedwel-investment-limited.firebasestorage.app',
+                messagingSenderId: '197778268619',
+                appId: '1:197778268619:web:92f29d88fa5a22dbfa964e'
+            };
+            if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+            var db = firebase.database();
+            var $ = function (id) { return document.getElementById(id); };
 
-        const PROJECT_DETAIL_PHOTOS = [
-            'assets/images/seedwel-strategy-session.jpg',
-            'assets/images/seedwel-digital-craft.jpg',
-            'assets/images/seedwel-client-support.jpg',
-            'assets/images/seedwel-business-advisory.jpg',
-            'assets/images/seedwel-launch-moment.jpg',
-            'assets/images/seedwel-team-studio.jpg',
-            'assets/images/seedwel-process-poster.jpg',
-            'assets/images/seedwel-showreel-poster.jpg',
-            'assets/images/seedwel-brand-workshop.jpg',
-            'assets/images/seedwel-code-collaboration.jpg',
-            'assets/images/seedwel-analytics-review.jpg',
-            'assets/images/seedwel-client-partnership.jpg',
-            'assets/images/seedwel-content-studio.jpg',
-            'assets/images/seedwel-launch-celebration.jpg'
-        ];
-        STATIC_PROJECTS.forEach((project, index) => {
-            project.gallery = [
-                project.image,
-                PROJECT_DETAIL_PHOTOS[index % PROJECT_DETAIL_PHOTOS.length],
-                PROJECT_DETAIL_PHOTOS[(index + 3) % PROJECT_DETAIL_PHOTOS.length]
-            ];
-        });
-        STATIC_PROJECTS.push(
-            { name: 'Digital Strategy Workshop', category: 'Digital marketing', client: 'Growth-stage business', image: 'assets/images/seedwel-strategy-session.jpg', gallery: ['assets/images/seedwel-strategy-session.jpg', 'assets/images/seedwel-business-advisory.jpg', 'assets/images/seedwel-team-studio.jpg'], description: 'A focused discovery and growth-planning engagement translating business priorities into a practical digital roadmap.', results: 'Research · Digital roadmap · Campaign priorities' },
-            { name: 'Product Design Sprint', category: 'Website', client: 'Technology venture', image: 'assets/images/seedwel-digital-craft.jpg', gallery: ['assets/images/seedwel-digital-craft.jpg', 'assets/images/seedwel-team-studio.jpg', 'assets/images/seedwel-process-poster.jpg'], description: 'Collaborative product design covering user journeys, interface direction and a responsive prototype ready for development.', results: 'UX planning · UI system · Responsive prototype' },
-            { name: 'Customer Care Operations', category: 'Other', client: 'Online service provider', image: 'assets/images/seedwel-client-support.jpg', gallery: ['assets/images/seedwel-client-support.jpg', 'assets/images/seedwel-team-studio.jpg', 'assets/images/seedwel-showreel-poster.jpg'], description: 'A structured virtual support workflow helping a growing company respond faster and keep customer communication consistent.', results: 'Support workflow · Response templates · Service reporting' },
-            { name: 'Business Launch Advisory', category: 'Business registration', client: 'New Zambian enterprise', image: 'assets/images/seedwel-business-advisory.jpg', gallery: ['assets/images/seedwel-business-advisory.jpg', 'assets/images/seedwel-strategy-session.jpg', 'assets/images/seedwel-launch-moment.jpg'], description: 'Launch support bringing registration, positioning and the first digital touchpoints into one clear action plan.', results: 'Registration plan · Brand positioning · Launch checklist' },
-            { name: 'Campaign Launch Creative', category: 'Branding', client: 'Consumer brand', image: 'assets/images/seedwel-launch-moment.jpg', gallery: ['assets/images/seedwel-launch-moment.jpg', 'assets/images/seedwel-digital-craft.jpg', 'assets/images/seedwel-showreel-poster.jpg'], description: 'A coordinated set of digital campaign visuals designed to create a confident and recognisable launch moment.', results: 'Campaign concept · Social assets · Launch toolkit' },
-            { name: 'Collaborative Website Build', category: 'Website', client: 'Professional services team', image: 'assets/images/seedwel-team-studio.jpg', gallery: ['assets/images/seedwel-team-studio.jpg', 'assets/images/seedwel-digital-craft.jpg', 'assets/images/seedwel-client-support.jpg'], description: 'A modern business website shaped through close collaboration, responsive development and a supported handover.', results: 'Content structure · Responsive build · Team training' }
-        );
+            var allProjects = [];
+            var activeFilter = 'All';
+            var selectedProject = null;
+            var selectedImages = [];
+            var selectedImageIndex = 0;
+            var toastTimer;
 
-
-        let allProjects = [];
-        let activeFilter = 'All';
-        let currentSettings = { ...DEFAULT_SETTINGS };
-        let selectedProject = null;
-        let selectedProjectImages = [];
-        let selectedProjectImageIndex = 0;
-        let usingFallback = false;
-        let toastTimer;
-
-        function safeText(value, limit = 0) { const result = String(value || '').trim(); return limit ? result.slice(0, limit) : result; }
-        function safeHttpUrl(value) {
-            try { const url = new URL(safeText(value, 2048), window.location.href); return (url.protocol === 'https:' || url.protocol === 'http:') ? url.href : ''; } catch (_) { return ''; }
-        }
-        function safeImageUrl(value) { return safeHttpUrl(value) || 'favicon.svg'; }
-        function projectImages(project) {
-            const raw = project && project.gallery;
-            const gallery = Array.isArray(raw) ? raw : (raw && typeof raw === 'object' ? Object.values(raw) : []);
-            const unique = [];
-            [project && project.image, ...gallery].forEach((value) => {
-                const url = safeHttpUrl(value);
-                if (url && !unique.includes(url) && unique.length < 6) unique.push(url);
-            });
-            return unique.length ? unique : ['favicon.svg'];
-        }
-        function getPortfolioLink() { return new URL('projects.html', window.location.href).href; }
-        function getShareText() { return 'Explore the Seedwel Investment LTD portfolio: ' + getPortfolioLink(); }
-        function normalisedPhone(value) { return safeText(value).replace(/[^\d]/g, ''); }
-        function storageLabel(value) { const amount = Math.max(.01, Number(value) || 1); return (amount < 1 ? amount.toFixed(2).replace(/0+$/, '').replace(/\.$/, '') : amount.toLocaleString()) + ' TB'; }
-        function showToast(message) {
-            let node = document.querySelector('.share-toast');
-            if (!node) { node = document.createElement('div'); node.className = 'share-toast'; document.body.appendChild(node); }
-            node.textContent = message; node.classList.add('show'); window.clearTimeout(toastTimer); toastTimer = window.setTimeout(() => node.classList.remove('show'), 3500);
-        }
-
-        const toastStyle = document.createElement('style');
-        toastStyle.textContent = '.share-toast{position:fixed;right:20px;bottom:87px;z-index:50;max-width:calc(100vw - 40px);padding:11px 14px;color:#effff6;border:1px solid rgba(67,209,158,.38);border-radius:11px;background:#194033;box-shadow:0 12px 30px rgba(15,23,42,.24);font:700 .75rem Inter,sans-serif;opacity:0;pointer-events:none;transform:translateY(10px);transition:.22s}.share-toast.show{opacity:1;transform:translateY(0)}';
-        document.head.appendChild(toastStyle);
-
-        function updateShareLinks() {
-            const message = getShareText();
-            $('shareWhatsApp').href = 'https://wa.me/?text=' + encodeURIComponent(message);
-            $('shareEmail').href = 'mailto:?subject=' + encodeURIComponent('Seedwel Investment LTD portfolio') + '&body=' + encodeURIComponent(message);
-        }
-        async function copyPortfolioLink() {
-            try {
-                if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(getPortfolioLink());
-                else { const area = document.createElement('textarea'); area.value = getPortfolioLink(); document.body.appendChild(area); area.select(); document.execCommand('copy'); area.remove(); }
-                showToast('Portfolio link copied.');
-            } catch (_) { showToast('Could not copy the link automatically.'); }
-        }
-        async function sharePortfolio() {
-            if (!navigator.share) { await copyPortfolioLink(); return; }
-            try { await navigator.share({ title: 'Seedwel Investment LTD portfolio', text: 'Explore our latest work.', url: getPortfolioLink() }); } catch (_) { /* Sharing was cancelled. */ }
-        }
-
-        function renderProjects() {
-            const grid = $('projectsGrid');
-            grid.textContent = '';
-            const matches = allProjects.filter((project) => activeFilter === 'All' || safeText(project.category) === activeFilter);
-            if (!matches.length) {
-                const empty = document.createElement('div');
-                empty.className = 'empty-projects';
-                empty.innerHTML = '<i class="fa-solid fa-folder-open" aria-hidden="true"></i>' + (allProjects.length ? 'No published projects match this filter yet.' : 'New published work will appear here soon.');
-                grid.appendChild(empty);
-                updateRevealObservers();
-                return;
+            function safeText(value, limit) { var t = String(value || '').trim(); return limit ? t.slice(0, limit) : t; }
+            function safeHttpUrl(value) {
+                try {
+                    var url = new URL(safeText(value, 2048), window.location.href);
+                    return (url.protocol === 'https:' || url.protocol === 'http:') ? url.href : '';
+                } catch (_) { return ''; }
             }
-            matches.forEach((project, index) => {
-                const article = document.createElement('article');
-                article.className = 'project-card reveal';
-                article.style.transitionDelay = Math.min(index * 45, 210) + 'ms';
-                const media = document.createElement('div'); media.className = 'project-media';
-                const image = document.createElement('img'); image.src = safeImageUrl(project.image); image.alt = safeText(project.name, 120) || 'Portfolio project'; image.loading = 'lazy'; image.addEventListener('error', () => { image.src = 'favicon.svg'; });
-                const category = document.createElement('span'); category.className = 'project-category'; category.textContent = safeText(project.category, 60) || 'Project';
-                const photos = projectImages(project);
-                const photoCount = document.createElement('span');
-                photoCount.className = 'project-photo-count';
-                photoCount.innerHTML = '<i class="fa-solid fa-images" aria-hidden="true"></i> ' + photos.length;
-                media.append(image, category, photoCount);
-                const content = document.createElement('div'); content.className = 'project-content';
-                const client = document.createElement('p'); client.className = 'project-client'; client.textContent = safeText(project.client, 120) || 'Seedwel Investment LTD';
-                const title = document.createElement('h3'); title.textContent = safeText(project.name, 120) || 'Untitled project';
-                const description = document.createElement('p'); description.className = 'project-description'; description.textContent = safeText(project.description, 1200);
-                const results = document.createElement('p'); results.className = 'project-results'; results.textContent = safeText(project.results, 500);
-                const actions = document.createElement('div'); actions.className = 'project-actions';
-                const details = document.createElement('button'); details.type = 'button'; details.className = 'project-details'; details.textContent = 'View details'; details.addEventListener('click', () => openProject(project));
-                actions.appendChild(details);
-                const link = safeHttpUrl(project.liveUrl);
-                if (link) { const live = document.createElement('a'); live.className = 'project-link'; live.href = link; live.target = '_blank'; live.rel = 'noopener'; live.innerHTML = 'Visit project <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>'; actions.appendChild(live); }
-                content.append(client, title, description, results, actions); article.append(media, content); grid.appendChild(article);
+            function safeImage(value) { return safeHttpUrl(value) || 'favicon.svg'; }
+            function projectImages(project) {
+                var raw = project && project.gallery;
+                var gallery = Array.isArray(raw) ? raw : (raw && typeof raw === 'object' ? Object.values(raw) : []);
+                var unique = [];
+                [project && project.image].concat(gallery).forEach(function (value) {
+                    var url = safeHttpUrl(value);
+                    if (url && unique.indexOf(url) === -1 && unique.length < 6) unique.push(url);
+                });
+                return unique.length ? unique : ['favicon.svg'];
+            }
+            function portfolioLink() { return new URL('projects.html', window.location.href).href; }
+
+            function showToast(message) {
+                var node = document.querySelector('.toast');
+                if (!node) { node = document.createElement('div'); node.className = 'toast'; document.body.appendChild(node); }
+                node.textContent = message;
+                node.classList.add('show');
+                window.clearTimeout(toastTimer);
+                toastTimer = window.setTimeout(function () { node.classList.remove('show'); }, 3200);
+            }
+
+            function buildFilters() {
+                var bar = $('filterBar');
+                var categories = ['All'];
+                allProjects.forEach(function (project) {
+                    var category = safeText(project.category, 60);
+                    if (category && categories.indexOf(category) === -1) categories.push(category);
+                });
+                bar.textContent = '';
+                categories.forEach(function (category) {
+                    var button = document.createElement('button');
+                    button.type = 'button';
+                    button.className = 'filter' + (category === activeFilter ? ' active' : '');
+                    button.dataset.filter = category;
+                    button.textContent = category === 'All' ? 'All work' : category;
+                    bar.appendChild(button);
+                });
+            }
+
+            function renderProjects() {
+                var grid = $('projectsGrid');
+                grid.textContent = '';
+                var matches = allProjects.filter(function (project) {
+                    return activeFilter === 'All' || safeText(project.category, 60) === activeFilter;
+                });
+                if (!matches.length) {
+                    var empty = document.createElement('div');
+                    empty.className = 'empty-projects';
+                    empty.innerHTML = '<i class="fa-solid fa-folder-open" aria-hidden="true"></i>' +
+                        (allProjects.length
+                            ? 'No published projects match this filter yet.'
+                            : 'Our live portfolio is being updated with recent work. If you would like to see examples of what we deliver, <a href="request.html">request a service</a> or <a href="contact.html">contact us</a>.');
+                    grid.appendChild(empty);
+                    if (window.SeedwelRefreshReveals) window.SeedwelRefreshReveals();
+                    return;
+                }
+                matches.forEach(function (project) {
+                    var article = document.createElement('article');
+                    article.className = 'card service-card project-card reveal';
+                    var media = document.createElement('div');
+                    media.className = 'project-media';
+                    var image = document.createElement('img');
+                    image.src = safeImage(project.image);
+                    image.alt = safeText(project.name, 120) || 'Seedwel portfolio project';
+                    image.loading = 'lazy';
+                    image.decoding = 'async';
+                    image.addEventListener('error', function () { image.src = 'favicon.svg'; });
+                    var category = document.createElement('span');
+                    category.className = 'project-category';
+                    category.textContent = safeText(project.category, 60) || 'Project';
+                    var photos = projectImages(project);
+                    var photoCount = document.createElement('span');
+                    photoCount.className = 'project-photo-count';
+                    photoCount.innerHTML = '<i class="fa-solid fa-images" aria-hidden="true"></i> ' + photos.length;
+                    media.append(image, category, photoCount);
+                    var body = document.createElement('div');
+                    body.className = 'project-body';
+                    var client = document.createElement('p');
+                    client.className = 'project-client';
+                    client.textContent = safeText(project.client, 120) || 'Seedwel client';
+                    var title = document.createElement('h3');
+                    title.textContent = safeText(project.name, 120) || 'Untitled project';
+                    var description = document.createElement('p');
+                    description.className = 'project-desc';
+                    description.textContent = safeText(project.description, 1200);
+                    var results = document.createElement('p');
+                    results.className = 'project-results';
+                    results.textContent = safeText(project.results, 500);
+                    var actions = document.createElement('div');
+                    actions.className = 'project-actions';
+                    var details = document.createElement('button');
+                    details.type = 'button';
+                    details.className = 'text-link';
+                    details.textContent = 'View details';
+                    details.addEventListener('click', function () { openProject(project); });
+                    actions.appendChild(details);
+                    var link = safeHttpUrl(project.liveUrl);
+                    if (link) {
+                        var live = document.createElement('a');
+                        live.className = 'text-link';
+                        live.href = link;
+                        live.target = '_blank';
+                        live.rel = 'noopener';
+                        live.innerHTML = 'Visit <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>';
+                        actions.appendChild(live);
+                    }
+                    body.append(client, title, description, results, actions);
+                    article.append(media, body);
+                    grid.appendChild(article);
+                });
+                if (window.SeedwelRefreshReveals) window.SeedwelRefreshReveals();
+            }
+
+            function updateStatus(count, fallback) {
+                var status = $('portfolioStatus');
+                status.textContent = fallback ? 'Showcase unavailable' : (count ? count + ' live project' + (count === 1 ? '' : 's') : 'Live portfolio ready');
+            }
+
+            function renderGallery() {
+                var image = selectedImages[selectedImageIndex] || 'favicon.svg';
+                $('modalImage').src = image;
+                $('modalImage').alt = (safeText(selectedProject && selectedProject.name, 120) || 'Portfolio project') + ' — photo ' + (selectedImageIndex + 1);
+                var multiple = selectedImages.length > 1;
+                $('modalPrev').hidden = !multiple;
+                $('modalNext').hidden = !multiple;
+                $('modalPhotoPosition').hidden = !multiple;
+                $('modalPhotoPosition').textContent = (selectedImageIndex + 1) + ' / ' + selectedImages.length;
+                var thumbnails = $('modalThumbnails');
+                thumbnails.textContent = '';
+                thumbnails.hidden = !multiple;
+                selectedImages.forEach(function (url, index) {
+                    var button = document.createElement('button');
+                    button.type = 'button';
+                    button.className = 'modal-thumbnail' + (index === selectedImageIndex ? ' active' : '');
+                    button.setAttribute('aria-label', 'View project photo ' + (index + 1));
+                    var thumb = document.createElement('img');
+                    thumb.src = url;
+                    thumb.alt = '';
+                    button.appendChild(thumb);
+                    button.addEventListener('click', function () { selectedImageIndex = index; renderGallery(); });
+                    thumbnails.appendChild(button);
+                });
+            }
+
+            function movePhoto(direction) {
+                if (selectedImages.length < 2) return;
+                selectedImageIndex = (selectedImageIndex + direction + selectedImages.length) % selectedImages.length;
+                renderGallery();
+            }
+
+            function openProject(project) {
+                selectedProject = project;
+                selectedImages = projectImages(project);
+                selectedImageIndex = 0;
+                renderGallery();
+                $('modalKicker').textContent = [safeText(project.category, 60), safeText(project.client, 120)].filter(Boolean).join(' · ');
+                $('modalTitle').textContent = safeText(project.name, 120) || 'Portfolio project';
+                $('modalDescription').textContent = safeText(project.description, 1200);
+                var result = safeText(project.results, 500);
+                $('modalResults').textContent = result;
+                $('modalResults').hidden = !result;
+                var link = safeHttpUrl(project.liveUrl);
+                $('modalLink').hidden = !link;
+                if (link) $('modalLink').href = link;
+                var dialog = $('projectDialog');
+                if (typeof dialog.showModal === 'function') dialog.showModal(); else dialog.setAttribute('open', '');
+            }
+
+            function closeDialog() {
+                var dialog = $('projectDialog');
+                if (typeof dialog.close === 'function') dialog.close(); else dialog.removeAttribute('open');
+            }
+
+            function updateShareLink() {
+                var message = 'Explore the Seedwel Investment LTD portfolio: ' + portfolioLink();
+                $('shareWhatsApp').href = 'https://wa.me/?text=' + encodeURIComponent(message);
+            }
+
+            $('filterBar').addEventListener('click', function (event) {
+                var button = event.target.closest('button[data-filter]');
+                if (!button) return;
+                activeFilter = button.dataset.filter;
+                document.querySelectorAll('.filter').forEach(function (filter) {
+                    filter.classList.toggle('active', filter === button);
+                });
+                renderProjects();
             });
-            updateRevealObservers();
-        }
 
-        function updateStats() {
-            const count = allProjects.length;
-            $('orbitProjectCount').textContent = count ? count + '+' : 'New';
-            $('portfolioStatus').textContent = usingFallback ? 'Showcase collection' : (count ? count + ' project' + (count === 1 ? '' : 's') + ' published live' : 'Live portfolio ready');
-        }
-
-        function applySettings() {
-            $('portfolioHeading').innerHTML = '';
-            const headingText = safeText(currentSettings.portfolioTitle, 100) || DEFAULT_SETTINGS.portfolioTitle;
-            const headingParts = headingText.split('&');
-            $('portfolioHeading').append(document.createTextNode(headingParts[0].trim() + (headingParts.length > 1 ? ' & ' : '')));
-            if (headingParts.length > 1) { const emphasis = document.createElement('span'); emphasis.textContent = headingParts.slice(1).join('&').trim(); $('portfolioHeading').appendChild(emphasis); }
-            $('portfolioIntro').textContent = safeText(currentSettings.portfolioIntro, 500) || DEFAULT_SETTINGS.portfolioIntro;
-            const capacity = storageLabel(currentSettings.storageCapacityTB);
-            $('publicStorageTarget').textContent = capacity;
-            $('capabilityStorageTarget').textContent = capacity + ' target';
-            const email = safeText(currentSettings.businessEmail, 160) || DEFAULT_SETTINGS.businessEmail;
-            const phone = safeText(currentSettings.businessPhone, 50) || DEFAULT_SETTINGS.businessPhone;
-            const footerEmail = $('footerEmail');
-            const emailIcon = document.createElement('i');
-            emailIcon.className = 'fa-solid fa-envelope';
-            emailIcon.setAttribute('aria-hidden', 'true');
-            footerEmail.href = 'mailto:' + encodeURIComponent(email);
-            footerEmail.replaceChildren(emailIcon, document.createTextNode(' ' + email));
-            const footerPhone = $('footerPhone');
-            const phoneIcon = document.createElement('i');
-            phoneIcon.className = 'fa-solid fa-phone';
-            phoneIcon.setAttribute('aria-hidden', 'true');
-            footerPhone.href = 'tel:+' + normalisedPhone(phone);
-            footerPhone.replaceChildren(phoneIcon, document.createTextNode(' ' + phone));
-            $('floatingWhatsApp').href = 'https://wa.me/' + normalisedPhone(phone);
-            $('contactCta').href = 'mailto:' + encodeURIComponent(email) + '?subject=' + encodeURIComponent('Project enquiry from the portfolio');
-        }
-
-        function renderModalGallery() {
-            const image = selectedProjectImages[selectedProjectImageIndex] || 'favicon.svg';
-            $('modalImage').src = image;
-            $('modalImage').alt = (safeText(selectedProject && selectedProject.name, 120) || 'Portfolio project') + ' — photo ' + (selectedProjectImageIndex + 1);
-            const multiple = selectedProjectImages.length > 1;
-            $('modalPrev').hidden = !multiple;
-            $('modalNext').hidden = !multiple;
-            $('modalPhotoPosition').hidden = !multiple;
-            $('modalPhotoPosition').textContent = (selectedProjectImageIndex + 1) + ' / ' + selectedProjectImages.length;
-            const thumbnails = $('modalThumbnails');
-            thumbnails.textContent = '';
-            thumbnails.hidden = !multiple;
-            selectedProjectImages.forEach((url, index) => {
-                const button = document.createElement('button');
-                button.type = 'button';
-                button.className = 'modal-thumbnail' + (index === selectedProjectImageIndex ? ' active' : '');
-                button.setAttribute('aria-label', 'View project photo ' + (index + 1));
-                const thumb = document.createElement('img');
-                thumb.src = url;
-                thumb.alt = '';
-                button.appendChild(thumb);
-                button.addEventListener('click', () => { selectedProjectImageIndex = index; renderModalGallery(); });
-                thumbnails.appendChild(button);
+            $('copyPortfolio').addEventListener('click', async function () {
+                try {
+                    if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(portfolioLink());
+                    else {
+                        var area = document.createElement('textarea');
+                        area.value = portfolioLink();
+                        document.body.appendChild(area);
+                        area.select();
+                        document.execCommand('copy');
+                        area.remove();
+                    }
+                    showToast('Portfolio link copied.');
+                } catch (_) { showToast('Could not copy the link automatically.'); }
             });
-        }
 
-        function moveModalPhoto(direction) {
-            if (selectedProjectImages.length < 2) return;
-            selectedProjectImageIndex = (selectedProjectImageIndex + direction + selectedProjectImages.length) % selectedProjectImages.length;
-            renderModalGallery();
-        }
+            $('dialogClose').addEventListener('click', closeDialog);
+            $('modalShare').addEventListener('click', async function () {
+                if (!selectedProject) return;
+                var url = safeHttpUrl(selectedProject.liveUrl) || portfolioLink();
+                var text = 'Explore "' + (safeText(selectedProject.name, 120) || 'this Seedwel project') + '" by Seedwel Investment LTD.';
+                if (!navigator.share) {
+                    try { await navigator.clipboard.writeText(text + ' ' + url); showToast('Project link copied.'); }
+                    catch (_) { showToast('Use the portfolio share link to send this project.'); }
+                    return;
+                }
+                try { await navigator.share({ title: safeText(selectedProject.name, 120), text: text, url: url }); } catch (_) { /* cancelled */ }
+            });
+            $('modalPrev').addEventListener('click', function () { movePhoto(-1); });
+            $('modalNext').addEventListener('click', function () { movePhoto(1); });
+            $('projectDialog').addEventListener('click', function (event) { if (event.target === $('projectDialog')) closeDialog(); });
+            $('projectDialog').addEventListener('keydown', function (event) {
+                if (event.key === 'ArrowLeft') movePhoto(-1);
+                if (event.key === 'ArrowRight') movePhoto(1);
+            });
 
-        function openProject(project) {
-            selectedProject = project;
-            selectedProjectImages = projectImages(project);
-            selectedProjectImageIndex = 0;
-            renderModalGallery();
-            $('modalKicker').textContent = [safeText(project.category, 60), safeText(project.client, 120)].filter(Boolean).join(' · ');
-            $('modalTitle').textContent = safeText(project.name, 120) || 'Portfolio project';
-            $('modalDescription').textContent = safeText(project.description, 1200);
-            const result = safeText(project.results, 500); $('modalResults').textContent = result; $('modalResults').hidden = !result;
-            const link = safeHttpUrl(project.liveUrl); $('modalLink').hidden = !link; if (link) $('modalLink').href = link;
-            const dialog = $('projectDialog');
-            if (typeof dialog.showModal === 'function') dialog.showModal(); else dialog.setAttribute('open', '');
-        }
+            db.ref('publicProjects').on('value', function (snapshot) {
+                allProjects = Object.entries(snapshot.val() || {})
+                    .map(function (entry) { return entry[1]; })
+                    .filter(function (project) { return project && project.published !== false; })
+                    .sort(function (a, b) { return Number(b.updatedAt || b.createdAt || 0) - Number(a.updatedAt || a.createdAt || 0); });
+                buildFilters();
+                renderProjects();
+                updateStatus(allProjects.length, false);
+            }, function () {
+                allProjects = [];
+                buildFilters();
+                renderProjects();
+                updateStatus(0, true);
+            });
 
-        function closeDialog() { const dialog = $('projectDialog'); if (typeof dialog.close === 'function') dialog.close(); else dialog.removeAttribute('open'); }
-        async function shareSelectedProject() {
-            if (!selectedProject) return;
-            const url = safeHttpUrl(selectedProject.liveUrl) || getPortfolioLink();
-            const text = 'Explore “' + (safeText(selectedProject.name, 120) || 'this Seedwel project') + '” by Seedwel Investment LTD.';
-            if (!navigator.share) { try { await navigator.clipboard.writeText(text + ' ' + url); showToast('Project link copied.'); } catch (_) { showToast('Use the portfolio share link to send this project.'); } return; }
-            try { await navigator.share({ title: safeText(selectedProject.name, 120), text, url }); } catch (_) { /* User cancelled. */ }
-        }
-
-        let revealObserver;
-        function updateRevealObservers() {
-            const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            if (reduced || !('IntersectionObserver' in window)) { document.querySelectorAll('.reveal').forEach((item) => item.classList.add('visible')); return; }
-            if (!revealObserver) revealObserver = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add('visible'); revealObserver.unobserve(entry.target); } }), { threshold: .13 });
-            document.querySelectorAll('.reveal:not(.visible)').forEach((item) => revealObserver.observe(item));
-        }
-
-        $('filterBar').addEventListener('click', (event) => {
-            const button = event.target.closest('button[data-filter]'); if (!button) return;
-            activeFilter = button.dataset.filter;
-            document.querySelectorAll('.filter').forEach((filter) => filter.classList.toggle('active', filter === button));
-            renderProjects();
+            updateShareLink();
         });
-        $('copyPortfolio').addEventListener('click', copyPortfolioLink);
-        $('nativeShare').addEventListener('click', sharePortfolio);
-        $('heroShare').addEventListener('click', sharePortfolio);
-        $('dialogClose').addEventListener('click', closeDialog);
-        $('modalShare').addEventListener('click', shareSelectedProject);
-        $('modalPrev').addEventListener('click', () => moveModalPhoto(-1));
-        $('modalNext').addEventListener('click', () => moveModalPhoto(1));
-        $('projectDialog').addEventListener('click', (event) => { if (event.target === $('projectDialog')) closeDialog(); });
-        $('projectDialog').addEventListener('keydown', (event) => {
-            if (event.key === 'ArrowLeft') moveModalPhoto(-1);
-            if (event.key === 'ArrowRight') moveModalPhoto(1);
-        });
-        $('header').classList.toggle('scrolled', window.scrollY > 20);
-        window.addEventListener('scroll', () => $('header').classList.toggle('scrolled', window.scrollY > 20), { passive: true });
-
-        const hamburger = $('hamburger'); const mobileMenu = $('mobileMenu'); const menuOverlay = $('menuOverlay');
-        function toggleMenu(force) { const active = typeof force === 'boolean' ? force : !mobileMenu.classList.contains('active'); mobileMenu.classList.toggle('active', active); menuOverlay.classList.toggle('active', active); hamburger.classList.toggle('active', active); hamburger.setAttribute('aria-expanded', String(active)); hamburger.setAttribute('aria-label', active ? 'Close navigation' : 'Open navigation'); document.body.style.overflow = active ? 'hidden' : ''; }
-        hamburger.addEventListener('click', () => toggleMenu()); menuOverlay.addEventListener('click', () => toggleMenu(false)); mobileMenu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => toggleMenu(false)));
-
-        db.ref('siteSettings').on('value', (snapshot) => { currentSettings = { ...DEFAULT_SETTINGS, ...(snapshot.val() || {}) }; applySettings(); }, () => { applySettings(); });
-        db.ref('publicProjects').on('value', (snapshot) => {
-            const records = Object.entries(snapshot.val() || {});
-            usingFallback = records.length === 0;
-            allProjects = usingFallback ? STATIC_PROJECTS : records
-                .map(([, project], index) => {
-                    if (!project || project.published === false) return null;
-                    const hasGallery = Array.isArray(project.gallery)
-                        ? project.gallery.length > 1
-                        : Boolean(project.gallery && typeof project.gallery === 'object' && Object.keys(project.gallery).length > 1);
-                    return hasGallery ? project : {
-                        ...project,
-                        gallery: [
-                            project.image,
-                            PROJECT_DETAIL_PHOTOS[index % PROJECT_DETAIL_PHOTOS.length],
-                            PROJECT_DETAIL_PHOTOS[(index + 3) % PROJECT_DETAIL_PHOTOS.length]
-                        ]
-                    };
-                })
-                .filter(Boolean);
-            allProjects.sort((a, b) => Number(b.updatedAt || b.createdAt || 0) - Number(a.updatedAt || a.createdAt || 0));
-            renderProjects(); updateStats();
-        }, () => { usingFallback = true; allProjects = STATIC_PROJECTS; renderProjects(); updateStats(); $('portfolioStatus').textContent = 'Showcase collection'; });
-        updateShareLinks(); applySettings(); updateRevealObservers();
     </script>
-    <script src="assets/js/service-strip.js" defer></script>
-    <script src="assets/js/local-ai.js" defer></script>
+    <script src="assets/js/site.js" defer></script>
 </body>
 </html>
