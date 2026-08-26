@@ -131,8 +131,8 @@
                 <div class="notice reveal">
                     <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
                     <div>
-                        <strong>Important:</strong> submitting an application or creating an account does <strong>not</strong> guarantee employment or a job award.
-                        Every application is reviewed and must be officially approved by Seedwel Investment LTD before an applicant becomes an approved worker with an official Worker ID.
+                        <strong>Important:</strong> submitting an application or later receiving a registration invitation does <strong>not</strong> guarantee employment or a job award.
+                        Every application is reviewed and must be officially approved by Seedwel Investment LTD before an applicant receives a secure registration link and dashboard access.
                     </div>
                 </div>
             </div>
@@ -543,6 +543,7 @@
             var fullName = document.getElementById('fullName').value.trim();
             var email = document.getElementById('email').value.trim();
             var phone = document.getElementById('phone').value.trim();
+            var location = document.getElementById('location').value.trim();
             var position = document.getElementById('position').value;
             var experience = document.getElementById('experience').value;
             var portfolioUrl = document.getElementById('portfolioUrl').value.trim();
@@ -683,6 +684,15 @@
             clearSelectedCv('');
             uploadProgress.setAttribute('aria-hidden', 'true');
             uploadProgressBar.style.width = '0';
+            formContent.hidden = false;
+            formSuccess.hidden = true;
+            document.getElementById('applyFormSection').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+    <script src="assets/js/site.js" defer></script>
+</body>
+</html>
+0';
             formContent.hidden = false;
             formSuccess.hidden = true;
             document.getElementById('applyFormSection').scrollIntoView({ behavior: 'smooth' });

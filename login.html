@@ -6,486 +6,64 @@
     <meta name="theme-color" content="#dc2626" />
     <meta name="robots" content="noindex, nofollow" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-    <title>Login | Seedwel Investment LTD</title>
-    <meta name="description" content="Sign in to your Seedwel Investment LTD account." />
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <title>Member Login | Seedwel Investment LTD</title>
+    <meta name="description" content="Sign in to your Seedwel member dashboard." />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-
-    <!-- Firebase -->
+    <link rel="stylesheet" href="assets/css/private-portal.css" />
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
-
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(180deg, #fef2f2 0%, #ffffff 40%);
-            color: #111827;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            line-height: 1.6;
-        }
-        .topbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 28px;
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-        }
-        .logo-container { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-        .logo-img { height: 40px; width: auto; }
-        .company-name {
-            font-family: 'Montserrat', sans-serif; font-weight: 800;
-            font-size: 0.95rem; color: #111827; letter-spacing: -0.5px;
-        }
-        .company-name span { color: #dc2626; }
-        .back-link {
-            text-decoration: none; color: #4b5563; font-weight: 600; font-size: 0.85rem;
-            display: inline-flex; align-items: center; gap: 8px; transition: color 0.3s;
-        }
-        .back-link:hover { color: #dc2626; }
-
-        .auth-wrap {
-            flex: 1; display: flex; align-items: center; justify-content: center;
-            padding: 24px 20px 60px;
-        }
-        .auth-card {
-            width: 100%; max-width: 480px; background: #ffffff;
-            border: 1px solid #e5e7eb; border-radius: 24px;
-            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
-            overflow: hidden;
-        }
-        .auth-head {
-            padding: 32px 34px 20px; text-align: center;
-        }
-        .auth-head .brand-logo {
-            height: 54px; width: auto; margin: 0 auto 14px; display: block;
-        }
-        .hiring-note {
-            margin: 14px 0 0; padding: 10px 14px; border-radius: 12px; text-align: left;
-            background: #fffbeb; border: 1px solid #fde68a; color: #92400e;
-            font-size: 0.78rem; font-weight: 500; display: flex; gap: 8px; align-items: flex-start;
-        }
-        .hiring-note i { margin-top: 2px; }
-        .auth-head h1 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.4rem; }
-        .auth-head p { color: #6b7280; font-size: 0.9rem; margin-top: 6px; }
-
-        .tabs { display: flex; border-top: 1px solid #f1f5f9; border-bottom: 1px solid #f1f5f9; }
-        .tab {
-            flex: 1; text-align: center; padding: 14px; cursor: pointer; border: none; background: #fff;
-            font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.85rem; color: #6b7280;
-            transition: all 0.3s ease; position: relative;
-        }
-        .tab.active { color: #dc2626; }
-        .tab.active::after {
-            content: ''; position: absolute; bottom: 0; left: 20%; width: 60%; height: 3px;
-            background: #dc2626; border-radius: 3px 3px 0 0;
-        }
-        .tab:hover { color: #dc2626; }
-
-        .auth-body { padding: 28px 34px 36px; }
-        .panel { display: none; }
-        .panel.active { display: block; animation: fadeIn 0.35s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-
-        .field { margin-bottom: 18px; }
-        .field label { display: block; font-weight: 600; font-size: 0.85rem; color: #111827; margin-bottom: 6px; }
-        .field label .req { color: #dc2626; }
-        .field input, .field select {
-            width: 100%; padding: 13px 16px; background: #f9fafb; border: 1px solid #e5e7eb;
-            border-radius: 12px; color: #111827; font-family: 'Inter', sans-serif; font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-        .field input:focus, .field select:focus {
-            border-color: #dc2626; outline: none; background: #fff;
-            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.06);
-        }
-        .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-
-        .btn {
-            width: 100%; padding: 15px; border: none; border-radius: 50px; cursor: pointer;
-            font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.95rem;
-            background: #dc2626; color: #fff; transition: all 0.3s ease;
-            box-shadow: 0 4px 16px rgba(220, 38, 38, 0.2);
-            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-        }
-        .btn:hover { background: #b91c1c; transform: translateY(-2px); }
-        .btn:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
-        .btn-outline {
-            background: transparent; color: #dc2626; border: 2px solid #dc2626; box-shadow: none;
-        }
-        .btn-outline:hover { background: rgba(220, 38, 38, 0.06); }
-
-        .helper { text-align: center; margin-top: 16px; font-size: 0.82rem; color: #6b7280; }
-        .helper a { color: #dc2626; font-weight: 600; text-decoration: none; cursor: pointer; }
-        .helper a:hover { text-decoration: underline; }
-
-        .msg {
-            display: none; margin-bottom: 16px; padding: 12px 14px; border-radius: 12px;
-            font-size: 0.85rem; font-weight: 600; line-height: 1.5;
-        }
-        .msg.error { display: block; background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
-        .msg.success { display: block; background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
-
-        .consent { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 20px; }
-        .consent input { margin-top: 4px; width: auto; accent-color: #dc2626; }
-        .consent label { font-weight: 500; font-size: 0.8rem; color: #4b5563; }
-        .consent a { color: #dc2626; text-decoration: none; }
-
-        .status-screen { text-align: center; padding: 12px 6px; }
-        .status-screen i { font-size: 3rem; color: #f59e0b; margin-bottom: 14px; display: block; }
-        .status-screen h2 { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.3rem; margin-bottom: 8px; }
-        .status-screen p { color: #6b7280; font-size: 0.9rem; margin-bottom: 20px; }
-
-        footer {
-            text-align: center; padding: 20px; color: #94a3b8; font-size: 0.78rem;
-            border-top: 1px solid #e5e7eb; background: #f8fafc;
-        }
-        footer a { color: #dc2626; text-decoration: none; }
-
-        @media (max-width: 560px) {
-            .auth-body { padding: 22px 18px 28px; }
-            .auth-head { padding: 26px 18px 18px; }
-            .field-row { grid-template-columns: 1fr; }
-        }
-    </style>
+    <script src="assets/js/firebase-config.js"></script>
 </head>
-<body>
-
-    <div class="topbar">
-        <a href="index.html" class="logo-container">
-            <img src="https://i.ibb.co/svxj52ny/seedwel.png" class="logo-img" alt="Seedwel Investment LTD" />
-            <span class="company-name">Seedwel <span>Investment</span> LTD</span>
+<body class="portal-auth">
+    <header class="portal-topbar">
+        <a href="index.html" class="portal-brand">
+            <img src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel Investment LTD" />
+            <strong>Seedwel <span>Investment</span> LTD</strong>
         </a>
-        <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to site</a>
-    </div>
+        <a href="index.html" class="portal-back"><i class="fa-solid fa-arrow-left"></i> Back to site</a>
+    </header>
 
-    <div class="auth-wrap">
-        <div class="auth-card">
+    <main class="auth-main">
+        <section class="auth-card" aria-labelledby="memberLoginTitle">
             <div class="auth-head">
-                <img src="https://i.ibb.co/svxj52ny/seedwel.png" class="brand-logo" alt="Seedwel Investment LTD" />
-                <h1>Seedwel Account Login</h1>
-                <p>One secure login. Your account type is detected automatically after you sign in.</p>
-            </div>
-
-            <div class="tabs">
-                <button class="tab active" id="tabSignIn" type="button">Login</button>
-                <button class="tab" id="tabJoin" type="button">Create Account</button>
+                <img src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel logo" />
+                <p class="auth-eyebrow">Member access</p>
+                <h1 id="memberLoginTitle">Sign in</h1>
+                <p>Approved applicants receive a secure one-time registration invitation. After registration, they can sign in here to access their member dashboard.</p>
             </div>
 
             <div class="auth-body">
-                <!-- SIGN IN PANEL -->
-                <div class="panel active" id="panelSignIn">
-                    <div class="msg error" id="signInMsg"></div>
-                    <form id="signInForm" novalidate>
-                        <div class="field">
-                            <label for="loginEmail">Email or account ID</label>
-                            <input type="text" id="loginEmail" placeholder="Email or account ID" autocomplete="username" autocapitalize="none" spellcheck="false" required />
+                <div class="banner info">Need an account? <a class="portal-link" href="apply.html">Submit an application</a>. You will only receive a registration link after approval.</div>
+                <div id="loginMessage" class="msg"></div>
+                <form id="memberLoginForm" novalidate>
+                    <div class="form-grid">
+                        <div class="field full">
+                            <label for="memberIdentity">Email</label>
+                            <input id="memberIdentity" type="email" placeholder="you@example.com" autocomplete="username" autocapitalize="none" spellcheck="false" required />
                         </div>
-                        <div class="field">
-                            <label for="loginPassword">Password</label>
-                            <input type="password" id="loginPassword" placeholder="Your password" autocomplete="current-password" required />
+                        <div class="field full">
+                            <label for="memberPassword">Password</label>
+                            <input id="memberPassword" type="password" placeholder="Your password" autocomplete="current-password" required />
                         </div>
-                        <button type="submit" class="btn" id="signInBtn"><i class="fas fa-right-to-bracket"></i> Sign In</button>
-                    </form>
-                    <p class="helper"><a id="forgotLink">Forgot your password?</a></p>
-                    <p class="helper">New here? <a id="gotoJoin">Create an account</a></p>
-                    <div class="hiring-note"><i class="fas fa-circle-info"></i><span>Account roles are stored securely on the server and checked during authentication — admins, approved workers and applicants are routed automatically.</span></div>
-                </div>
-
-                <!-- JOIN PANEL -->
-                <div class="panel" id="panelJoin">
-                    <div class="msg error" id="joinMsg"></div>
-                    <form id="joinForm" novalidate>
-                        <div class="field">
-                            <label>Full name <span class="req">*</span></label>
-                            <input type="text" id="joinName" placeholder="Your full name" autocomplete="name" required />
-                        </div>
-                        <div class="field">
-                            <label>Email address <span class="req">*</span></label>
-                            <input type="email" id="joinEmail" placeholder="you@example.com" autocomplete="email" required />
-                        </div>
-                        <div class="field-row">
-                            <div class="field">
-                                <label>Phone / WhatsApp</label>
-                                <input type="tel" id="joinPhone" placeholder="+260 XXX XXX XXX" autocomplete="tel" />
-                            </div>
-                            <div class="field">
-                                <label>Country</label>
-                                <input type="text" id="joinCountry" placeholder="e.g. Zambia" />
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label>Role <span class="req">*</span></label>
-                            <select id="joinRole" required>
-                                <option value="">Select a role...</option>
-                                <option value="Cold Caller">📞 Cold Caller</option>
-                                <option value="Virtual Assistant">🖥️ Virtual Assistant</option>
-                                <option value="Web Developer">💻 Web Developer</option>
-                                <option value="Graphic Designer">🎨 Graphic Designer</option>
-                                <option value="Digital Marketer">📊 Digital Marketer</option>
-                                <option value="Video Editor">🎬 Video Editor</option>
-                                <option value="Mobile App Developer">📱 Mobile App Developer</option>
-                                <option value="Online Tutor">📚 Online Tutor</option>
-                            </select>
-                        </div>
-                        <div class="field-row">
-                            <div class="field">
-                                <label>Password <span class="req">*</span></label>
-                                <input type="password" id="joinPassword" placeholder="Min. 6 characters" autocomplete="new-password" required />
-                            </div>
-                            <div class="field">
-                                <label>Confirm password <span class="req">*</span></label>
-                                <input type="password" id="joinConfirm" placeholder="Repeat password" autocomplete="new-password" required />
-                            </div>
-                        </div>
-                        <div class="consent">
-                            <input type="checkbox" id="joinAgree" required />
-                            <label for="joinAgree">I agree to the <a href="terms.html">Terms</a> and <a href="privacy.html">Privacy Policy</a>, and to the <strong>10% commission</strong> structure. My account starts as <strong>Pending Approval</strong>. <span style="color:#dc2626;">*</span></label>
-                        </div>
-                        <div class="hiring-note" style="margin-bottom:16px;"><i class="fas fa-triangle-exclamation"></i><span><strong>Important:</strong> Creating an account does not guarantee employment or a job award. Your application must be completed, reviewed and officially approved by Seedwel Investment LTD before you become an approved worker with an official Worker ID.</span></div>
-                        <button type="submit" class="btn" id="joinBtn"><i class="fas fa-paper-plane"></i> Submit Application</button>
-                    </form>
-                    <p class="helper">Already have an account? <a id="gotoSignIn">Sign in</a></p>
-                </div>
-
-                <!-- STATUS SCREEN (after registration) -->
-                <div class="panel" id="panelStatus">
-                    <div class="status-screen">
-                        <i class="fas fa-hourglass-half"></i>
-                        <h2>Application received!</h2>
-                        <p>Thanks, <strong id="statusName"></strong>. Your applicant account has been created with <strong>Pending Approval</strong> status. Seedwel Investment LTD will review your application and verify your information before approval.</p>
-                        <p style="font-size:0.82rem;">Creating an account does not guarantee employment. Once approved, you will receive your official Seedwel Worker ID and full dashboard access. You can sign in again at any time to check your application status.</p>
-                        <button type="button" class="btn btn-outline" id="statusSignOut"><i class="fas fa-right-from-bracket"></i> Sign Out</button>
+                    </div>
+                    <div class="auth-actions">
+                        <button type="submit" class="btn btn-primary" id="memberLoginBtn"><i class="fa-solid fa-right-to-bracket"></i> Sign In</button>
+                        <button class="btn btn-secondary" id="forgotMemberPassword" type="button"><i class="fa-regular fa-envelope"></i> Forgot Password</button>
+                    </div>
+                </form>
+                <div class="auth-note">
+                    <strong>How access works:</strong> application submission is public, approval is private, registration is invitation-only, and dashboard access becomes active only after the applicant creates their own password.
+                    <div style="margin-top:10px;">
+                        Administrator? <a class="portal-link" href="/admin/login">Go to admin login</a>.
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
 
-    <footer>
-        &copy; 2026 Seedwel Investment LTD · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a>
-    </footer>
-
-    <script>
-        'use strict';
-
-        // Firebase configuration is public by design. Access is controlled by the
-        // deployed Database/Storage Rules and Firebase Authentication.
-        const firebaseConfig = {
-            apiKey: 'AIzaSyA-BpRy-RVc2rqIG6uiRu_XrGEu1ZGnQwU',
-            authDomain: 'seedwel-investment-limited.firebaseapp.com',
-            databaseURL: 'https://seedwel-investment-limited-default-rtdb.firebaseio.com',
-            projectId: 'seedwel-investment-limited',
-            storageBucket: 'seedwel-investment-limited.firebasestorage.app',
-            messagingSenderId: '197778268619',
-            appId: '1:197778268619:web:92f29d88fa5a22dbfa964e'
-        };
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.database();
-        const ADMIN_EMAIL = 'zacheussimbaya@gmail.com';
-        // The public-facing admin ID is mapped to the verified Firebase account.
-        // The real email is never displayed in the interface and the password is
-        // sent directly to Firebase Authentication — it is not stored in this site.
-        const ADMIN_LOGIN_ID = 'seedwel@admin';
-
-        function firebaseSignInEmail(value) {
-            const identity = String(value || '').trim().toLowerCase();
-            return identity === ADMIN_LOGIN_ID ? ADMIN_EMAIL : identity;
-        }
-
-        // ─── Tab switching ───
-        const tabSignIn = document.getElementById('tabSignIn');
-        const tabJoin = document.getElementById('tabJoin');
-        const panelSignIn = document.getElementById('panelSignIn');
-        const panelJoin = document.getElementById('panelJoin');
-        const panelStatus = document.getElementById('panelStatus');
-        const signInMsg = document.getElementById('signInMsg');
-        const joinMsg = document.getElementById('joinMsg');
-
-        function showPanel(panel) {
-            [panelSignIn, panelJoin, panelStatus].forEach(p => p.classList.remove('active'));
-            panel.classList.add('active');
-            signInMsg.style.display = 'none';
-            joinMsg.style.display = 'none';
-        }
-        function setTab(active) {
-            tabSignIn.classList.toggle('active', active === 'signin');
-            tabJoin.classList.toggle('active', active === 'join');
-        }
-        tabSignIn.addEventListener('click', () => { setTab('signin'); showPanel(panelSignIn); });
-        tabJoin.addEventListener('click', () => { setTab('join'); showPanel(panelJoin); });
-        document.getElementById('gotoJoin').addEventListener('click', () => { setTab('join'); showPanel(panelJoin); });
-        document.getElementById('gotoSignIn').addEventListener('click', () => { setTab('signin'); showPanel(panelSignIn); });
-
-        function showMsg(el, text) { el.textContent = text; el.style.display = 'block'; }
-        function clearMsg(el) { el.textContent = ''; el.style.display = 'none'; }
-
-        // ─── Routing after a successful sign-in ───
-        async function routeUser(user) {
-            if (user.email && user.email.toLowerCase() === ADMIN_EMAIL) {
-                window.location.href = 'admin.html';
-                return;
-            }
-            try {
-                const snap = await db.ref('workers/' + user.uid).once('value');
-                const worker = snap.val();
-                if (!worker) {
-                    await auth.signOut();
-                    setTab('signin'); showPanel(panelSignIn);
-                    showMsg(signInMsg, 'No worker account is linked to this email. Please use "Join Seedwel Team" to apply first.');
-                    return;
-                }
-                // Dashboard reads status itself and shows the right screen.
-                window.location.href = 'dashboard.html';
-            } catch (err) {
-                console.error('Route error:', err);
-                showMsg(signInMsg, 'Unable to verify your account. Please try again.');
-            }
-        }
-
-        // ─── Sign in ───
-        document.getElementById('signInForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            clearMsg(signInMsg);
-            const identity = document.getElementById('loginEmail').value.trim();
-            const email = firebaseSignInEmail(identity);
-            const password = document.getElementById('loginPassword').value;
-            if (!identity || !password) { showMsg(signInMsg, 'Please enter your email or account ID and password.'); return; }
-
-            const btn = document.getElementById('signInBtn');
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
-            try {
-                const cred = await auth.signInWithEmailAndPassword(email, password);
-                await routeUser(cred.user);
-            } catch (err) {
-                console.error('Sign-in error:', err);
-                const code = err.code || '';
-                if (code === 'auth/invalid-credential' || code === 'auth/wrong-password' || code === 'auth/user-not-found') {
-                    showMsg(signInMsg, 'Incorrect email or password. Please try again.');
-                } else if (code === 'auth/too-many-requests') {
-                    showMsg(signInMsg, 'Too many attempts. Please wait a moment and try again.');
-                } else {
-                    showMsg(signInMsg, 'Sign-in failed: ' + (err.message || 'please try again.'));
-                }
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-right-to-bracket"></i> Sign In';
-            }
-        });
-
-        // ─── Forgot password ───
-        document.getElementById('forgotLink').addEventListener('click', async () => {
-            const identity = document.getElementById('loginEmail').value.trim();
-            const email = firebaseSignInEmail(identity);
-            if (!identity) { showMsg(signInMsg, 'Enter your email or account ID above, then click "Forgot your password?"'); return; }
-            try {
-                await auth.sendPasswordResetEmail(email);
-                showMsg(signInMsg, '');
-                signInMsg.textContent = identity.toLowerCase() === ADMIN_LOGIN_ID
-                    ? 'Password reset instructions were sent to the private administrator email.'
-                    : 'Password reset link sent to ' + identity + '.';
-                signInMsg.classList.remove('error');
-                signInMsg.classList.add('success');
-                signInMsg.style.display = 'block';
-            } catch (err) {
-                showMsg(signInMsg, 'Could not send reset email. Check the address and try again.');
-            }
-        });
-
-        // ─── Join (registration) ───
-        document.getElementById('joinForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            clearMsg(joinMsg);
-            const name = document.getElementById('joinName').value.trim();
-            const email = document.getElementById('joinEmail').value.trim().toLowerCase();
-            const phone = document.getElementById('joinPhone').value.trim();
-            const country = document.getElementById('joinCountry').value.trim();
-            const role = document.getElementById('joinRole').value;
-            const password = document.getElementById('joinPassword').value;
-            const confirm = document.getElementById('joinConfirm').value;
-            const agree = document.getElementById('joinAgree').checked;
-
-            if (!name || !email || !role || !password) { showMsg(joinMsg, 'Please complete all required fields.'); return; }
-            if (name.length < 2) { showMsg(joinMsg, 'Please enter your full name.'); return; }
-            if (password.length < 6) { showMsg(joinMsg, 'Password must be at least 6 characters.'); return; }
-            if (password !== confirm) { showMsg(joinMsg, 'Passwords do not match.'); return; }
-            if (!agree) { showMsg(joinMsg, 'Please agree to the terms and commission structure to continue.'); return; }
-
-            const btn = document.getElementById('joinBtn');
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating account...';
-
-            let createdUser = null;
-            try {
-                const cred = await auth.createUserWithEmailAndPassword(email, password);
-                createdUser = cred.user;
-            } catch (err) {
-                const code = err.code || '';
-                if (code === 'auth/email-already-in-use') {
-                    showMsg(joinMsg, 'That email is already registered. Use "Sign In" instead.');
-                } else if (code === 'auth/invalid-email') {
-                    showMsg(joinMsg, 'Please enter a valid email address.');
-                } else if (code === 'auth/weak-password') {
-                    showMsg(joinMsg, 'Password is too weak. Please use at least 6 characters.');
-                } else {
-                    showMsg(joinMsg, 'Registration failed: ' + (err.message || 'please try again.'));
-                }
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Application';
-                return;
-            }
-
-            // Create the pending worker record under the new auth uid.
-            try {
-                await db.ref('workers/' + createdUser.uid).set({
-                    fullName: name.slice(0, 120),
-                    email: email.slice(0, 160),
-                    phone: phone.slice(0, 40),
-                    country: country.slice(0, 80),
-                    role: role.slice(0, 120),
-                    skills: '',
-                    experience: '',
-                    availability: '',
-                    commissionRate: 10,
-                    status: 'pending',
-                    createdAt: firebase.database.ServerValue.TIMESTAMP
-                });
-
-                // No verification email is sent: Seedwel accounts do not require
-                // email confirmation.
-
-                document.getElementById('statusName').textContent = name;
-                setTab('signin');
-                showPanel(panelStatus);
-            } catch (err) {
-                console.error('Profile write error:', err);
-                // Clean up the just-created account so the applicant can retry cleanly.
-                try { await createdUser.delete(); } catch (_) {}
-                showMsg(joinMsg, 'Could not save your application. Please check your connection and try again.');
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Application';
-            }
-        });
-
-        document.getElementById('statusSignOut').addEventListener('click', async () => {
-            await auth.signOut();
-            window.location.href = 'index.html';
-        });
-
-        // If already signed in, route them straight through.
-        auth.onAuthStateChanged((user) => {
-            if (user) routeUser(user);
-        });
-    </script>
+    <footer class="portal-footer">&copy; 2026 Seedwel Investment LTD · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></footer>
+    <script src="assets/js/member-login.js"></script>
 </body>
 </html>

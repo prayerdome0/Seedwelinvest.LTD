@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#dc2626" />
+    <title>Review Application | Seedwel Admin</title>
+    <meta name="description" content="Review a Seedwel applicant and create a registration invitation." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/private-portal.css" />
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="/assets/js/firebase-config.js"></script>
+    <script src="/assets/js/recruitment-utils.js"></script>
+    <script src="/assets/js/admin-shared.js"></script>
+    <script src="/cloudinary-upload.js"></script>
+</head>
+<body class="portal-body" data-page="application-detail">
+    <div class="portal-shell">
+        <aside class="portal-sidebar">
+            <a class="portal-brand" href="/admin/dashboard">
+                <img src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel Investment LTD" />
+                <strong>Seedwel <span>Admin</span></strong>
+            </a>
+            <div class="sidebar-copy">Review the applicant, record notes, then choose Shortlist, Reject or Approve with a secure registration invitation.</div>
+            <nav class="sidebar-nav" aria-label="Admin navigation">
+                <a data-page="dashboard" href="/admin/dashboard"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+                <a data-page="applications" href="/admin/applications"><i class="fa-solid fa-user-check"></i> Applications</a>
+                <a data-page="members" href="/admin/members"><i class="fa-solid fa-users"></i> Members</a>
+            </nav>
+            <div class="sidebar-foot"><a class="portal-link" href="/admin/applications">&larr; Back to applications</a></div>
+        </aside>
+        <main class="portal-main">
+            <header class="page-header">
+                <div>
+                    <p class="auth-eyebrow">Applicant review</p>
+                    <h1 id="applicationName">Loading application…</h1>
+                    <p>Inspect the applicant's profile and documents, then progress them through the recruitment workflow without creating a permanent known password.</p>
+                </div>
+                <div class="header-meta">
+                    <div class="header-chip" id="signedInEmail">Checking session…</div>
+                    <div id="applicationStatus"></div>
+                    <button class="btn btn-secondary" id="logoutBtn" type="button"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+                </div>
+            </header>
+
+            <div id="pageMessage" class="msg"></div>
+
+            <section class="split">
+                <div class="panel">
+                    <div class="panel-head">
+                        <div>
+                            <h2>Applicant information</h2>
+                            <p>Submitted <span id="applicationDate">—</span></p>
+                        </div>
+                    </div>
+                    <div class="detail-grid">
+                        <div class="stat-block"><span>Full name</span><div id="appFullName">—</div></div>
+                        <div class="stat-block"><span>Email</span><div id="appEmail">—</div></div>
+                        <div class="stat-block"><span>Phone</span><div id="appPhone">—</div></div>
+                        <div class="stat-block"><span>Location</span><div id="appLocation">—</div></div>
+                        <div class="stat-block"><span>Position applied for</span><div id="appPosition">—</div></div>
+                        <div class="stat-block"><span>Experience</span><div id="appExperience">—</div></div>
+                        <div class="stat-block full"><span>Portfolio</span><div id="appPortfolio">—</div><div style="margin-top:8px;"><a id="appPortfolioLink" class="portal-link" hidden target="_blank" rel="noopener">Open portfolio link</a></div></div>
+                        <div class="stat-block full"><span>Application answers</span><div id="appAnswers">—</div></div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-head">
+                        <div>
+                            <h2>Admin decision</h2>
+                            <p>Use a simple and traceable workflow.</p>
+                        </div>
+                    </div>
+                    <div class="inline-actions">
+                        <button class="btn btn-secondary" id="shortlistBtn" type="button"><i class="fa-solid fa-star"></i> Shortlist</button>
+                        <button class="btn btn-primary" id="approveBtn" type="button"><i class="fa-solid fa-circle-check"></i> Approve Application</button>
+                        <button class="btn btn-danger" id="rejectBtn" type="button"><i class="fa-solid fa-ban"></i> Reject</button>
+                    </div>
+                    <div id="approvePanel" class="panel hide" style="margin-top:16px;padding:16px;box-shadow:none;">
+                        <div class="detail-grid">
+                            <div class="field full">
+                                <label for="approveRole">Role</label>
+                                <select id="approveRole">
+                                    <option value="Member">Member</option>
+                                    <option value="Staff">Staff</option>
+                                </select>
+                            </div>
+                            <div class="field full">
+                                <label for="approveDepartment">Department</label>
+                                <input id="approveDepartment" type="text" placeholder="Technology" />
+                            </div>
+                            <div class="field full">
+                                <label for="approveExpiry">Invitation expiry</label>
+                                <select id="approveExpiry">
+                                    <option value="3">3 days</option>
+                                    <option value="7" selected>7 days</option>
+                                    <option value="14">14 days</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="banner info" style="margin-top:14px;">Confirm the approval, create the member record, generate the one-time invitation link and let the applicant create their own password.</div>
+                        <button class="btn btn-primary" id="createInvitationBtn" type="button"><i class="fa-solid fa-link"></i> Approve &amp; Create Registration Invitation</button>
+                    </div>
+                    <div class="field" style="margin-top:16px;">
+                        <label for="adminNotes">Admin notes</label>
+                        <textarea id="adminNotes" placeholder="Strong experience in frontend development. Approved for Web Developer position."></textarea>
+                    </div>
+                    <button class="btn btn-secondary" id="saveNotesBtn" type="button"><i class="fa-solid fa-floppy-disk"></i> Save Notes</button>
+                </div>
+            </section>
+
+            <section class="content-grid" style="margin-top:18px;">
+                <article class="panel">
+                    <div class="panel-head">
+                        <div>
+                            <h2>Documents</h2>
+                            <p>Cloudinary-backed CVs and related attachments open from secure links.</p>
+                        </div>
+                    </div>
+                    <div id="documentList" class="document-list"><div class="empty-state">Loading documents…</div></div>
+                </article>
+                <article class="panel hide" id="invitationDetails">
+                    <div class="panel-head">
+                        <div>
+                            <h2>Registration invitation</h2>
+                            <p>Copy the link and send it to the approved applicant.</p>
+                        </div>
+                    </div>
+                    <div id="invitationState"></div>
+                    <div class="field">
+                        <label for="invitationLink">Invitation link</label>
+                        <textarea class="code-box" id="invitationLink" readonly></textarea>
+                    </div>
+                    <div class="inline-actions">
+                        <button class="btn btn-primary" id="copyInvitationBtn" type="button"><i class="fa-regular fa-copy"></i> Copy Link</button>
+                        <a class="btn btn-secondary" href="/admin/applications">Back to Applications</a>
+                    </div>
+                </article>
+            </section>
+        </main>
+    </div>
+
+    <script src="/assets/js/admin-applications.js"></script>
+</body>
+</html>

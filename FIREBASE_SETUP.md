@@ -84,7 +84,7 @@ The admin inbox supports application search, status/CV filtering, secure CV requ
 
 Workers use Firebase Authentication and have one record at `/workers/{uid}`. Tasks are stored at `/tasks/{workerUid}/{taskId}`. Database Rules prevent workers from assigning their own status, role, commission rate, Worker ID, verification token or performance statistics.
 
-Approval transactionally increments `/counters/workerId`, issues a permanent ID such as `SWL-2026-000001`, creates a random verification token and writes the limited public record at `/verifications/{token}`. A worker's Cloudinary profile photo is saved privately with their worker record and copied only to their own token-based public verification record. The rules do not let them edit the public name, role, Worker ID or status.
+The new approval workflow transactionally increments `/counters/memberId`, creates an admin-side member record, and generates a one-time invitation under `/registrationInvitations/{token}`. When the invite is completed, the member record becomes an active `/workers/{uid}` dashboard account with a permanent ID such as `SW-2026-0001`. Legacy `SWL-YYYY-NNNNNN` verification records remain supported. A worker's Cloudinary profile photo is saved privately with their worker record and copied only to their own token-based public verification record. The rules do not let them edit the public name, role, ID or status.
 
 Scanning the ID QR opens `verify.html?t={token}`. Active records show the verified worker's name, role, Worker ID, status and profile photo. Suspended records show a warning; revoked records fail verification.
 
