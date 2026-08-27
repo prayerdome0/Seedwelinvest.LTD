@@ -1,0 +1,1680 @@
+{
+  "generatedAt": "2026-08-27",
+  "total": 167,
+  "counts": {
+    "verified": 104,
+    "sample": 63
+  },
+  "items": [
+    {
+      "number": 1,
+      "provider": "OpenAI Academy",
+      "credential": "certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/001-openai-academy-certificate.webp",
+      "slug": "001-openai-academy-certificate",
+      "sourceUrl": "https://academy.openai.com/public/certificate/4vjheebp7n"
+    },
+    {
+      "number": 2,
+      "provider": "Claude Academy",
+      "credential": "certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/002-claude-academy-certificate.webp",
+      "slug": "002-claude-academy-certificate",
+      "sourceUrl": "https://academy.claude.com/verify/13103f134da7befe9615ec2adfc8c50e"
+    },
+    {
+      "number": 3,
+      "provider": "Microsoft",
+      "credential": "AI Professional certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/003-microsoft-ai-professional-certificate.webp",
+      "slug": "003-microsoft-ai-professional-certificate",
+      "sourceUrl": "https://realnumeracy.wordpress.com/2019/08/06/microsoft-artificial-intelligence-certificate-part-2/"
+    },
+    {
+      "number": 4,
+      "provider": "Oracle",
+      "credential": "certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/004-oracle-certificate.webp",
+      "slug": "004-oracle-certificate",
+      "sourceUrl": "https://catalog-education.oracle.com/pls/certview/sharebadge?id=2B40E8FBEAADE2BC32D2A28728EFE22FA85B609F980AD81B2E030CB696DD6A60"
+    },
+    {
+      "number": 5,
+      "provider": "IBM SkillsBuild",
+      "credential": "AI Fundamentals certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/005-ibm-skillsbuild-ai-fundamentals-certificate.webp",
+      "slug": "005-ibm-skillsbuild-ai-fundamentals-certificate",
+      "sourceUrl": "https://www.iainkennedy.com/recruitment/certificates/ibm-skillsbuild-ai-fundementals.pdf"
+    },
+    {
+      "number": 6,
+      "provider": "IBM Cognitive Class",
+      "credential": "certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/006-ibm-cognitive-class-certificate.webp",
+      "slug": "006-ibm-cognitive-class-certificate",
+      "sourceUrl": "https://courses.cognitiveclass.ai/certificates/d9a6fb51acfe4535aa54b1f5e1013afb"
+    },
+    {
+      "number": 7,
+      "provider": "AWS",
+      "credential": "Machine Learning certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/007-aws-machine-learning-certificate.webp",
+      "slug": "007-aws-machine-learning-certificate",
+      "sourceUrl": "https://www.slideshare.net/slideshow/aws-certificate-what-is-machine-learning/124675979"
+    },
+    {
+      "number": 8,
+      "provider": "Google Cloud",
+      "credential": "Gen AI Academy certificate record",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/008-google-cloud-gen-ai-academy-certificate-record.webp",
+      "slug": "008-google-cloud-gen-ai-academy-certificate-record",
+      "sourceUrl": "https://certificate.hack2skill.com/verify/2026H2S07GCGENAIAPACC2-P00186"
+    },
+    {
+      "number": 9,
+      "provider": "NVIDIA DLI",
+      "credential": "certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/009-nvidia-dli-certificate.webp",
+      "slug": "009-nvidia-dli-certificate",
+      "sourceUrl": "https://learn.nvidia.com/faq-content.html"
+    },
+    {
+      "number": 10,
+      "provider": "Cisco",
+      "credential": "badge",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/010-cisco-badge.webp",
+      "slug": "010-cisco-badge",
+      "sourceUrl": "https://www.credly.com/org/cisco/badge/introduction-to-modern-ai"
+    },
+    {
+      "number": 11,
+      "provider": "Intel",
+      "credential": "AI course completion certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/011-intel-ai-course-completion-certificate.webp",
+      "slug": "011-intel-ai-course-completion-certificate",
+      "sourceUrl": "https://community.intel.com/t5/Intel-Optimized-AI-Frameworks/Certification-for-Intel-AI-Data-Center-to-Edge/m-p/1163132"
+    },
+    {
+      "number": 12,
+      "provider": "SAP",
+      "credential": "openSAP AI Record of Achievement",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/012-sap-opensap-ai-record-of-achievement.webp",
+      "slug": "012-sap-opensap-ai-record-of-achievement",
+      "sourceUrl": "https://stephenmillard.com/assets/training/it-sap/ai1_recordofachievement.pdf"
+    },
+    {
+      "number": 13,
+      "provider": "Salesforce Trailhead",
+      "credential": "AI Associate credential record",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/013-salesforce-trailhead-ai-associate-credential-record.webp",
+      "slug": "013-salesforce-trailhead-ai-associate-credential-record",
+      "sourceUrl": "https://trailhead.salesforce.com/en/credentials/certification-detail-print/?searchString=C6jrqwqTq9Eb8IeaGiHSMPu5L5bKiqGM0EbFulHmyNFFocvgz3Al87jvv%2F2%2FxtVo"
+    },
+    {
+      "number": 14,
+      "provider": "University of Helsinki",
+      "credential": "certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/014-university-of-helsinki-certificate.webp",
+      "slug": "014-university-of-helsinki-certificate",
+      "sourceUrl": "https://community.elementsofai.com/c/elements-faq/i-have-passed-an-elements-of-ai-course-where-is-my-certificate"
+    },
+    {
+      "number": 15,
+      "provider": "Harvard CS50 AI",
+      "credential": "certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/015-harvard-cs50-ai-certificate.webp",
+      "slug": "015-harvard-cs50-ai-certificate",
+      "sourceUrl": "https://cs50.harvard.edu/ai/certificate/"
+    },
+    {
+      "number": 16,
+      "provider": "Saylor Academy",
+      "credential": "certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/016-saylor-academy-certificate.webp",
+      "slug": "016-saylor-academy-certificate",
+      "sourceUrl": "https://www.saylor.org/certificates/"
+    },
+    {
+      "number": 17,
+      "provider": "Kaggle Learn",
+      "credential": "certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/017-kaggle-learn-certificate.webp",
+      "slug": "017-kaggle-learn-certificate",
+      "sourceUrl": "https://www.kaggle.com/learn/certification/lehrasibali/intro-to-machine-learning"
+    },
+    {
+      "number": 18,
+      "provider": "Hugging Face",
+      "credential": "your certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/018-hugging-face-your-certificate.webp",
+      "slug": "018-hugging-face-your-certificate",
+      "sourceUrl": "https://huggingface.co/learn/agents-course/unit1/get-your-certificate"
+    },
+    {
+      "number": 19,
+      "provider": "HP LIFE",
+      "credential": "certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/019-hp-life-certificate.webp",
+      "slug": "019-hp-life-certificate",
+      "sourceUrl": "https://api.life-global.org/learning/api/certificates/27be0f1a-1fa1-47d2-94fc-44b42a580d10"
+    },
+    {
+      "number": 20,
+      "provider": "openHPI",
+      "credential": "participation record",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/020-openhpi-participation-record.webp",
+      "slug": "020-openhpi-participation-record",
+      "sourceUrl": "https://open.hpi.de/pages/document_types?locale=en"
+    },
+    {
+      "number": 21,
+      "provider": "freeCodeCamp",
+      "credential": "certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/021-freecodecamp-certificate.webp",
+      "slug": "021-freecodecamp-certificate",
+      "sourceUrl": "https://www.freecodecamp.org/certification/fcc603b5224-0381-4146-9502-07f258055cc0/machine-learning-with-python-v7"
+    },
+    {
+      "number": 22,
+      "provider": "Semrush Academy",
+      "credential": "certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/022-semrush-academy-certificate.webp",
+      "slug": "022-semrush-academy-certificate",
+      "sourceUrl": "https://static.semrush.com/academy/certificates/5d78408997/kate-carey_26.pdf"
+    },
+    {
+      "number": 23,
+      "provider": "HubSpot Academy",
+      "credential": "certificate",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/023-hubspot-academy-certificate.webp",
+      "slug": "023-hubspot-academy-certificate",
+      "sourceUrl": "https://knowledge.hubspot.com/help-and-resources/how-can-i-view-and-download-my-certification"
+    },
+    {
+      "number": 24,
+      "provider": "Simplilearn SkillUp",
+      "credential": "certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/024-simplilearn-skillup-certificate.webp",
+      "slug": "024-simplilearn-skillup-certificate",
+      "sourceUrl": "https://certificates.simplicdn.net/share/8430411_87752711749106562688.pdf"
+    },
+    {
+      "number": 25,
+      "provider": "University of Florida",
+      "credential": "AI badge",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/025-university-of-florida-ai-badge.webp",
+      "slug": "025-university-of-florida-ai-badge",
+      "sourceUrl": "https://www.credly.com/org/university-of-florida/badge/artificial-intelligence-ai"
+    },
+    {
+      "number": 26,
+      "provider": "Saint Louis University",
+      "credential": "ML badge",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/026-saint-louis-university-ml-badge.webp",
+      "slug": "026-saint-louis-university-ml-badge",
+      "sourceUrl": "https://www.credly.com/org/saint-louis-university-chaifetz-school-of-business/badge/data-science-machine-learning-competition"
+    },
+    {
+      "number": 27,
+      "provider": "PMI",
+      "credential": "Generative AI course certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/027-pmi-generative-ai-course-certificate.webp",
+      "slug": "027-pmi-generative-ai-course-certificate",
+      "sourceUrl": "https://progsofts.com/rizwan/Courses/Generative%20AI%20Overview%20for%20Project%20Managers.pdf"
+    },
+    {
+      "number": 28,
+      "provider": "GitHub",
+      "credential": "Copilot certification",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/028-github-copilot-certification.webp",
+      "slug": "028-github-copilot-certification",
+      "sourceUrl": "https://www.credly.com/org/github/badge/github-copilot"
+    },
+    {
+      "number": 29,
+      "provider": "SAS",
+      "credential": "AI & ML certification",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/029-sas-ai-ml-certification.webp",
+      "slug": "029-sas-ai-ml-certification",
+      "sourceUrl": "https://www.credly.com/org/sas/badge/sas-certified-professional-ai-machine-learning.1"
+    },
+    {
+      "number": 30,
+      "provider": "Red Hat",
+      "credential": "AI Foundations badge",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/030-red-hat-ai-foundations-badge.webp",
+      "slug": "030-red-hat-ai-foundations-badge",
+      "sourceUrl": "https://www.credly.com/org/red-hat-inc/badge/red-hat-ai-foundations-technical-skills-badge"
+    },
+    {
+      "number": 31,
+      "provider": "Linux Foundation",
+      "credential": "Secure AI badge",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/031-linux-foundation-secure-ai-badge.webp",
+      "slug": "031-linux-foundation-secure-ai-badge",
+      "sourceUrl": "https://www.credly.com/org/the-linux-foundation/badge/lfel1012-secure-ai-ml-driven-software-development"
+    },
+    {
+      "number": 32,
+      "provider": "Cloudera",
+      "credential": "ML Engineer",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/032-cloudera-ml-engineer.webp",
+      "slug": "032-cloudera-ml-engineer",
+      "sourceUrl": "https://www.credly.com/org/cloudera/badge/cdp-certified-machine-learning-engineer"
+    },
+    {
+      "number": 33,
+      "provider": "Teradata",
+      "credential": "Data Science",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/033-teradata-data-science.webp",
+      "slug": "033-teradata-data-science",
+      "sourceUrl": "https://www.credly.com/org/teradata/badge/vantage-data-science-certification"
+    },
+    {
+      "number": 34,
+      "provider": "APMG",
+      "credential": "AI Practitioner",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/034-apmg-ai-practitioner.webp",
+      "slug": "034-apmg-ai-practitioner",
+      "sourceUrl": "https://www.credly.com/org/apmg-international/badge/artificial-intelligence-practitioner-aip/"
+    },
+    {
+      "number": 35,
+      "provider": "AI Institute",
+      "credential": "GenAI Practitioner",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/035-ai-institute-genai-practitioner.webp",
+      "slug": "035-ai-institute-genai-practitioner",
+      "sourceUrl": "https://www.credly.com/org/ai-institute/badge/generative-ai-practitioner"
+    },
+    {
+      "number": 36,
+      "provider": "Decoded",
+      "credential": "Machine Learning",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/036-decoded-machine-learning.webp",
+      "slug": "036-decoded-machine-learning",
+      "sourceUrl": "https://www.credly.com/org/decoded/badge/machine-learning"
+    },
+    {
+      "number": 37,
+      "provider": "Franklin University",
+      "credential": "Data & ML",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/037-franklin-university-data-ml.webp",
+      "slug": "037-franklin-university-data-ml",
+      "sourceUrl": "https://www.credly.com/org/franklin-university/badge/data-machine-learning-engineering"
+    },
+    {
+      "number": 38,
+      "provider": "TECH I.S.",
+      "credential": "Data, ML & AI",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/038-tech-i-s-data-ml-ai.webp",
+      "slug": "038-tech-i-s-data-ml-ai",
+      "sourceUrl": "https://www.credly.com/org/tech-i-s/badge/data-science-machine-learning-ai"
+    },
+    {
+      "number": 39,
+      "provider": "AIS Academy",
+      "credential": "AI Foundation",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/039-ais-academy-ai-foundation.webp",
+      "slug": "039-ais-academy-ai-foundation",
+      "sourceUrl": "https://www.credly.com/org/ais-academy/badge/artificial-intelligence-foundation"
+    },
+    {
+      "number": 40,
+      "provider": "Great Learning",
+      "credential": "AI certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/040-great-learning-ai-certificate.webp",
+      "slug": "040-great-learning-ai-certificate",
+      "sourceUrl": "https://www.mygreatlearning.com/certificate/UHWQWTQT"
+    },
+    {
+      "number": 41,
+      "provider": "Alison",
+      "credential": "certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/041-alison-certificate.webp",
+      "slug": "041-alison-certificate",
+      "sourceUrl": "https://helpcenter.alison.com/en/articles/8206452-sample-alison-certificate-and-diploma-parchment"
+    },
+    {
+      "number": 42,
+      "provider": "Codecademy",
+      "credential": "NLP certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/042-codecademy-nlp-certificate.webp",
+      "slug": "042-codecademy-nlp-certificate",
+      "sourceUrl": "https://www.codecademy.com/profiles/ANDRES.R.BUCHELI/certificates/b6d2d1d0d1c2d9dfae7a6ea0197354ba"
+    },
+    {
+      "number": 43,
+      "provider": "DataCamp",
+      "credential": "AI Fundamentals",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/043-datacamp-ai-fundamentals.webp",
+      "slug": "043-datacamp-ai-fundamentals",
+      "sourceUrl": "https://careerhub-api.datacamp.com/certificates/AIF0029647638027/pdf"
+    },
+    {
+      "number": 44,
+      "provider": "Udemy",
+      "credential": "ML certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/044-udemy-ml-certificate.webp",
+      "slug": "044-udemy-ml-certificate",
+      "sourceUrl": "https://www.udemy.com/certificate/UC-DM5ROQH4/"
+    },
+    {
+      "number": 45,
+      "provider": "Coursera",
+      "credential": "TensorFlow AI",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/045-coursera-tensorflow-ai.webp",
+      "slug": "045-coursera-tensorflow-ai",
+      "sourceUrl": "https://www.coursera.org/account/accomplishments/verify/2WBFM5YCHZ36"
+    },
+    {
+      "number": 46,
+      "provider": "edX / MITx",
+      "credential": "Machine Learning",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/046-edx-mitx-machine-learning.webp",
+      "slug": "046-edx-mitx-machine-learning",
+      "sourceUrl": "https://courses.edx.org/certificates/ac12ad62271f48d3ab944607ba1eb2b5"
+    },
+    {
+      "number": 47,
+      "provider": "LinkedIn Learning",
+      "credential": "GenAI",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/047-linkedin-learning-genai.webp",
+      "slug": "047-linkedin-learning-genai",
+      "sourceUrl": "https://www.linkedin.com/learning/certificates/2af4b08089309dd1ed6ae81e3862b61a251e16aaacb280c262c8b16de3217a5c"
+    },
+    {
+      "number": 48,
+      "provider": "Udacity",
+      "credential": "Ethical AI",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/048-udacity-ethical-ai.webp",
+      "slug": "048-udacity-ethical-ai",
+      "sourceUrl": "https://www.udacity.com/certificate/e/224ad0e0-f8bc-11ee-8c8d-dbea505a7081"
+    },
+    {
+      "number": 49,
+      "provider": "FutureLearn",
+      "credential": "Artificial Intelligence",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/049-futurelearn-artificial-intelligence.webp",
+      "slug": "049-futurelearn-artificial-intelligence",
+      "sourceUrl": "https://www.futurelearn.com/certificates/hhbh33a"
+    },
+    {
+      "number": 50,
+      "provider": "Pluralsight",
+      "credential": "GenAI for Innovators",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/050-pluralsight-genai-for-innovators.webp",
+      "slug": "050-pluralsight-genai-for-innovators",
+      "sourceUrl": "https://grokify.github.io/certificates/artificial-intelligence/#generative-ai-for-innovators-from-pluralsight-by-esteban-herrera"
+    },
+    {
+      "number": 51,
+      "provider": "DeepLearning.AI",
+      "credential": "Machine Learning",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/051-deeplearning-ai-machine-learning.webp",
+      "slug": "051-deeplearning-ai-machine-learning",
+      "sourceUrl": "https://www.deeplearning.ai/certificates/d0a7ac3f-28f3-4504-9426-9ace791f0fc1"
+    },
+    {
+      "number": 52,
+      "provider": "Stanford Online",
+      "credential": "AI Professional",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/052-stanford-online-ai-professional.webp",
+      "slug": "052-stanford-online-ai-professional",
+      "sourceUrl": "https://cv.xn--jrme-mign-b4ai8j.fr/pdf/Stanford_AI_Professional_Certificate.pdf"
+    },
+    {
+      "number": 53,
+      "provider": "MIT xPRO",
+      "credential": "AI Products & Services",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/053-mit-xpro-ai-products-services.webp",
+      "slug": "053-mit-xpro-ai-products-services",
+      "sourceUrl": "https://www.tips-usa.com/assets/Vendorspdf/231002_CONTRACT_Building_Opt.pdf#page=49"
+    },
+    {
+      "number": 54,
+      "provider": "Oxford Saïd",
+      "credential": "AI Programme",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/054-oxford-said-ai-programme.webp",
+      "slug": "054-oxford-said-ai-programme",
+      "sourceUrl": "https://dp.edu.az/uploads/fileuploads/2022/05/16d064ac050249b9b8dfa1eca370f2f3.pdf#page=10"
+    },
+    {
+      "number": 55,
+      "provider": "NPTEL / SWAYAM",
+      "credential": "Artificial Intelligence",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/055-nptel-swayam-artificial-intelligence.webp",
+      "slug": "055-nptel-swayam-artificial-intelligence",
+      "sourceUrl": "https://archive.nptel.ac.in/content/noc/NOC25/SEM2/Ecertificates/106/noc25-cs159/Course/NPTEL25CS159S116080063810383422.pdf"
+    },
+    {
+      "number": 56,
+      "provider": "Vanderbilt",
+      "credential": "Prompt Engineering",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/056-vanderbilt-prompt-engineering.webp",
+      "slug": "056-vanderbilt-prompt-engineering",
+      "sourceUrl": "https://www.coursera.org/account/accomplishments/verify/WN8ZQLA9VWDJ"
+    },
+    {
+      "number": 57,
+      "provider": "Wharton / Penn",
+      "credential": "AI for Business",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/057-wharton-penn-ai-for-business.webp",
+      "slug": "057-wharton-penn-ai-for-business",
+      "sourceUrl": "https://www.coursera.org/account/accomplishments/specialization/V98KQDTQTVYD"
+    },
+    {
+      "number": 58,
+      "provider": "Duke",
+      "credential": "AI Product Management",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/058-duke-ai-product-management.webp",
+      "slug": "058-duke-ai-product-management",
+      "sourceUrl": "https://www.coursera.org/account/accomplishments/specialization/PKJGVYSD2CLF"
+    },
+    {
+      "number": 59,
+      "provider": "Meta",
+      "credential": "GenAI in Data Analytics",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/059-meta-genai-in-data-analytics.webp",
+      "slug": "059-meta-genai-in-data-analytics",
+      "sourceUrl": "https://www.coursera.org/account/accomplishments/verify/UQCCVTRW4U7X"
+    },
+    {
+      "number": 60,
+      "provider": "Databricks Academy",
+      "credential": "GenAI Fundamentals",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/060-databricks-academy-genai-fundamentals.webp",
+      "slug": "060-databricks-academy-genai-fundamentals",
+      "sourceUrl": "https://credentials.databricks.com/b63a9dd7-ed6e-4571-a9e0-e30fb649c08f"
+    },
+    {
+      "number": 61,
+      "provider": "Snowflake",
+      "credential": "Data Scientist",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/061-snowflake-data-scientist.webp",
+      "slug": "061-snowflake-data-scientist",
+      "sourceUrl": "https://www.credly.com/badges/9a7af63f-c8c5-4bd4-ab31-ce658f83e8ba/linked_in_profile"
+    },
+    {
+      "number": 62,
+      "provider": "MongoDB",
+      "credential": "Search Fundamentals",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/062-mongodb-search-fundamentals.webp",
+      "slug": "062-mongodb-search-fundamentals",
+      "sourceUrl": "https://www.credly.com/org/mongodb/badge/search-with-mongodb"
+    },
+    {
+      "number": 63,
+      "provider": "Neo4j",
+      "credential": "Graph Data Science",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/063-neo4j-graph-data-science.webp",
+      "slug": "063-neo4j-graph-data-science",
+      "sourceUrl": "https://graphacademy.neo4j.com/c/11d3a24b-c87a-4a9c-b4d7-c8975e0522d5"
+    },
+    {
+      "number": 64,
+      "provider": "Dataiku",
+      "credential": "Advanced Designer",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/064-dataiku-advanced-designer.webp",
+      "slug": "064-dataiku-advanced-designer",
+      "sourceUrl": "https://raw.githubusercontent.com/AndreaFrattini/Certificates/main/Dataiku%20-%20Advanced%20Designer%20Certificate.pdf"
+    },
+    {
+      "number": 65,
+      "provider": "UiPath",
+      "credential": "Specialized AI Associate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/065-uipath-specialized-ai-associate.webp",
+      "slug": "065-uipath-specialized-ai-associate",
+      "sourceUrl": "https://credentials.uipath.com/5cd6fc5a-2d96-4273-abe1-b50ddea3eacf"
+    },
+    {
+      "number": 66,
+      "provider": "Alibaba Cloud",
+      "credential": "AI Associate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/066-alibaba-cloud-ai-associate.webp",
+      "slug": "066-alibaba-cloud-ai-associate",
+      "sourceUrl": "https://edu.aliyun.com/certification/ACA05"
+    },
+    {
+      "number": 67,
+      "provider": "Infosys Springboard",
+      "credential": "AI & ML",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/067-infosys-springboard-ai-ml.webp",
+      "slug": "067-infosys-springboard-ai-ml",
+      "sourceUrl": "https://infyspringboard.onwingspan.com/public-assets/infosysheadstart/cert/lex_auth_01381726723041689676/1-f5cbb8cf-9520-48c5-b66b-ad35f99518db.pdf"
+    },
+    {
+      "number": 68,
+      "provider": "eCornell",
+      "credential": "Machine Learning",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/068-ecornell-machine-learning.webp",
+      "slug": "068-ecornell-machine-learning",
+      "sourceUrl": "https://ecornell.cornell.edu/certificates/technology/"
+    },
+    {
+      "number": 69,
+      "provider": "UC Berkeley Exec Ed",
+      "credential": "AI Strategy",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/069-uc-berkeley-exec-ed-ai-strategy.webp",
+      "slug": "069-uc-berkeley-exec-ed-ai-strategy",
+      "sourceUrl": "https://www.analyticsinsight.net/education/top-10-ai-certifications-recognized-in-usa"
+    },
+    {
+      "number": 70,
+      "provider": "Carnegie Mellon",
+      "credential": "Artificial Intelligence",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/070-carnegie-mellon-artificial-intelligence.webp",
+      "slug": "070-carnegie-mellon-artificial-intelligence",
+      "sourceUrl": "https://execonline.cs.cmu.edu/introduction-artificial-intelligence"
+    },
+    {
+      "number": 71,
+      "provider": "University of Michigan",
+      "credential": "Applied ML",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/071-university-of-michigan-applied-ml.webp",
+      "slug": "071-university-of-michigan-applied-ml",
+      "sourceUrl": "https://www.coursera.org/account/accomplishments/verify/E8F792F75CU2"
+    },
+    {
+      "number": 72,
+      "provider": "University of Washington",
+      "credential": "Machine Learning",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/072-university-of-washington-machine-learning.webp",
+      "slug": "072-university-of-washington-machine-learning",
+      "sourceUrl": "https://www.coursera.org/account/accomplishments/verify/WEG733BSTSJF"
+    },
+    {
+      "number": 73,
+      "provider": "Imperial College London",
+      "credential": "ML Mathematics",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/073-imperial-college-london-ml-mathematics.webp",
+      "slug": "073-imperial-college-london-ml-mathematics",
+      "sourceUrl": "https://www.coursera.org/account/accomplishments/specialization/BGCTZ9C649FH"
+    },
+    {
+      "number": 74,
+      "provider": "Politecnico di Milano",
+      "credential": "AI Overview",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/074-politecnico-di-milano-ai-overview.webp",
+      "slug": "074-politecnico-di-milano-ai-overview",
+      "sourceUrl": "https://www.coursera.org/account/accomplishments/verify/Z3Q6R65USW23"
+    },
+    {
+      "number": 75,
+      "provider": "KAIST",
+      "credential": "Practical AI Coding",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/075-kaist-practical-ai-coding.webp",
+      "slug": "075-kaist-practical-ai-coding",
+      "sourceUrl": "https://www.coursera.org/account/accomplishments/verify/TXPXKL2EPUM3"
+    },
+    {
+      "number": 76,
+      "provider": "UC Davis",
+      "credential": "AI & Ethics",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/076-uc-davis-ai-ethics.webp",
+      "slug": "076-uc-davis-ai-ethics",
+      "sourceUrl": "https://coursera.org/share/f8696421c56b20dc8ea1dfa3c8c4d043"
+    },
+    {
+      "number": 77,
+      "provider": "Deloitte",
+      "credential": "Advanced Machine Learning",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/077-deloitte-advanced-machine-learning.webp",
+      "slug": "077-deloitte-advanced-machine-learning",
+      "sourceUrl": "https://www.credly.com/org/deloitte/badge/machine-learning-advanced"
+    },
+    {
+      "number": 78,
+      "provider": "PwC",
+      "credential": "Academy GenAI Launchpad certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/078-pwc-academy-genai-launchpad-certificate.webp",
+      "slug": "078-pwc-academy-genai-launchpad-certificate",
+      "sourceUrl": "https://career247.com/job-assisted-programs/genai-for-all"
+    },
+    {
+      "number": 79,
+      "provider": "Workearly",
+      "credential": "Big Data & ML",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/079-workearly-big-data-ml.webp",
+      "slug": "079-workearly-big-data-ml",
+      "sourceUrl": "https://www.credly.com/org/workearly/badge/big-data-machine-learning-certification"
+    },
+    {
+      "number": 80,
+      "provider": "Minnesota State",
+      "credential": "Introduction to ML",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/080-minnesota-state-introduction-to-ml.webp",
+      "slug": "080-minnesota-state-introduction-to-ml",
+      "sourceUrl": "https://www.credly.com/org/minnesota-state-it-center-of-excellence/badge/introduction-to-machine-learning-badges-certificate"
+    },
+    {
+      "number": 81,
+      "provider": "LaGuardia CC",
+      "credential": "Artificial Intelligence",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/081-laguardia-cc-artificial-intelligence.webp",
+      "slug": "081-laguardia-cc-artificial-intelligence",
+      "sourceUrl": "https://www.credly.com/org/laguardia-community-college/badge/artificial-intelligence-certificate"
+    },
+    {
+      "number": 82,
+      "provider": "KNIME",
+      "credential": "Machine Learning",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/082-knime-machine-learning.webp",
+      "slug": "082-knime-machine-learning",
+      "sourceUrl": "https://www.credly.com/org/knime/badge/machine-learning-in-knime-analytics-platform"
+    },
+    {
+      "number": 83,
+      "provider": "New Horizons",
+      "credential": "CertNexus AI Practitioner",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/083-new-horizons-certnexus-ai-practitioner.webp",
+      "slug": "083-new-horizons-certnexus-ai-practitioner",
+      "sourceUrl": "https://www.credly.com/org/new-horizons-computer-learning-center/badge/certnexus-certified-artificial-intelligence-practit"
+    },
+    {
+      "number": 84,
+      "provider": "Penn State Engineering",
+      "credential": "AI Data Modeling",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/084-penn-state-engineering-ai-data-modeling.webp",
+      "slug": "084-penn-state-engineering-ai-data-modeling",
+      "sourceUrl": "https://www.credly.com/org/penn-state-college-of-engineering/badge/data-modeling-for-artificial-intelligence"
+    },
+    {
+      "number": 85,
+      "provider": "EY",
+      "credential": "Artificial Intelligence",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/085-ey-artificial-intelligence.webp",
+      "slug": "085-ey-artificial-intelligence",
+      "sourceUrl": "https://www.credly.com/org/ey/badge/ey-artificial-intelligence-silver-2021"
+    },
+    {
+      "number": 86,
+      "provider": "Dell Technologies",
+      "credential": "GenAI Engineering",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/086-dell-technologies-genai-engineering.webp",
+      "slug": "086-dell-technologies-genai-engineering",
+      "sourceUrl": "https://www.credly.com/org/delltechnologies/badge/dell-genai-model-augmentation-and-data-engineering-"
+    },
+    {
+      "number": 87,
+      "provider": "KPMG",
+      "credential": "AI & Automation",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/087-kpmg-ai-automation.webp",
+      "slug": "087-kpmg-ai-automation",
+      "sourceUrl": "https://www.credly.com/org/kpmg/badge/digital-and-data-foundations-artificial-intelligenc"
+    },
+    {
+      "number": 88,
+      "provider": "O’Reilly",
+      "credential": "AI & Machine Learning",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/088-o-reilly-ai-machine-learning.webp",
+      "slug": "088-o-reilly-ai-machine-learning",
+      "sourceUrl": "https://www.credly.com/org/o-reilly-media/badge/ai-and-machine-learning.1"
+    },
+    {
+      "number": 89,
+      "provider": "Adobe",
+      "credential": "Creativity with AI",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/089-adobe-creativity-with-ai.webp",
+      "slug": "089-adobe-creativity-with-ai",
+      "sourceUrl": "https://www.credly.com/org/adobe/badge/adobe-and-pearson-creativity-with-ai"
+    },
+    {
+      "number": 90,
+      "provider": "Cognizant",
+      "credential": "AI Vibe Coding",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/090-cognizant-ai-vibe-coding.webp",
+      "slug": "090-cognizant-ai-vibe-coding",
+      "sourceUrl": "https://www.credly.com/org/cognizant/badge/vibe-code-hackathon-vibe-coded-using-cursor"
+    },
+    {
+      "number": 91,
+      "provider": "ISACA",
+      "credential": "AI Fundamentals",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/091-isaca-ai-fundamentals.webp",
+      "slug": "091-isaca-ai-fundamentals",
+      "sourceUrl": "https://www.credly.com/org/isaca/badge/artificial-intelligence-fundamentals-certificate"
+    },
+    {
+      "number": 92,
+      "provider": "Certiport",
+      "credential": "GenAI Foundations certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/092-certiport-genai-foundations-certificate.webp",
+      "slug": "092-certiport-genai-foundations-certificate",
+      "sourceUrl": "https://store.commsgate.africa/products/generative-ai-foundations-certification-exam-voucher"
+    },
+    {
+      "number": 93,
+      "provider": "Praxis AI",
+      "credential": "GenAI Foundations",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/093-praxis-ai-genai-foundations.webp",
+      "slug": "093-praxis-ai-genai-foundations",
+      "sourceUrl": "https://www.credly.com/org/praxis-ai/badge/generative-ai-foundations"
+    },
+    {
+      "number": 94,
+      "provider": "Badge Nation",
+      "credential": "Build with AI",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/094-badge-nation-build-with-ai.webp",
+      "slug": "094-badge-nation-build-with-ai",
+      "sourceUrl": "https://www.credly.com/org/badge-nation/badge/build-with-artificial-intelligence"
+    },
+    {
+      "number": 95,
+      "provider": "HFMA",
+      "credential": "AI Governance",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/095-hfma-ai-governance.webp",
+      "slug": "095-hfma-ai-governance",
+      "sourceUrl": "https://www.credly.com/org/healthcare-financial-management-association/badge/ai-governance"
+    },
+    {
+      "number": 96,
+      "provider": "St. John’s University",
+      "credential": "AI",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/096-st-john-s-university-ai.webp",
+      "slug": "096-st-john-s-university-ai",
+      "sourceUrl": "https://www.credly.com/org/st-johns-university/badge/artificial-intelligence"
+    },
+    {
+      "number": 97,
+      "provider": "DaCodes",
+      "credential": "GenAI Foundations",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/097-dacodes-genai-foundations.webp",
+      "slug": "097-dacodes-genai-foundations",
+      "sourceUrl": "https://www.credly.com/org/dacodes/badge/generative-ai-foundations"
+    },
+    {
+      "number": 98,
+      "provider": "Harper College",
+      "credential": "Introduction to AI",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/098-harper-college-introduction-to-ai.webp",
+      "slug": "098-harper-college-introduction-to-ai",
+      "sourceUrl": "https://www.credly.com/org/harper-college-community-education/badge/introduction-to-artificial-intelligence-ai/"
+    },
+    {
+      "number": 99,
+      "provider": "BCG",
+      "credential": "AI Literacy",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/099-bcg-ai-literacy.webp",
+      "slug": "099-bcg-ai-literacy",
+      "sourceUrl": "https://www.credly.com/org/boston-consulting-group-bcg/badge/artificial-intelligence-for-scbx"
+    },
+    {
+      "number": 100,
+      "provider": "Florida International University",
+      "credential": "AI Essentials certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/100-florida-international-university-ai-essentials-certificate.webp",
+      "slug": "100-florida-international-university-ai-essentials-certificate",
+      "sourceUrl": "https://ziplines.fiu.edu/ai-essentials"
+    },
+    {
+      "number": 101,
+      "provider": "Purdue University Online",
+      "credential": "Data Science & Generative AI certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/101-purdue-university-online-data-science-generative-ai-certificate.webp",
+      "slug": "101-purdue-university-online-data-science-generative-ai-certificate",
+      "sourceUrl": "https://www.simplilearn.com/pgp-data-science-certification-bootcamp-program"
+    },
+    {
+      "number": 102,
+      "provider": "University of Phoenix",
+      "credential": "Generative AI",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/102-university-of-phoenix-generative-ai.webp",
+      "slug": "102-university-of-phoenix-generative-ai",
+      "sourceUrl": "https://www.credly.com/org/the-university-of-phoenix/badge/generative-ai-everyday-application"
+    },
+    {
+      "number": 103,
+      "provider": "Boston University",
+      "credential": "GenAI for Leaders",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/103-boston-university-genai-for-leaders.webp",
+      "slug": "103-boston-university-genai-for-leaders",
+      "sourceUrl": "https://www.credly.com/org/boston-university/badge/generative-ai-for-leaders"
+    },
+    {
+      "number": 104,
+      "provider": "Bee-Relevant",
+      "credential": "Generative AI",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/104-bee-relevant-generative-ai.webp",
+      "slug": "104-bee-relevant-generative-ai",
+      "sourceUrl": "https://www.credly.com/org/bee-relevant/badge/generative-ai"
+    },
+    {
+      "number": 105,
+      "provider": "ProEdge",
+      "credential": "Responsible AI",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/105-proedge-responsible-ai.webp",
+      "slug": "105-proedge-responsible-ai",
+      "sourceUrl": "https://www.credly.com/org/proedge/badge/introduction-to-responsible-ai/"
+    },
+    {
+      "number": 106,
+      "provider": "Emory Continuing Education",
+      "credential": "Responsible AI",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/106-emory-continuing-education-responsible-ai.webp",
+      "slug": "106-emory-continuing-education-responsible-ai",
+      "sourceUrl": "https://www.credly.com/org/emory-university/badge/responsible-ai-ethical-strategies-for-your-organiza"
+    },
+    {
+      "number": 107,
+      "provider": "GAIN Academy",
+      "credential": "Responsible AI",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/107-gain-academy-responsible-ai.webp",
+      "slug": "107-gain-academy-responsible-ai",
+      "sourceUrl": "https://www.credly.com/org/gain/badge/5281-responsible-ai"
+    },
+    {
+      "number": 108,
+      "provider": "Southern Connecticut State",
+      "credential": "AI Foundations",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/108-southern-connecticut-state-ai-foundations.webp",
+      "slug": "108-southern-connecticut-state-ai-foundations",
+      "sourceUrl": "https://www.credly.com/org/southern-connecticut-state-university/badge/artificial-intelligence-foundations-for-workplace-s"
+    },
+    {
+      "number": 109,
+      "provider": "Marshall Skills Exchange",
+      "credential": "Generative AI",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/109-marshall-skills-exchange-generative-ai.webp",
+      "slug": "109-marshall-skills-exchange-generative-ai",
+      "sourceUrl": "https://www.credly.com/org/mse/badge/introduction-to-generative-ai"
+    },
+    {
+      "number": 110,
+      "provider": "Cardiff Metropolitan",
+      "credential": "Machine Learning",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/110-cardiff-metropolitan-machine-learning.webp",
+      "slug": "110-cardiff-metropolitan-machine-learning",
+      "sourceUrl": "https://www.credly.com/org/cardiff-metropolitan-university/badge/machine-learning"
+    },
+    {
+      "number": 111,
+      "provider": "CPA Ontario",
+      "credential": "GenAI for CPAs",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/111-cpa-ontario-genai-for-cpas.webp",
+      "slug": "111-cpa-ontario-genai-for-cpas",
+      "sourceUrl": "https://www.credly.com/org/cpaontario/badge/introduction-to-generative-ai-for-cpas-certificate"
+    },
+    {
+      "number": 112,
+      "provider": "Virginia Commonwealth",
+      "credential": "AI Ethics",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/112-virginia-commonwealth-ai-ethics.webp",
+      "slug": "112-virginia-commonwealth-ai-ethics",
+      "sourceUrl": "https://www.credly.com/org/virginia-commonwealth-university/badge/ethics-and-philosophy-of-ai"
+    },
+    {
+      "number": 113,
+      "provider": "Oklahoma State Regents",
+      "credential": "AI Ethics",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/113-oklahoma-state-regents-ai-ethics.webp",
+      "slug": "113-oklahoma-state-regents-ai-ethics",
+      "sourceUrl": "https://www.credly.com/org/oklahoma-state-regents-for-higher-education-osrhe/badge/ethics-of-artificial-intelligence-ai"
+    },
+    {
+      "number": 114,
+      "provider": "Web Age Solutions",
+      "credential": "Prompt Engineering",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/114-web-age-solutions-prompt-engineering.webp",
+      "slug": "114-web-age-solutions-prompt-engineering",
+      "sourceUrl": "https://www.credly.com/org/web-age-solutions/badge/prompt-engineering-techniques-and-best-practices"
+    },
+    {
+      "number": 115,
+      "provider": "Nassau Community College",
+      "credential": "AI Prompting",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/115-nassau-community-college-ai-prompting.webp",
+      "slug": "115-nassau-community-college-ai-prompting",
+      "sourceUrl": "https://www.credly.com/org/nassau-community-college/badge/use-prompt-engineering-in-ai-searches"
+    },
+    {
+      "number": 116,
+      "provider": "Moderna",
+      "credential": "AI Academy",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/116-moderna-ai-academy.webp",
+      "slug": "116-moderna-ai-academy",
+      "sourceUrl": "https://www.credly.com/org/moderna/badge/moderna-ai-academy-awareness.1"
+    },
+    {
+      "number": 117,
+      "provider": "UBS",
+      "credential": "AI Citizen",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/117-ubs-ai-citizen.webp",
+      "slug": "117-ubs-ai-citizen",
+      "sourceUrl": "https://www.credly.com/org/ubs/badge/ai-citizen-learning-journey"
+    },
+    {
+      "number": 118,
+      "provider": "Akkodis",
+      "credential": "AI for Leaders",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/118-akkodis-ai-for-leaders.webp",
+      "slug": "118-akkodis-ai-for-leaders",
+      "sourceUrl": "https://www.credly.com/org/modis/badge/ai-for-leaders/"
+    },
+    {
+      "number": 119,
+      "provider": "Vonage",
+      "credential": "AI Studio Foundation",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/119-vonage-ai-studio-foundation.webp",
+      "slug": "119-vonage-ai-studio-foundation",
+      "sourceUrl": "https://www.credly.com/org/vonage/badge/vonage-ai-studio-foundation/"
+    },
+    {
+      "number": 120,
+      "provider": "Linde",
+      "credential": "Basics of AI",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/120-linde-basics-of-ai.webp",
+      "slug": "120-linde-basics-of-ai",
+      "sourceUrl": "https://www.credly.com/org/linde/badge/digital-enthusiast-basics-of-ai"
+    },
+    {
+      "number": 121,
+      "provider": "Training Industry",
+      "credential": "AI Essentials",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/121-training-industry-ai-essentials.webp",
+      "slug": "121-training-industry-ai-essentials",
+      "sourceUrl": "https://www.credly.com/org/training-industry-inc/badge/ai-essentials-for-training-managers/"
+    },
+    {
+      "number": 122,
+      "provider": "LoopMe",
+      "credential": "AI in Media",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/122-loopme-ai-in-media.webp",
+      "slug": "122-loopme-ai-in-media",
+      "sourceUrl": "https://www.credly.com/org/loopme/badge/ai-academy-ai-in-media"
+    },
+    {
+      "number": 123,
+      "provider": "UNSW",
+      "credential": "AI Fundamentals",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/123-unsw-ai-fundamentals.webp",
+      "slug": "123-unsw-ai-fundamentals",
+      "sourceUrl": "https://www.credly.com/org/unsw/badge/ai-fundamentals"
+    },
+    {
+      "number": 124,
+      "provider": "Ikigai Labs",
+      "credential": "AI Foundations",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/124-ikigai-labs-ai-foundations.webp",
+      "slug": "124-ikigai-labs-ai-foundations",
+      "sourceUrl": "https://www.credly.com/org/ikigai-labs/badge/ai-foundations/"
+    },
+    {
+      "number": 125,
+      "provider": "SkillStorm",
+      "credential": "Introduction to AI",
+      "status": "sample",
+      "statusLabel": "Sample only — not a certificate document",
+      "image": "02-pending-public-certificate-samples/125-skillstorm-introduction-to-ai.webp",
+      "slug": "125-skillstorm-introduction-to-ai",
+      "sourceUrl": "https://www.credly.com/org/skillstorm/badge/introduction-to-ai"
+    },
+    {
+      "number": 126,
+      "provider": "CertNexus",
+      "credential": "AI Practitioner certificate record",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/126-certnexus-ai-practitioner-certificate-record.webp",
+      "slug": "126-certnexus-ai-practitioner-certificate-record",
+      "sourceUrl": "https://certifications.certnexus.com/5febfac7-abd0-433f-8098-db5a7936d463"
+    },
+    {
+      "number": 127,
+      "provider": "360DigiTMG",
+      "credential": "Artificial Intelligence certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/127-360digitmg-artificial-intelligence-certificate.webp",
+      "slug": "127-360digitmg-artificial-intelligence-certificate",
+      "sourceUrl": "https://360digitmg.com/india/whitefield/artificial-intelligence-ai-and-deep-learning-certification-course-training-institute"
+    },
+    {
+      "number": 128,
+      "provider": "Complete AI Training",
+      "credential": "Understanding Generative AI certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/128-complete-ai-training-understanding-generative-ai-certificate.webp",
+      "slug": "128-complete-ai-training-understanding-generative-ai-certificate",
+      "sourceUrl": "https://completeaitraining.com/certification/certification-understanding-generative-ai/"
+    },
+    {
+      "number": 129,
+      "provider": "Coursesity",
+      "credential": "Artificial Intelligence certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/129-coursesity-artificial-intelligence-certificate.webp",
+      "slug": "129-coursesity-artificial-intelligence-certificate",
+      "sourceUrl": "https://coursesity.com/tutor-ai"
+    },
+    {
+      "number": 130,
+      "provider": "Advance Agility",
+      "credential": "Responsible AI certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/130-advance-agility-responsible-ai-certificate.webp",
+      "slug": "130-advance-agility-responsible-ai-certificate",
+      "sourceUrl": "https://advanceagility.com/safe-aiwithsafe"
+    },
+    {
+      "number": 131,
+      "provider": "CertiProf",
+      "credential": "Generative AI Professional certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/131-certiprof-generative-ai-professional-certificate.webp",
+      "slug": "131-certiprof-generative-ai-professional-certificate",
+      "sourceUrl": "https://certiprof.com/products/generative-ai-professional-certification-gaipc"
+    },
+    {
+      "number": 132,
+      "provider": "EduHubSpot",
+      "credential": "Generative AI Professional certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/132-eduhubspot-generative-ai-professional-certificate.webp",
+      "slug": "132-eduhubspot-generative-ai-professional-certificate",
+      "sourceUrl": "https://www.eduhubspot.com/genai-signup"
+    },
+    {
+      "number": 133,
+      "provider": "Yaswanth Palaghat Courses",
+      "credential": "Prompt Engineering certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/133-yaswanth-palaghat-courses-prompt-engineering-certificate.webp",
+      "slug": "133-yaswanth-palaghat-courses-prompt-engineering-certificate",
+      "sourceUrl": "https://www.yaswanthpalaghatcourses.com/courses/6530eb25e4b06a7ebbbe0f8b"
+    },
+    {
+      "number": 134,
+      "provider": "Analytics Vidhya",
+      "credential": "Applied ML with Generative AI certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/134-analytics-vidhya-applied-ml-with-generative-ai-certificate.webp",
+      "slug": "134-analytics-vidhya-applied-ml-with-generative-ai-certificate",
+      "sourceUrl": "https://www.analyticsvidhya.com/datahacksummit-2024/workshops/pioneering-applied-machine-learning-with"
+    },
+    {
+      "number": 135,
+      "provider": "365 Data Science",
+      "credential": "Data Scientist certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/135-365-data-science-data-scientist-certificate.webp",
+      "slug": "135-365-data-science-data-scientist-certificate",
+      "sourceUrl": "https://365datascience.com/news/365-data-science-all-courses-on-platform-free/"
+    },
+    {
+      "number": 136,
+      "provider": "upGrad",
+      "credential": "GenAI Powered Data Science certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/136-upgrad-genai-powered-data-science-certificate.webp",
+      "slug": "136-upgrad-genai-powered-data-science-certificate",
+      "sourceUrl": "https://www.upgrad.com/offline-centres/advanced-certificate-in-data-science/"
+    },
+    {
+      "number": 137,
+      "provider": "Edureka / NIT Warangal",
+      "credential": "AI & ML diploma",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/137-edureka-nit-warangal-ai-ml-diploma.webp",
+      "slug": "137-edureka-nit-warangal-ai-ml-diploma",
+      "sourceUrl": "https://www.edureka.co/executive-programs/machine-learning-and-ai-canada"
+    },
+    {
+      "number": 138,
+      "provider": "Intellipaat / IITM Pravartak",
+      "credential": "GenAI, ML & Agentic AI certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/138-intellipaat-iitm-pravartak-genai-ml-agentic-ai-certificate.webp",
+      "slug": "138-intellipaat-iitm-pravartak-genai-ml-agentic-ai-certificate",
+      "sourceUrl": "https://intellipaat.com/gen-ai-agentic-ai-course/"
+    },
+    {
+      "number": 139,
+      "provider": "EDUCBA",
+      "credential": "Artificial Intelligence certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/139-educba-artificial-intelligence-certificate.webp",
+      "slug": "139-educba-artificial-intelligence-certificate",
+      "sourceUrl": "https://www.educba.com/data-science/courses/artificial-intelligence-course/"
+    },
+    {
+      "number": 140,
+      "provider": "IIT Patna / EdNxt",
+      "credential": "Generative AI for Professionals certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/140-iit-patna-ednxt-generative-ai-for-professionals-certificate.webp",
+      "slug": "140-iit-patna-ednxt-generative-ai-for-professionals-certificate",
+      "sourceUrl": "https://ednxt.ai/iit-patna-genai"
+    },
+    {
+      "number": 141,
+      "provider": "UT Dallas",
+      "credential": "AI & Machine Learning Bootcamp certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/141-ut-dallas-ai-machine-learning-bootcamp-certificate.webp",
+      "slug": "141-ut-dallas-ai-machine-learning-bootcamp-certificate",
+      "sourceUrl": "https://www.simplilearn.com/ai-and-ml-engineer-bootcamp"
+    },
+    {
+      "number": 142,
+      "provider": "TripleTen",
+      "credential": "AI & Machine Learning Bootcamp certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/142-tripleten-ai-machine-learning-bootcamp-certificate.webp",
+      "slug": "142-tripleten-ai-machine-learning-bootcamp-certificate",
+      "sourceUrl": "https://tripleten.com/ai-machine-learning/"
+    },
+    {
+      "number": 143,
+      "provider": "SkillNext",
+      "credential": "Artificial Intelligence Bootcamp certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/143-skillnext-artificial-intelligence-bootcamp-certificate.webp",
+      "slug": "143-skillnext-artificial-intelligence-bootcamp-certificate",
+      "sourceUrl": "https://skillnext.com/bootcamp/artificial-intelligence/"
+    },
+    {
+      "number": 144,
+      "provider": "Noble Desktop",
+      "credential": "AI Foundations Bootcamp certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/144-noble-desktop-ai-foundations-bootcamp-certificate.webp",
+      "slug": "144-noble-desktop-ai-foundations-bootcamp-certificate",
+      "sourceUrl": "https://www.classcentral.com/course/noble-desktop-ai-foundations-bootcamp-534418"
+    },
+    {
+      "number": 145,
+      "provider": "Vertical Institute",
+      "credential": "Generative AI Bootcamp certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/145-vertical-institute-generative-ai-bootcamp-certificate.webp",
+      "slug": "145-vertical-institute-generative-ai-bootcamp-certificate",
+      "sourceUrl": "https://verticalinstitute.com/generative-ai-course/"
+    },
+    {
+      "number": 146,
+      "provider": "NextLeap",
+      "credential": "Applied Generative AI certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/146-nextleap-applied-generative-ai-certificate.webp",
+      "slug": "146-nextleap-applied-generative-ai-certificate",
+      "sourceUrl": "https://nextleap.app/course/generative-ai-course"
+    },
+    {
+      "number": 147,
+      "provider": "Caltech CTME",
+      "credential": "AI & Machine Learning certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/147-caltech-ctme-ai-machine-learning-certificate.webp",
+      "slug": "147-caltech-ctme-ai-machine-learning-certificate",
+      "sourceUrl": "https://www.simplilearn.com/pgp-ai-machine-learning-certification-training-course"
+    },
+    {
+      "number": 148,
+      "provider": "Johns Hopkins University",
+      "credential": "Agentic AI certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/148-johns-hopkins-university-agentic-ai-certificate.webp",
+      "slug": "148-johns-hopkins-university-agentic-ai-certificate",
+      "sourceUrl": "https://online.lifelonglearning.jhu.edu/jhu-certificate-program-agentic-ai"
+    },
+    {
+      "number": 149,
+      "provider": "Team Academy",
+      "credential": "Certified Professional in AI",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/149-team-academy-certified-professional-in-ai.webp",
+      "slug": "149-team-academy-certified-professional-in-ai",
+      "sourceUrl": "https://teamacademy.qa/products/microsoft-certified-ai-business-practitioner"
+    },
+    {
+      "number": 150,
+      "provider": "Learn Artificial Intelligence",
+      "credential": "Adaptive Learning certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/150-learn-artificial-intelligence-adaptive-learning-certificate.webp",
+      "slug": "150-learn-artificial-intelligence-adaptive-learning-certificate",
+      "sourceUrl": "https://www.learnartificialintelligence.ai/ai-courses/artificial-intelligence-in-education/adaptive-learning-in-artificial-intelligence"
+    },
+    {
+      "number": 151,
+      "provider": "Blockchain Council",
+      "credential": "Certified AI Expert certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/151-blockchain-council-certified-ai-expert-certificate.webp",
+      "slug": "151-blockchain-council-certified-ai-expert-certificate",
+      "sourceUrl": "https://www.blockchain-council.org/instructor-led-training/certified-artificial-intelligence-ai-expert-ilt/"
+    },
+    {
+      "number": 152,
+      "provider": "USAII",
+      "credential": "Certified Artificial Intelligence Scientist certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/152-usaii-certified-artificial-intelligence-scientist-certificate.webp",
+      "slug": "152-usaii-certified-artificial-intelligence-scientist-certificate",
+      "sourceUrl": "https://www.usaii.org/"
+    },
+    {
+      "number": 153,
+      "provider": "OCEG / GRC Certify",
+      "credential": "Integrated AI Professional certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/153-oceg-grc-certify-integrated-ai-professional-certificate.webp",
+      "slug": "153-oceg-grc-certify-integrated-ai-professional-certificate",
+      "sourceUrl": "https://www.oceg.org/certifications/iaip-integrated-artificial-intelligence-professional/"
+    },
+    {
+      "number": 154,
+      "provider": "John Snow Labs",
+      "credential": "Applied Generative AI Data Scientist certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/154-john-snow-labs-applied-generative-ai-data-scientist-certificate.webp",
+      "slug": "154-john-snow-labs-applied-generative-ai-data-scientist-certificate",
+      "sourceUrl": "https://www.johnsnowlabs.com/generative-ai-lab/"
+    },
+    {
+      "number": 155,
+      "provider": "myAIcademy",
+      "credential": "Applied AI Practitioner certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/155-myaicademy-applied-ai-practitioner-certificate.webp",
+      "slug": "155-myaicademy-applied-ai-practitioner-certificate",
+      "sourceUrl": "https://www.myaicademy.com/"
+    },
+    {
+      "number": 156,
+      "provider": "IPOE Education Foundation",
+      "credential": "Artificial Intelligence Expertise certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/156-ipoe-education-foundation-artificial-intelligence-expertise-certificate.webp",
+      "slug": "156-ipoe-education-foundation-artificial-intelligence-expertise-certificate",
+      "sourceUrl": "https://jyic.cn/AIE"
+    },
+    {
+      "number": 157,
+      "provider": "DataTalks.Club",
+      "credential": "Machine Learning Zoomcamp certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/157-datatalks-club-machine-learning-zoomcamp-certificate.webp",
+      "slug": "157-datatalks-club-machine-learning-zoomcamp-certificate",
+      "sourceUrl": "https://datatalks.club/blog/machine-learning-zoomcamp.html"
+    },
+    {
+      "number": 158,
+      "provider": "Corporate Finance Institute / ML Edge",
+      "credential": "Machine Learning certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/158-corporate-finance-institute-ml-edge-machine-learning-certificate.webp",
+      "slug": "158-corporate-finance-institute-ml-edge-machine-learning-certificate",
+      "sourceUrl": "https://www.credential.net/issuer/1298"
+    },
+    {
+      "number": 159,
+      "provider": "CFTE / ACT",
+      "credential": "Generative AI in Corporate Treasury certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/159-cfte-act-generative-ai-in-corporate-treasury-certificate.webp",
+      "slug": "159-cfte-act-generative-ai-in-corporate-treasury-certificate",
+      "sourceUrl": "https://courses.cfte.education/generative-ai-in-corporate-treasury/"
+    },
+    {
+      "number": 160,
+      "provider": "Lawttorney",
+      "credential": "Certified Legal AI Practitioner certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/160-lawttorney-certified-legal-ai-practitioner-certificate.webp",
+      "slug": "160-lawttorney-certified-legal-ai-practitioner-certificate",
+      "sourceUrl": "https://www.lawttorney.com/certcourse299"
+    },
+    {
+      "number": 161,
+      "provider": "Harvard Medical School",
+      "credential": "AI in Health Care certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/161-harvard-medical-school-ai-in-health-care-certificate.webp",
+      "slug": "161-harvard-medical-school-ai-in-health-care-certificate",
+      "sourceUrl": "https://execonline.hms.harvard.edu/artificial-intelligence-in-health-care-from-strategies-to-implementation"
+    },
+    {
+      "number": 162,
+      "provider": "PVAI Academy on Maven",
+      "credential": "AI Skills for Marketers certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/162-pvai-academy-on-maven-ai-skills-for-marketers-certificate.webp",
+      "slug": "162-pvai-academy-on-maven-ai-skills-for-marketers-certificate",
+      "sourceUrl": "https://maven.com/pvaiacademy/mastering-ai-skills-for-marketers"
+    },
+    {
+      "number": 163,
+      "provider": "Juristbot AI",
+      "credential": "AI Legal Drafting certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/163-juristbot-ai-ai-legal-drafting-certificate.webp",
+      "slug": "163-juristbot-ai-ai-legal-drafting-certificate",
+      "sourceUrl": "https://juristbot.ai/"
+    },
+    {
+      "number": 164,
+      "provider": "Section",
+      "credential": "AI Builder certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/164-section-ai-builder-certificate.webp",
+      "slug": "164-section-ai-builder-certificate",
+      "sourceUrl": "https://www.sectionai.com/ai/become-an-ai-builder-in-a-day"
+    },
+    {
+      "number": 165,
+      "provider": "Merit Global Training",
+      "credential": "GenAI for Software Developers certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/165-merit-global-training-genai-for-software-developers-certificate.webp",
+      "slug": "165-merit-global-training-genai-for-software-developers-certificate",
+      "sourceUrl": "https://meritglobaltraining.com/course/generative-ai-certification-software-developers-microsoft"
+    },
+    {
+      "number": 166,
+      "provider": "Digital Innovation One",
+      "credential": "AI Emotion Detection certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/166-digital-innovation-one-ai-emotion-detection-certificate.webp",
+      "slug": "166-digital-innovation-one-ai-emotion-detection-certificate",
+      "sourceUrl": "https://www.dio.me/en/acceleration/aceleracao-internacional-implementing-artificial-intelligence-emotion-detection"
+    },
+    {
+      "number": 167,
+      "provider": "Daidu.ai",
+      "credential": "Generative AI for L&D certificate",
+      "status": "verified",
+      "statusLabel": "Verified certificate document",
+      "image": "01-verified-actual-certificates/167-daidu-ai-generative-ai-for-l-d-certificate.webp",
+      "slug": "167-daidu-ai-generative-ai-for-l-d-certificate",
+      "sourceUrl": "https://www.daidu.ai/pages/free-courses/free-artificial-intelligence-ai-courses-great-learning"
+    }
+  ]
+}
