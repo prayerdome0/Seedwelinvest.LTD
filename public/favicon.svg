@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Seedwel Investment LTD</title>
+  <desc id="desc">Seedwel red and navy S mark</desc>
+  <defs>
+    <linearGradient id="seedwel-red" x1="60" y1="42" x2="450" y2="470" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ef4444"/>
+      <stop offset="1" stop-color="#b91c1c"/>
+    </linearGradient>
+    <linearGradient id="seedwel-navy" x1="100" y1="40" x2="405" y2="475" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1e293b"/>
+      <stop offset="1" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="url(#seedwel-navy)"/>
+  <path d="M119 153c43-53 108-78 182-71 52 5 91 23 121 52l-53 61c-25-22-54-33-87-33-36 0-59 11-59 31 0 17 19 27 70 37 87 17 128 57 128 121 0 80-67 130-168 130-75 0-136-25-174-68l53-63c34 30 75 45 121 45 42 0 68-14 68-39 0-21-20-32-75-44-82-17-121-55-121-116 0-31 11-58 34-82Z" fill="url(#seedwel-red)"/>
+  <circle cx="388" cy="126" r="22" fill="#f8d17a"/>
+</svg>

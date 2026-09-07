@@ -1,7 +1,32 @@
-node_modules/
-.vercel/
-.env
-.env.*
-!.env.example
+# Dependencies
+/node_modules/
+
+# Build output
+/.next/
+/out/
+/build/
+/dist/
+/.vercel/
+
+# Environment
+/.env
+/.env.*
+!/.env.example
+
+# Runtime data: SQLite database, private uploads and uploaded media
+# NOTE: these patterns are anchored with a leading "/" on purpose. An
+# unanchored "data/" also matches src/lib/data/, which silently excluded the
+# data-access layer from the repository and broke the production build.
+/data/
+*.db
+*.db-shm
+*.db-wal
+/public/uploads/*
+!/public/uploads/.gitkeep
+
+# Tooling
 npm-debug.log*
-.preview/
+yarn-error.log*
+/tsconfig.tsbuildinfo
+.DS_Store
+/.preview/
