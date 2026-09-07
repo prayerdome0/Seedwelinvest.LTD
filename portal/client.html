@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#0f766e" />
+    <title>Client Dashboard | Seedwel Workplace</title>
+    <meta name="description" content="Private client workspace for Seedwel Investment LTD clients and businesses." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/private-portal.css" />
+    <link rel="stylesheet" href="/assets/css/workplace.css" />
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="/assets/js/firebase-config.js"></script>
+    <script src="/assets/js/recruitment-utils.js"></script>
+    <script src="/assets/js/workflow.js"></script>
+    <script src="/assets/js/portal-shared.js"></script>
+    <script src="/assets/js/task-utils.js"></script>
+</head>
+<body class="portal-body wp-body" data-page="client">
+    <div class="portal-shell">
+        <aside class="portal-sidebar wp-sidebar">
+            <a class="portal-brand" href="/portal/client">
+                <img src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel Investment LTD" />
+                <strong>Seedwel <span class="wp-brand-mark">Workplace</span></strong>
+            </a>
+            <div class="sidebar-copy">Your private client workspace — service requests, assigned work and updates from the Seedwel team.</div>
+            <nav class="sidebar-nav" aria-label="Client navigation">
+                <a data-page="overview" href="#overview"><i class="fa-solid fa-chart-line"></i> Overview</a>
+                <a data-page="requests" href="#requests"><i class="fa-solid fa-inbox"></i> My Requests</a>
+                <a data-page="tasks" href="#tasks"><i class="fa-solid fa-list-check"></i> My Work</a>
+                <a data-page="activity" href="#activity"><i class="fa-solid fa-clock-rotate-left"></i> Activity</a>
+            </nav>
+            <div class="sidebar-copy" style="font-size:0.76rem;color:#94a3b8;">Public site</div>
+            <nav class="sidebar-nav" aria-label="Public services">
+                <a href="/services"><i class="fa-solid fa-layer-group"></i> Services</a>
+                <a href="/projects"><i class="fa-solid fa-briefcase"></i> Portfolio</a>
+                <a href="/support"><i class="fa-solid fa-circle-question"></i> Help &amp; FAQ</a>
+            </nav>
+            <div class="sidebar-foot">Private client workspace · no public indexing · signed-in session only.</div>
+        </aside>
+
+        <main class="portal-main">
+            <header class="page-header">
+                <div>
+                    <p class="auth-eyebrow">Client Dashboard</p>
+                    <h1>Welcome, <span id="welcomeName">—</span></h1>
+                    <p>Track your service requests and see the work Seedwel is doing for you in one place.</p>
+                </div>
+                <div class="header-meta">
+                    <div class="header-chip"><span class="role-chip client" id="signedInRole">Client / Business</span></div>
+                    <div class="header-chip" id="signedInEmail">Loading…</div>
+                    <button class="btn btn-secondary" id="logoutBtn" type="button"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+                </div>
+            </header>
+
+            <div id="pageMessage" class="msg"></div>
+
+            <section class="metric-grid" aria-label="Client metrics">
+                <article class="metric-card"><strong id="metricRequests">0</strong><span>Service Requests</span></article>
+                <article class="metric-card"><strong id="metricOpen">0</strong><span>Work In Motion</span></article>
+                <article class="metric-card"><strong id="metricApproved">0</strong><span>Completed</span></article>
+                <article class="metric-card"><strong id="metricOverdue">0</strong><span>Overdue</span></article>
+            </section>
+
+            <div class="stack">
+                <section class="panel section-anchor" id="overview">
+                    <div class="panel-head">
+                        <div><h2>Update Your Details</h2><p>Keep your contact information current so the Seedwel team can reach you.</p></div>
+                    </div>
+                    <form id="profileForm" novalidate>
+                        <div class="form-grid">
+                            <div class="field"><label for="pfPhone">Phone / WhatsApp</label><input id="pfPhone" type="tel" maxlength="40" autocomplete="tel" /></div>
+                            <div class="field"><label for="pfCompany">Company / Business</label><input id="pfCompany" type="text" maxlength="120" autocomplete="organization" /></div>
+                            <div class="field full"><label for="pfNotes">How should we reach you?</label><textarea id="pfNotes" maxlength="500" rows="2" placeholder="Preferred times, WhatsApp vs email, etc."></textarea></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="profileSaveBtn" style="margin-top:16px;"><i class="fa-solid fa-floppy-disk"></i> Save profile</button>
+                        <div class="form-msg" id="profileMsg"></div>
+                    </form>
+                </section>
+
+                <section class="panel full section-anchor" id="requests">
+                    <div class="panel-head">
+                        <div><h2>My Service Requests</h2><p>Request a service from here and follow its status.</p></div>
+                        <a class="btn btn-secondary" href="/request" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> Public request form</a>
+                    </div>
+                    <form id="requestForm" novalidate class="panel" style="background:#f8fafc;box-shadow:none;">
+                        <div class="form-grid">
+                            <div class="field full"><label for="reqService">Which service do you need?</label>
+                                <select id="reqService">
+                                    <option value="website-package">Website + Logo + Business Cards Package</option>
+                                    <option value="web-development">Website Development</option>
+                                    <option value="logo-branding">Logo &amp; Branding</option>
+                                    <option value="business-materials">Business Materials</option>
+                                    <option value="graphics-social">Graphics &amp; Social Media</option>
+                                    <option value="education">Education / Tuition</option>
+                                    <option value="other">Something else</option>
+                                </select>
+                            </div>
+                            <div class="field full"><label for="reqDetails">What do you need?</label><textarea id="reqDetails" maxlength="3000" rows="4" placeholder="Briefly describe your project…" required></textarea></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="requestBtn" style="margin-top:14px;"><i class="fa-solid fa-paper-plane"></i> Send request</button>
+                        <div class="form-msg" id="requestMsg"></div>
+                    </form>
+                    <div class="task-list" id="requestList" style="margin-top:16px;"><div class="empty-state">Loading requests…</div></div>
+                </section>
+
+                <section class="panel full section-anchor" id="tasks">
+                    <div class="panel-head">
+                        <div><h2>My Work</h2><p>Tasks and deliverables the Seedwel team is working on for you.</p></div>
+                    </div>
+                    <div class="filters">
+                        <input id="taskSearch" type="search" placeholder="Search your work…" autocomplete="off" />
+                        <select id="taskStatusFilter">
+                            <option value="">All statuses</option>
+                            <option value="pending">Pending</option>
+                            <option value="accepted">I'm On It</option>
+                            <option value="in_progress">In Progress</option>
+                            <option value="submitted">Submitted</option>
+                            <option value="approved">Approved</option>
+                            <option value="changes_required">Changes Required</option>
+                            <option value="resubmitted">Resubmitted</option>
+                        </select>
+                    </div>
+                    <div class="task-list" id="taskList"><div class="empty-state">Loading your work…</div></div>
+                </section>
+
+                <section class="panel full section-anchor" id="activity">
+                    <div class="panel-head">
+                        <div><h2>Recent Activity</h2><p>Updates on requests and deliverables assigned to you.</p></div>
+                    </div>
+                    <div class="timeline" id="activityFeed"><div class="empty-state">No activity yet.</div></div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="/assets/js/portal-client.js"></script>
+</body>
+</html>

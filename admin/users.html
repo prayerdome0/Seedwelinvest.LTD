@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#0f766e" />
+    <title>Users &amp; Roles | Seedwel Workplace</title>
+    <meta name="description" content="Manage Seedwel workplace accounts, roles, managers and account status." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/private-portal.css" />
+    <link rel="stylesheet" href="/assets/css/workplace.css" />
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="/assets/js/firebase-config.js"></script>
+    <script src="/assets/js/recruitment-utils.js"></script>
+    <script src="/assets/js/workflow.js"></script>
+    <script src="/assets/js/portal-shared.js"></script>
+    <script src="/assets/js/admin-shared.js"></script>
+</head>
+<body class="portal-body wp-body" data-page="users">
+    <div class="portal-shell">
+        <aside class="portal-sidebar wp-sidebar">
+            <a class="portal-brand" href="/admin/dashboard">
+                <img src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel Investment LTD" />
+                <strong>Seedwel <span class="wp-brand-mark">Workplace</span> Admin</strong>
+            </a>
+            <div class="sidebar-copy">Workforce management: accounts, roles, managers, tasks, approvals and the recruitment pipeline.</div>
+            <nav class="sidebar-nav" aria-label="Admin navigation">
+                <a data-page="dashboard" href="/admin/dashboard"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+                <a data-page="applications" href="/admin/applications"><i class="fa-solid fa-user-check"></i> Applications</a>
+                <a data-page="members" href="/admin/members"><i class="fa-solid fa-users"></i> Members</a>
+                <a data-page="users" href="/admin/users"><i class="fa-solid fa-id-card"></i> Users &amp; Roles</a>
+                <a data-page="tasks" href="/admin/tasks"><i class="fa-solid fa-list-check"></i> Tasks &amp; Approvals</a>
+                <a data-page="documents" href="/admin/documents"><i class="fa-solid fa-folder-open"></i> Documents</a>
+                <a data-page="certificates" href="/admin/certificates"><i class="fa-solid fa-award"></i> Certificates</a>
+            </nav>
+            <div class="sidebar-copy" style="font-size:0.76rem;color:#94a3b8;">Operations workspace</div>
+            <nav class="sidebar-nav" aria-label="Operations workspace">
+                <a href="/admin#requests"><i class="fa-solid fa-inbox"></i> Service Requests</a>
+                <a href="/admin#jobs"><i class="fa-solid fa-briefcase"></i> Recruitment Jobs</a>
+                <a href="/admin#portfolio"><i class="fa-solid fa-layer-group"></i> Projects &amp; Media</a>
+                <a href="/admin#messages"><i class="fa-solid fa-envelope"></i> Messages</a>
+                <a href="/admin#audit"><i class="fa-solid fa-clock-rotate-left"></i> Audit Logs</a>
+                <a href="/admin#settings"><i class="fa-solid fa-gear"></i> Settings</a>
+            </nav>
+            <div class="sidebar-foot">Only administrators can manage accounts. Roles decide which dashboard each person sees after login.</div>
+        </aside>
+
+        <main class="portal-main">
+            <header class="page-header">
+                <div>
+                    <p class="auth-eyebrow">Workforce Management</p>
+                    <h1>Users &amp; Roles</h1>
+                    <p>Create staff and client accounts, view registered users, assign roles and managers, activate or suspend access, and resend invitations.</p>
+                </div>
+                <div class="header-meta">
+                    <div class="header-chip" id="signedInEmail">Checking session…</div>
+                    <button class="btn btn-secondary" id="logoutBtn" type="button"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+                </div>
+            </header>
+
+            <div id="pageMessage" class="msg"></div>
+
+            <section class="metric-grid" aria-label="Account metrics">
+                <article class="metric-card"><strong id="metricAccounts">0</strong><span>Accounts</span></article>
+                <article class="metric-card"><strong id="metricActive">0</strong><span>Active</span></article>
+                <article class="metric-card"><strong id="metricSuspended">0</strong><span>Suspended</span></article>
+                <article class="metric-card"><strong id="metricInvites">0</strong><span>Pending Invitations</span></article>
+            </section>
+
+            <div class="stack">
+                <section class="panel" id="createAccount">
+                    <div class="panel-head">
+                        <div><h2>Create an Account</h2><p>Send a secure one-time registration link. The person sets their own password — the role is assigned here, never chosen by the user.</p></div>
+                    </div>
+                    <form id="createAccountForm" novalidate>
+                        <div class="form-grid">
+                            <div class="field full"><label for="inviteName">Full name</label><input id="inviteName" maxlength="120" autocomplete="off" required /></div>
+                            <div class="field"><label for="inviteEmail">Email</label><input id="inviteEmail" type="email" maxlength="160" autocomplete="off" required /></div>
+                            <div class="field"><label for="invitePhone">Phone / WhatsApp</label><input id="invitePhone" type="tel" maxlength="40" autocomplete="off" /></div>
+                            <div class="field"><label for="inviteRole">Account role</label>
+                                <select id="inviteRole">
+                                    <option value="staff">Staff</option>
+                                    <option value="manager">Manager / Virtual Assistant</option>
+                                    <option value="client">Client / Business</option>
+                                </select>
+                            </div>
+                            <div class="field"><label for="invitePosition">Position / Job title</label><input id="invitePosition" maxlength="120" placeholder="e.g. Virtual Assistant, Cold Caller" required /></div>
+                            <div class="field"><label for="inviteDepartment">Department</label><input id="inviteDepartment" maxlength="120" placeholder="e.g. Operations, Sales" /></div>
+                            <div class="field"><label for="inviteManager">Assign a manager (staff only)</label><select id="inviteManager"><option value="">— None yet —</option></select></div>
+                            <div class="field"><label for="inviteExpiry">Invitation valid (days)</label>
+                                <select id="inviteExpiry"><option value="7" selected>7 days</option><option value="14">14 days</option><option value="30">30 days</option></select>
+                            </div>
+                            <div class="field full"><label for="inviteNote">Internal note (optional)</label><input id="inviteNote" maxlength="300" placeholder="Brief handover note — not shown to the invitee" /></div>
+                        </div>
+                        <div class="auth-actions" style="margin-top:18px;">
+                            <button type="submit" class="btn btn-primary" id="createAccountBtn"><i class="fa-solid fa-paper-plane"></i> Create &amp; send invitation</button>
+                        </div>
+                    </form>
+                </section>
+
+                <section class="panel full">
+                    <div class="panel-head">
+                        <div><h2>All Users</h2><p>Every registered account (including legacy worker accounts) plus pending invitations.</p></div>
+                    </div>
+                    <div class="filters">
+                        <input id="userSearch" type="search" placeholder="Search name, email, phone…" autocomplete="off" />
+                        <select id="roleFilter"><option value="">All roles</option><option value="admin">Administrator</option><option value="manager">Manager / VA</option><option value="staff">Staff</option><option value="client">Client / Business</option></select>
+                        <select id="statusFilter"><option value="">All statuses</option><option value="active">Active</option><option value="suspended">Suspended</option><option value="invite">Pending invitation</option></select>
+                    </div>
+                    <div class="table-wrap">
+                        <table class="data-table">
+                            <thead><tr><th>Name</th><th>Contact</th><th>Role</th><th>Status</th><th>Manager</th><th>Invitation</th><th>Actions</th></tr></thead>
+                            <tbody id="usersTable"><tr><td colspan="7">Loading users…</td></tr></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="panel full">
+                    <div class="panel-head">
+                        <div><h2>Recent Account Activity</h2><p>Audit entries for account creation, role changes and suspensions.</p></div>
+                    </div>
+                    <div class="task-list" id="accountActivity"><div class="empty-state">Loading activity…</div></div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="/assets/js/admin-users.js"></script>
+</body>
+</html>

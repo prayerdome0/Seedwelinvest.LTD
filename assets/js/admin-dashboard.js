@@ -10,7 +10,8 @@
             var workerTasks = tasks[uid] || {};
             Object.keys(workerTasks).forEach(function (taskId) {
                 var task = workerTasks[taskId] || {};
-                if (String(task.status || 'pending') !== 'completed') total += 1;
+                var status = String(task.status || 'pending');
+                if (status !== 'completed' && status !== 'approved') total += 1;
             });
         });
         return total;

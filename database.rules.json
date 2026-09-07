@@ -176,7 +176,8 @@
         },
         "updatedAt": {
           ".validate": "!newData.exists() || newData.isNumber()"
-        }
+        },
+        ".read": "auth != null && (auth.token.email == 'zacheussimbaya@gmail.com' || root.child('users').child(auth.uid).child('role').val() == 'admin' || root.child('users').child(auth.uid).child('email').val() == data.child('email').val())"
       }
     },
     "applications": {
@@ -256,7 +257,7 @@
       ".read": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com'",
       "$token": {
         ".read": "data.exists() && data.child('status').val() == 'pending' && data.child('expiresAt').val() > now",
-        ".write": "(auth != null && auth.token.email == 'zacheussimbaya@gmail.com') || (auth != null && data.exists() && auth.uid == newData.child('usedByUid').val() && root.child('workers').child(auth.uid).exists() && root.child('workers').child(auth.uid).child('invitationToken').val() == $token && data.child('email').val() == auth.token.email && data.child('status').val() == 'pending' && data.child('expiresAt').val() > now && newData.child('status').val() == 'registered' && newData.child('applicationId').val() == data.child('applicationId').val() && newData.child('memberId').val() == data.child('memberId').val() && newData.child('memberCode').val() == data.child('memberCode').val() && newData.child('fullName').val() == data.child('fullName').val() && newData.child('email').val() == data.child('email').val() && newData.child('position').val() == data.child('position').val() && newData.child('department').val() == data.child('department').val())",
+        ".write": "(auth != null && auth.token.email == 'zacheussimbaya@gmail.com') || (auth != null && root.child('users').child(auth.uid).child('role').val() == 'admin') || (auth != null && data.exists() && auth.uid == newData.child('usedByUid').val() && root.child('workers').child(auth.uid).exists() && root.child('workers').child(auth.uid).child('invitationToken').val() == $token && data.child('email').val() == auth.token.email && data.child('status').val() == 'pending' && data.child('expiresAt').val() > now && newData.child('status').val() == 'registered' && newData.child('applicationId').val() == data.child('applicationId').val() && newData.child('memberId').val() == data.child('memberId').val() && newData.child('memberCode').val() == data.child('memberCode').val() && newData.child('fullName').val() == data.child('fullName').val() && newData.child('email').val() == data.child('email').val() && newData.child('position').val() == data.child('position').val() && newData.child('department').val() == data.child('department').val())",
         ".validate": "!newData.exists() || (newData.hasChildren(['applicationId', 'memberId', 'memberCode', 'fullName', 'email', 'position', 'department', 'roleType', 'status', 'expiresAt', 'createdAt']) && newData.child('applicationId').isString() && newData.child('applicationId').val().length > 0 && newData.child('memberId').isString() && newData.child('memberId').val().length > 0 && newData.child('memberCode').isString() && newData.child('memberCode').val().matches(/^(SW-[0-9]{4}-[0-9]{4}|SWL-[0-9]{4}-[0-9]{6})$/) && newData.child('fullName').isString() && newData.child('fullName').val().length >= 2 && newData.child('fullName').val().length <= 120 && newData.child('email').isString() && newData.child('email').val().length >= 5 && newData.child('email').val().length <= 160 && newData.child('position').isString() && newData.child('position').val().length >= 2 && newData.child('position').val().length <= 120 && newData.child('department').isString() && newData.child('department').val().length >= 2 && newData.child('department').val().length <= 120 && newData.child('roleType').isString() && newData.child('roleType').val().matches(/^(Member|Staff)$/) && newData.child('status').isString() && newData.child('status').val().matches(/^(pending|registered|replaced|revoked|expired)$/) && newData.child('expiresAt').isNumber() && newData.child('createdAt').isNumber())",
         "phone": {
           ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 40)"
@@ -284,7 +285,7 @@
     "members": {
       ".read": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com'",
       "$memberId": {
-        ".write": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com'",
+        ".write": "auth != null && (auth.token.email == 'zacheussimbaya@gmail.com' || root.child('users').child(auth.uid).child('role').val() == 'admin')",
         ".validate": "!newData.exists() || (newData.hasChildren(['applicationId', 'fullName', 'email', 'position', 'department', 'roleType', 'memberCode', 'status', 'createdAt']) && newData.child('applicationId').isString() && newData.child('applicationId').val().length > 0 && newData.child('fullName').isString() && newData.child('fullName').val().length >= 2 && newData.child('fullName').val().length <= 120 && newData.child('email').isString() && newData.child('email').val().length >= 5 && newData.child('email').val().length <= 160 && newData.child('position').isString() && newData.child('position').val().length >= 2 && newData.child('position').val().length <= 120 && newData.child('department').isString() && newData.child('department').val().length >= 2 && newData.child('department').val().length <= 120 && newData.child('roleType').isString() && newData.child('roleType').val().matches(/^(Member|Staff)$/) && newData.child('memberCode').isString() && newData.child('memberCode').val().matches(/^(SW-[0-9]{4}-[0-9]{4}|SWL-[0-9]{4}-[0-9]{6})$/) && newData.child('status').isString() && newData.child('status').val().matches(/^(approved|pending_registration|registered|active|rejected|suspended)$/) && newData.child('createdAt').isNumber())",
         "phone": {
           ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 40)"
@@ -304,10 +305,10 @@
       }
     },
     "workers": {
-      ".read": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com'",
+      ".read": "auth != null && (auth.token.email == 'zacheussimbaya@gmail.com' || root.child('users').child(auth.uid).child('role').val() == 'admin' || root.child('users').child(auth.uid).child('role').val() == 'manager' || (root.child('workers').child(auth.uid).child('role').val() == 'Virtual Assistant' || root.child('workers').child(auth.uid).child('position').val() == 'Virtual Assistant'))",
       "$uid": {
-        ".read": "auth != null && (auth.uid == $uid || (auth.token.email == 'zacheussimbaya@gmail.com'))",
-        ".write": "auth != null && ((auth.token.email == 'zacheussimbaya@gmail.com') || (auth.uid == $uid && ((!data.exists() && root.child('registrationInvitations').child(newData.child('invitationToken').val()).exists() && root.child('registrationInvitations').child(newData.child('invitationToken').val()).child('status').val() == 'pending' && root.child('registrationInvitations').child(newData.child('invitationToken').val()).child('expiresAt').val() > now && root.child('registrationInvitations').child(newData.child('invitationToken').val()).child('email').val() == auth.token.email && newData.child('email').val() == auth.token.email && newData.child('workerId').val() == root.child('registrationInvitations').child(newData.child('invitationToken').val()).child('memberCode').val() && newData.child('memberRecordId').val() == root.child('registrationInvitations').child(newData.child('invitationToken').val()).child('memberId').val() && newData.child('role').val() == root.child('registrationInvitations').child(newData.child('invitationToken').val()).child('position').val() && newData.child('position').val() == root.child('registrationInvitations').child(newData.child('invitationToken').val()).child('position').val() && newData.child('department').val() == root.child('registrationInvitations').child(newData.child('invitationToken').val()).child('department').val() && newData.child('status').val() == 'active' && newData.child('commissionRate').val() == 0) || (data.exists() && newData.child('status').val() == data.child('status').val() && newData.child('role').val() == data.child('role').val() && newData.child('position').val() == data.child('position').val() && newData.child('department').val() == data.child('department').val() && newData.child('commissionRate').val() == data.child('commissionRate').val() && newData.child('workerId').val() == data.child('workerId').val() && newData.child('verifyToken').val() == data.child('verifyToken').val() && newData.child('approvedAt').val() == data.child('approvedAt').val() && newData.child('memberRecordId').val() == data.child('memberRecordId').val() && newData.child('invitationToken').val() == data.child('invitationToken').val()))))",
+        ".read": "auth != null && (auth.uid == $uid || auth.token.email == 'zacheussimbaya@gmail.com' || root.child('users').child(auth.uid).child('role').val() == 'admin' || root.child('users').child(auth.uid).child('role').val() == 'manager' || (root.child('workers').child(auth.uid).child('role').val() == 'Virtual Assistant' || root.child('workers').child(auth.uid).child('position').val() == 'Virtual Assistant') || root.child('users').child($uid).child('assignedManagerId').val() == auth.uid)",
+        ".write": "auth != null && ((auth.token.email == 'zacheussimbaya@gmail.com') || root.child('users').child(auth.uid).child('role').val() == 'admin' || (auth.uid == $uid && ((!data.exists() && root.child('registrationInvitations').child(newData.child('invitationToken').val()).exists() && root.child('registrationInvitations').child(newData.child('invitationToken').val()).child('status').val() == 'pending' && root.child('registrationInvitations').child(newData.child('invitationToken').val()).child('expiresAt').val() > now && root.child('registrationInvitations').child(newData.child('invitationToken').val()).child('email').val() == auth.token.email && newData.child('email').val() == auth.token.email && newData.child('workerId').val() == root.child('registrationInvitations').child(newData.child('invitationToken').val()).child('memberCode').val() && newData.child('memberRecordId').val() == root.child('registrationInvitations').child(newData.child('invitationToken').val()).child('memberId').val() && newData.child('role').val() == root.child('registrationInvitations').child(newData.child('invitationToken').val()).child('position').val() && newData.child('position').val() == root.child('registrationInvitations').child(newData.child('invitationToken').val()).child('position').val() && newData.child('department').val() == root.child('registrationInvitations').child(newData.child('invitationToken').val()).child('department').val() && newData.child('status').val() == 'active' && newData.child('commissionRate').val() == 0) || (data.exists() && newData.child('status').val() == data.child('status').val() && newData.child('role').val() == data.child('role').val() && newData.child('position').val() == data.child('position').val() && newData.child('department').val() == data.child('department').val() && newData.child('commissionRate').val() == data.child('commissionRate').val() && newData.child('workerId').val() == data.child('workerId').val() && newData.child('verifyToken').val() == data.child('verifyToken').val() && newData.child('approvedAt').val() == data.child('approvedAt').val() && newData.child('memberRecordId').val() == data.child('memberRecordId').val() && newData.child('invitationToken').val() == data.child('invitationToken').val()))))",
         ".validate": "!newData.exists() || (newData.hasChildren(['fullName', 'email', 'role', 'status', 'commissionRate', 'createdAt']) && newData.child('fullName').isString() && newData.child('fullName').val().length >= 2 && newData.child('fullName').val().length <= 120 && newData.child('email').isString() && newData.child('email').val().length >= 5 && newData.child('email').val().length <= 160 && newData.child('role').isString() && newData.child('role').val().length >= 2 && newData.child('role').val().length <= 120 && newData.child('status').isString() && newData.child('status').val().matches(/^(pending|under_review|info_required|active|suspended|rejected)$/) && newData.child('commissionRate').isNumber() && newData.child('commissionRate').val() >= 0 && newData.child('commissionRate').val() <= 100 && newData.child('createdAt').isNumber())",
         "phone": {
           ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 40)"
@@ -403,7 +404,7 @@
       "$uid": {
         ".read": "auth != null && (auth.uid == $uid || (auth.token.email == 'zacheussimbaya@gmail.com'))",
         "$noteId": {
-          ".write": "auth != null && ((auth.token.email == 'zacheussimbaya@gmail.com') || (auth.uid == $uid && data.exists() && newData.exists() && newData.child('title').val() == data.child('title').val() && newData.child('body').val() == data.child('body').val() && newData.child('createdAt').val() == data.child('createdAt').val()))",
+          ".write": "auth != null && ((auth.token.email == 'zacheussimbaya@gmail.com') || root.child('users').child(auth.uid).child('role').val() == 'admin' || root.child('users').child(auth.uid).child('role').val() == 'manager' || (auth.uid == $uid && data.exists() && newData.exists() && newData.child('title').val() == data.child('title').val() && newData.child('body').val() == data.child('body').val() && newData.child('createdAt').val() == data.child('createdAt').val()))",
           ".validate": "!newData.exists() || (newData.hasChildren(['title', 'createdAt']) && newData.child('title').isString() && newData.child('title').val().length >= 2 && newData.child('title').val().length <= 200 && newData.child('createdAt').isNumber())",
           "body": {
             ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 1000)"
@@ -487,9 +488,9 @@
       }
     },
     "auditLog": {
-      ".read": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com'",
+      ".read": "auth != null && (auth.token.email == 'zacheussimbaya@gmail.com' || root.child('users').child(auth.uid).child('role').val() == 'admin' || root.child('users').child(auth.uid).child('role').val() == 'manager')",
       "$entryId": {
-        ".write": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com' && !data.exists() && newData.exists()",
+        ".write": "auth != null && (auth.token.email == 'zacheussimbaya@gmail.com' || root.child('users').child(auth.uid).child('role').val() == 'admin' || root.child('users').child(auth.uid).child('role').val() == 'manager') && !data.exists() && newData.exists()",
         ".validate": "newData.hasChildren(['action', 'at']) && newData.child('action').isString() && newData.child('action').val().length >= 2 && newData.child('action').val().length <= 80 && newData.child('at').isNumber()",
         "target": {
           ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 200)"
@@ -503,17 +504,17 @@
       }
     },
     "tasks": {
-      ".read": "auth != null && auth.token.email == 'zacheussimbaya@gmail.com'",
+      ".read": "auth != null && (auth.token.email == 'zacheussimbaya@gmail.com' || root.child('users').child(auth.uid).child('role').val() == 'admin' || root.child('users').child(auth.uid).child('role').val() == 'manager' || (root.child('workers').child(auth.uid).child('role').val() == 'Virtual Assistant' || root.child('workers').child(auth.uid).child('position').val() == 'Virtual Assistant'))",
       "$workerUid": {
-        ".read": "auth != null && (auth.uid == $workerUid || (auth.token.email == 'zacheussimbaya@gmail.com'))",
+        ".read": "auth != null && (auth.uid == $workerUid || auth.token.email == 'zacheussimbaya@gmail.com' || root.child('users').child(auth.uid).child('role').val() == 'admin' || root.child('users').child(auth.uid).child('role').val() == 'manager' || (root.child('workers').child(auth.uid).child('role').val() == 'Virtual Assistant' || root.child('workers').child(auth.uid).child('position').val() == 'Virtual Assistant') || root.child('users').child($workerUid).child('assignedManagerId').val() == auth.uid)",
         "$taskId": {
-          ".write": "auth != null && ((auth.token.email == 'zacheussimbaya@gmail.com') || (auth.uid == $workerUid && data.exists() && newData.exists()))",
-          ".validate": "!newData.exists() || (newData.hasChildren(['title', 'status', 'createdAt']) && newData.child('title').isString() && newData.child('title').val().length >= 2 && newData.child('title').val().length <= 200 && newData.child('status').isString() && newData.child('status').val().matches(/^(pending|in_progress|completed)$/) && newData.child('createdAt').isNumber())",
+          ".write": "auth != null && (auth.token.email == 'zacheussimbaya@gmail.com' || root.child('users').child(auth.uid).child('role').val() == 'admin' || root.child('users').child(auth.uid).child('role').val() == 'manager' || (root.child('workers').child(auth.uid).child('role').val() == 'Virtual Assistant' || root.child('workers').child(auth.uid).child('position').val() == 'Virtual Assistant') || (auth.uid == $workerUid && data.exists() && newData.exists()))",
+          ".validate": "!newData.exists() || (newData.hasChildren(['title', 'status', 'createdAt']) && newData.child('title').isString() && newData.child('title').val().length >= 2 && newData.child('title').val().length <= 200 && newData.child('status').isString() && newData.child('status').val().matches(/^(pending|accepted|in_progress|submitted|approved|changes_required|resubmitted|completed)$/) && newData.child('createdAt').isNumber())",
           "dueDate": {
             ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 40)"
           },
           "priority": {
-            ".validate": "!newData.exists() || (newData.isString() && newData.val().matches(/^(low|medium|high)$/))"
+            ".validate": "!newData.exists() || (newData.isString() && newData.val().matches(/^(low|medium|high|urgent)$/))"
           },
           "notes": {
             ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 2000)"
@@ -610,6 +611,80 @@
           }
         }
       }
+    },
+    "users": {
+      ".read": "auth != null && (auth.token.email == 'zacheussimbaya@gmail.com' || root.child('users').child(auth.uid).child('role').val() == 'admin' || root.child('users').child(auth.uid).child('role').val() == 'manager' || (root.child('workers').child(auth.uid).child('role').val() == 'Virtual Assistant' || root.child('workers').child(auth.uid).child('position').val() == 'Virtual Assistant'))",
+      "$uid": {
+        ".read": "auth != null && (auth.uid == $uid || auth.token.email == 'zacheussimbaya@gmail.com' || root.child('users').child(auth.uid).child('role').val() == 'admin' || root.child('users').child(auth.uid).child('role').val() == 'manager' || (root.child('workers').child(auth.uid).child('role').val() == 'Virtual Assistant' || root.child('workers').child(auth.uid).child('position').val() == 'Virtual Assistant'))",
+        ".write": "auth != null && (auth.token.email == 'zacheussimbaya@gmail.com' || root.child('users').child(auth.uid).child('role').val() == 'admin' || auth.uid == $uid && data.exists() && newData.exists() && newData.child('email').val() == data.child('email').val() && newData.child('role').val() == data.child('role').val() || !data.exists() && root.child('registrationInvitations').child(newData.child('invitationToken').val()).child('usedByUid').val() == auth.uid && root.child('registrationInvitations').child(newData.child('invitationToken').val()).child('email').val() == auth.token.email)",
+        ".validate": "!newData.exists() || (newData.hasChildren(['email', 'role', 'status', 'createdAt']) && newData.child('email').isString() && newData.child('email').val().length >= 5 && newData.child('email').val().length <= 160 && newData.child('role').isString() && newData.child('role').val().length <= 40 && newData.child('status').isString() && newData.child('status').val().length <= 40 && newData.child('createdAt').isNumber())",
+        "fullName": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 120)"
+        },
+        "name": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 120)"
+        },
+        "phone": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 40)"
+        },
+        "position": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 120)"
+        },
+        "department": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 120)"
+        },
+        "assignedManagerId": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 128)"
+        },
+        "assignedManagerName": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 120)"
+        },
+        "workerId": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 20)"
+        },
+        "company": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 120)"
+        },
+        "notes": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 500)"
+        }
+      }
+    },
+    "taskMeta": {
+      ".read": "auth != null && (auth.token.email == 'zacheussimbaya@gmail.com' || root.child('users').child(auth.uid).child('role').val() == 'admin' || root.child('users').child(auth.uid).child('role').val() == 'manager' || (root.child('workers').child(auth.uid).child('role').val() == 'Virtual Assistant' || root.child('workers').child(auth.uid).child('position').val() == 'Virtual Assistant'))",
+      "$taskId": {
+        ".write": "auth != null && (auth.token.email == 'zacheussimbaya@gmail.com' || root.child('users').child(auth.uid).child('role').val() == 'admin' || root.child('users').child(auth.uid).child('role').val() == 'manager' || (root.child('workers').child(auth.uid).child('role').val() == 'Virtual Assistant' || root.child('workers').child(auth.uid).child('position').val() == 'Virtual Assistant'))",
+        ".validate": "!newData.exists() || (newData.hasChildren(['title', 'status', 'createdAt']) && newData.child('title').isString() && newData.child('title').val().length >= 2 && newData.child('title').val().length <= 200 && newData.child('status').isString() && newData.child('status').val().length <= 40 && newData.child('createdAt').isNumber())",
+        "priority": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().matches(/^(low|medium|high|urgent)$/))"
+        },
+        "description": {
+          ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 3000)"
+        }
+      }
+    },
+    "clientTasks": {
+      "$clientUid": {
+        ".read": "auth != null && (auth.uid == $clientUid || auth.token.email == 'zacheussimbaya@gmail.com' || root.child('users').child(auth.uid).child('role').val() == 'admin' || root.child('users').child(auth.uid).child('role').val() == 'manager' || (root.child('workers').child(auth.uid).child('role').val() == 'Virtual Assistant' || root.child('workers').child(auth.uid).child('position').val() == 'Virtual Assistant'))",
+        "$taskId": {
+          ".write": "auth != null && (auth.token.email == 'zacheussimbaya@gmail.com' || root.child('users').child(auth.uid).child('role').val() == 'admin' || root.child('users').child(auth.uid).child('role').val() == 'manager' || (root.child('workers').child(auth.uid).child('role').val() == 'Virtual Assistant' || root.child('workers').child(auth.uid).child('position').val() == 'Virtual Assistant'))",
+          ".validate": "!newData.exists() || (newData.hasChildren(['title', 'status', 'createdAt']) && newData.child('title').isString() && newData.child('title').val().length >= 2 && newData.child('title').val().length <= 200 && newData.child('status').isString() && newData.child('status').val().length <= 40 && newData.child('createdAt').isNumber())",
+          "comments": {
+            ".write": "auth != null && (auth.token.email == 'zacheussimbaya@gmail.com' || root.child('users').child(auth.uid).child('role').val() == 'admin' || root.child('users').child(auth.uid).child('role').val() == 'manager' || (root.child('workers').child(auth.uid).child('role').val() == 'Virtual Assistant' || root.child('workers').child(auth.uid).child('position').val() == 'Virtual Assistant') || (auth.uid == $clientUid && newData.exists()))"
+          }
+        }
+      },
+      ".read": "auth != null && (auth.token.email == 'zacheussimbaya@gmail.com' || root.child('users').child(auth.uid).child('role').val() == 'admin')"
+    },
+    "clientRequests": {
+      "$clientUid": {
+        ".read": "auth != null && (auth.uid == $clientUid || auth.token.email == 'zacheussimbaya@gmail.com' || root.child('users').child(auth.uid).child('role').val() == 'admin')",
+        "$requestId": {
+          ".write": "auth != null && (auth.token.email == 'zacheussimbaya@gmail.com' || root.child('users').child(auth.uid).child('role').val() == 'admin' || (auth.uid == $clientUid && !data.exists() && newData.exists() && newData.child('status').val() == 'new'))",
+          ".validate": "!newData.exists() || (newData.hasChildren(['fullName', 'email', 'service', 'status', 'submittedAt']) && newData.child('email').isString() && newData.child('email').val().length >= 5 && newData.child('service').isString() && newData.child('service').val().length >= 2 && newData.child('status').isString() && newData.child('status').val().length <= 40 && newData.child('submittedAt').isNumber())"
+        }
+      },
+      ".read": "auth != null && (auth.token.email == 'zacheussimbaya@gmail.com' || root.child('users').child(auth.uid).child('role').val() == 'admin')"
     }
   }
 }

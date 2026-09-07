@@ -30,6 +30,14 @@
         return Boolean(record && String(record.status || '').toLowerCase() === 'pending' && Number(record.expiresAt || 0) > Date.now());
     }
 
+    function resolveRole(record) {
+        var role = utils.safeText(record.role, 40).toLowerCase();
+        if (['admin', 'manager', 'staff', 'client'].indexOf(role) !== -1) return role;
+        if (String(record.roleType || '').toLowerCase() === 'member') return 'client';
+        if (/virtual\s*assistant/i.test(String(record.position || ''))) return 'manager';
+        return 'staff';
+    }
+
     async function loadInvite() {
         if (!token) {
             loading.hidden = true;
@@ -47,6 +55,8 @@
         fill('inviteEmail', invite.email);
         fill('invitePosition', invite.position);
         fill('inviteDepartment', invite.department || 'Operations');
+        var roleLabel = document.getElementById('inviteRoleLabel');
+        if (roleLabel) roleLabel.textContent = resolveRole(invite) === 'client' ? 'Client / Business Account' : resolveRole(invite) === 'manager' ? 'Manager / Virtual Assistant' : 'Staff Account';
         formWrap.hidden = false;
     }
 
@@ -54,6 +64,9 @@
         var credential = await auth.createUserWithEmailAndPassword(email, password);
         var user = credential.user;
         var workerCreated = false;
+        var userCreated = false;
+        var role = resolveRole(invite);
+        var now = window.firebase.database.ServerValue.TIMESTAMP;
         try {
             var workerRecord = {
                 fullName: utils.safeText(invite.fullName, 120),
@@ -71,22 +84,58 @@
                 skills: '',
                 experience: utils.safeText(invite.experience, 40),
                 availability: '',
-                approvedAt: window.firebase.database.ServerValue.TIMESTAMP,
-                createdAt: window.firebase.database.ServerValue.TIMESTAMP,
-                updatedAt: window.firebase.database.ServerValue.TIMESTAMP
+                approvedAt: now,
+                createdAt: now,
+                updatedAt: now
             };
             await db.ref('workers/' + user.uid).set(workerRecord);
             workerCreated = true;
+
+            var accountRecord = {
+                fullName: utils.safeText(invite.fullName, 120),
+                name: utils.safeText(invite.fullName, 120),
+                email: utils.safeText(invite.email, 160).toLowerCase(),
+                phone: utils.safeText(invite.phone, 40),
+                country: utils.safeText(invite.location, 80),
+                company: utils.safeText(invite.company, 120),
+                role: role,
+                accountType: role === 'client' ? 'client' : 'worker',
+                position: utils.safeText(invite.position, 120),
+                department: utils.safeText(invite.department, 100),
+                workerId: utils.safeText(invite.memberCode, 20),
+                assignedManagerId: utils.safeText(invite.assignedManagerId, 128),
+                assignedManagerName: utils.safeText(invite.assignedManagerName, 120),
+                invitationToken: token,
+                status: 'active',
+                registeredAt: now,
+                approvedAt: now,
+                createdAt: now,
+                updatedAt: now
+            };
+            await db.ref('users/' + user.uid).set(accountRecord);
+            userCreated = true;
+
             await db.ref('registrationInvitations/' + token).update({
                 status: 'registered',
                 usedByUid: user.uid,
-                usedAt: window.firebase.database.ServerValue.TIMESTAMP
+                usedAt: now
             });
+            try {
+                await db.ref('adminNotifications').push({
+                    title: 'New account registered',
+                    body: utils.safeText(invite.fullName, 120) + ' (' + role + ') completed registration.',
+                    type: 'member',
+                    read: false,
+                    link: 'members',
+                    createdAt: now
+                });
+            } catch (_) { /* best-effort notification */ }
+
             successWrap.hidden = false;
             formWrap.hidden = true;
             fill('successName', invite.fullName);
         } catch (error) {
-            if (!workerCreated) {
+            if (!userCreated && !workerCreated) {
                 try { await user.delete(); } catch (_) {}
             }
             throw error;
@@ -133,7 +182,9 @@
     });
 
     document.getElementById('goToDashboardBtn').addEventListener('click', function () {
-        window.location.href = '/dashboard';
+        var role = invite ? resolveRole(invite) : 'staff';
+        var home = { admin: '/admin/dashboard', manager: '/portal/manager', staff: '/dashboard', client: '/portal/client' };
+        window.location.href = home[role] || '/dashboard';
     });
 
     auth.onAuthStateChanged(function (user) {

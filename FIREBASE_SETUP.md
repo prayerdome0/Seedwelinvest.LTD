@@ -43,6 +43,7 @@ CVs remain private even though they share the `portfolio` Media Library folder: 
 - The administrator's real email is not displayed in the interface. The password is never saved, displayed, hashed in the browser, or committed to Git.
 - Email verification is **not** required. Administrator access is granted as soon as `zacheussimbaya@gmail.com` signs in; the Database Rules, Storage Rules and the Cloudinary helper all check the administrator email address only.
 - `database.rules.json` keeps private portfolio, application and worker records protected while exposing only deliberately public portfolio and verification copies.
+- The **Seedwel Workplace** role system adds these database nodes: `users` (account + role + status + assigned manager), `taskMeta`, `clientTasks`, `clientRequests` and extended statuses on `tasks`. Roles are enforced **server-side by the rules** — an account can only change its own role-independent profile fields; role and status changes require an administrator account (`zacheussimbaya@gmail.com` or a user with `users/{uid}/role == 'admin'`). Managers (including legacy `Virtual Assistant` worker records) can read/manage the tasks of people assigned to them and approve submissions.
 - `storage.rules` now blocks all new Firebase Storage uploads. It retains read/delete access needed to display or clean up files uploaded before the Cloudinary migration.
 
 Firebase web configuration values are public app identifiers, not account secrets. Firebase Authentication and deployed Database Rules provide access control.

@@ -4,6 +4,8 @@ Disallow: /admin
 Disallow: /admin/
 Disallow: /login
 Disallow: /dashboard
+Disallow: /portal
+Disallow: /portal/
 Disallow: /member/
 Disallow: /verify
 Disallow: /register
