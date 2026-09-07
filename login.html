@@ -6,17 +6,20 @@
     <meta name="theme-color" content="#dc2626" />
     <meta name="robots" content="noindex, nofollow" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-    <title>Member Login | Seedwel Investment LTD</title>
-    <meta name="description" content="Sign in to your Seedwel member dashboard." />
+    <title>Sign In | Seedwel Workplace</title>
+    <meta name="description" content="Sign in to your Seedwel workplace dashboard." />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link rel="stylesheet" href="assets/css/private-portal.css" />
+    <link rel="stylesheet" href="assets/css/workplace.css" />
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
     <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/recruitment-utils.js"></script>
+    <script src="assets/js/portal-shared.js"></script>
 </head>
-<body class="portal-auth">
+<body class="portal-auth wp-auth">
     <header class="portal-topbar">
         <a href="/" class="portal-brand">
             <img src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel Investment LTD" />
@@ -29,13 +32,13 @@
         <section class="auth-card" aria-labelledby="memberLoginTitle">
             <div class="auth-head">
                 <img src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel logo" />
-                <p class="auth-eyebrow">Member access</p>
+                <p class="auth-eyebrow">Seedwel Workplace</p>
                 <h1 id="memberLoginTitle">Sign in</h1>
-                <p>Approved applicants receive a secure one-time registration invitation. After registration, they can sign in here to access their member dashboard.</p>
+                <p>One secure login for staff, managers and clients. After sign-in you are routed automatically to your role's dashboard.</p>
             </div>
 
             <div class="auth-body">
-                <div class="banner info">Need an account? <a class="portal-link" href="/apply">Submit an application</a>. You will only receive a registration link after approval.</div>
+                <div class="banner info">Recruiting? <a class="portal-link" href="/apply">Submit an application</a> for Virtual Assistant or Cold Caller roles. Staff, managers and clients receive registration links directly from Seedwel after approval.</div>
                 <div id="loginMessage" class="msg"></div>
                 <form id="memberLoginForm" novalidate>
                     <div class="form-grid">
@@ -54,7 +57,7 @@
                     </div>
                 </form>
                 <div class="auth-note">
-                    <strong>How access works:</strong> application submission is public, approval is private, registration is invitation-only, and dashboard access becomes active only after the applicant creates their own password.
+                    <strong>How access works:</strong> applications are public, approval is private, registration is invitation-only, and your account role decides which dashboard you enter — Administrator, Management, Staff or Client.
                     <div style="margin-top:10px;">
                         Administrator? <a class="portal-link" href="/admin/login">Go to admin login</a>.
                     </div>

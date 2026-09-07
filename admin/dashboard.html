@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/assets/css/private-portal.css" />
+    <link rel="stylesheet" href="/assets/css/workplace.css" />
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
@@ -23,13 +24,15 @@
         <aside class="portal-sidebar">
             <a class="portal-brand" href="/admin/dashboard">
                 <img src="https://i.ibb.co/svxj52ny/seedwel.png" alt="Seedwel Investment LTD" />
-                <strong>Seedwel <span>Admin</span></strong>
+                <strong>Seedwel <span>Workplace</span> Admin</strong>
             </a>
-            <div class="sidebar-copy">Applications, approvals, registration invitations, members, task assignments and role-based worker documents.</div>
+            <div class="sidebar-copy">Workforce management: accounts, roles, managers, tasks, approvals, applications and role-based documents.</div>
             <nav class="sidebar-nav" aria-label="Admin navigation">
                 <a data-page="dashboard" href="/admin/dashboard"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
                 <a data-page="applications" href="/admin/applications"><i class="fa-solid fa-user-check"></i> Applications</a>
                 <a data-page="members" href="/admin/members"><i class="fa-solid fa-users"></i> Members</a>
+                <a data-page="users" href="/admin/users"><i class="fa-solid fa-id-card"></i> Users &amp; Roles</a>
+                <a data-page="tasks" href="/admin/tasks"><i class="fa-solid fa-list-check"></i> Tasks &amp; Approvals</a>
                 <a data-page="documents" href="/admin/documents"><i class="fa-solid fa-folder-open"></i> Documents</a>
                 <a data-page="certificates" href="/admin/certificates"><i class="fa-solid fa-award"></i> Certificates</a>
             </nav>

@@ -36,6 +36,17 @@
         });
     }
 
+    async function isAdminRoleUser(user) {
+        if (!user) return false;
+        try {
+            var snap = await db.ref('users/' + user.uid).once('value');
+            var record = snap.val();
+            return Boolean(record && String(record.role || '').toLowerCase() === 'admin');
+        } catch (_) {
+            return false;
+        }
+    }
+
     function withAdminPage(setup) {
         ensureActiveNav();
         attachLogout();
@@ -47,7 +58,8 @@
                         global.location.href = '/admin/login';
                         return;
                     }
-                    if (!global.SeedwelFirebase.isAdminUser(user)) {
+                    var allowed = global.SeedwelFirebase.isAdminUser(user) || await isAdminRoleUser(user);
+                    if (!allowed) {
                         await auth.signOut().catch(function () {});
                         global.location.href = '/admin/login?error=unauthorized';
                         return;

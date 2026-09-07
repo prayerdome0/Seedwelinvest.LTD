@@ -29,7 +29,7 @@ const PRECACHE = [
 ];
 
 /* Never touched by the service worker. */
-const PRIVATE_PATHS = ['/admin', '/dashboard', '/login', '/register', '/verify', '/member', '/api'];
+const PRIVATE_PATHS = ['/admin', '/dashboard', '/login', '/register', '/verify', '/member', '/portal', '/api'];
 
 function isPrivate(pathname) {
     return PRIVATE_PATHS.some((prefix) => pathname === prefix || pathname.startsWith(prefix + '/'));

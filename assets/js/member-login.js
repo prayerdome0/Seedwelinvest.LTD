@@ -3,7 +3,7 @@
 
     var bootstrap = window.SeedwelFirebase.init();
     var auth = bootstrap.auth;
-    var db = bootstrap.db;
+    var portal = window.SeedwelPortal;
     var form = document.getElementById('memberLoginForm');
     var msg = document.getElementById('loginMessage');
     var button = document.getElementById('memberLoginBtn');
@@ -21,14 +21,13 @@
             window.location.href = '/admin/dashboard';
             return;
         }
-        var snap = await db.ref('workers/' + user.uid).once('value');
-        var worker = snap.val();
-        if (!worker) {
+        var account = await portal.accountFor(user);
+        if (!account) {
             await auth.signOut();
             show('No active member account is linked to this email yet. Apply first, then wait for an approved registration invitation.', 'error');
             return;
         }
-        window.location.href = '/dashboard';
+        window.location.href = portal.roleHome(account.role);
     }
 
     auth.setPersistence(window.firebase.auth.Auth.Persistence.LOCAL)

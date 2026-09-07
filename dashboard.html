@@ -6,8 +6,8 @@
     <meta name="theme-color" content="#dc2626" />
     <meta name="robots" content="noindex, nofollow" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-    <title>Member Dashboard | Seedwel Investment LTD</title>
-    <meta name="description" content="Private Seedwel Investment LTD member dashboard." />
+    <title>Staff Dashboard | Seedwel Workplace</title>
+    <meta name="description" content="Private Seedwel Investment LTD staff dashboard." />
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -17,6 +17,10 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/recruitment-utils.js"></script>
+    <script src="assets/js/workflow.js"></script>
+    <script src="assets/js/portal-shared.js"></script>
     <script src="cloudinary-upload.js"></script>
     <!-- QR generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -172,8 +176,32 @@
             white-space: nowrap;
         }
         .status-pill.pending { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
-        .status-pill.in_progress { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+        .status-pill.accepted { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+        .status-pill.in_progress { background: #f1f5f9; color: #334155; border: 1px solid #e2e8f0; }
+        .status-pill.submitted { background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; }
+        .status-pill.approved,
         .status-pill.completed { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+        .status-pill.changes_required { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+        .status-pill.resubmitted { background: #ecfeff; color: #155e75; border: 1px solid #a5f3fc; }
+        .review-box {
+            margin-top: 10px; padding: 12px 14px; border-radius: 12px; font-size: 0.82rem;
+            background: #fef2f2; border: 1px solid #fecaca; border-left: 4px solid #dc2626; color: #7f1d1d;
+        }
+        .review-box.ok { background: #ecfdf5; border-color: #a7f3d0; border-left-color: #059669; color: #064e3b; }
+        .review-box strong { display: block; margin-bottom: 4px; }
+        .comment-box { margin-top: 12px; }
+        .comment-box .comment {
+            padding: 10px 12px; border: 1px solid #e5e7eb; border-radius: 12px; background: #f8fafc;
+            font-size: 0.82rem; margin-bottom: 8px;
+        }
+        .comment-box .comment strong { display: block; font-size: 0.78rem; }
+        .comment-box textarea {
+            width: 100%; min-height: 64px; margin-top: 6px; padding: 10px 12px; border: 1px solid #e5e7eb; border-radius: 10px;
+            font-family: 'Inter', sans-serif; font-size: 0.85rem; resize: vertical;
+        }
+        .task-mini-history { margin-top: 10px; }
+        .task-mini-history summary { cursor: pointer; font-size: 0.78rem; color: #6b7280; font-weight: 700; }
+        .task-mini-history div { font-size: 0.76rem; color: #6b7280; padding: 6px 0; border-bottom: 1px dashed #e5e7eb; }
         .prio { font-weight: 700; }
         .prio.high { color: #dc2626; }
         .prio.medium { color: #b45309; }
@@ -573,19 +601,21 @@
     <script>
         'use strict';
 
-        const firebaseConfig = {
-            apiKey: 'AIzaSyA-BpRy-RVc2rqIG6uiRu_XrGEu1ZGnQwU',
-            authDomain: 'seedwel-investment-limited.firebaseapp.com',
-            databaseURL: 'https://seedwel-investment-limited-default-rtdb.firebaseio.com',
-            projectId: 'seedwel-investment-limited',
-            storageBucket: 'seedwel-investment-limited.firebasestorage.app',
-            messagingSenderId: '197778268619',
-            appId: '1:197778268619:web:92f29d88fa5a22dbfa964e'
-        };
-        firebase.initializeApp(firebaseConfig);
+        if (!firebase.apps.length) {
+            firebase.initializeApp({
+                apiKey: 'AIzaSyA-BpRy-RVc2rqIG6uiRu_XrGEu1ZGnQwU',
+                authDomain: 'seedwel-investment-limited.firebaseapp.com',
+                databaseURL: 'https://seedwel-investment-limited-default-rtdb.firebaseio.com',
+                projectId: 'seedwel-investment-limited',
+                storageBucket: 'seedwel-investment-limited.firebasestorage.app',
+                messagingSenderId: '197778268619',
+                appId: '1:197778268619:web:92f29d88fa5a22dbfa964e'
+            });
+        }
         const auth = firebase.auth();
         const db = firebase.database();
         const ADMIN_EMAIL = 'zacheussimbaya@gmail.com';
+        const wf = window.SeedwelWorkflow;
 
         function $(id) { return document.getElementById(id); }
 
@@ -634,7 +664,7 @@
         }
 
         function labelFor(status) {
-            return { pending: 'Pending', in_progress: 'In Progress', completed: 'Completed' }[status] || status;
+            return wf.label(status);
         }
 
         function showFormMsg(el, text, ok) {
@@ -656,15 +686,16 @@
                     return;
                 }
                 tasks.sort((a, b) => {
-                    const p = { high: 0, medium: 1, low: 2 };
-                    return (p[a.priority] ?? 1) - (p[b.priority] ?? 1);
+                    const p = { urgent: 0, high: 1, medium: 2, low: 3 };
+                    return (p[a.priority] ?? 2) - (p[b.priority] ?? 2);
                 });
                 tasks.forEach(t => list.appendChild(renderTaskItem(uid, t)));
             });
         }
 
         function renderTaskItem(uid, t) {
-            const status = t.status || 'pending';
+            const metaInfo = wf.meta(t.status);
+            const status = metaInfo.className === 'approved' ? 'approved' : wf.normalize(t.status);
             const item = document.createElement('div');
             item.className = 'task-item';
 
@@ -679,6 +710,7 @@
             let metaParts = [];
             if (t.priority) metaParts.push('<span class="prio ' + t.priority + '">' + (t.priority[0].toUpperCase() + t.priority.slice(1)) + ' priority</span>');
             if (t.dueDate) metaParts.push('Due ' + String(t.dueDate));
+            if (t.assignedByName) metaParts.push('Assigned by ' + String(t.assignedByName));
             meta.innerHTML = metaParts.join(' · ') || '&nbsp;';
 
             main.appendChild(title);
@@ -691,33 +723,60 @@
                 main.appendChild(notes);
             }
 
+            if (t.status === 'changes_required' && t.reviewNote) {
+                const review = document.createElement('div');
+                review.className = 'review-box';
+                review.innerHTML = '<strong>' + String(t.reviewedByName ? t.reviewedByName + ' — ' : '') + 'reviewed your work</strong>' + String(t.reviewNote);
+                main.appendChild(review);
+            } else if (wf.isCompleted(t.status) && t.reviewNote) {
+                const review = document.createElement('div');
+                review.className = 'review-box ok';
+                review.innerHTML = '<strong>Approval note</strong>' + String(t.reviewNote);
+                main.appendChild(review);
+            }
+
+            const details = document.createElement('details');
+            details.className = 'task-mini-history';
+            const summary = document.createElement('summary');
+            summary.textContent = 'History';
+            details.appendChild(summary);
+            const history = [];
+            Object.keys(t.history || {}).forEach((key) => history.push(t.history[key]));
+            history.sort((a, b) => Number(a.at || 0) - Number(b.at || 0));
+            if (history.length) {
+                history.slice(-5).forEach((entry) => {
+                    const line = document.createElement('div');
+                    line.textContent = (entry.actorName || entry.actor || 'System') + ' · ' + (entry.action || 'Update') + (entry.note ? ' — ' + entry.note : '') + ' · ' + new Date(Number(entry.at || 0)).toLocaleString();
+                    details.appendChild(line);
+                });
+            } else {
+                const line = document.createElement('div');
+                line.textContent = 'No history yet.';
+                details.appendChild(line);
+            }
+            main.appendChild(details);
+
             const pill = document.createElement('span');
-            pill.className = 'status-pill ' + status;
-            pill.textContent = labelFor(status);
+            pill.className = 'status-pill ' + (metaInfo.className || status);
+            pill.textContent = labelFor(t.status);
 
             const actions = document.createElement('div');
             actions.className = 'task-actions';
 
-            if (status === 'pending') {
-                actions.appendChild(miniBtn('start', 'fas fa-play', 'Start work', async () => {
-                    await setTaskStatus(uid, t.id, 'in_progress');
+            wf.staffActions(t.status).forEach((action) => {
+                const cls = action.key === 'accept' ? 'start' : action.key === 'back' ? 'reopen' : 'complete';
+                actions.appendChild(miniBtn(cls, action.icon, action.label, async () => {
+                    await setTaskStatus(uid, t.id, action.to);
                 }));
-            } else if (status === 'in_progress') {
-                actions.appendChild(miniBtn('complete', 'fas fa-check', 'Mark completed', async () => {
-                    await setTaskStatus(uid, t.id, 'completed');
-                }));
-                actions.appendChild(miniBtn('reopen', 'fas fa-arrow-rotate-left', 'Back to pending', async () => {
-                    await setTaskStatus(uid, t.id, 'pending');
-                }));
-            } else if (status === 'completed') {
-                actions.appendChild(miniBtn('reopen', 'fas fa-arrow-rotate-left', 'Reopen', async () => {
-                    await setTaskStatus(uid, t.id, 'pending');
-                }));
-            }
+            });
 
             actions.appendChild(miniBtn('', 'fas fa-pen', 'Note', () => {
                 editor.classList.toggle('open');
                 if (editor.classList.contains('open')) editorTextarea.focus();
+            }));
+            actions.appendChild(miniBtn('', 'fa-regular fa-comment', 'Comment', () => {
+                commentBox.classList.toggle('open');
+                if (commentBox.classList.contains('open')) commentTextarea.focus();
             }));
 
             const editor = document.createElement('div');
@@ -740,10 +799,38 @@
             editor.appendChild(editorTextarea);
             editor.appendChild(noteActions);
 
+            const commentBox = document.createElement('div');
+            commentBox.className = 'note-editor comment-box';
+            const commentList = document.createElement('div');
+            const allComments = [];
+            Object.keys(t.comments || {}).forEach((key) => allComments.push(t.comments[key]));
+            allComments.sort((a, b) => Number(a.at || 0) - Number(b.at || 0));
+            allComments.slice(-3).forEach((comment) => {
+                const row = document.createElement('div');
+                row.className = 'comment';
+                row.innerHTML = '<strong>' + String(comment.byName || comment.by || 'Team') + ' · ' + new Date(Number(comment.at || 0)).toLocaleString() + '</strong>' + String(comment.text);
+                commentList.appendChild(row);
+            });
+            const commentTextarea = document.createElement('textarea');
+            commentTextarea.maxLength = 2000;
+            commentTextarea.placeholder = 'Add a comment for your manager…';
+            const commentActions = document.createElement('div');
+            commentActions.className = 'note-actions';
+            commentActions.appendChild(miniBtn('complete', 'fa-regular fa-paper-plane', 'Add comment', async () => {
+                const text = commentTextarea.value.trim();
+                if (!text) return;
+                await saveTaskComment(uid, t.id, text);
+                commentTextarea.value = '';
+            }));
+            commentBox.appendChild(commentList);
+            commentBox.appendChild(commentTextarea);
+            commentBox.appendChild(commentActions);
+
             item.appendChild(main);
             item.appendChild(pill);
             item.appendChild(actions);
             item.appendChild(editor);
+            item.appendChild(commentBox);
             return item;
         }
 
@@ -761,9 +848,19 @@
 
         async function setTaskStatus(uid, taskId, status) {
             try {
-                await db.ref('tasks/' + uid + '/' + taskId).update({
+                const updates = {
                     status: status,
                     updatedAt: firebase.database.ServerValue.TIMESTAMP
+                };
+                if (status === 'submitted') updates.submittedAt = firebase.database.ServerValue.TIMESTAMP;
+                if (status === 'approved') updates.approvedAt = firebase.database.ServerValue.TIMESTAMP;
+                await db.ref('tasks/' + uid + '/' + taskId).update(updates);
+                await db.ref('tasks/' + uid + '/' + taskId + '/history').push({
+                    at: firebase.database.ServerValue.TIMESTAMP,
+                    actor: auth.currentUser ? auth.currentUser.email : '',
+                    actorName: currentWorker ? currentWorker.fullName : (auth.currentUser ? auth.currentUser.email : 'Staff'),
+                    action: wf.milestone(status),
+                    note: ''
                 });
             } catch (err) {
                 console.error('Task status error:', err);
@@ -780,6 +877,22 @@
             } catch (err) {
                 console.error('Task note error:', err);
                 alert('Could not save the note. Please try again.');
+            }
+        }
+
+        async function saveTaskComment(uid, taskId, text) {
+            try {
+                await db.ref('tasks/' + uid + '/' + taskId + '/comments').push({
+                    at: firebase.database.ServerValue.TIMESTAMP,
+                    by: auth.currentUser ? auth.currentUser.email : '',
+                    byName: currentWorker ? currentWorker.fullName : (auth.currentUser ? auth.currentUser.email : 'Staff'),
+                    kind: 'staff',
+                    text: String(text).slice(0, 2000)
+                });
+                await db.ref('tasks/' + uid + '/' + taskId).update({ updatedAt: firebase.database.ServerValue.TIMESTAMP });
+            } catch (err) {
+                console.error('Task comment error:', err);
+                alert('Could not save the comment. Please try again.');
             }
         }
 
@@ -1152,7 +1265,7 @@
 
             // Active worker
             $('welcomeName').textContent = worker.fullName || 'there';
-            $('welcomeEmail').textContent = user.email || '';
+            $('welcomeEmail').textContent = (user.email || '') + (worker.assignedManagerName ? ' · Manager: ' + worker.assignedManagerName : '');
             $('roleLabel').textContent = worker.position || worker.role || 'Member';
             const rate = (typeof worker.commissionRate === 'number') ? worker.commissionRate : 10;
             $('commissionLabel').textContent = rate + '% Commission on eligible sales';
@@ -1176,6 +1289,13 @@
         auth.onAuthStateChanged(async (user) => {
             if (!user) { window.location.href = '/login'; return; }
             if (user.email && user.email.toLowerCase() === ADMIN_EMAIL) { window.location.href = '/admin/dashboard'; return; }
+            try {
+                const portalAccount = await window.SeedwelPortal.accountFor(user);
+                if (portalAccount && portalAccount.role === 'manager') { window.location.href = '/portal/manager'; return; }
+                if (portalAccount && portalAccount.role === 'client') { window.location.href = '/portal/client'; return; }
+            } catch (error) {
+                console.error('Role resolution failed:', error);
+            }
 
             db.ref('workers/' + user.uid).on('value', (snap) => {
                 const worker = snap.val();

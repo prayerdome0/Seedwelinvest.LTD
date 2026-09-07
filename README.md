@@ -27,10 +27,15 @@ The public website for **Seedwel Investment LTD** — a growing organisation wor
 | `/request` | **Request a Service** form — creates a service request in the admin workflow |
 | `/support` | Help centre and FAQ |
 | `/privacy` / `/cookie-policy` / `/terms` | Legal |
-| `/login` | Member login page for approved/registered accounts |
+| `/login` | **Seedwel Workplace** sign-in — one login for every role; the user is routed by account role |
 | `/register` | One-time invitation registration page with applicant details pre-filled |
-| `/dashboard` | Private member dashboard (member ID, **My Documents**, tasks, notifications, profile, security) |
+| `/portal` | Private routing hub — sends the signed-in user to their role dashboard |
+| `/portal/manager` | **Management Dashboard** — team, task assignment, monitoring, approvals and activity (managers & Virtual Assistants) |
+| `/portal/client` | **Client Dashboard** — service requests, assigned deliverables, comments and activity (client/business accounts) |
+| `/dashboard` | **Staff Dashboard** (member ID, **My Documents**, tasks with the approval workflow, notifications, profile, security) |
 | `/admin/dashboard` | Modular admin: overview metrics and activity |
+| `/admin/users` | **Users & Roles** — create staff/client accounts via secure invitations, list all registered users, assign roles & managers, activate/suspend |
+| `/admin/tasks` | **Tasks & Approvals** — create tasks for individuals, whole roles or clients; deadlines, priorities, monitoring, approve/reject with comments |
 | `/admin/applications` (+ `application.html`) | Recruitment inbox and application detail |
 | `/admin/members` (+ `member.html`) | Approved members and registration state |
 | `/admin/documents` | **Worker document library** — upload → select role → publish |
@@ -113,6 +118,45 @@ Run the validators locally with `npm run validate` (they are also part of `npm t
 - Visitors submit the **Request a Service** form (`/request`, pre-selectable via `?service=website-package`, `?service=web-development`, etc.). Requests are pushed to `serviceRequests` in the Firebase Realtime Database; Database Rules allow public *creation only* (with status `new`) and administrator-only reads/updates.
 - The legacy admin workspace (`/admin` → **Requests**) manages each request through the pipeline **New → Reviewing → Assigned → In Progress → Completed** (plus Cancelled), with assignee names, optional notes, search, status filters, email reply and an audit-log entry for every status change.
 
+## Workforce roles & task workflow (Seedwel Workplace)
+
+The authenticated area is branded **Seedwel Workplace** and stays visually and
+conceptually separate from the public site. The public website remains exactly
+what it is: services, education, projects, careers, contact and request forms.
+
+- **Roles are stored in the database, never chosen by the user.** Every account
+  gets a record at `users/{uid}` with `role` (`admin`, `manager`, `staff`,
+  `client`) and `status` (`active`/`suspended`). The browser reads the role and
+  routes the user to the right dashboard; it can never write its own role
+  (Database Rules only let the account owner update profile fields, and only
+  let an administrator change `role`/`status`).
+- **Routing after login:** Administrator → `/admin/dashboard` · Manager /
+  Virtual Assistant → `/portal/manager` · Staff → `/dashboard` · Client /
+  Business → `/portal/client`.
+- **Legacy worker accounts** (created before roles existed) still work:
+  `Virtual Assistant` records are treated as managers, everything else as staff.
+- **Task workflow:** `Pending → I'm On It → In Progress → Submitted → Approved`,
+  with `Submitted → Changes Required → Resubmitted → Approved` for corrections.
+  Staff can only push work forward; managers/administrators approve or request
+  changes (with a note), reopen approved work, and leave comments. Every status
+  change and comment is recorded in the task's `history`/`comments`.
+- **Task data:** `/taskMeta/{taskId}` (shared description + assignees),
+  `/tasks/{assigneeUid}/{taskId}` (each staff member's working copy) and
+  `/clientTasks/{clientUid}/{taskId}` (client deliverables). Client service
+  requests are mirrored to `/clientRequests/{clientUid}/{id}` for tracking.
+- **Creation of accounts:** administrators send a one-time registration link
+  (same secure invitation mechanism as recruitment); the invitee creates their
+  own password. Invitations carry the role, position, department and optional
+  assigned manager. Client accounts also receive a `workers/{uid}` record so the
+  registration machinery stays identical and auditable.
+- **Manager assignment:** an administrator assigns managers in
+  `/admin/users`; a manager's dashboard automatically shows the people assigned
+  to them (`assignedManagerId` / `assignedManagerEmail`).
+
+The public **Careers → Apply → Review → Accept → Registration Link → Sign in →
+role dashboard** flow is unchanged; approved applicants simply arrive in the
+dashboard for their role after registration.
+
 ## Hiring portal (two roles, one honest process)
 
 - **One login entry point** (`/login`): the account role is stored in Firebase (server-side rules), never chosen in the browser. After sign-in, admins are routed to the admin dashboard, approved workers to their dashboard, and applicants to their status screen.
@@ -135,7 +179,7 @@ Access control is enforced twice: the Database Rules only let a worker read `doc
 ## Team portal
 
 - Applicants submit public applications via `/apply` (with private CV upload to Cloudinary). After admin approval, the system creates a one-time registration invitation; the applicant then creates their own password and activates their member account.
-- `/dashboard` is protected by Firebase Authentication. Pending accounts see an "Application under review" screen; only **active** workers see the dashboard (role, commission rate, stats, My Documents, and assigned tasks). Workers can move tasks **Pending → In Progress → Completed** and leave progress notes, and submit daily reports.
+- `/dashboard` is protected by Firebase Authentication. Pending accounts see an "Application under review" screen; only **active** workers see the dashboard (role, commission rate, stats, My Documents, and assigned tasks). Workers move tasks through the full approval workflow (**Pending → I'm On It → In Progress → Submitted**, plus the **Changes Required → Resubmitted** loop), leave progress notes and comments, and submit daily reports.
 - The legacy admin workspace has a **Workers** panel: approve, reject, suspend, or activate workers, plus an **Assign a task** form that writes to `/tasks/{workerUid}/{taskId}`.
 
 ## Media
