@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import Database from 'better-sqlite3';
 import { SCHEMA_SQL } from './schema';
@@ -7,22 +8,72 @@ import { slugify } from '../utils';
 
 export type Row = Record<string, any>;
 
+/**
+ * Root directory that holds writable runtime state (the SQLite database and
+ * private uploads).
+ *
+ * Serverless platforms such as Vercel, AWS Lambda and Netlify mount the project
+ * directory read-only and only guarantee writes inside the OS temp directory.
+ * We detect that up front and relocate state there, so the application boots
+ * instead of throwing EROFS the first time it touches the database.
+ *
+ * On a normal server or local machine the project directory is used, keeping
+ * the database at ./data/seedwel.db as documented.
+ */
+function stateRoot(): string {
+  if (process.env.SEEDWEL_STATE_DIR) {
+    return path.resolve(process.cwd(), process.env.SEEDWEL_STATE_DIR);
+  }
+
+  const cwd = process.cwd();
+  const serverless = Boolean(
+    process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.NETLIFY,
+  );
+
+  if (!serverless) {
+    try {
+      fs.accessSync(cwd, fs.constants.W_OK);
+      return cwd;
+    } catch {
+      /* read-only project directory: fall back to the temp directory */
+    }
+  }
+
+  return path.join(os.tmpdir(), 'seedwel');
+}
+
+const STATE_ROOT = stateRoot();
+
 const DB_PATH = process.env.DATABASE_PATH
-  ? path.resolve(process.cwd(), process.env.DATABASE_PATH)
-  : path.join(process.cwd(), 'data', 'seedwel.db');
+  ? path.resolve(STATE_ROOT, process.env.DATABASE_PATH)
+  : path.join(STATE_ROOT, 'data', 'seedwel.db');
 
 const PRIVATE_UPLOAD_DIR = process.env.PRIVATE_UPLOAD_DIR
-  ? path.resolve(process.cwd(), process.env.PRIVATE_UPLOAD_DIR)
-  : path.join(process.cwd(), 'data', 'uploads');
+  ? path.resolve(STATE_ROOT, process.env.PRIVATE_UPLOAD_DIR)
+  : path.join(STATE_ROOT, 'data', 'uploads');
 
+/** Public uploads are static assets served from Next's `public` directory. */
 export const PUBLIC_UPLOAD_DIR = path.join(process.cwd(), 'public', 'uploads');
 
 let dbInstance: Database.Database | null = null;
 
+/**
+ * Creates a directory when the filesystem allows it. `public/uploads` lives
+ * inside the deployed bundle on serverless platforms, where it is read-only;
+ * the directory already ships with the build, so failing is not fatal there.
+ */
+function ensureDir(dir: string, required: boolean): void {
+  try {
+    fs.mkdirSync(dir, { recursive: true });
+  } catch (error) {
+    if (required) throw error;
+  }
+}
+
 function create(): Database.Database {
-  fs.mkdirSync(path.dirname(DB_PATH), { recursive: true });
-  fs.mkdirSync(PRIVATE_UPLOAD_DIR, { recursive: true });
-  fs.mkdirSync(PUBLIC_UPLOAD_DIR, { recursive: true });
+  ensureDir(path.dirname(DB_PATH), true);
+  ensureDir(PRIVATE_UPLOAD_DIR, true);
+  ensureDir(PUBLIC_UPLOAD_DIR, false);
 
   const db = new Database(DB_PATH);
   db.pragma('journal_mode = WAL');

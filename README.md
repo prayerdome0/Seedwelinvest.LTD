@@ -60,8 +60,9 @@ announcements and every website content block).
 | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | Canonical origin used for SEO, sitemap and emails |
 | `AUTH_SECRET` | Signs session cookies; **must** be changed in production |
-| `DATABASE_PATH` | SQLite file location (default `./data/seedwel.db`) |
+| `DATABASE_PATH` | SQLite file location (default `./data/seedwel.db`, resolved against the state directory) |
 | `PRIVATE_UPLOAD_DIR` | Where access-controlled files are stored (outside `public/`) |
+| `SEEDWEL_STATE_DIR` | Overrides the writable state root (default: the project directory, or `/tmp/seedwel` when it is read-only) |
 | `MAIL_DRIVER` | `outbox` (stored in the database) or `console` |
 | `MAIL_FROM_NAME`, `MAIL_FROM_EMAIL` | Sender identity |
 | `ADMIN_EMAIL`, `ADMIN_PASSWORD`, … | Bootstrap super administrator created at seed time |
@@ -322,9 +323,16 @@ npm start
 Notes for production:
 
 1. **Set `AUTH_SECRET`** and a strong administrator password before the first seed.
-2. **SQLite** suits a single instance. For multi-instance or serverless deployments, move to
-   Postgres: the data access is concentrated in `src/lib/db`, and the in-process rate limiter
-   in `src/lib/rate-limit.ts` should be swapped for Redis (call sites stay the same).
+2. **SQLite needs a writable disk.** The app detects read-only project directories (Vercel,
+   AWS Lambda, Netlify) at start-up and relocates the database to `/tmp/seedwel` so it boots
+   instead of failing with `EROFS`. That keeps a serverless deployment *running*, but `/tmp` is
+   ephemeral, so anything written there disappears when the instance is recycled. Use a host
+   with persistent storage — a VPS, Docker host, Fly.io/Railway volume or Render disk — for a
+   real installation. For genuinely stateless/serverless hosting, move to Postgres or Turso:
+   the data access is concentrated in `src/lib/db`, and the in-process rate limiter in
+   `src/lib/rate-limit.ts` should be swapped for Redis (call sites stay the same).
+   Uploads written to `public/uploads` are static assets and are **read-only on serverless
+   platforms**; the admin media uploader reports a clear error there instead of crashing.
 3. **Back up** `data/seedwel.db` and the private upload directory — that is your content.
 4. **Email**: the default `outbox` driver stores messages in the database and shows them in
    Settings → Email outbox. Point `MAIL_DRIVER` at a real provider for delivery.

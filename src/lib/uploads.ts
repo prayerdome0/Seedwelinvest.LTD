@@ -79,7 +79,13 @@ export async function storeUpload(file: File, kind: UploadKind, folder = 'genera
   const storedName = `${Date.now().toString(36)}-${crypto.randomBytes(8).toString('hex')}${extensionFor(mime, file.name)}`;
 
   const baseDir = kind === 'private' ? PRIVATE_UPLOAD_DIR : path.join(PUBLIC_UPLOAD_DIR, safeFolder);
-  await fs.mkdir(baseDir, { recursive: true });
+  try {
+    await fs.mkdir(baseDir, { recursive: true });
+  } catch {
+    throw new UploadError(
+      'The server could not create the upload folder. This usually means the deployment is running on a read-only filesystem.',
+    );
+  }
 
   let width: number | undefined;
   let height: number | undefined;
@@ -110,7 +116,13 @@ export async function storeUpload(file: File, kind: UploadKind, folder = 'genera
     }
   }
 
-  await fs.writeFile(path.join(baseDir, finalName), finalBuffer);
+  try {
+    await fs.writeFile(path.join(baseDir, finalName), finalBuffer);
+  } catch {
+    throw new UploadError(
+      'The file could not be saved because the deployment filesystem is read-only. Uploads require a host with persistent storage.',
+    );
+  }
 
   return {
     name: file.name || finalName,
